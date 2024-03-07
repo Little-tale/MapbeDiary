@@ -16,6 +16,13 @@
 		7B1137262B99A17100D6BBD1 /* MapbeDiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137252B99A17100D6BBD1 /* MapbeDiaryTests.swift */; };
 		7B1137302B99A17100D6BBD1 /* MapbeDiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11372F2B99A17100D6BBD1 /* MapbeDiaryUITests.swift */; };
 		7B1137322B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137312B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift */; };
+		7B11373F2B99A21200D6BBD1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */; };
+		7B1137412B99A23700D6BBD1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B1137402B99A23700D6BBD1 /* .gitignore */; };
+		7B1137442B99A27700D6BBD1 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137432B99A27700D6BBD1 /* Realm */; };
+		7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137452B99A27700D6BBD1 /* RealmSwift */; };
+		7B1137492B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137482B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11374A2B99A2E400D6BBD1 /* FirebaseCrashlytics */; };
+		7B11374D2B99A2E400D6BBD1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11374C2B99A2E400D6BBD1 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,8 @@
 		7B11372B2B99A17100D6BBD1 /* MapbeDiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapbeDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B11372F2B99A17100D6BBD1 /* MapbeDiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapbeDiaryUITests.swift; sourceTree = "<group>"; };
 		7B1137312B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapbeDiaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7B1137402B99A23700D6BBD1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +65,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */,
+				7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */,
+				7B11374D2B99A2E400D6BBD1 /* FirebaseMessaging in Frameworks */,
+				7B1137492B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				7B1137442B99A27700D6BBD1 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +93,8 @@
 		7B1137022B99A16F00D6BBD1 = {
 			isa = PBXGroup;
 			children = (
+				7B1137402B99A23700D6BBD1 /* .gitignore */,
+				7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */,
 				7B11370D2B99A16F00D6BBD1 /* MapbeDiary */,
 				7B1137242B99A17100D6BBD1 /* MapbeDiaryTests */,
 				7B11372E2B99A17100D6BBD1 /* MapbeDiaryUITests */,
@@ -143,6 +159,13 @@
 			dependencies = (
 			);
 			name = MapbeDiary;
+			packageProductDependencies = (
+				7B1137432B99A27700D6BBD1 /* Realm */,
+				7B1137452B99A27700D6BBD1 /* RealmSwift */,
+				7B1137482B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				7B11374A2B99A2E400D6BBD1 /* FirebaseCrashlytics */,
+				7B11374C2B99A2E400D6BBD1 /* FirebaseMessaging */,
+			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +238,10 @@
 				Base,
 			);
 			mainGroup = 7B1137022B99A16F00D6BBD1;
+			packageReferences = (
+				7B1137422B99A27700D6BBD1 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,7 +258,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1137412B99A23700D6BBD1 /* .gitignore in Resources */,
 				7B11371B2B99A17100D6BBD1 /* LaunchScreen.storyboard in Resources */,
+				7B11373F2B99A21200D6BBD1 /* GoogleService-Info.plist in Resources */,
 				7B1137182B99A17100D6BBD1 /* Assets.xcassets in Resources */,
 				7B1137162B99A16F00D6BBD1 /* Main.storyboard in Resources */,
 			);
@@ -450,6 +479,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,9 +487,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -478,6 +512,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -485,9 +520,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -607,6 +646,53 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7B1137422B99A27700D6BBD1 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.47.0;
+			};
+		};
+		7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.22.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7B1137432B99A27700D6BBD1 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137422B99A27700D6BBD1 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		7B1137452B99A27700D6BBD1 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137422B99A27700D6BBD1 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		7B1137482B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		7B11374A2B99A2E400D6BBD1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		7B11374C2B99A2E400D6BBD1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B1137032B99A16F00D6BBD1 /* Project object */;
 }
