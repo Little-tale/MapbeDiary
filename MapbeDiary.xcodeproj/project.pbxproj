@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */; };
 		7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */; };
-		7B1137132B99A16F00D6BBD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137122B99A16F00D6BBD1 /* ViewController.swift */; };
 		7B1137182B99A17100D6BBD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1137172B99A17100D6BBD1 /* Assets.xcassets */; };
 		7B11371B2B99A17100D6BBD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */; };
 		7B1137262B99A17100D6BBD1 /* MapbeDiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137252B99A17100D6BBD1 /* MapbeDiaryTests.swift */; };
@@ -32,6 +31,19 @@
 		7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137662B99A94800D6BBD1 /* KakaoAPIModel.swift */; };
 		7B11376A2B99A98000D6BBD1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B11376C2B99A98000D6BBD1 /* Localizable.strings */; };
 		7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11376E2B99AA2100D6BBD1 /* Extention.swift */; };
+		7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137702B99AB1400D6BBD1 /* RealmManager.swift */; };
+		7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137722B99AB2C00D6BBD1 /* RealmModel.swift */; };
+		7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137782B99AD4200D6BBD1 /* Observable.swift */; };
+		7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */; };
+		7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */; };
+		7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */; };
+		7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */; };
+		7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137832B99B5A700D6BBD1 /* TabbarController.swift */; };
+		7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137862B99BF6200D6BBD1 /* MapSection.swift */; };
+		7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137892B99C2F100D6BBD1 /* Toast */; };
+		7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */; };
+		7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */; };
+		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +67,6 @@
 		7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapbeDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7B1137122B99A16F00D6BBD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7B1137172B99A17100D6BBD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B11371A2B99A17100D6BBD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B11371C2B99A17100D6BBD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -73,6 +84,18 @@
 		7B11376B2B99A98000D6BBD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B11376D2B99A99F00D6BBD1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B11376E2B99AA2100D6BBD1 /* Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
+		7B1137702B99AB1400D6BBD1 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		7B1137722B99AB2C00D6BBD1 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		7B1137782B99AD4200D6BBD1 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHomeViewController.swift; sourceTree = "<group>"; };
+		7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeView.swift; sourceTree = "<group>"; };
+		7B1137832B99B5A700D6BBD1 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		7B1137862B99BF6200D6BBD1 /* MapSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSection.swift; sourceTree = "<group>"; };
+		7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
+		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +111,7 @@
 				7B1137492B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */,
 				7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */,
+				7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */,
 				7B1137442B99A27700D6BBD1 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,11 +160,12 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
+				7B1137852B99BF4F00D6BBD1 /* Section */,
+				7B1137742B99AC5700D6BBD1 /* View */,
 				7B1137602B99A8ED00D6BBD1 /* Model */,
 				7B1137512B99A82F00D6BBD1 /* Manager */,
 				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
 				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
-				7B1137122B99A16F00D6BBD1 /* ViewController.swift */,
 				7B1137172B99A17100D6BBD1 /* Assets.xcassets */,
 				7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */,
 				7B11371C2B99A17100D6BBD1 /* Info.plist */,
@@ -170,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */,
+				7B1137702B99AB1400D6BBD1 /* RealmManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -177,7 +203,9 @@
 		7B1137602B99A8ED00D6BBD1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7B11378B2B99E95900D6BBD1 /* ViewModel */,
 				7B1137632B99A91D00D6BBD1 /* API */,
+				7B1137722B99AB2C00D6BBD1 /* RealmModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -189,6 +217,77 @@
 				7B1137662B99A94800D6BBD1 /* KakaoAPIModel.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		7B1137742B99AC5700D6BBD1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137772B99ACB100D6BBD1 /* Views */,
+				7B1137752B99AC6600D6BBD1 /* Controller */,
+				7B1137782B99AD4200D6BBD1 /* Observable.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7B1137752B99AC6600D6BBD1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137822B99B59D00D6BBD1 /* Tab */,
+				7B1137762B99AC9B00D6BBD1 /* Base */,
+				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7B1137762B99AC9B00D6BBD1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		7B1137772B99ACB100D6BBD1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B11378E2B99FDD800D6BBD1 /* Marker */,
+				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
+				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7B1137822B99B59D00D6BBD1 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137832B99B5A700D6BBD1 /* TabbarController.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		7B1137852B99BF4F00D6BBD1 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137862B99BF6200D6BBD1 /* MapSection.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
+		7B11378B2B99E95900D6BBD1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7B11378E2B99FDD800D6BBD1 /* Marker */ = {
+			isa = PBXGroup;
+			children = (
+				7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */,
+				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
+			);
+			path = Marker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +317,7 @@
 				7B1137582B99A8A900D6BBD1 /* FloatingPanel */,
 				7B11375B2B99A8C000D6BBD1 /* IQKeyboardManagerSwift */,
 				7B11375E2B99A8E200D6BBD1 /* DGCharts */,
+				7B1137892B99C2F100D6BBD1 /* Toast */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -299,6 +399,7 @@
 				7B1137572B99A8A900D6BBD1 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				7B11375A2B99A8C000D6BBD1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */,
+				7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -370,13 +471,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
-				7B1137132B99A16F00D6BBD1 /* ViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
+				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,
+				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
 				7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */,
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
+				7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */,
+				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
+				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
+				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
+				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
+				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
+				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
+				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -786,6 +898,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -833,6 +953,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		7B1137892B99C2F100D6BBD1 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
