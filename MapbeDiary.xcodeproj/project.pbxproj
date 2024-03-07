@@ -24,6 +24,14 @@
 		7B11374D2B99A2E400D6BBD1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11374C2B99A2E400D6BBD1 /* FirebaseMessaging */; };
 		7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11374F2B99A81300D6BBD1 /* APIKey.swift */; };
 		7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */; };
+		7B1137562B99A89100D6BBD1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137552B99A89100D6BBD1 /* SnapKit */; };
+		7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137582B99A8A900D6BBD1 /* FloatingPanel */; };
+		7B11375C2B99A8C000D6BBD1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11375B2B99A8C000D6BBD1 /* IQKeyboardManagerSwift */; };
+		7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11375E2B99A8E200D6BBD1 /* DGCharts */; };
+		7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137642B99A92A00D6BBD1 /* KakaoModel.swift */; };
+		7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137662B99A94800D6BBD1 /* KakaoAPIModel.swift */; };
+		7B11376A2B99A98000D6BBD1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B11376C2B99A98000D6BBD1 /* Localizable.strings */; };
+		7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11376E2B99AA2100D6BBD1 /* Extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +68,11 @@
 		7B1137402B99A23700D6BBD1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7B11374F2B99A81300D6BBD1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManager.swift; sourceTree = "<group>"; };
+		7B1137642B99A92A00D6BBD1 /* KakaoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoModel.swift; sourceTree = "<group>"; };
+		7B1137662B99A94800D6BBD1 /* KakaoAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPIModel.swift; sourceTree = "<group>"; };
+		7B11376B2B99A98000D6BBD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7B11376D2B99A99F00D6BBD1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7B11376E2B99AA2100D6BBD1 /* Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +81,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */,
+				7B11375C2B99A8C000D6BBD1 /* IQKeyboardManagerSwift in Frameworks */,
 				7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */,
 				7B11374D2B99A2E400D6BBD1 /* FirebaseMessaging in Frameworks */,
+				7B1137562B99A89100D6BBD1 /* SnapKit in Frameworks */,
 				7B1137492B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */,
+				7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */,
 				7B1137442B99A27700D6BBD1 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +112,7 @@
 		7B1137022B99A16F00D6BBD1 = {
 			isa = PBXGroup;
 			children = (
+				7B11376C2B99A98000D6BBD1 /* Localizable.strings */,
 				7B11374F2B99A81300D6BBD1 /* APIKey.swift */,
 				7B1137402B99A23700D6BBD1 /* .gitignore */,
 				7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */,
@@ -118,6 +136,7 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
+				7B1137602B99A8ED00D6BBD1 /* Model */,
 				7B1137512B99A82F00D6BBD1 /* Manager */,
 				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
 				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
@@ -125,6 +144,7 @@
 				7B1137172B99A17100D6BBD1 /* Assets.xcassets */,
 				7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */,
 				7B11371C2B99A17100D6BBD1 /* Info.plist */,
+				7B11376E2B99AA2100D6BBD1 /* Extention.swift */,
 			);
 			path = MapbeDiary;
 			sourceTree = "<group>";
@@ -154,6 +174,23 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		7B1137602B99A8ED00D6BBD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137632B99A91D00D6BBD1 /* API */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7B1137632B99A91D00D6BBD1 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137642B99A92A00D6BBD1 /* KakaoModel.swift */,
+				7B1137662B99A94800D6BBD1 /* KakaoAPIModel.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -177,6 +214,10 @@
 				7B1137482B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				7B11374A2B99A2E400D6BBD1 /* FirebaseCrashlytics */,
 				7B11374C2B99A2E400D6BBD1 /* FirebaseMessaging */,
+				7B1137552B99A89100D6BBD1 /* SnapKit */,
+				7B1137582B99A8A900D6BBD1 /* FloatingPanel */,
+				7B11375B2B99A8C000D6BBD1 /* IQKeyboardManagerSwift */,
+				7B11375E2B99A8E200D6BBD1 /* DGCharts */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -248,11 +289,16 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 7B1137022B99A16F00D6BBD1;
 			packageReferences = (
 				7B1137422B99A27700D6BBD1 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7B1137542B99A89100D6BBD1 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				7B1137572B99A8A900D6BBD1 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				7B11375A2B99A8C000D6BBD1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -270,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B11376A2B99A98000D6BBD1 /* Localizable.strings in Resources */,
 				7B1137412B99A23700D6BBD1 /* .gitignore in Resources */,
 				7B11371B2B99A17100D6BBD1 /* LaunchScreen.storyboard in Resources */,
 				7B11373F2B99A21200D6BBD1 /* GoogleService-Info.plist in Resources */,
@@ -323,10 +370,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7B1137132B99A16F00D6BBD1 /* ViewController.swift in Sources */,
+				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
 				7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */,
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
+				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,6 +422,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		7B11376C2B99A98000D6BBD1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B11376B2B99A98000D6BBD1 /* en */,
+				7B11376D2B99A99F00D6BBD1 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -380,6 +439,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -443,6 +503,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -693,6 +754,38 @@
 				minimumVersion = 10.22.0;
 			};
 		};
+		7B1137542B99A89100D6BBD1 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		7B1137572B99A8A900D6BBD1 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.2;
+			};
+		};
+		7B11375A2B99A8C000D6BBD1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
+		7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -720,6 +813,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B1137472B99A2E400D6BBD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		7B1137552B99A89100D6BBD1 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137542B99A89100D6BBD1 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		7B1137582B99A8A900D6BBD1 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B1137572B99A8A900D6BBD1 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
+		};
+		7B11375B2B99A8C000D6BBD1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B11375A2B99A8C000D6BBD1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		7B11375E2B99A8E200D6BBD1 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  MapbeDiary
+
+  Created by Jae hyung Kim on 3/7/24.
+  
+*/
+
+"Error_alert_title" = "Error";
+
+"Alert_check_title" = "check";
+
+"Kakao_error_message_type1" = "There was a problem with the service, please restart it!";
+
+"Kakao_error_message_type2" = "This is an excessive request, please try again later!";
+
+"Kakao_error_message_type3" = "We're currently experiencing server issues, please try again later!";
+
+"Kakao_error_message_type4" = "The server is currently undergoing maintenance. Please try again later!";
+

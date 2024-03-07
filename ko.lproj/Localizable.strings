@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  MapbeDiary
+
+  Created by Jae hyung Kim on 3/7/24.
+  
+*/
+
+"Error_alert_title" = "에러";
+
+"Alert_check_title" = "확인";
+
+"Kakao_error_message_type1" = "서비스에 문제가 발생했습니다. 다시 시작해주세요!";
+
+"Kakao_error_message_type2" = "과도한 요청입니다 잠시후 시도해주세요!";
+
+"Kakao_error_message_type3" = "현재 서버의 문제가 발생했어요! 잠시후 시도해주세요!";
+
+"Kakao_error_message_type4" = "현재 서버 점검중입니다. 잠시후 시도해주세요!";
