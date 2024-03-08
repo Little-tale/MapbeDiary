@@ -44,6 +44,8 @@
 		7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */; };
 		7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */; };
 		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
+		7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */; };
+		7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,8 @@
 		7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
+		7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,7 @@
 			children = (
 				7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */,
 				7B1137702B99AB1400D6BBD1 /* RealmManager.swift */,
+				7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				7B1137822B99B59D00D6BBD1 /* Tab */,
 				7B1137762B99AC9B00D6BBD1 /* Base */,
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
+				7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
 				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,
 				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
@@ -488,6 +495,7 @@
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
+				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 			);

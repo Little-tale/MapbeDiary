@@ -37,6 +37,7 @@ class Memo: Object {
     @Persisted var detailContents: String? // 세부 메모
     @Persisted var phoneNumber: String? // 전화번호
     @Persisted var imagePaths: List<ImageObject> // 이미지 경로 배열
+    @Persisted var regdate: Date // 생성일
     @Persisted(originProperty: "memolist") var parents: LinkingObjects<Folder>
     
     convenience
@@ -45,6 +46,7 @@ class Memo: Object {
         self.title = title
         self.location = location
         self.contents = contents
+        self.regdate = Date()
     }
     
 }

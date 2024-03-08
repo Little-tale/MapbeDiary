@@ -47,5 +47,5 @@ enum MapAlertSection {
             return "취소"
         }
     
-    
+    static let noneName: String = "메모를 남겨요!"
 }

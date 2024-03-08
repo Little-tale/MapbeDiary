@@ -5,7 +5,6 @@
 //  Created by Jae hyung Kim on 3/7/24.
 //
 
-import UIKit
 import SnapKit
 import MapKit
 
@@ -17,6 +16,7 @@ class MapHomeView: BaseView {
     // MARK: 로케이션 메니저
     var locationManager: CLLocationManager!
     
+    var location: ((CLLocationCoordinate2D) -> Void)?
     
     
     override func configureHierarchy() {
@@ -27,14 +27,35 @@ class MapHomeView: BaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
-    
+    override func register() {
+        mapView.register(ArtWorkMarkerView.self, forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusebleIdentifier)
+    }
     override func designView() {
         //
         let location = CLLocationCoordinate2D(latitude:37.5664056, longitude: 126.9778222)
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: false)
-
+        
         mapView.mapType = .standard
         mapView.backgroundColor = .brown
+        
+        
+        // MARK: 롱탭
+        let longtap = UILongPressGestureRecognizer(target: self , action: #selector(longTap))
+        
+        mapView.addGestureRecognizer(longtap)
+        
+    }
+    
+    @objc func longTap(sender: UIGestureRecognizer){
+        print("long tap")
+        if sender.state == .began {
+            // 변환하고자 하는 위치 즉 맵뷰 기준의 포인트 CGPoint
+            let locationInView = sender.location(in: mapView)
+            // 해당 위치가 속한 뷰에 CGPoint 를 넘겨서 위치를 반환
+            let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            location?(locationOnMap) // 위치를 넘겨준다...
+        }
+        print(sender.state == .ended)
     }
 }

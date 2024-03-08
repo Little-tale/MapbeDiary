@@ -83,6 +83,14 @@ class RealmRepository {
         
     }
     
+    // MARK: 메모 날짜를 통해 메모를 찾습니다.
+    func findMemo(date: Date) -> Memo?{
+        let findMemo = realm.objects(memoModel).where { $0.regdate == date }
+        let memo = findMemo.first
+        return memo
+    }
+    
+    
     
     // MARK: 폴더를 먼저 만들었다면 이후에 메모를 넣습니다.
     /// 폴더가 있고 Memo 객체가 있어야 폴더에 추가해드립니다. 중복 방지 해놓았습니다.
@@ -168,7 +176,6 @@ class RealmRepository {
         } catch {
             throw RealmManagerError.cantAddImage
         }
-       
     }
     
     // MARK: 메모 아이디 기준으로 폴더 생성

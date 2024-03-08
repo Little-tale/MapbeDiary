@@ -14,15 +14,16 @@ struct testV {
     var title: String
     var lat : String
     var lon : String
+    var image: String?
 }
 
 class MapViewController: BaseHomeViewController<MapHomeView> {
     
     let test = [
-        testV(title: "시작 a3a9154c", lat: "35.88232645159043", lon: "126.70855166498062"),
+        testV(title: "시작 a3a9154c", lat: "35.88232645159043", lon: "126.70855166498062",image: "google-309740_1280"),
         testV(title: "asdasd", lat: "37.62153143200515", lon: "129.8814751149255"),
         testV(title: "vasw", lat: "34.70741906345003", lon: "129.11500797655407"),
-        testV(title: "끝 badadsa", lat: "35.04770126585043", lon: "129.46649274833894"),
+        testV(title: "끝 badadsa", lat: "35.04770126585043", lon: "129.46649274833894",image: "google-309740_1280"),
     ]
     
     override func viewDidLoad() {
@@ -33,6 +34,15 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
       //   customMarker()
         
         addTestAnnotations()
+        
+        homeView.location = {[weak self] result in
+            print("asdsadsad")
+            guard let self else {return}
+            removeAll()
+            addTestAnnotations()
+            addLongAnnotation(cl2: result)
+        }
+        
     }
     // MARK: 맵뷰 세팅
     func settingMapView(){
@@ -42,26 +52,52 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
     }
     
+    
+    
     // MARK: 테스트 어노테이션 추가하기 왜 바로 이미지를 못넣는걸까
+    
+    // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
-        for testData in test {
-            let annotation = MKPointAnnotation()
-            annotation.title = testData.title
-            if let lat = Double(testData.lat),
-               let lon = Double(testData.lon) {
-                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            }
-            homeView.mapView.addAnnotation(annotation)
-        }
+        let repo = RealmRepository()
+
+        let test = test.first!
+        let cordi = CLLocationCoordinate2D(latitude: Double(test.lat)!, longitude: Double(test.lon)!)
+        //
+        // homeView.mapView.addAnnotation(cus)
+    }
+    
+    func addCustomAnnotation(){
+        
+    }
+    
+    func addLongAnnotation(cl2: CLLocationCoordinate2D){
+        let anno = MKPointAnnotation()
+        anno.coordinate = cl2
+        let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapAlertSection.noneName , coordinate: cl2)
+        homeView.mapView.addAnnotation(location)
+        homeView.mapView.selectAnnotation(location, animated: true)
+    }
+    func removeAll(){
+        let anotaions = homeView.mapView.annotations
+        homeView.mapView.removeAnnotations(anotaions)
     }
 
 }
 
-extension MapViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        var view = MKAnnotationView()
-//        view.ti
-//    }
+extension MapViewController: MKMapViewDelegate { // 수정해
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if let annotation = annotation as? CustomAnnotation {
+            var view: ArtWorkMarkerView? = mapView.dequeueReusableAnnotationView(withIdentifier: ArtWorkMarkerView.reusebleIdentifier, for: annotation) as? ArtWorkMarkerView
+    
+            view = ArtWorkMarkerView(annotation: annotation, reuseIdentifier: CustomAnnotation.reusableIdentifier)
+        
+            return view
+        }
+        
+        print("asdsadsa")
+        return nil
+    }
     
 }
 
@@ -80,7 +116,7 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     // MARK: 셋 리전
     func setRegion(location: CLLocationCoordinate2D){
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 1800, longitudinalMeters: 1800)
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
         homeView.mapView.setRegion(region, animated: true)
     }
     
@@ -124,21 +160,19 @@ extension MapViewController {
         switch authoriztionState {
         case .notDetermined: // 설정한 적이 없거나 한번만 허용후 다시 올때
             allowLocation()
-        case .denied:
             
+        case .denied:
             showAlert(title: MapAlertSection.checkUserAut.title, message: MapAlertSection.checkUserAut.message, actionTitle: MapAlertSection.checkUserAut.actionTitle) {
                 [weak self] action in
                 guard let self else {return}
                 goSetting()
             }
-        case .authorizedAlways:
-            
+            // MARK: 이시점에서 현위치 가져올수 있음
+        case .authorizedAlways, .authorizedWhenInUse:
+            // Optional(__C.CLLocationCoordinate2D(latitude: 37.785834, longitude: -122.406417))
             homeView.mapView.showsUserLocation = true
             homeView.locationManager.startUpdatingLocation()
-        case .authorizedWhenInUse:
-            
-            homeView.mapView.showsUserLocation = true
-            homeView.locationManager.startUpdatingLocation()
+            print("@@",homeView.locationManager.location?.coordinate)
         default:
             homeView.makeToast(MapAlertSection.noneAct.message,duration: 1.0, position: .bottom)
         }
