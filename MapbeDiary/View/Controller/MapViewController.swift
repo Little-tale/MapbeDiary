@@ -70,6 +70,8 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         fvc.invalidateLayout() // 레이아웃 if need
         fvc.isRemovalInteractionEnabled = false // 내려가기 방지
         fvc.addPanel(toParent: self) // 관리뷰
+        fvc.surfaceView.layer.cornerRadius = 20
+        fvc.surfaceView.clipsToBounds = true
         return fvc
     }
     

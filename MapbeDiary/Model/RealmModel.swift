@@ -41,12 +41,13 @@ class Memo: Object {
     @Persisted(originProperty: "memolist") var parents: LinkingObjects<Folder>
     
     convenience
-    init(title: String, location: Location, contents: String?){
+    init(title: String, location: Location, contents: String?, phoneNumber: String? = nil){
         self.init()
         self.title = title
         self.location = location
         self.contents = contents
         self.regdate = Date()
+        self.phoneNumber = phoneNumber
     }
     
 }
@@ -58,7 +59,7 @@ class ImageObject: Object {
     @Persisted var orderIndex: Int // 후에 정렬이나 순서 교체 염두
     
     convenience
-    init(id: ObjectId, imagename: String, index: Int) {
+    init(imagename: String, index: Int) {
         self.init()
         self.imagename = imagename
         self.regDate = Date()

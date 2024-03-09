@@ -48,14 +48,17 @@
 		7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */; };
 		7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */; };
 		7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */; };
-		7B1C53392B9C345F00B712BC /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53382B9C345F00B712BC /* SaveButton.swift */; };
+		7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53382B9C345F00B712BC /* CustomButton.swift */; };
 		7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533A2B9C376D00B712BC /* ImageSection.swift */; };
 		7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533C2B9C406000B712BC /* ErrorSection.swift */; };
+		7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533E2B9C716E00B712BC /* DateFormetter.swift */; };
+		7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
 		7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */; };
 		7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */; };
+		7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,14 +115,17 @@
 		7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
 		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTitleDateImageView.swift; path = ../AddTitleDateImageView.swift; sourceTree = "<group>"; };
 		7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCustomLayout.swift; sourceTree = "<group>"; };
-		7B1C53382B9C345F00B712BC /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
+		7B1C53382B9C345F00B712BC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7B1C533A2B9C376D00B712BC /* ImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSection.swift; sourceTree = "<group>"; };
 		7B1C533C2B9C406000B712BC /* ErrorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSection.swift; sourceTree = "<group>"; };
+		7B1C533E2B9C716E00B712BC /* DateFormetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormetter.swift; sourceTree = "<group>"; };
+		7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSection.swift; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBaseView.swift; sourceTree = "<group>"; };
 		7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
+		7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +227,7 @@
 				7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */,
 				7B1137702B99AB1400D6BBD1 /* RealmManager.swift */,
 				7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */,
+				7B1C533E2B9C716E00B712BC /* DateFormetter.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -301,6 +308,7 @@
 				7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */,
 				7B1C533A2B9C376D00B712BC /* ImageSection.swift */,
 				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
+				7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -326,7 +334,7 @@
 		7B1C53372B9C344D00B712BC /* Button */ = {
 			isa = PBXGroup;
 			children = (
-				7B1C53382B9C345F00B712BC /* SaveButton.swift */,
+				7B1C53382B9C345F00B712BC /* CustomButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -334,6 +342,7 @@
 		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				7BECDA292B9C97F800033B18 /* Action */,
 				7B1C53372B9C344D00B712BC /* Button */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
 				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
@@ -348,6 +357,14 @@
 				7BDEA5112B9B450C008C6922 /* TestViewController.swift */,
 			);
 			path = TestViewCon;
+			sourceTree = "<group>";
+		};
+		7BECDA292B9C97F800033B18 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */,
+			);
+			path = Action;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,6 +552,7 @@
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */,
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
 				7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */,
@@ -546,6 +564,7 @@
 				7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */,
 				7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */,
 				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
+				7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
@@ -553,6 +572,7 @@
 				7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */,
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
+				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */,
@@ -561,7 +581,7 @@
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
-				7B1C53392B9C345F00B712BC /* SaveButton.swift in Sources */,
+				7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

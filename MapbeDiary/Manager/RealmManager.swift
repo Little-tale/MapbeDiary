@@ -41,15 +41,12 @@ class RealmRepository {
         }
     }
     // MARK: 메모를 만들어 드립니다. V
-    func makeMemoModel(title: String, contents: String?, location: Location) -> Memo {
-        return Memo(title: title, location: location, contents: contents)
-//        do {
-//            try realm.write {
-//                realm.add(Memo(title: title, location: location, contents: contents))
-//            }
-//        } catch {
-//            throw RealmManagerError.canMakeMemo
-//        }
+    func makeMemoModel(title: String, contents: String?, location: Location, phoneNum: String?) -> Memo {
+        return Memo(title: title, location: location, contents: contents, phoneNumber: phoneNum)
+    }
+    
+    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) -> Memo {
+        return Memo(title: addViewStruct.title, location: location, contents: addViewStruct.content, phoneNumber: addViewStruct.phoneNumber)
     }
     
   
@@ -96,8 +93,42 @@ class RealmRepository {
         } catch {
             throw RealmManagerError.cantAddMemoInFolder
         }
-        
     }
+    
+    func makeMemoAtFolder(folder: Folder, model: addViewOutStruct, location: Location) throws {
+        let memo = makeMemoModel(addViewStruct: model, location: location)
+    
+        if let image = model.memoImage {
+            let imageUUID = UUID().uuidString
+            let imagePath = getFolderPathForMemoId(memoId: memo.id).appendingPathComponent(imageUUID)
+            
+            // UIImage를 파일 시스템에 저장
+            if let imageData = image.jpegData(compressionQuality: 0.8) {
+                do {
+                    try imageData.write(to: imagePath)
+                    let imageObject = ImageObject(imagename: imageUUID, index: memo.imagePaths.count)
+                    do {
+                        try realm.write {
+                            memo.imagePaths.append(imageObject)
+                        }
+                    } catch {
+                        throw RealmManagerError.cantAddImage
+                    }
+                } catch {
+                    throw RealmManagerError.cantAddImage
+                }
+            }
+        }
+        do {
+            try realm.write {
+                folder.memolist.append(memo)
+            }
+        } catch {
+            throw RealmManagerError.cantAddMemoInFolder
+        }
+    }
+    
+    
     // MARK: ------------- Create -------------
     
     // MARK: 모든 메모를 가져옵니다. V

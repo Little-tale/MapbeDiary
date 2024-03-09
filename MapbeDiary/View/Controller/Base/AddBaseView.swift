@@ -11,24 +11,19 @@ import SnapKit
 final class AddBaseView: BaseView {
     private let backView = UIView()
     let AddTitleDateView = AddTitleDateImageView()
-    let folderButton: UIButton = {
-       let view = UIButton()
-        var configu = UIButton.Configuration.tinted()
-        configu.image = UIImage(named: "defaultFolderImage")?.resizeImage(newWidth: 30)
-        configu.imagePadding = 8
-        view.configuration = configu
-        return view
-    }()
+    let folderButton: UIButton = CustomButton.folderButton()
     
     let phonNumberLabel: UILabel = {
        let view = UILabel()
         view.text = AddViewSection.phoneNumberTextLabel.placeHolder
         view.textColor = .black
-        view.font = .systemFont(ofSize: 12, weight: .black)
+        view.font = .systemFont(ofSize: 12, weight: .bold)
         return view
     }()
     
     let phoneTextField = UITextField(frame: .zero)
+    
+    var textFieldClosure: ((UITextField) -> Void)?
     
     let stackView: UIStackView = {
        let view = UIStackView()
@@ -39,6 +34,8 @@ final class AddBaseView: BaseView {
         return view
     }()
     
+    lazy var textFieldList = [AddTitleDateView.titleTextField, AddTitleDateView.simpleMemoTextField, phoneTextField]
+    
     override func configureHierarchy() {
         self.addSubview(backView)
         backView.addSubview(AddTitleDateView)
@@ -46,6 +43,8 @@ final class AddBaseView: BaseView {
         stackView.addArrangedSubview(phonNumberLabel)
         stackView.addArrangedSubview(phoneTextField)
         backView.addSubview(folderButton)
+        
+        
     }
     
     override func configureLayout() {
@@ -77,19 +76,39 @@ final class AddBaseView: BaseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         phoneTextField.snp.updateConstraints { make in
-            make.width.equalTo(self.frame.width * 0.7)
+            make.width.equalTo(self.frame.width * 0.75)
         }
         layoutIfNeeded()
     }
     
     override func designView() {
+        textFieldSetting()
+
         backView.layer.cornerRadius = 24
         backView.backgroundColor = .white
+        
+        
+        phonNumberLabel.textAlignment = .center
+        AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+       
+    }
+    
+    private func textFieldSetting(){
+        
         phoneTextField.backgroundColor = .red
         phoneTextField.addLeftPadding(width: 12)
-        phonNumberLabel.textAlignment = .center
+        phoneTextField.borderStyle = .roundedRect
+        phoneTextField.backgroundColor = .systemGray5
+        phoneTextField.placeholder = AddViewSection.phoneNuberTextField.placeHolder
+        phoneTextField.setPlaceholderColor(.black)
         
-        AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
-        
+        var tag = 0
+        textFieldList.forEach { [weak self] textfield in
+            guard self != nil else { return }
+            textfield.tag = tag
+            tag += 1
+        }
     }
+    
+    
 }

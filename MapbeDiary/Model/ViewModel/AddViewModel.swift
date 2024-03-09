@@ -18,19 +18,7 @@ struct addViewStruct {
         self.folder = folder
     }
 }
-struct addViewOutStruct {
-    var title: String
-    let titlePlacHolder: String
-    var content: String
-    var folder: Folder
-    
-    init(title: String?, titlePlacHolder: String?, folder: Folder) {
-        self.title = title ?? AddViewSection.defaultTitle
-        self.titlePlacHolder = titlePlacHolder ?? "Add_title_text_fileld_text".localized
-        self.folder = folder
-        self.content = ""
-    }
-}
+
 
 class AddViewModel {
     // ------- In Put ------
@@ -43,12 +31,14 @@ class AddViewModel {
     // ------- Out Put -----
     let urlSuccessOutPut: Observable<addViewOutStruct?> = Observable(nil)
     
+    let saveButtonOutPutImage: Observable<String?> = Observable(nil)
+    
     let urlErrorOutPut: Observable<URLSessionManagerError?> = Observable(nil)
     
     let realmError: Observable<RealmManagerError?> = Observable(nil)
     
     // ------- Static -------
-    private let repository = RealmRepository()
+    let repository = RealmRepository()
     var titleName = String()
  
     
@@ -103,15 +93,21 @@ class AddViewModel {
     private func saveButtonClicked(){
         guard let start = coordinateTrigger.value else { return }
         guard let result = urlSuccessOutPut.value else { return }
-        // location
+        
         let location = Location(lat: start.lat, lon: start.lon)
-        // memo
-        let memo = repository.makeMemoModel(title: result.title, contents: result.content, location: location)
-        // putInFolder
+        
         do {
-            try repository.makeMemoAtFolder(folder: result.folder, memo: memo)
+            try repository.makeMemoAtFolder(folder: result.folder, model: result, location: location)
+            
         } catch (let error) {
             realmError.value = error as? RealmManagerError
         }
     }
 }
+
+
+// location
+/*repository.makeMemoAtFolder(folder: result.folder, memo: memo)*/
+// memo
+//        let memo = repository.makeMemoModel(addViewStruct: result, location: location)
+// putInFolder

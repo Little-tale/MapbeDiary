@@ -13,6 +13,7 @@ final class AddTitleDateImageView: BaseView {
     private let emptyView = UIView()
     let titleTextField = UITextField(frame: .zero)
     let imageView = circleImageView(frame: .zero)
+    let imageChangeButton = CustomButton.imageChangeButton()
     let simpleMemoTextField = UITextField(frame: .zero)
     let dateLabel = UILabel()
     
@@ -20,6 +21,7 @@ final class AddTitleDateImageView: BaseView {
         self.addSubview(emptyView)
         emptyView.addSubview(titleTextField)
         emptyView.addSubview(imageView)
+        emptyView.addSubview(imageChangeButton)
         emptyView.addSubview(simpleMemoTextField)
         emptyView.addSubview(dateLabel)
     }
@@ -31,6 +33,11 @@ final class AddTitleDateImageView: BaseView {
             make.centerY.equalToSuperview()
             make.leading.equalTo(10)
             make.size.equalTo(60)
+        }
+        imageChangeButton.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(4)
+            make.centerX.equalTo(imageView)
+            make.height.equalTo(22)
         }
         titleTextField.snp.makeConstraints{ make in
             make.leading.equalTo(imageView.snp.trailing).offset(10)
@@ -59,7 +66,7 @@ final class AddTitleDateImageView: BaseView {
         titleTextField.textAlignment = .center
         simpleMemoTextField.textAlignment = .center
         layerSetting()
-
+        
     }
     
     private func placeHolderSetting(){
@@ -76,7 +83,7 @@ final class AddTitleDateImageView: BaseView {
     }
     private func layerSetting() {
         titleTextField.layer.cornerRadius = 12
-        simpleMemoTextField.layer.cornerRadius = 12
+        simpleMemoTextField.layer.cornerRadius = 8
         dateLabel.font = .systemFont(ofSize: 12, weight: .light)
     }
 }
