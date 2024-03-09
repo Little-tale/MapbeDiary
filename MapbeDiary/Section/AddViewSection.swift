@@ -11,15 +11,20 @@ import Foundation
 enum AddViewSection {
     case titleTextFieldText
     case simpleMemoTextFiled
+    case phoneNumberTextLabel
     
     var placeHolder: String {
         switch self {
         case .titleTextFieldText:
-            "여기는 어디일까요?"
+            "Add_title_text_fileld_text".localized
         case .simpleMemoTextFiled:
-            "간단한 메모를 남겨보세요!"
+            "Add_simple_text_filed_text".localized
+        case .phoneNumberTextLabel:
+            "Add_phone_number_text_label".localized
+        default :
+            ""
         }
     }
-    
-    
+    static var saveButtonText: String = "Add_save_button_text".localized
+    static var defaultTitle: String = "Add_default_Text".localized
 }

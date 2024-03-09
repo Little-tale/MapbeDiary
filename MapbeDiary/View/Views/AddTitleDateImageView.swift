@@ -52,13 +52,14 @@ final class AddTitleDateImageView: BaseView {
     override func designView() {
         // emptyView.backgroundColor = .brown
         placeHolderSetting()
-        imageView.backgroundColor = .darkGray
+        imageView.backgroundColor = .systemGray5
         titleTextField.backgroundColor = .systemGray6
         simpleMemoTextField.backgroundColor = .systemGray6
         
         titleTextField.textAlignment = .center
         simpleMemoTextField.textAlignment = .center
         layerSetting()
+
     }
     
     private func placeHolderSetting(){
@@ -70,6 +71,8 @@ final class AddTitleDateImageView: BaseView {
         simpleMemoTextField.placeholder = AddViewSection.simpleMemoTextFiled.placeHolder
         
         simpleMemoTextField.setPlaceholderColor(.black)
+        
+        
     }
     private func layerSetting() {
         titleTextField.layer.cornerRadius = 12

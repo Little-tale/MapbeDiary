@@ -11,10 +11,18 @@ import SnapKit
 final class AddBaseView: BaseView {
     private let backView = UIView()
     let AddTitleDateView = AddTitleDateImageView()
+    let folderButton: UIButton = {
+       let view = UIButton()
+        var configu = UIButton.Configuration.tinted()
+        configu.image = UIImage(named: "defaultFolderImage")?.resizeImage(newWidth: 30)
+        configu.imagePadding = 8
+        view.configuration = configu
+        return view
+    }()
     
     let phonNumberLabel: UILabel = {
        let view = UILabel()
-        view.text = "전화번호"
+        view.text = AddViewSection.phoneNumberTextLabel.placeHolder
         view.textColor = .black
         view.font = .systemFont(ofSize: 12, weight: .black)
         return view
@@ -37,6 +45,7 @@ final class AddBaseView: BaseView {
         backView.addSubview(stackView)
         stackView.addArrangedSubview(phonNumberLabel)
         stackView.addArrangedSubview(phoneTextField)
+        backView.addSubview(folderButton)
     }
     
     override func configureLayout() {
@@ -52,14 +61,25 @@ final class AddBaseView: BaseView {
         
         phoneTextField.snp.makeConstraints { make in
             make.height.equalTo(30)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.width.equalTo(140)
         }
         
         stackView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
             make.top.equalTo(AddTitleDateView.snp.bottom).offset(8)
         }
-        
+        folderButton.snp.makeConstraints { make in
+            make.trailing.equalTo(stackView.snp.trailing)
+            make.top.equalTo(stackView.snp.bottom).offset(8)
+            make.height.equalTo(30)
+        }
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        phoneTextField.snp.updateConstraints { make in
+            make.width.equalTo(self.frame.width * 0.7)
+        }
+        layoutIfNeeded()
     }
     
     override func designView() {
@@ -68,5 +88,8 @@ final class AddBaseView: BaseView {
         phoneTextField.backgroundColor = .red
         phoneTextField.addLeftPadding(width: 12)
         phonNumberLabel.textAlignment = .center
+        
+        AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+        
     }
 }

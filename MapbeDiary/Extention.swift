@@ -19,6 +19,13 @@ extension UIViewController {
 
         present(alert,animated: true)
     }
+    func showAPIErrorAlert(repo: RealmManagerError) {
+        let alert = UIAlertController(title: "Error_alert_title".localized, message: repo.alertMessage, preferredStyle: .alert)
+        
+        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
+        alert.addAction(okButton)
+        present(alert,animated: true)
+    }
     
     func showAlertHandler(title: String, message: String,actionTitle: String, handler: @escaping (UIAlertAction) -> Void ) {
         

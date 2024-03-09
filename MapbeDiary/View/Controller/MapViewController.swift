@@ -20,16 +20,9 @@ struct testV {
 
 class MapViewController: BaseHomeViewController<MapHomeView> {
     
-    lazy var floatPanel: FloatingPanelController = {
-        let fvc = FloatingPanelController(delegate: self)
-        let vc = AddMemoViewController()
-        fvc.set(contentViewController: vc) // 다음뷰
-        fvc.layout = FloatingCustomLayout() // 커스텀
-        fvc.invalidateLayout() // 레이아웃 if need
-        fvc.isRemovalInteractionEnabled = false // 내려가기 방지
-        fvc.addPanel(toParent: self) // 관리뷰
-        return fvc
-    }()
+    var floatPanel: FloatingPanelController?
+    
+    var folder = RealmRepository().findAllFolderArray()[0]
     
     let test = [
         testV(title: "시작 a3a9154c", lat: "35.88232645159043", lon: "126.70855166498062",image: "google-309740_1280"),
@@ -65,7 +58,20 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
     }
-  
+    func settingPanel() -> FloatingPanelController{
+        let fvc = FloatingPanelController(delegate: self)
+        let vc = AddMemoViewController()
+        vc.backDelegate = self
+        
+        let nvc = UINavigationController(rootViewController: vc )
+        
+        fvc.set(contentViewController: nvc) // 다음뷰
+        fvc.layout = FloatingCustomLayout() // 커스텀
+        fvc.invalidateLayout() // 레이아웃 if need
+        fvc.isRemovalInteractionEnabled = false // 내려가기 방지
+        fvc.addPanel(toParent: self) // 관리뷰
+        return fvc
+    }
     
     
     // MARK: 테스트 어노테이션 추가하기 왜 바로 이미지를 못넣는걸까
@@ -116,11 +122,35 @@ extension MapViewController: MKMapViewDelegate { // 수정해
 }
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
+    
     func updateFloatingPanelContent(_ CL: CLLocationCoordinate2D){
-        if let addMemoVc = floatPanel.contentViewController as? AddMemoViewController {
-            addMemoVc.addViewModel.coordinateTrigger.value = (String(CL.latitude),String(CL.longitude))
+        updateAddMemoViewControllerContent(with: CL)
+    }
+    
+    // MARK: 재사용목적 있으면 다음 없으면 재 생성
+    private func updateAddMemoViewControllerContent(with coordinate: CLLocationCoordinate2D) {
+        floatPanel = settingPanel()
+        
+        if let navigationController = floatPanel?.contentViewController as? UINavigationController,
+           let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
+            let coordinateStruct = addViewStruct(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
+            
+            addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
+            floatPanel?.move(to: .half, animated: true)
+            return
+        }else {
+            showAlert(title: MapAlertSection.panelError.title, message: MapAlertSection.panelError.message)
         }
-        floatPanel.move(to: .half, animated: true)
+    }
+    
+}
+extension MapViewController: BackButtonDelegate {
+    func backButtonClicked() {
+        floatPanel?.removePanelFromParent(animated: true) {
+            [weak self] in
+            guard let self else {return}
+            floatPanel = nil
+        }
     }
 }
 
@@ -149,6 +179,7 @@ extension MapViewController: CLLocationManagerDelegate {
         checkDeviewlocationAuthorization()
     }
 }
+
 
 
 extension MapViewController {

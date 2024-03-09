@@ -8,17 +8,7 @@
 import RealmSwift
 import UIKit
 
-enum RealmManagerError: Error {
-    case canMakeFolder
-    case canMakeMemo
-    case cantDeleteOfFolder
-    case cantSortedOfFolder
-    case cantDeleteMemo
-    case cantAddMemoInFolder
-    case canModifiMemo
-    case cantAddImage
-    case cantDeleteImage
-}
+
 
 //MARK: RalmRepository
 class RealmRepository {
@@ -51,14 +41,15 @@ class RealmRepository {
         }
     }
     // MARK: 메모를 만들어 드립니다. V
-    func makeMemoModel(title: String, contents: String?, location: Location) throws {
-        do {
-            try realm.write {
-                realm.add(Memo(title: title, location: location, contents: contents))
-            }
-        } catch {
-            throw RealmManagerError.canMakeMemo
-        }
+    func makeMemoModel(title: String, contents: String?, location: Location) -> Memo {
+        return Memo(title: title, location: location, contents: contents)
+//        do {
+//            try realm.write {
+//                realm.add(Memo(title: title, location: location, contents: contents))
+//            }
+//        } catch {
+//            throw RealmManagerError.canMakeMemo
+//        }
     }
     
   

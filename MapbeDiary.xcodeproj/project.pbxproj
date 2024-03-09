@@ -48,6 +48,9 @@
 		7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */; };
 		7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */; };
 		7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */; };
+		7B1C53392B9C345F00B712BC /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53382B9C345F00B712BC /* SaveButton.swift */; };
+		7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533A2B9C376D00B712BC /* ImageSection.swift */; };
+		7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533C2B9C406000B712BC /* ErrorSection.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
@@ -109,6 +112,9 @@
 		7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
 		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTitleDateImageView.swift; path = ../AddTitleDateImageView.swift; sourceTree = "<group>"; };
 		7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCustomLayout.swift; sourceTree = "<group>"; };
+		7B1C53382B9C345F00B712BC /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
+		7B1C533A2B9C376D00B712BC /* ImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSection.swift; sourceTree = "<group>"; };
+		7B1C533C2B9C406000B712BC /* ErrorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSection.swift; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
@@ -293,6 +299,8 @@
 			children = (
 				7B1137862B99BF6200D6BBD1 /* MapSection.swift */,
 				7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */,
+				7B1C533A2B9C376D00B712BC /* ImageSection.swift */,
+				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -315,9 +323,18 @@
 			path = Marker;
 			sourceTree = "<group>";
 		};
+		7B1C53372B9C344D00B712BC /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				7B1C53382B9C345F00B712BC /* SaveButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				7B1C53372B9C344D00B712BC /* Button */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
 				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */,
@@ -527,6 +544,7 @@
 				7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */,
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
 				7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */,
+				7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */,
 				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
@@ -536,12 +554,14 @@
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
+				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
+				7B1C53392B9C345F00B712BC /* SaveButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

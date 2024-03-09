@@ -12,6 +12,7 @@ enum MapAlertSection {
     case requestFail
     case noneAct
     case checkUserAut
+    case panelError
     
     var title: String {
         switch self{
@@ -21,6 +22,8 @@ enum MapAlertSection {
             return "위치권한"
         case .checkUserAut:
             return "위치 권한이 필요합니다."
+        case .panelError:
+            return "치명적 오류"
         }
     }
     var message: String{
@@ -31,6 +34,8 @@ enum MapAlertSection {
             return "위치권한을 허용 해주세요"
         case .checkUserAut:
             return "위치권한을 허용 해주세요"
+        case .panelError:
+            return "관리자에게 문의하세요!"
         }
     }
     var actionTitle:String {
@@ -41,11 +46,14 @@ enum MapAlertSection {
             return ""
         case .checkUserAut:
             return "이동"
+        case .panelError:
+            return ""
         }
     }
-        var cancelTitle: String{
+    var cancelTitle: String{
             return "취소"
-        }
+    }
     
     static let noneName: String = "메모를 남겨요!"
+    
 }
