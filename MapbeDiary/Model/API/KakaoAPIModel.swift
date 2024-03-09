@@ -76,6 +76,7 @@ enum KaKaoErrors:Int, CaseIterable, ApiTypeError{
     var errorCode: Int {
         return self.rawValue
     }
+    
     var message: String{
         switch self {
         case .clietnError, .tokkenError, .authError:

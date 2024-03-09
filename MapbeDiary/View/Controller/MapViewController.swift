@@ -9,6 +9,7 @@
 import MapKit
 import CoreLocation
 import Toast
+import FloatingPanel
 
 struct testV {
     var title: String
@@ -18,6 +19,17 @@ struct testV {
 }
 
 class MapViewController: BaseHomeViewController<MapHomeView> {
+    
+    lazy var floatPanel: FloatingPanelController = {
+        let fvc = FloatingPanelController(delegate: self)
+        let vc = AddMemoViewController()
+        fvc.set(contentViewController: vc) // 다음뷰
+        fvc.layout = FloatingCustomLayout() // 커스텀
+        fvc.invalidateLayout() // 레이아웃 if need
+        fvc.isRemovalInteractionEnabled = false // 내려가기 방지
+        fvc.addPanel(toParent: self) // 관리뷰
+        return fvc
+    }()
     
     let test = [
         testV(title: "시작 a3a9154c", lat: "35.88232645159043", lon: "126.70855166498062",image: "google-309740_1280"),
@@ -40,6 +52,8 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
             guard let self else {return}
             removeAll()
             addTestAnnotations()
+            // PannelViewSend(result)
+            updateFloatingPanelContent(result)
             addLongAnnotation(cl2: result)
         }
         
@@ -51,7 +65,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
     }
-    
+  
     
     
     // MARK: 테스트 어노테이션 추가하기 왜 바로 이미지를 못넣는걸까
@@ -100,6 +114,17 @@ extension MapViewController: MKMapViewDelegate { // 수정해
     }
     
 }
+// MARK: 판넬 뷰
+extension MapViewController: FloatingPanelControllerDelegate {
+    func updateFloatingPanelContent(_ CL: CLLocationCoordinate2D){
+        if let addMemoVc = floatPanel.contentViewController as? AddMemoViewController {
+            addMemoVc.addViewModel.coordinateTrigger.value = (String(CL.latitude),String(CL.longitude))
+        }
+        floatPanel.move(to: .half, animated: true)
+    }
+}
+
+// ----------------------------------------------------------
 
 // MARK: MAPView Loaction 권한 과 위치세팅
 extension MapViewController: CLLocationManagerDelegate {

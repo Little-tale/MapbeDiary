@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,13 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
+        // MARK: 아이큐 키보드
+        IQKeyboardManager.shared.enable = true
+        
         var tabbarCon = UITabBarController()
         tabbarCon.tabBar.backgroundColor = .white
         let first = MapViewController()
         first.tabBarItem.image = UIImage(systemName: "star")
-        tabbarCon.viewControllers = [first]
-        
-        window?.rootViewController = tabbarCon
+        tabbarCon.viewControllers = [TestViewController(),first]
+        let test = UINavigationController(rootViewController: AddMemoViewController())
+        window?.rootViewController = tabbarCon //test // tabbarCon
         window?.makeKeyAndVisible()
     }
 

@@ -52,19 +52,35 @@ struct KaKakaoCordinateModel: Decodable {
 }
 /// documents -> 도로병 주소 구조체 roadAddress
 struct LongLat: Decodable {
-    let roadAddress: RoadAddress // 도로명주소 구조체
+    var roadAddress: RoadAddress // 도로명주소 구조체
+    let address: Address
     
     enum CodingKeys: String, CodingKey {
         case roadAddress = "road_address"
+        case address
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.address = try container.decode(Address.self, forKey: .address)
+        // -------------------------------------
+        if let roadAddress = try container.decodeIfPresent(RoadAddress.self, forKey: .roadAddress) {
+            self.roadAddress = roadAddress
+            
+        } else {
+            self.roadAddress = RoadAddress(addressName: address.address_name)
+        }
     }
 }
 /// addressName 도로명 주소
 struct RoadAddress: Decodable {
     let addressName: String // 도로명주소
-
+    
     enum CodingKeys: String, CodingKey {
         case addressName = "address_name"
     }
 }
 
+struct Address: Decodable {
+    let address_name: String // 일반적 주소
+}
 

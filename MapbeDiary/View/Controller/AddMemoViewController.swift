@@ -6,3 +6,12 @@
 //
 
 import UIKit
+
+final class AddMemoViewController: BaseHomeViewController<AddBaseView> {
+    var addViewModel = AddViewModel()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        homeView.backgroundColor = .white
+    }
+}

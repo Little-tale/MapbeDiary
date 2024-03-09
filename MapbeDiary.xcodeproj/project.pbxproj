@@ -46,6 +46,13 @@
 		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
 		7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */; };
 		7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */; };
+		7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */; };
+		7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */; };
+		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
+		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
+		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
+		7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */; };
+		7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +107,13 @@
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
 		7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
+		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTitleDateImageView.swift; path = ../AddTitleDateImageView.swift; sourceTree = "<group>"; };
+		7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCustomLayout.swift; sourceTree = "<group>"; };
+		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
+		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBaseView.swift; sourceTree = "<group>"; };
+		7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +251,7 @@
 		7B1137752B99AC6600D6BBD1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7BDEA5222B9B7365008C6922 /* TestViewCon */,
 				7B1137822B99B59D00D6BBD1 /* Tab */,
 				7B1137762B99AC9B00D6BBD1 /* Base */,
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
@@ -249,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
+				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -256,6 +272,7 @@
 		7B1137772B99ACB100D6BBD1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7BDEA51D2B9B63C4008C6922 /* Sub */,
 				7B11378E2B99FDD800D6BBD1 /* Marker */,
 				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
 				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
@@ -275,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				7B1137862B99BF6200D6BBD1 /* MapSection.swift */,
+				7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -283,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
+				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -294,6 +313,24 @@
 				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
 			);
 			path = Marker;
+			sourceTree = "<group>";
+		};
+		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
+				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
+				7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		7BDEA5222B9B7365008C6922 /* TestViewCon */ = {
+			isa = PBXGroup;
+			children = (
+				7BDEA5112B9B450C008C6922 /* TestViewController.swift */,
+			);
+			path = TestViewCon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -479,11 +516,14 @@
 			files = (
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
+				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
+				7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */,
 				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,
 				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
+				7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */,
 				7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */,
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
 				7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */,
@@ -492,12 +532,16 @@
 				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
+				7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */,
+				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
+				7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
+				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +651,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -665,7 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -749,7 +793,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiaryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -769,7 +813,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiaryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
