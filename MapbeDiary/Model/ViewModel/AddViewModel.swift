@@ -7,17 +7,6 @@
 
 import Foundation
 
-struct addViewStruct {
-    let lat: String
-    let lon: String
-    var folder: Folder
-    
-    init(lat: String, lon: String, folder: Folder) {
-        self.lat = lat
-        self.lon = lon
-        self.folder = folder
-    }
-}
 
 
 class AddViewModel {
@@ -95,7 +84,7 @@ class AddViewModel {
         guard let result = urlSuccessOutPut.value else { return }
         
         let location = Location(lat: start.lat, lon: start.lon)
-        
+        print(result)
         do {
             try repository.makeMemoAtFolder(folder: result.folder, model: result, location: location)
             

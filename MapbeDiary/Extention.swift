@@ -58,12 +58,42 @@ extension UIViewController {
         present(alert, animated: true )
     }
     
+    
+    // 세팅으로 유도합니다.
+    func goSetting(){
+        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingUrl)
+        } else {
+            showAlert(title: MapAlertSection.requestFail.title, message: MapAlertSection.requestFail.message)
+        }
+    }
+    
 }
 // MARK: 다국어 확장
 extension String {
     /// 다국어 키를 현재
     var localized: String {
         return NSLocalizedString(self, comment: "")
+    }
+}
+// MARK: 표현식 설정
+extension String {
+    static func testString(text: String) -> String{
+        let result = text.replacingOccurrences(of: "[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]", with: "", options: .regularExpression)
+        return result
+    }
+}
+// MARK: 서치바 세팅
+extension UISearchBar {
+    func setTextFieldBackground(color: UIColor, transparentBackground: Bool = true) {
+        if transparentBackground {
+            // 서치바의 전체 배경을 투명하게 설정
+            self.backgroundImage = UIImage()
+        }
+        // 서치바 내부의 UITextField를 찾아서 배경색을 설정
+        if let textField = self.value(forKey: "searchField") as? UITextField {
+            textField.backgroundColor = color
+        }
     }
 }
 
@@ -141,5 +171,21 @@ extension UITextField {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: self.frame.height))
         self.leftView = paddingView
         self.leftViewMode = ViewMode.always
+    }
+}
+
+
+extension UILabel {
+    func asFont(targetString: String) {
+        let fullText = text ?? ""
+        // MARK:
+        let attributeString = NSMutableAttributedString(string: fullText)
+        // MARK: 범위 + 대소문자 구분없이
+        let range = (fullText as NSString).range(of: targetString, options: .caseInsensitive)
+        
+        attributeString.addAttribute(.foregroundColor ,value: UIColor.green, range: range)
+        
+        attributedText = attributeString
+
     }
 }

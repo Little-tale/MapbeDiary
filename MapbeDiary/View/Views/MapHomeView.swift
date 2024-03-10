@@ -12,6 +12,7 @@ import MapKit
 class MapHomeView: BaseView {
     
     let mapView = MKMapView(frame: .zero)
+    let searchBar = UISearchBar(frame: .zero)
     
     // MARK: 로케이션 메니저
     var locationManager: CLLocationManager!
@@ -20,11 +21,17 @@ class MapHomeView: BaseView {
     
     
     override func configureHierarchy() {
-        self.addSubview(mapView)
+        addSubview(mapView)
+        addSubview(searchBar)
     }
     override func configureLayout() {
         mapView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(4)
+            make.horizontalEdges.equalTo(mapView).inset(34)
+            make.height.equalTo(40)
         }
     }
     override func register() {
@@ -38,7 +45,8 @@ class MapHomeView: BaseView {
         
         mapView.mapType = .standard
         mapView.backgroundColor = .brown
-        
+        searchBar.setTextFieldBackground(color: .white, transparentBackground: true)
+        searchBar.placeholder = "장소를 검색해 보세요!"
         
         // MARK: 롱탭
         let longtap = UILongPressGestureRecognizer(target: self , action: #selector(longTap))

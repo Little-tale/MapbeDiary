@@ -53,6 +53,13 @@
 		7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533C2B9C406000B712BC /* ErrorSection.swift */; };
 		7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533E2B9C716E00B712BC /* DateFormetter.swift */; };
 		7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */; };
+		7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */; };
+		7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373342B9D86CC0016E851 /* SearchViewController.swift */; };
+		7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373362B9D86FB0016E851 /* SearchBaseView.swift */; };
+		7BA3733B2B9D88540016E851 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733A2B9D88540016E851 /* SearchCollectionViewCell.swift */; };
+		7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */; };
+		7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */; };
+		7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
@@ -120,6 +127,13 @@
 		7B1C533C2B9C406000B712BC /* ErrorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSection.swift; sourceTree = "<group>"; };
 		7B1C533E2B9C716E00B712BC /* DateFormetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormetter.swift; sourceTree = "<group>"; };
 		7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSection.swift; sourceTree = "<group>"; };
+		7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
+		7BA373342B9D86CC0016E851 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		7BA373362B9D86FB0016E851 /* SearchBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseView.swift; sourceTree = "<group>"; };
+		7BA3733A2B9D88540016E851 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
@@ -269,6 +283,7 @@
 				7B1137762B99AC9B00D6BBD1 /* Base */,
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
 				7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */,
+				7BA373342B9D86CC0016E851 /* SearchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -278,6 +293,9 @@
 			children = (
 				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
 				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
+				7BA373362B9D86FB0016E851 /* SearchBaseView.swift */,
+				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
+				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -285,6 +303,7 @@
 		7B1137772B99ACB100D6BBD1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7BA373392B9D88430016E851 /* Cell */,
 				7BDEA51D2B9B63C4008C6922 /* Sub */,
 				7B11378E2B99FDD800D6BBD1 /* Marker */,
 				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
@@ -318,6 +337,7 @@
 			children = (
 				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
 				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
+				7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -339,6 +359,14 @@
 			path = Button;
 			sourceTree = "<group>";
 		};
+		7BA373392B9D88430016E851 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7BA3733A2B9D88540016E851 /* SearchCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +375,7 @@
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
 				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingCustomLayout.swift */,
+				7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -552,6 +581,8 @@
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */,
+				7BA3733B2B9D88540016E851 /* SearchCollectionViewCell.swift in Sources */,
 				7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */,
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
@@ -566,21 +597,26 @@
 				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
 				7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
+				7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
 				7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */,
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
+				7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */,
 				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
+				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
+				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
+				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
 				7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

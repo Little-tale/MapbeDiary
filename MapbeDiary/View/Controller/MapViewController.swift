@@ -49,6 +49,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
             updateFloatingPanelContent(result)
             addLongAnnotation(cl2: result)
         }
+        homeView.searchBar.delegate = self
         
     }
     // MARK: 맵뷰 세팅
@@ -69,7 +70,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         fvc.layout = FloatingCustomLayout() // 커스텀
         fvc.invalidateLayout() // 레이아웃 if need
         fvc.isRemovalInteractionEnabled = false // 내려가기 방지
-        fvc.addPanel(toParent: self) // 관리뷰
+        fvc.addPanel(toParent: self,animated: true) // 관리뷰
         fvc.surfaceView.layer.cornerRadius = 20
         fvc.surfaceView.clipsToBounds = true
         return fvc
@@ -105,6 +106,27 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     }
 
 }
+// MARK: 서치바 딜리게이트 -> 실제론 그저 다음뷰에서 처리하게 넘김
+extension MapViewController : UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        // 현재 맵 보는 기준으로 맵 중심 Location을 전달할 준비
+        let location = homeView.mapView.region.center
+        
+        // 다음 뷰 컨트롤러로 이동하는 로직을 구현
+        let searchViewController = SearchViewController() // 검색 뷰 컨트롤러 인스턴스 생성
+        
+        let data = SearchModel(searchText: "", long: location.longitude.magnitude, lat: location.latitude.magnitude)
+        
+        searchViewController.searchViewModel.searchTextOb.value = data
+        
+        searchViewController.modalPresentationStyle = .fullScreen
+        
+        present(searchViewController, animated: false)
+        // false를 반환하여 서치바가 포커스를 받지 않도록 함
+        return false
+    }
+    
+}
 
 extension MapViewController: MKMapViewDelegate { // 수정해
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -124,28 +146,37 @@ extension MapViewController: MKMapViewDelegate { // 수정해
 }
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
-    
+    // MARK: 업데이트 플로팅 패널
     func updateFloatingPanelContent(_ CL: CLLocationCoordinate2D){
-        updateAddMemoViewControllerContent(with: CL)
+        removeExistingPanelIfNeeded { [weak self] in
+            self?.setupNewPanelWithCoordinates(CL)
+        }
     }
-    
-    // MARK: 재사용목적 있으면 다음 없으면 재 생성
-    private func updateAddMemoViewControllerContent(with coordinate: CLLocationCoordinate2D) {
-        floatPanel = settingPanel()
-        
-        if let navigationController = floatPanel?.contentViewController as? UINavigationController,
-           let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
-            let coordinateStruct = addViewStruct(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
-            
-            addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
-            floatPanel?.move(to: .half, animated: true)
-            return
-        }else {
-            showAlert(title: MapAlertSection.panelError.title, message: MapAlertSection.panelError.message)
+    // MARK: 새로운 것이 필요할때만 새로생성
+    private func removeExistingPanelIfNeeded(completion: @escaping () -> Void) {
+        if let existingPanel = floatPanel {
+            existingPanel.removePanelFromParent(animated: true) { [weak self] in
+                self?.floatPanel = nil
+                completion()
+            }
+        } else {
+            completion()
         }
     }
     
+    private func setupNewPanelWithCoordinates(_ CL: CLLocationCoordinate2D) {
+        let newPanel = settingPanel()
+        if let navigationController = newPanel.contentViewController as? UINavigationController,
+           let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
+            let coordinateStruct = addViewStruct(lat: String(CL.latitude), lon: String(CL.longitude), folder: folder)
+            
+            addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
+            newPanel.move(to: .half, animated: true)
+        }
+        floatPanel = newPanel
+    }
 }
+// MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
     func backButtonClicked() {
         floatPanel?.removePanelFromParent(animated: true) {
@@ -242,16 +273,6 @@ extension MapViewController {
         homeView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         homeView.locationManager.requestWhenInUseAuthorization()
     }
-    
-    // 세팅으로 유도합니다.
-    func goSetting(){
-        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(settingUrl)
-        } else {
-            showAlert(title: MapAlertSection.requestFail.title, message: MapAlertSection.requestFail.message)
-        }
-    }
-    
 }
 
 

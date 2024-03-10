@@ -41,3 +41,12 @@ enum RealmManagerError: Error {
         }
     }
 }
+
+
+enum cameraError {
+    static var titleString: String = "가져오기 싪패"
+    static var messageString: String = "사진을 가져오는 도중 문제가 발생했습니다!"
+}
+
+
+

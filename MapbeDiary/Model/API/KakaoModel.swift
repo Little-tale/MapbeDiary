@@ -16,10 +16,11 @@ struct KakaoLocalModel: Decodable {
 
 // MARK: - 도로명 주소 장소이름 전화번호 x,y lon lat
 /// 도로명 , 장소이름, 전화번호,
-struct Document: Decodable {
+struct Document: Hashable, Decodable {
     let phone, placeName: String // 전화번호, 장소이름
     let roadAddressName, x, y: String // 도로명 주소 , lat lon
-
+    let id = UUID()
+    
     enum CodingKeys: String, CodingKey {
         case phone
         case placeName = "place_name"

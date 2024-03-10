@@ -20,10 +20,11 @@ final class AddBaseView: BaseView {
         view.font = .systemFont(ofSize: 12, weight: .bold)
         return view
     }()
-    
+
     let phoneTextField = UITextField(frame: .zero)
     
     var textFieldClosure: ((UITextField) -> Void)?
+    
     
     let stackView: UIStackView = {
        let view = UIStackView()
@@ -34,6 +35,16 @@ final class AddBaseView: BaseView {
         return view
     }()
     
+    private var detailTextTitle: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = .systemFont(ofSize: 14, weight: .bold)
+        view.text = "자세한 이야기"
+        return view
+    }()
+    
+    var detailTextView = PlaceholderTextView()
+    
+    
     lazy var textFieldList = [AddTitleDateView.titleTextField, AddTitleDateView.simpleMemoTextField, phoneTextField]
     
     override func configureHierarchy() {
@@ -43,7 +54,8 @@ final class AddBaseView: BaseView {
         stackView.addArrangedSubview(phonNumberLabel)
         stackView.addArrangedSubview(phoneTextField)
         backView.addSubview(folderButton)
-        
+        backView.addSubview(detailTextTitle)
+        backView.addSubview(detailTextView)
         
     }
     
@@ -72,7 +84,18 @@ final class AddBaseView: BaseView {
             make.top.equalTo(stackView.snp.bottom).offset(8)
             make.height.equalTo(30)
         }
+        detailTextTitle.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.top.equalTo(folderButton.snp.bottom).offset(6)
+        }
+        detailTextView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.top.equalTo(detailTextTitle.snp.bottom).offset(8)
+            make.height.equalTo(150)
+        }
     }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         phoneTextField.snp.updateConstraints { make in
@@ -90,11 +113,12 @@ final class AddBaseView: BaseView {
         
         phonNumberLabel.textAlignment = .center
         AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
-       
+        
+        
+        detailTextView.placeholderText = "자세한 메모는 여기에~!"
     }
     
     private func textFieldSetting(){
-        
         phoneTextField.backgroundColor = .red
         phoneTextField.addLeftPadding(width: 12)
         phoneTextField.borderStyle = .roundedRect

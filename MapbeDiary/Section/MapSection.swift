@@ -13,6 +13,7 @@ enum MapAlertSection {
     case noneAct
     case checkUserAut
     case panelError
+    case camera
     
     var title: String {
         switch self{
@@ -24,6 +25,8 @@ enum MapAlertSection {
             return "위치 권한이 필요합니다."
         case .panelError:
             return "치명적 오류"
+        case .camera:
+            return "카메라 권한"
         }
     }
     var message: String{
@@ -36,6 +39,8 @@ enum MapAlertSection {
             return "위치권한을 허용 해주세요"
         case .panelError:
             return "관리자에게 문의하세요!"
+        case .camera:
+            return  "카메라 권한을 허용 해주세요"
         }
     }
     var actionTitle:String {
@@ -44,7 +49,7 @@ enum MapAlertSection {
             return "확인"
         case .noneAct:
             return ""
-        case .checkUserAut:
+        case .checkUserAut, .camera:
             return "이동"
         case .panelError:
             return ""

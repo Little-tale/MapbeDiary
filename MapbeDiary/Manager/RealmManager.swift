@@ -45,8 +45,23 @@ class RealmRepository {
         return Memo(title: title, location: location, contents: contents, phoneNumber: phoneNum)
     }
     
-    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) -> Memo {
-        return Memo(title: addViewStruct.title, location: location, contents: addViewStruct.content, phoneNumber: addViewStruct.phoneNumber)
+    // MARK: 메모를 진짜 만들어드립니다...>!
+    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) throws -> Memo?  {
+        var memo: Memo?
+        do {
+            try realm.write {
+                memo = realm.create(Memo.self, value: [
+                    "title": addViewStruct.title,
+                    "location": location,
+                    "contents": addViewStruct.content,
+                    "phoneNumber": addViewStruct.phoneNumber ?? "",
+                    "detailContents": addViewStruct.detailContents ?? ""
+                ])
+            }
+        } catch {
+            throw RealmManagerError.canMakeMemo
+        }
+        return memo
     }
     
   
@@ -96,8 +111,9 @@ class RealmRepository {
     }
     
     func makeMemoAtFolder(folder: Folder, model: addViewOutStruct, location: Location) throws {
-        let memo = makeMemoModel(addViewStruct: model, location: location)
-    
+        let memo = try? makeMemoModel(addViewStruct: model, location: location)
+        guard let memo else { return }
+        
         if let image = model.memoImage {
             let imageUUID = UUID().uuidString
             let imagePath = getFolderPathForMemoId(memoId: memo.id).appendingPathComponent(imageUUID)
