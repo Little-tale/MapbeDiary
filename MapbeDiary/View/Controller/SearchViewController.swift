@@ -81,11 +81,14 @@ extension SearchViewController: UICollectionViewDelegate {
 // MARK: 페이지 네이션
 extension SearchViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
         guard let index =  indexPaths.map({ $0.row }).max() else {return}
+        guard let end = searchViewModel.endPageBool else {return}
+        guard let currnt = searchViewModel.currentPage.value else {return}
         print(searchViewModel.pageNation)
+        
         if searchViewModel.pageNation - 2 < index,
-           searchViewModel.endPage != searchViewModel.currentPage.value {
-            
+           !end {
             let page = searchViewModel.currentPage.value
             guard let page else {return}
             

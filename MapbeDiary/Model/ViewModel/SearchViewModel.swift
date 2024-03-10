@@ -31,7 +31,7 @@ class SearchViewModel {
     var outPutError: Observable<URLSessionManagerError?> = Observable(nil)
     
     // Static
-    var endPage: Int?
+    var endPageBool: Bool?
     var pageNation: Int = 15
     
     init(){
@@ -44,21 +44,24 @@ class SearchViewModel {
         currentPage.bind { [weak self] num in
             guard let self else { return }
             guard num != nil else {return}
+            
             guard let data = searchTextOb.value else { return }
             if num == 1 { return }
+            
             requestText(data)
         }
     }
-    
+
     private func requestText(_ model: SearchModel) {
         URLSessionManager.shared.fetch(type: KakaoLocalModel.self, api: KakaoApiModel.keywordLocation(text: model.searchText, page: currentPage.value ?? 1, x: model.long, y: model.lat)) {
             [weak self] result in
             guard let self else {return}
             switch result{
             case .success(let data):
-                endPage = data.meta.pageableCount
-                print("마지막 페이지",endPage ?? "")
+                endPageBool = data.meta.isEnd
+                print("마지막 페이지",endPageBool ?? "")
                 outPutModel.value?.append(contentsOf: data.documents)
+        
             case .failure(let fail):
                 outPutError.value = fail
             }
