@@ -29,6 +29,7 @@ class SearchViewModel {
     // MARK: Output
     var outPutModel: Observable<[Document]?> = Observable([])
     var outPutError: Observable<URLSessionManagerError?> = Observable(nil)
+    
     // Static
     var endPage: Int?
     var pageNation: Int = 15
@@ -55,13 +56,17 @@ class SearchViewModel {
             guard let self else {return}
             switch result{
             case .success(let data):
-                endPage = data.meta.totalCount
-                print("마지막 페이지",endPage)
+                endPage = data.meta.pageableCount
+                print("마지막 페이지",endPage ?? "")
                 outPutModel.value?.append(contentsOf: data.documents)
             case .failure(let fail):
                 outPutError.value = fail
             }
         }
+    }
+    
+    deinit {
+        print("사라질께요!", self)
     }
     
 }

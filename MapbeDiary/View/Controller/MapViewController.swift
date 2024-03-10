@@ -98,8 +98,10 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         anno.coordinate = cl2
         let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapAlertSection.noneName , coordinate: cl2)
         homeView.mapView.addAnnotation(location)
+        homeView.mapView.setCenter(location.coordinate, animated: true)
         homeView.mapView.selectAnnotation(location, animated: true)
     }
+    
     func removeAll(){
         let anotaions = homeView.mapView.annotations
         homeView.mapView.removeAnnotations(anotaions)
@@ -123,6 +125,19 @@ extension MapViewController : UISearchBarDelegate {
         
         present(searchViewController, animated: false)
         // false를 반환하여 서치바가 포커스를 받지 않도록 함
+        
+        searchViewController.kakaoDataClosure = {
+            [weak self] data in
+            guard let self else {return}
+            
+            guard let location = makeCLLcocation(lon:data.x ,lat:data.y) else {
+                return
+            }
+            removeAll()
+            updateFloatingPanelContent(location, searchText: data.placeName)
+            addLongAnnotation(cl2: location)
+        }
+        
         return false
     }
     
@@ -146,12 +161,19 @@ extension MapViewController: MKMapViewDelegate { // 수정해
 }
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
-    // MARK: 업데이트 플로팅 패널
+    // MARK: 롱프레스 업데이트 플로팅 패널
     func updateFloatingPanelContent(_ CL: CLLocationCoordinate2D){
         removeExistingPanelIfNeeded { [weak self] in
             self?.setupNewPanelWithCoordinates(CL)
         }
     }
+    
+    func updateFloatingPanelContent(_ CL: CLLocationCoordinate2D, searchText: String){
+        removeExistingPanelIfNeeded { [weak self] in
+            self?.setupUpdatePanelForSearch(CL, searchTitle: searchText)
+        }
+    }
+    
     // MARK: 새로운 것이 필요할때만 새로생성
     private func removeExistingPanelIfNeeded(completion: @escaping () -> Void) {
         if let existingPanel = floatPanel {
@@ -175,6 +197,23 @@ extension MapViewController: FloatingPanelControllerDelegate {
         }
         floatPanel = newPanel
     }
+    
+    private func setupUpdatePanelForSearch(_ CL: CLLocationCoordinate2D, searchTitle: String) {
+        let newPanel = settingPanel()
+        if let navigationController = newPanel.contentViewController as? UINavigationController,
+           let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
+            
+            let coordinateStruct = addViewStruct(lat: String(CL.latitude), lon: String(CL.longitude), folder: folder)
+            addMemoVc.addViewModel.searchTitle = searchTitle
+            
+            addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
+            
+            newPanel.move(to: .half, animated: true)
+            
+        }
+        floatPanel = newPanel
+    }
+    
 }
 // MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
@@ -184,6 +223,7 @@ extension MapViewController: BackButtonDelegate {
             guard let self else {return}
             floatPanel = nil
         }
+        removeAll()
     }
 }
 
@@ -258,9 +298,11 @@ extension MapViewController {
             }
             // MARK: 이시점에서 현위치 가져올수 있음
         case .authorizedAlways, .authorizedWhenInUse:
-            // Optional(__C.CLLocationCoordinate2D(latitude: 37.785834, longitude: -122.406417))
+            
             homeView.mapView.showsUserLocation = true
+            
             homeView.locationManager.startUpdatingLocation()
+            
             print("@@",homeView.locationManager.location?.coordinate)
         default:
             homeView.makeToast(MapAlertSection.noneAct.message,duration: 1.0, position: .bottom)

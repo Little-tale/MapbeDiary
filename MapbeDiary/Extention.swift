@@ -5,7 +5,7 @@
 //  Created by Jae hyung Kim on 3/7/24.
 //
 
-import UIKit
+import MapKit
 
 // MARK: 알렛 확장
 extension UIViewController {
@@ -189,3 +189,34 @@ extension UILabel {
 
     }
 }
+
+// CollecionViewCell ANIME
+extension UIViewController {
+    func collectionViewCellAnimation(cell: UICollectionViewCell){
+        UIView.animate(withDuration: 0.08, animations: {
+            cell.backgroundColor = .green // 선택됐을 때의 색
+        }) { _ in
+            UIView.animate(withDuration: 0.08) {
+                cell.backgroundColor = .white // 원래 색으로 돌아감
+            }
+        }
+    }
+}
+
+// MARK: String -> CLLcocation
+extension UIViewController {
+    
+    func makeCLLcocation(lon: String, lat: String) -> CLLocationCoordinate2D? {
+        let dbLat = Double(lat)
+        let dbLon = Double(lon)
+        
+        if let dbLat,
+           let dbLon {
+            return CLLocationCoordinate2D(latitude: dbLat, longitude: dbLon)
+        } else {
+            return nil
+        }
+    }
+    
+}
+

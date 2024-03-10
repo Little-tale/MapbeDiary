@@ -39,6 +39,17 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
         placeNameLabel.font = .systemFont(ofSize: 20, weight: .bold)
         roadNameLabel.font = .systemFont(ofSize: 15, weight: .light)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cleartext()
+        layoutIfNeeded()
+    }
+    
+    private func cleartext(){
+        placeNameLabel.textColor = .black
+        roadNameLabel.textColor = .black
+    }
 }
 
 

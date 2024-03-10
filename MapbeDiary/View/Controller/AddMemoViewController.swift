@@ -27,7 +27,7 @@ struct addViewStruct {
 
 struct addViewOutStruct {
     var title: String
-    let titlePlacHolder: String
+    var titlePlacHolder: String
     var content: String
     var phoneNumber: String?
     var folderimage: String

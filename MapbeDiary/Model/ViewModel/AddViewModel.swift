@@ -29,7 +29,7 @@ class AddViewModel {
     // ------- Static -------
     let repository = RealmRepository()
     var titleName = String()
- 
+    var searchTitle: String?
     
     init(){
         coordinateTrigger.bind {[weak self] coordi in
@@ -68,8 +68,14 @@ class AddViewModel {
     }
     
     private func proccing(model : KaKakaoCordinateModel, folder: Folder) {
-        //print("출력: ",success.documents)
-        urlSuccessOutPut.value = addViewOutStruct(title:AddViewSection.defaultTitle,titlePlacHolder: model.documents.first?.roadAddress.addressName, folder: folder)
+        
+        var data = addViewOutStruct(title:AddViewSection.defaultTitle,titlePlacHolder: model.documents.first?.roadAddress.addressName, folder: folder)
+        
+        if let searchTitle {
+            data.titlePlacHolder = searchTitle
+        }
+        
+        urlSuccessOutPut.value = data
     }
     
     private func findFolderName(folder: Folder) {

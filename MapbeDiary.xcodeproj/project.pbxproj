@@ -60,6 +60,7 @@
 		7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */; };
 		7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */; };
 		7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */; };
+		7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
@@ -134,6 +135,7 @@
 		7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseImageView.swift; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
@@ -367,9 +369,18 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		7BB8ECBA2B9DF72F00C88F17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				7BB8ECBA2B9DF72F00C88F17 /* View */,
 				7BECDA292B9C97F800033B18 /* Action */,
 				7B1C53372B9C344D00B712BC /* Button */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
@@ -612,6 +623,7 @@
 				7B1C53362B9BFBAF00B712BC /* FloatingCustomLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
+				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,

@@ -11,6 +11,7 @@ import SnapKit
 class SearchBaseView: BaseView {
     let backButton = UIButton(frame: .zero)
     let searchBar = UISearchBar()
+    let emptyImage = SearchBaseImageView()
     
     lazy var collectionView = UICollectionView(frame: .zero,collectionViewLayout: createLayout())
     
@@ -19,6 +20,8 @@ class SearchBaseView: BaseView {
         addSubview(backButton)
         addSubview(searchBar)
         addSubview(collectionView)
+        addSubview(emptyImage)
+        
     }
     
     override func configureLayout() {
@@ -36,6 +39,11 @@ class SearchBaseView: BaseView {
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
             make.top.equalTo(searchBar.snp.bottom).offset(4)
         }
+        emptyImage.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.centerY.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(140)
+        }
     }
     
     override func register() {
@@ -48,6 +56,7 @@ class SearchBaseView: BaseView {
         backButton.setBackgroundImage(UIImage(systemName: "chevron.backward.circle.fill"), for: .normal)
         backButton.clipsToBounds = true
         backButton.tintColor = .systemGreen
+       
     }
 }
 

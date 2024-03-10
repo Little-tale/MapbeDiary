@@ -53,6 +53,7 @@ class MapHomeView: BaseView {
         
         mapView.addGestureRecognizer(longtap)
         
+        
     }
     
     @objc func longTap(sender: UIGestureRecognizer){

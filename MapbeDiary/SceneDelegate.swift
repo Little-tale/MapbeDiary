@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         // MARK: 아이큐 키보드
         IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.resignOnTouchOutside = true
         
         var tabbarCon = UITabBarController()
         tabbarCon.tabBar.backgroundColor = .white
