@@ -17,6 +17,8 @@ enum RealmManagerError: Error {
     case canModifiMemo
     case cantAddImage
     case cantDeleteImage
+    case cantFindObjectId
+    case cantModifyMemo
     
     var alertMessage: String {
         switch self {
@@ -38,6 +40,10 @@ enum RealmManagerError: Error {
             "이미지 추가중 문제가 발생했습니다. 관리자에 문의 해주세요!"
         case .cantDeleteImage:
             "이미지 제거중 문제가 발생했습니다. 관리자에 문의 해주세요!"
+        case .cantFindObjectId:
+            "파일을 찾지 못했어요!"
+        case .cantModifyMemo:
+            "수정 할수 없어요!"
         }
     }
 }

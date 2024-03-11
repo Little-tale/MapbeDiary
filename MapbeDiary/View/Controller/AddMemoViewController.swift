@@ -31,10 +31,11 @@ struct addViewOutStruct {
     var content: String
     var phoneNumber: String?
     var folderimage: String
-    var regDate = Date()
+    var regDate = Date() // 일단 대기
     var memoImage: UIImage?
     var folder: Folder
     var detailContents: String?
+    var memoId: String?
     
     init(title: String?, titlePlacHolder: String?, folder: Folder, folderImage: String? = nil) {
         var text = title ?? AddViewSection.defaultTitle
@@ -45,6 +46,36 @@ struct addViewOutStruct {
         self.folder = folder
         self.content = ""
         self.folderimage = folderImage ?? ImageSection.defaultFolderImage.rawValue
+        
+        
+    }
+}
+
+struct memoModifyOutstruct {
+    var title: String
+    var content: String?
+    var phoneNumber: String?
+    var folderimage: String?
+    var regDate: Date
+    var memoImage: UIImage?
+    var folder: Folder
+    var detailContents: String?
+    var memoId: String
+    
+    init(memo: Memo, folder:Folder) {
+        self.title = memo.title
+        self.content = memo.contents
+        self.phoneNumber = memo.phoneNumber
+        self.regDate = memo.regdate
+        self.folder = folder
+        self.detailContents = memo.detailContents
+        self.memoId = memo.id.stringValue
+        
+        if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
+            memoImage = UIImage(contentsOfFile: iamgePath)
+        } else {
+            memoImage = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+        }
         
     }
 }
@@ -113,19 +144,27 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         homeView.textFieldList.forEach { [weak self] textfield in
             guard let self else { return }
             var value = addViewModel.urlSuccessOutPut.value
+            var modify = addViewModel.memoSuccessOutPut.value
             switch textfield.tag {
             case 0:
                 value?.title = titleTestter(textField: textfield)
+                modify?.title = titleTestter(textField: textfield)
             case 1:
                 value?.content = textfield.text ?? ""
+                modify?.content = textfield.text
             case 2:
                 value?.phoneNumber = textfield.text ?? ""
+                modify?.phoneNumber = textfield.text
             default:
                 break
             }
-            addViewModel.urlSuccessOutPut.value = value
+            if addViewModel.urlSuccessOutPut.value != nil {
+                addViewModel.urlSuccessOutPut.value = value
+            } else {
+                addViewModel.modifyEnd = modify
+            }
+            
         }
-        
         addViewModel.saveButtonTrigger.value = ()
         backDelegate?.backButtonClicked()
     }
@@ -182,6 +221,32 @@ extension AddMemoViewController {
             guard let error else { return }
             guard let self else { return }
             showAPIErrorAlert(repo: error)
+        }
+        
+        addViewModel.memoSuccessOutPut.bind { [weak self] model in
+            guard let self else { return }
+            guard let model else { return }
+            
+            homeView.folderButton.configuration?.title = model.folder.folderName
+            
+            if let folderImagePath = FileManagers.shard.findFolderImage(folderId: model.folder.id.stringValue) {
+                
+                homeView.folderButton.configuration?.image = UIImage(contentsOfFile: folderImagePath)?.resizeImage(newWidth: 20)
+            } else {
+                homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
+            }
+            
+            homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
+            // 이미지
+            homeView.AddTitleDateView.imageView.image = model.memoImage
+            // 타이틀
+            homeView.AddTitleDateView.titleTextField.text = model.title
+            // 간편메모
+            homeView.AddTitleDateView.simpleMemoTextField.text = model.content
+            // 전화번호
+            homeView.phoneTextField.text = model.phoneNumber
+            // 디테일
+            homeView.detailTextView.text = model.detailContents
         }
        
     }
@@ -244,17 +309,22 @@ extension AddMemoViewController {
 extension AddMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
-        
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         picker.dismiss(animated: true)
-        
+      
         guard let pickImage = info[.originalImage] as? UIImage else {
             showAlert(title: cameraError.titleString, message: cameraError.messageString)
             return
         }
-        addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
+        if addViewModel.coordinateTrigger.value != nil {
+            addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
+        } else {
+            addViewModel.modifyEnd?.memoImage = pickImage
+        }
+        
     }
 }
 
@@ -283,9 +353,14 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
             DispatchQueue.main.async {
                 guard let image = image as? UIImage else {return}
                 print(image)
-                var value = self?.addViewModel.urlSuccessOutPut.value
-                value?.memoImage = image
-                self?.addViewModel.urlSuccessOutPut.value = value
+                if self?.addViewModel.coordinateTrigger.value != nil {
+                    var value = self?.addViewModel.urlSuccessOutPut.value
+                    value?.memoImage = image
+                    self?.addViewModel.urlSuccessOutPut.value = value
+                } else {
+                    self?.addViewModel.modifyEnd?.memoImage = image
+                }
+                
             }
         }
     }
@@ -293,10 +368,15 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
 
 extension AddMemoViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
-        var value = addViewModel.urlSuccessOutPut.value
-        value?.detailContents = textView.text
-        addViewModel.urlSuccessOutPut.value = value
-        print("$$$",value?.detailContents ?? "")
+        if addViewModel.coordinateTrigger.value != nil {
+            var value = addViewModel.urlSuccessOutPut.value
+            value?.detailContents = textView.text
+            addViewModel.urlSuccessOutPut.value = value
+          
+        } else {
+            addViewModel.modifyEnd?.detailContents = textView.text
+        }
+        
     }
     
 }

@@ -31,10 +31,9 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingMapView() /// 맵뷰 세팅
-        ///
-        checkDeviewlocationAuthorization()
-      //   customMarker()
         
+        checkDeviewlocationAuthorization()
+    
         addTestAnnotations()
         
         homeView.location = {[weak self] result in
@@ -87,7 +86,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         let location = memo.location
         guard let location else { return }
         let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
-        
+        print("????",memo.id.stringValue)
         if let cl2 {
             let customLocation = CustomAnnotation(memoRegDate: memo.regdate, memoId: memo.id.stringValue, title: memo.title, coordinate: cl2)
             homeView.mapView.addAnnotation(customLocation)
@@ -136,7 +135,7 @@ extension MapViewController : UISearchBarDelegate {
                 return
             }
             removeAll()
-        
+            /// 판넬 업데이트
             updateFloatingPanel(with: PanelConfiguration(coordinate: location, configureAddMemoViewController: { viewCon in
                 viewCon.addViewModel.searchTitle = data.placeName
             }))
@@ -169,9 +168,11 @@ extension MapViewController: MKMapViewDelegate { // 수정해
        
         if let annotaion = view.annotation as? CustomAnnotation {
             homeView.mapView.setCenter(annotaion.coordinate, animated: true)
-            if let date = annotaion.memoRegDate {
+            if let memoid = annotaion.memoId {
                 print("@@@@",annotaion)
-                
+                updateFloatingPanel(with: PanelConfiguration(configureAddMemoViewController: { viewController in
+                    viewController.addViewModel.modifyTrigger.value = memoid
+                }))
             }
             
         }
@@ -194,6 +195,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
 
     private func setupPanel(with configuration: PanelConfiguration) {
         let newPanel = settingPanel()
+        
         if let navigationController = newPanel.contentViewController as? UINavigationController,
            let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
             

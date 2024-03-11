@@ -20,6 +20,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
         self.memoRegDate = memoRegDate
         self.coordinate = coordinate
         self.title = title
+        self.memoId = memoId
     }
     
 }
@@ -38,7 +39,7 @@ class ArtWorkMarkerView: MKAnnotationView {
                 return
             }
             
-            if let imagePath = FileManagers.shard.loadMemoImage(memoId: memoId) {
+            if let imagePath = FileManagers.shard.loadImageMarkerImage(memoId: memoId) {
                 let image = UIImage(contentsOfFile: imagePath)?.resizeImage(newWidth: 30)
                 
                 centerOffset = CGPoint(x: 0, y: -30)

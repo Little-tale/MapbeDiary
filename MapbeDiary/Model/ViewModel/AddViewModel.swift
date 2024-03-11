@@ -19,10 +19,12 @@ class AddViewModel {
     let saveButtonTrigger: Observable<Void?> = Observable(nil)
     
     // MARK: 수정시 Input ------
-    let modifyTrigger: Observable<Date?> = Observable(nil)
+    let modifyTrigger: Observable<String?> = Observable(nil)
     
     // ------- Out Put -----
     let urlSuccessOutPut: Observable<addViewOutStruct?> = Observable(nil)
+    
+    let memoSuccessOutPut: Observable<memoModifyOutstruct?> = Observable(nil)
     
     let saveButtonOutPutImage: Observable<String?> = Observable(nil)
     
@@ -34,6 +36,7 @@ class AddViewModel {
     let repository = RealmRepository()
     var titleName = String()
     var searchTitle: String?
+    var modifyEnd : memoModifyOutstruct?
     
     init(){
         coordinateTrigger.bind {[weak self] coordi in
@@ -52,10 +55,10 @@ class AddViewModel {
             guard void != nil else {return}
             saveButtonClicked()
         }
-        modifyTrigger.bind { [weak self] date in
-            guard let date else { return }
+        modifyTrigger.bind { [weak self] memoId in
+            guard let memoId else { return }
             guard let self else { return }
-            print(date)
+            findMemo(memoId:memoId)
         }
     }
     
@@ -96,15 +99,42 @@ class AddViewModel {
     
     private func saveButtonClicked(){
         guard let start = coordinateTrigger.value else { return }
-        guard let result = urlSuccessOutPut.value else { return }
         
-        let location = Location(lat: start.lat, lon: start.lon)
-        print(result)
-        do {
-            try repository.makeMemoAtFolder(folder: result.folder, model: result, location: location)
-            
-        } catch (let error) {
-            realmError.value = error as? RealmManagerError
+        if let result = urlSuccessOutPut.value {
+            print("마커",result.memoImage ?? "")
+            let location = Location(lat: start.lat, lon: start.lon)
+            print(result)
+            do {
+                try repository.makeMemoMarkerAtFolders( model: result, location: location)
+                
+            } catch (let error) {
+                realmError.value = error as? RealmManagerError
+            }
+        } else {
+            guard let modify = memoSuccessOutPut.value else { return }
+            do {
+                try repository.modifyMemo(structure: modify)
+            } catch (let error) {
+                realmError.value = error as? RealmManagerError
+            }
+        }
+        
+    }
+    // MARK: 메모스트링 아이디를 통해 메모를 찾아옵니다.
+    private func findMemo(memoId: String){
+        repository.findId(IdString: memoId) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let success):
+                if let memo = repository.findMemo(ojID: success),
+                   let folder = repository.findMemoAtFolder(memo: memo){
+                    let model = memoModifyOutstruct(memo: memo, folder: folder)
+                    memoSuccessOutPut.value = model
+                    modifyEnd = model
+                }
+            case .failure(let failure):
+                print(failure.alertMessage)
+            }
         }
     }
 }
