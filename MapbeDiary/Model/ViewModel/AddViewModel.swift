@@ -18,6 +18,9 @@ class AddViewModel {
     
     let saveButtonTrigger: Observable<Void?> = Observable(nil)
     
+    // MARK: 수정시 Input ------
+    let modifyTrigger: Observable<Date?> = Observable(nil)
+    
     // ------- Out Put -----
     let urlSuccessOutPut: Observable<addViewOutStruct?> = Observable(nil)
     
@@ -48,6 +51,11 @@ class AddViewModel {
             guard let self else {return}
             guard void != nil else {return}
             saveButtonClicked()
+        }
+        modifyTrigger.bind { [weak self] date in
+            guard let date else { return }
+            guard let self else { return }
+            print(date)
         }
     }
     

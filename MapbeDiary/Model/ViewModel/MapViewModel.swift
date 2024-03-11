@@ -13,5 +13,4 @@ class MapVIewModel {
     init(){
         
     }
-    
 }
