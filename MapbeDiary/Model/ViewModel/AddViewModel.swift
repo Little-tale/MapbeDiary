@@ -12,6 +12,7 @@ import Foundation
 class AddViewModel {
     // ------- In Put ------
     let coordinateTrigger: Observable<(addViewStruct)?> = Observable(nil)
+    //let coordinateModifyTrriger: Observable?
     
     let changeFolder: Observable<Folder?> = Observable(nil)
     

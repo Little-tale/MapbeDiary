@@ -24,6 +24,8 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     
     var folder = RealmRepository().findAllFolderArray()[0]
     
+    var repository = RealmRepository()
+    
     let test = [
         testV(title: "시작 a3a9154c", lat: "35.88232645159043", lon: "126.70855166498062",image: "google-309740_1280"),
         testV(title: "asdasd", lat: "37.62153143200515", lon: "129.8814751149255"),
@@ -43,11 +45,10 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.location = {[weak self] result in
             print("asdsadsad")
             guard let self else {return}
-            removeAll()
-            addTestAnnotations()
-            // PannelViewSend(result)
-            updateFloatingPanelContent(result)
-            addLongAnnotation(cl2: result)
+            removeAll() // 일단 다 지우기
+            addTestAnnotations() // 렘 정보 가져오기
+            updateFloatingPanelContent(result) // 판넬 업데이트
+            addLongAnnotation(cl2: result) // 롱프레스
         }
         homeView.searchBar.delegate = self
         
@@ -81,18 +82,24 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
-        let repo = RealmRepository()
-
-        let test = test.first!
-        let cordi = CLLocationCoordinate2D(latitude: Double(test.lat)!, longitude: Double(test.lon)!)
-        //
-        // homeView.mapView.addAnnotation(cus)
+        repository.findAllMemoArray().forEach { [weak self] memo in
+            guard let self else { return }
+            addCustomNoFocusforMemo(memo: memo)
+        }
     }
-    
-    func addCustomAnnotation(){
+    // MARK: 메모를 통해 커스텀 어노테이션 설정
+    func addCustomNoFocusforMemo(memo: Memo){
+        let location = memo.location
+        guard let location else { return }
+        let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
         
+        if let cl2 {
+            let customLocation = CustomAnnotation(memoRegDate: memo.regdate, memoId: memo.id.stringValue, title: memo.title, coordinate: cl2)
+            homeView.mapView.addAnnotation(customLocation)
+        }
     }
     
+    // MARK: 롱프레스 하면 커스텀 어노테이션과 포커스
     func addLongAnnotation(cl2: CLLocationCoordinate2D){
         let anno = MKPointAnnotation()
         anno.coordinate = cl2
@@ -144,6 +151,7 @@ extension MapViewController : UISearchBarDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate { // 수정해
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if let annotation = annotation as? CustomAnnotation {
@@ -156,6 +164,17 @@ extension MapViewController: MKMapViewDelegate { // 수정해
         
         print("asdsadsa")
         return nil
+    }
+    // MARK: 기존것을 선택했을때,
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+       
+        if let annotaion = view.annotation as? CustomAnnotation {
+            homeView.mapView.setCenter(annotaion.coordinate, animated: true)
+            if let data = annotaion.memoRegDate {
+                print("@@@@",annotaion)
+            }
+            
+        }
     }
     
 }
@@ -224,6 +243,7 @@ extension MapViewController: BackButtonDelegate {
             floatPanel = nil
         }
         removeAll()
+        addTestAnnotations()
     }
 }
 

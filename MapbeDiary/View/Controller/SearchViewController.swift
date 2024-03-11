@@ -68,9 +68,11 @@ extension SearchViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let datas = searchViewModel.outPutModel.value else { return }
-        let data = datas[indexPath.item]
+        // let data = datas[indexPath.item]
+        let realData = dataSource?.itemIdentifier(for: indexPath)
+        guard let realData else { return }
         
-        kakaoDataClosure?(data)
+        kakaoDataClosure?(realData)
         
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         collectionViewCellAnimation(cell: cell)

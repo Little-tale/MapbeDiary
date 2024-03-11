@@ -115,9 +115,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
             var value = addViewModel.urlSuccessOutPut.value
             switch textfield.tag {
             case 0:
-                var text = textfield.text ?? AddViewSection.defaultTitle
-                if text == "" { text = AddViewSection.defaultTitle }
-                value?.title = text
+                value?.title = titleTestter(textField: textfield)
             case 1:
                 value?.content = textfield.text ?? ""
             case 2:
@@ -127,11 +125,30 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
             }
             addViewModel.urlSuccessOutPut.value = value
         }
+        
         addViewModel.saveButtonTrigger.value = ()
         backDelegate?.backButtonClicked()
     }
     deinit {
         print("deinit",#function)
+    }
+    
+    func titleTestter(textField : UITextField) -> String{
+        // 1. 텍스트가 비어있는지 부터
+        if let textFieldText = textField.text,
+           textFieldText.isEmpty {
+            // 2. 기본 플레이스 홀더와 비교
+            if let placeHolder = textField.placeholder,
+               placeHolder != "Add_title_text_fileld_text".localized {
+                return placeHolder
+            } else {
+                return textField.placeholder ?? AddViewSection.defaultTitle
+            }
+        }
+        if let title = textField.text {
+            return title // ""
+        }
+        return textField.placeholder ?? AddViewSection.defaultTitle
     }
 }
 
@@ -279,7 +296,7 @@ extension AddMemoViewController: UITextViewDelegate{
         var value = addViewModel.urlSuccessOutPut.value
         value?.detailContents = textView.text
         addViewModel.urlSuccessOutPut.value = value
-        print("$$$",value?.detailContents)
+        print("$$$",value?.detailContents ?? "")
     }
     
 }
