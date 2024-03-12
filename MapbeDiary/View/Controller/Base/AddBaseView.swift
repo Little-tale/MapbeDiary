@@ -13,6 +13,23 @@ final class AddBaseView: BaseView {
     let AddTitleDateView = AddTitleDateImageView()
     let folderButton: UIButton = CustomButton.folderButton()
     
+    let saveButton: UIButton = {
+        let view = UIButton()
+        var configu = UIButton.Configuration.plain()
+        configu.title = "저장"
+        view.configuration = configu
+        return view
+    }()
+    
+    let backButton: UIButton = {
+        let view = UIButton()
+        var configu = UIButton.Configuration.plain()
+        configu.image = UIImage(systemName: "chevron.backward")
+        view.configuration = configu
+        return view
+    }()
+    
+    
     let phonNumberLabel: UILabel = {
        let view = UILabel()
         view.text = AddViewSection.phoneNumberTextLabel.placeHolder
@@ -48,6 +65,8 @@ final class AddBaseView: BaseView {
     lazy var textFieldList = [AddTitleDateView.titleTextField, AddTitleDateView.simpleMemoTextField, phoneTextField]
     
     override func configureHierarchy() {
+        addSubview(saveButton)
+        addSubview(backButton)
         self.addSubview(backView)
         backView.addSubview(AddTitleDateView)
         backView.addSubview(stackView)
@@ -60,13 +79,22 @@ final class AddBaseView: BaseView {
     }
     
     override func configureLayout() {
+        saveButton.snp.makeConstraints { make in
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
+            make.top.equalTo(safeAreaLayoutGuide).offset(4)
+        }
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(safeAreaLayoutGuide).inset(8)
+            make.top.equalTo(safeAreaLayoutGuide).offset(4)
+        }
         backView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide).offset(40)
             make.bottom.equalToSuperview()
         }
         
         AddTitleDateView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.top.equalTo(backView)
             make.height.equalTo(110)
         }
         
@@ -76,7 +104,7 @@ final class AddBaseView: BaseView {
         }
         
         stackView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.horizontalEdges.equalTo(backView).inset(12)
             make.top.equalTo(AddTitleDateView.snp.bottom).offset(8)
         }
         folderButton.snp.makeConstraints { make in
@@ -85,11 +113,11 @@ final class AddBaseView: BaseView {
             make.height.equalTo(30)
         }
         detailTextTitle.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.horizontalEdges.equalTo(backView).inset(12)
             make.top.equalTo(folderButton.snp.bottom).offset(6)
         }
         detailTextView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.horizontalEdges.equalTo(backView).inset(12)
             make.top.equalTo(detailTextTitle.snp.bottom).offset(8)
             make.height.equalTo(150)
         }

@@ -52,25 +52,26 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
     }
+    
+    // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행
     func settingPanel() -> FloatingPanelController{
         let fvc = FloatingPanelController(delegate: self)
         let vc = AddMemoViewController()
         vc.backDelegate = self
         
-        let nvc = UINavigationController(rootViewController: vc )
+        fvc.set(contentViewController: vc) // 다음뷰
         
-        fvc.set(contentViewController: nvc) // 다음뷰
         fvc.layout = FloatingCustomLayout() // 커스텀
+        
         fvc.invalidateLayout() // 레이아웃 if need
         fvc.isRemovalInteractionEnabled = false // 내려가기 방지
+        
         fvc.addPanel(toParent: self,animated: true) // 관리뷰
+        
         fvc.surfaceView.layer.cornerRadius = 20
         fvc.surfaceView.clipsToBounds = true
         return fvc
     }
-    
-    
-    // MARK: 테스트 어노테이션 추가하기 왜 바로 이미지를 못넣는걸까
     
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
@@ -203,8 +204,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         guard let folder else { return }
         let newPanel = settingPanel()
         
-        if let navigationController = newPanel.contentViewController as? UINavigationController,
-           let addMemoVc = navigationController.viewControllers.first as? AddMemoViewController {
+        if let addMemoVc = newPanel.contentViewController as? AddMemoViewController {
             
             if let coordinate = configuration.coordinate {
                 let coordinateStruct = addViewStruct(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
@@ -230,6 +230,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
             completion()
         }
     }
+    
 }
 
 // MARK: 뒤로가기 버튼 감지

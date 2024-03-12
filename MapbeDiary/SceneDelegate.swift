@@ -30,17 +30,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let first = MapViewController()
         first.tabBarItem.image = UIImage(systemName: "star")
         
-        let allList = AllMemoListViewController()
+        let allList = UINavigationController(rootViewController: AllMemoListViewController())
         allList.tabBarItem.image = UIImage(systemName: "star")
         
         tabbarCon.viewControllers = [TestViewController(),first,allList]
         let test = UINavigationController(rootViewController: AddMemoViewController())
-        
+
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {
+            
             SingleToneDataViewModel.shared.shardFolderOb.value = folder
+            
             window?.rootViewController = tabbarCon
             window?.makeKeyAndVisible()
+        } else {
+            try? repository.makeFolder(folderName: "테스트")
+            if let folder = repository.findAllFolderArray().first {
+                SingleToneDataViewModel.shared.shardFolderOb.value = folder
+                window?.rootViewController = tabbarCon
+                window?.makeKeyAndVisible()
+            }
         }
     }
 

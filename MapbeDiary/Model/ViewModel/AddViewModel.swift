@@ -116,13 +116,33 @@ class AddViewModel {
                 guard let modifyEnd else {return}
                 print("###",modifyEnd)
                 try repository.modifyMemo(structure: modifyEnd)
-                
+                if let image = modifyEnd.memoImage {
+                    imagePag()
+                }
             } catch (let error) {
                 realmError.value = error as? RealmManagerError
             }
         }
-        
     }
+    
+    // MARK: 이미지 저장 수정해야함
+    func imagePag(){
+        guard let modifyEnd = modifyEnd,
+        let memoImage = modifyEnd.memoImage else { return }
+        
+        
+        if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.memoId, image: memoImage) {
+            realmError.value = RealmManagerError.canModifiMemo
+        } else {
+            if !FileManagers.shard.saveMarkerImageForMemo(memoId: modifyEnd.memoId, image: memoImage) {
+                realmError.value = RealmManagerError.canModifiMemo
+            }
+        }
+    }
+    // MARK: $$$$ 지우는 거 해야함.
+    
+    
+    
     // MARK: 메모스트링 아이디를 통해 메모를 찾아옵니다.
     private func findMemo(memoId: String){
         repository.findId(IdString: memoId) { [weak self] result in

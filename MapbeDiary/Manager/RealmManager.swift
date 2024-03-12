@@ -357,7 +357,7 @@ class RealmRepository {
         }
     }
     
-    func deleteImageFromMemo(memoId: ObjectId, imageName: String) throws {
+    func deleteImageFromMemoAt(memoId: ObjectId, imageName: String) throws {
         
         let imagePath = getFolderPathForMemoId(memoId: memoId).appendingPathComponent(imageName)
         
@@ -375,6 +375,17 @@ class RealmRepository {
         } catch {
             throw RealmManagerError.cantDeleteImage
         }
+    }
+    
+    func deleteAllImageFromMemo(memoId: ObjectId) {
+        
+        // 1. 마커 이미지 제거
+        
+        // 2. 이미지 리스트 파일들 제거
+        
+        // 3. 메모 제거
+        
+        
     }
  
     

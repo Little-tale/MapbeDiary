@@ -55,7 +55,8 @@ class FileManagers {
             return false
         }
     }
-    func saveMarkerZipImageForMemo(memoId: String, image: UIImage) -> Bool{
+    func saveMarkerZipImageForMemo(memoId: String, image: UIImage?) -> Bool{
+        guard let image else { return false }
         guard let imageData = image.jpegData(compressionQuality: 1.0) else { return false}
         let memoImagesDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imagePath = memoImagesDirectory.appendingPathComponent("\(memoId)-40.jpeg")
@@ -76,5 +77,21 @@ class FileManagers {
         } else {
             return nil
         }
+    }
+    
+    func loadImageOrignerMarker(memoId: String) -> String? {
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagePath = memoPath.appendingPathComponent("\(memoId).jpeg")
+        if FileManager.default.fileExists(atPath: imagePath.path()){
+            return imagePath.path()
+        } else {
+            return nil
+        }
+    }
+    
+    
+    func removeMarkerImageAtMemo(memoIdString: String) {
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagePath = memoPath.appendingPathExtension("\(memoIdString).jpeg")
     }
 }

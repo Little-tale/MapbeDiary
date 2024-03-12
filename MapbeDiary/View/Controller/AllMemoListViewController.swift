@@ -6,6 +6,11 @@
 //
 
 import UIKit
+// MARK: 사용할 모델
+struct AllMemoModel {
+    var folder: Folder
+    var Memo: [Memo]
+}
 
 class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
     
@@ -13,14 +18,18 @@ class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        subscribe()
         collectionViewDataSource()
         snapShot()
+        navigationSetting()
+        subscribe()
+        test()
     }
     deinit {
         print("AllMemoListViewController",self)
     }
-    
+    func navigationSetting(){
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .medium)]
+    }
 }
 
 
@@ -32,13 +41,15 @@ extension AllMemoListViewController {
             guard self != nil else { return }
             cell.titleLabel.text = item.title
             cell.dateLabel.text = DateFormetters.shared.localDate(item.regdate)
+            print("제발!!!!cellRegister",item.title)
             cell.subTitleLabel.text = item.contents
-            let image = FileManagers.shard.loadImageMarkerImage(memoId: item.id.stringValue)
+            let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id.stringValue)
             if let image {
                 cell.imageView.image = UIImage(contentsOfFile: image)
             }else {
                 cell.imageView.image = UIImage(named: "Image")
             }
+            
             
         }
         
@@ -47,6 +58,28 @@ extension AllMemoListViewController {
             return collectionView.dequeueConfiguredReusableCell(using: cellRegister, for: indexPath, item: itemIdentifier)
         })
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeView.allMemoViewModel.reloadTrigger.value = ()
+    }
+    
+    private func test(){
+        homeView.deleteAction = {[weak self] indexPath in
+            let action = UIContextualAction(style: .normal, title: "제거") { action, view, whatif in
+                guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
+                print(data)
+            }
+            return UISwipeActionsConfiguration(actions: [action])
+        }
+    }
+    
+    private func deleteAlert(memo: Memo){
+        showAlert(title: "삭제", message: "지우시면 복구하실수 없습니다!", actionTitle: "삭제하기") { [weak self] action in
+            guard let self else {return}
+            
+        }
+    }
+    
 }
 
 extension AllMemoListViewController {
@@ -55,8 +88,10 @@ extension AllMemoListViewController {
         if let data = homeView.allMemoViewModel.outPutTrigger.value {
             var snaphot = NSDiffableDataSourceSnapshot<Folder   ,Memo>()
             snaphot.appendSections([data.folder])
-            snaphot.appendItems(data.list,toSection: data.folder)
-            dataSource?.apply(snaphot, animatingDifferences: true)
+            snaphot.appendItems(data.Memo,toSection: data.folder)
+            // MARK: diff를 계산하지 않고 Reload한다.
+            dataSource?.applySnapshotUsingReloadData(snaphot)
+//            dataSource?.apply(snaphot, animatingDifferences: true)
         }
     }
     private func subscribe(){
@@ -65,10 +100,16 @@ extension AllMemoListViewController {
             guard let folder else { return }
             homeView.allMemoViewModel.inputTrigger.value = folder
         }
+        
         homeView.allMemoViewModel.outPutTrigger.bind { [weak self ] result in
-            guard result != nil else { return }
+            guard let result else { return }
             guard let self else { return }
             snapShot()
+            
+            navigationItem.title = result.folder.folderName
         }
+
     }
 }
+
+

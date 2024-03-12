@@ -17,6 +17,7 @@ final class AddTitleDateImageView: BaseView {
     let simpleMemoTextField = UITextField(frame: .zero)
     let dateLabel = UILabel()
     
+
     override func configureHierarchy() {
         self.addSubview(emptyView)
         emptyView.addSubview(titleTextField)
@@ -86,4 +87,7 @@ final class AddTitleDateImageView: BaseView {
         simpleMemoTextField.layer.cornerRadius = 8
         dateLabel.font = .systemFont(ofSize: 12, weight: .light)
     }
+    
+    
+
 }

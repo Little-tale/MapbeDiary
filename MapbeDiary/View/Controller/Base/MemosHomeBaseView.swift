@@ -13,6 +13,7 @@ class MemosHomeBaseView: BaseView {
     
     var allMemoViewModel = AllMemoListViewModel()
     
+    var deleteAction: ((IndexPath) -> UISwipeActionsConfiguration)?
     
     override func configureHierarchy() {
         addSubview(collectionView)
@@ -22,6 +23,7 @@ class MemosHomeBaseView: BaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
+    
 }
 
 extension MemosHomeBaseView {
@@ -29,6 +31,11 @@ extension MemosHomeBaseView {
         var configu = UICollectionLayoutListConfiguration(appearance: .plain)
         configu.showsSeparators = true
         
+        configu.trailingSwipeActionsConfigurationProvider = {
+          [weak self] indexPath in
+            self?.deleteAction?(indexPath)
+        }
+
         let layout = UICollectionViewCompositionalLayout.list(using: configu)
         
         return layout

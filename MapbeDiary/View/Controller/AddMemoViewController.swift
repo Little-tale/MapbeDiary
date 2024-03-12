@@ -75,8 +75,6 @@ struct memoModifyOutstruct {
         
         if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
             memoImage = UIImage(contentsOfFile: iamgePath)
-        } else {
-            memoImage = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
         }
         
     }
@@ -93,9 +91,8 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         homeView.backgroundColor = .systemGreen
         print(RealmRepository().printURL())
         subscribe()
-        navigationSetting()
         folderButtonSetting()
-        
+        buttonActionSetting()
         homeView.AddTitleDateView.imageChangeButton.addTarget(self, action: #selector(changeImageButtonClicked), for: .touchUpInside)
         homeView.detailTextView.delegate = self
     }
@@ -124,13 +121,19 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         present(alert, animated: true)
     }
     
-    func navigationSetting(){
-        let saveButton = CustomButton.saveCreate(title: AddViewSection.saveButtonText, target: self, action: #selector(saveButtonClicked))
-        let dismisButton = CustomButton.backCreate(target: self, action: #selector(backButtonClicked))
-        navigationItem.rightBarButtonItem = saveButton
-        navigationItem.leftBarButtonItem = dismisButton
+    func buttonActionSetting() {
+        homeView.backButton.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            backButtonClicked()
+        }), for: .touchUpInside)
+        
+        homeView.saveButton.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            saveButtonClicked()
+        }), for: .touchUpInside)
     }
     
+    // MARK: 폴더버튼 액션
     func folderButtonSetting(){
         homeView.folderButton.addTarget(self, action: #selector(sendFolderViewController), for: .touchUpInside)
     }
@@ -140,7 +143,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         print(#function)
     }
     
-    @objc
+
     func saveButtonClicked(){
         print(#function)
         homeView.textFieldList.forEach { [weak self] textfield in
@@ -239,7 +242,7 @@ extension AddMemoViewController {
             
             homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
             // 이미지
-            homeView.AddTitleDateView.imageView.image = model.memoImage
+            homeView.AddTitleDateView.imageView.image = model.memoImage ?? UIImage(named: ImageSection.defaultMarkerImage.rawValue)
             // 타이틀
             homeView.AddTitleDateView.titleTextField.text = model.title
             // 간편메모
@@ -254,7 +257,7 @@ extension AddMemoViewController {
 }
 
 extension AddMemoViewController {
-    @objc
+    
     func backButtonClicked() {
         // ismiss(animated: true)
         backDelegate?.backButtonClicked()
@@ -361,7 +364,7 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
                     value?.memoImage = image
                     self?.addViewModel.urlSuccessOutPut.value = value
                 } else {
-                    self?.addViewModel.modifyEnd?.memoImage = image
+                    self?.addViewModel.modifyEnd?.memoImage = image.resizeImage(newWidth: 30)
                     self?.homeView.AddTitleDateView.imageView.image = image
                     self?.addViewModel.modifyEnd?.modiFy = true
                 }

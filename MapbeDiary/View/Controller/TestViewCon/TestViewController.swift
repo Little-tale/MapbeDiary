@@ -12,6 +12,7 @@ import SnapKit
 class TestViewController: UIViewController{
     private let backView = UIView()
     let t = AddTitleDateImageView()
+ 
     
     let testSearchBar = UISearchBar()
     
@@ -26,7 +27,7 @@ class TestViewController: UIViewController{
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
-        
+
         
         t.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
@@ -41,6 +42,7 @@ class TestViewController: UIViewController{
         testNavi()
         backView.layer.cornerRadius = 24
         
+    
     }
     
     func testNavi(){
@@ -53,12 +55,14 @@ class TestViewController: UIViewController{
         testSearchBar.backgroundImage = UIImage()
         testSearchBar.setTextFieldBackground(color: UIColor.white, transparentBackground: true)
         testSearchBar.placeholder = "검색하세요~"
-
+        t.imageChangeButton.addTarget(self, action: #selector(test), for: .touchUpInside)
     }
     
     @objc
     func test(_ sender: UIButton) {
         print(sender)
+       
+        
     }
 }
 // let regex4 = "[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]"
