@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabbarCon.viewControllers = [TestViewController(),first,allList]
         let test = UINavigationController(rootViewController: AddMemoViewController())
-
+        
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {
             

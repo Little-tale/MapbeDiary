@@ -17,6 +17,8 @@ class AllMemoListViewModel {
     
     var outPutTrigger: Observable<AllMemoModel?> = Observable(nil)
     
+    var outPutCountBool: Observable<Bool?> = Observable(nil)
+    
     var realmError: Observable<RealmManagerError?> = Observable(nil)
     
     var repo = RealmRepository()
@@ -46,21 +48,23 @@ class AllMemoListViewModel {
     private func proceccing(folder: Folder){
         let memos = repo.findAllMemoAtFolder(folder: folder)
         outPutTrigger.value = AllMemoModel(folder: folder, Memo: memos)
+        if memos.isEmpty {
+            outPutCountBool.value = false
+        } else {
+            outPutCountBool.value = true
+        }
     }
     
-    // MARK: $$$ 메모 지우는거 해야해 Test
+    // MARK: 메모를 지웁니다!!
     private func deleteMemo(memo: Memo){
         do {
             try repo.deleteAllImageFromMemo(memoId: memo.id)
         } catch {
             realmError.value = error as? RealmManagerError
         }
-        let folder = SingleToneDataViewModel.shared.shardFolderOb.value
-        SingleToneDataViewModel.shared.shardFolderOb.value = nil
-        SingleToneDataViewModel.shared.shardFolderOb.value = folder
+        SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
     }
     deinit{
         print("AllMemoListViewModel", self  )
     }
-    
 }

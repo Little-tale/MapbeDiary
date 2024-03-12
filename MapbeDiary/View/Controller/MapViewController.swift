@@ -108,7 +108,6 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.mapView.removeAnnotations(anotaions)
     }
 
-
 }
 
 extension MapViewController {

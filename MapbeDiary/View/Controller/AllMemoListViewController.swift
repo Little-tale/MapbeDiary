@@ -23,12 +23,24 @@ class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
         navigationSetting()
         subscribe()
         test()
+        
+        
     }
     deinit {
         print("AllMemoListViewController",self)
     }
     func navigationSetting(){
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .medium)]
+    }
+    
+    func emptyImageSetting(){
+        let width = view.bounds.width
+        homeView.emptyLauout(screen: width)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        emptyImageSetting()
     }
 }
 
@@ -50,7 +62,6 @@ extension AllMemoListViewController {
                 cell.imageView.image = UIImage(named: "Image")
             }
             
-            
         }
         
         dataSource = UICollectionViewDiffableDataSource<Folder,Memo>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -64,12 +75,22 @@ extension AllMemoListViewController {
     }
     
     private func test(){
-        homeView.deleteAction = {[weak self] indexPath in
-            let action = UIContextualAction(style: .normal, title: "제거") { action, view, whatif in
+        homeView.swifeAction = {[weak self] indexPath in
+            
+            let action = UIContextualAction(style: .destructive, title: "제거") { action, view, whatif in
                 guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
                 self?.deleteAlert(memo: data)
+                whatif(true)
             }
-            return UISwipeActionsConfiguration(actions: [action])
+            let modifyAction = UIContextualAction(style: .normal, title: "세부수정") { action, view, whatIf in
+                guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
+                self?.modifyAction(memo: data)
+                whatIf(true)
+            }
+            
+            modifyAction.backgroundColor = .systemGreen
+            
+            return UISwipeActionsConfiguration(actions: [action, modifyAction])
         }
     }
     
@@ -78,6 +99,9 @@ extension AllMemoListViewController {
             guard let self else {return}
             homeView.allMemoViewModel.removeMemo.value = memo
         }
+    }
+    private func modifyAction(memo: Memo) {
+        print(#function)
     }
     
 }
@@ -93,7 +117,6 @@ extension AllMemoListViewController {
             
             // MARK: diff를 계산하지 않고 Reload한다.
             dataSource?.applySnapshotUsingReloadData(snaphot)
-
         }
     }
     private func subscribe(){
