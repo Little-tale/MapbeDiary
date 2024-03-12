@@ -67,7 +67,7 @@ extension AllMemoListViewController {
         homeView.deleteAction = {[weak self] indexPath in
             let action = UIContextualAction(style: .normal, title: "제거") { action, view, whatif in
                 guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
-                print(data)
+                self?.deleteAlert(memo: data)
             }
             return UISwipeActionsConfiguration(actions: [action])
         }
@@ -76,7 +76,7 @@ extension AllMemoListViewController {
     private func deleteAlert(memo: Memo){
         showAlert(title: "삭제", message: "지우시면 복구하실수 없습니다!", actionTitle: "삭제하기") { [weak self] action in
             guard let self else {return}
-            
+            homeView.allMemoViewModel.removeMemo.value = memo
         }
     }
     
@@ -87,15 +87,17 @@ extension AllMemoListViewController {
     private func snapShot(){
         if let data = homeView.allMemoViewModel.outPutTrigger.value {
             var snaphot = NSDiffableDataSourceSnapshot<Folder   ,Memo>()
+            
             snaphot.appendSections([data.folder])
             snaphot.appendItems(data.Memo,toSection: data.folder)
+            
             // MARK: diff를 계산하지 않고 Reload한다.
             dataSource?.applySnapshotUsingReloadData(snaphot)
-//            dataSource?.apply(snaphot, animatingDifferences: true)
+
         }
     }
     private func subscribe(){
-        SingleToneDataViewModel.shared.shardFolderOb.bind { [weak self] folder in
+        SingleToneDataViewModel.shared.allListFolderOut.bind { [weak self] folder in
             guard let self else { return }
             guard let folder else { return }
             homeView.allMemoViewModel.inputTrigger.value = folder
@@ -105,11 +107,16 @@ extension AllMemoListViewController {
             guard let result else { return }
             guard let self else { return }
             snapShot()
-            
             navigationItem.title = result.folder.folderName
         }
-
+        homeView.allMemoViewModel.realmError.bind {
+            [weak self] error in
+            guard let error else { return }
+            guard let self else { return }
+            showAPIErrorAlert(repo: error)
+        }
     }
+    
 }
 
 

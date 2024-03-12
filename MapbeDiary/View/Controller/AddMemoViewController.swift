@@ -93,8 +93,10 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         subscribe()
         folderButtonSetting()
         buttonActionSetting()
-        homeView.AddTitleDateView.imageChangeButton.addTarget(self, action: #selector(changeImageButtonClicked), for: .touchUpInside)
+        
         homeView.detailTextView.delegate = self
+        
+        homeView.AddTitleDateView.imageChangeButton.addTarget(self, action: #selector(changeImageButtonClicked), for: .touchUpInside)
     }
     
     @objc
@@ -172,10 +174,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         addViewModel.saveButtonTrigger.value = ()
         backDelegate?.backButtonClicked()
     }
-    deinit {
-        print("deinit",#function)
-    }
-    
+   
     func titleTestter(textField : UITextField) -> String{
         // 1. 텍스트가 비어있는지 부터
         if let textFieldText = textField.text,
@@ -193,6 +192,11 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         }
         return textField.placeholder ?? AddViewSection.defaultTitle
     }
+    
+    deinit {
+        print("deinit",#function)
+    }
+    
 }
 
 extension AddMemoViewController {

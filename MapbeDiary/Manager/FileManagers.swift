@@ -78,7 +78,8 @@ class FileManagers {
             return nil
         }
     }
-    
+    // MARK: 마커 오리지널 이미지를 가져옵니다.
+    /// 마커 오리지널 이미지를 가져옵니다.
     func loadImageOrignerMarker(memoId: String) -> String? {
         let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imagePath = memoPath.appendingPathComponent("\(memoId).jpeg")
@@ -89,9 +90,44 @@ class FileManagers {
         }
     }
     
-    
-    func removeMarkerImageAtMemo(memoIdString: String) {
+    // MARK: 마커 이미지를 제거합니다. 완전 성공 확인
+    func removeMarkerImageAtMemo(memoIdString: String) -> Bool {
         let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let imagePath = memoPath.appendingPathExtension("\(memoIdString).jpeg")
+        let imagePath = memoPath.appendingPathComponent("\(memoIdString).jpeg").path()
+        let markerPath = memoPath.appendingPathComponent("\(memoIdString)-40.jpeg").path()
+        if fileManager.fileExists(atPath: imagePath) {
+            do {
+                try fileManager.removeItem(atPath: imagePath)
+            } catch {
+                return false
+            }
+        }
+        if fileManager.fileExists(atPath: markerPath) {
+            do {
+                try fileManager.removeItem(atPath: markerPath)
+            } catch {
+                return false
+            }
+        }
+        return true
     }
+    
+    // MARK : 이미지 리스트 파일을 제거합니다 반복문 부탁드립니다.
+    func removeImageListAtMemo(memoidString: String ,ImageIdString: String) -> Bool{
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
+        let imagePath = memoPath.appendingPathComponent("\(memoidString)/\(ImageIdString).jpeg")
+        
+        if fileManager.fileExists(atPath: imagePath.path) {
+            do {
+                try fileManager.removeItem(at: imagePath)
+                return true
+            } catch {
+                return false
+            }
+        }
+        return true
+    }
+    
+    
 }

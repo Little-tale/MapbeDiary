@@ -80,6 +80,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
             addCustomNoFocusforMemo(memo: memo)
         }
     }
+    
     // MARK: 메모를 통해 커스텀 어노테이션 설정
     func addCustomNoFocusforMemo(memo: Memo){
         let location = memo.location
@@ -107,14 +108,17 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.mapView.removeAnnotations(anotaions)
     }
 
+
 }
 
 extension MapViewController {
     func subscribe(){
-        SingleToneDataViewModel.shared.shardFolderOb.bind { [weak self] folder in
+        SingleToneDataViewModel.shared.mapViewFloderOut.bind { [weak self] folder in
             guard let self else { return }
             guard let folder else { return }
             self.folder = folder
+            removeAll()
+            addTestAnnotations()
         }
     }
 }
@@ -266,6 +270,7 @@ extension MapViewController: CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
         homeView.mapView.setRegion(region, animated: true)
     }
+    // MARK: @@@@컴팩트 알아보기
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkDeviewlocationAuthorization()

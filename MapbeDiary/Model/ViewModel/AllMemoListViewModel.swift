@@ -17,13 +17,15 @@ class AllMemoListViewModel {
     
     var outPutTrigger: Observable<AllMemoModel?> = Observable(nil)
     
+    var realmError: Observable<RealmManagerError?> = Observable(nil)
+    
     var repo = RealmRepository()
     
     init(){
      
         inputTrigger.bind { [weak self] folder in
-            guard let self else {return}
-            guard let folder else {return}
+            guard let self else { return }
+            guard let folder else { return }
             proceccing(folder:folder)
         }
         reloadTrigger.bind { [weak self] void in
@@ -44,13 +46,19 @@ class AllMemoListViewModel {
     private func proceccing(folder: Folder){
         let memos = repo.findAllMemoAtFolder(folder: folder)
         outPutTrigger.value = AllMemoModel(folder: folder, Memo: memos)
-        
-    }
-    // MARK: $$$ 메모 지우는거 해야해
-    private func deleteMemo(memo: Memo){
-        // repo.deleteImageFromMemo(memoId: memo.id, imageName: <#T##String#>)
     }
     
+    // MARK: $$$ 메모 지우는거 해야해 Test
+    private func deleteMemo(memo: Memo){
+        do {
+            try repo.deleteAllImageFromMemo(memoId: memo.id)
+        } catch {
+            realmError.value = error as? RealmManagerError
+        }
+        let folder = SingleToneDataViewModel.shared.shardFolderOb.value
+        SingleToneDataViewModel.shared.shardFolderOb.value = nil
+        SingleToneDataViewModel.shared.shardFolderOb.value = folder
+    }
     deinit{
         print("AllMemoListViewModel", self  )
     }

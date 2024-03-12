@@ -11,8 +11,8 @@ import Foundation
 
 class AddViewModel {
     // ------- In Put ------
+    // lat: String, lon: String, folder: Folder
     let coordinateTrigger: Observable<(addViewStruct)?> = Observable(nil)
-    //let coordinateModifyTrriger: Observable?
     
     let changeFolder: Observable<Folder?> = Observable(nil)
     
@@ -36,6 +36,8 @@ class AddViewModel {
     let repository = RealmRepository()
     var titleName = String()
     var searchTitle: String?
+    
+    var saveEnd : memoModifyOutstruct?
     var modifyEnd : memoModifyOutstruct?
     
     init(){
@@ -43,7 +45,6 @@ class AddViewModel {
             guard let self else {return}
             guard let coordi else {return}
             apiRequest(lat: coordi.lat, lon: coordi.lon, folder: coordi.folder)
-            print("@@!!",coordi.folder)
         }
         changeFolder.bind {[weak self] folder in
             guard let self else {return}
@@ -61,7 +62,7 @@ class AddViewModel {
             findMemo(memoId:memoId)
         }
     }
-    
+    // MARK: API 요청을 통해 현지 정보를 가져옵니다.
     private func apiRequest(lat: String, lon: String, folder: Folder){
         print(lat, lon)
         URLSessionManager.shared.fetch(type: KaKakaoCordinateModel.self, api: KakaoApiModel.cordinate(x: lon, y: lat)) {
@@ -69,26 +70,23 @@ class AddViewModel {
             guard let self else { return }
             switch results {
             case .success(let success):
-                
                 proccing(model:success, folder: folder)
             case .failure(let fail):
-                print("@@fail 통신실패")
                 urlErrorOutPut.value = fail
-                print(fail.errorMessage)
             }
         }
     }
-    
+    // MARK: API 모델을 알맞은 모델로 수정합니다.
     private func proccing(model : KaKakaoCordinateModel, folder: Folder) {
-        
         var data = addViewOutStruct(title:AddViewSection.defaultTitle,titlePlacHolder: model.documents.first?.roadAddress.addressName, folder: folder)
+        
         
         if let searchTitle {
             data.titlePlacHolder = searchTitle
         }
-        
         urlSuccessOutPut.value = data
     }
+    
     
     private func findFolderName(folder: Folder) {
         guard coordinateTrigger.value == nil else { return }
@@ -129,8 +127,7 @@ class AddViewModel {
     func imagePag(){
         guard let modifyEnd = modifyEnd,
         let memoImage = modifyEnd.memoImage else { return }
-        
-        
+    
         if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.memoId, image: memoImage) {
             realmError.value = RealmManagerError.canModifiMemo
         } else {

@@ -139,40 +139,7 @@ class RealmRepository {
             throw RealmManagerError.cantAddMemoInFolder
         }
     }
-    // MARK: 뭔가 꼬임 이거 재수정 바람 목적과 맞지 않음
-    func makeMemoAtFolder(folder: Folder, model: addViewOutStruct, location: Location) throws {
-        let memo = try? makeMemoModel(addViewStruct: model, location: location)
-        guard let memo else { return }
-        
-        if let image = model.memoImage {
-            let imageUUID = UUID().uuidString
-            let imagePath = getFolderPathForMemoId(memoId: memo.id).appendingPathComponent(imageUUID)
-            
-            // UIImage를 파일 시스템에 저장
-            if let imageData = image.jpegData(compressionQuality: 0.8) {
-                do {
-                    try imageData.write(to: imagePath)
-                    let imageObject = ImageObject(imagename: imageUUID, index: memo.imagePaths.count)
-                    do {
-                        try realm.write {
-                            memo.imagePaths.append(imageObject)
-                        }
-                    } catch {
-                        throw RealmManagerError.cantAddImage
-                    }
-                } catch {
-                    throw RealmManagerError.cantAddImage
-                }
-            }
-        }
-        do {
-            try realm.write {
-                folder.memolist.append(memo)
-            }
-        } catch {
-            throw RealmManagerError.cantAddMemoInFolder
-        }
-    }
+
     
     func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location) throws {
         let memo = try? makeMemoModel(addViewStruct: model, location: location)
@@ -377,16 +344,68 @@ class RealmRepository {
         }
     }
     
-    func deleteAllImageFromMemo(memoId: ObjectId) {
-        
+    func deleteAllImageFromMemo(memoId: ObjectId) throws {
+        let memoIdString = memoId.stringValue
         // 1. 마커 이미지 제거
+        if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: memoIdString){
+            throw RealmManagerError.cantDeleteImage
+        }
         
         // 2. 이미지 리스트 파일들 제거
+        let memo = realm.objects(memoModel).where { $0.id == memoId }.first
+        guard let memo else { throw RealmManagerError.cantDeleteMemo }
+        let memoImageList = Array(memo.imagePaths)
         
+        memoImageList.forEach { [weak self] imageObject in
+            guard self != nil else { return }
+            if !FileManagers.shard.removeImageListAtMemo(memoidString: memoIdString, ImageIdString: imageObject.id.stringValue) {
+            }
+        }
         // 3. 메모 제거
-        
-        
+        do {
+            try realm.write {
+                realm.delete(memo)
+            }
+        } catch {
+            throw RealmManagerError.cantDeleteMemo
+        }
     }
  
     
 }
+
+
+// MARK: 뭔가 꼬임 이거 재수정 바람 목적과 맞지 않음
+//    func makeMemoAtFolder(folder: Folder, model: addViewOutStruct, location: Location) throws {
+//        let memo = try? makeMemoModel(addViewStruct: model, location: location)
+//        guard let memo else { return }
+//
+//        if let image = model.memoImage {
+//            let imageUUID = UUID().uuidString
+//            let imagePath = getFolderPathForMemoId(memoId: memo.id).appendingPathComponent(imageUUID)
+//
+//            // UIImage를 파일 시스템에 저장
+//            if let imageData = image.jpegData(compressionQuality: 0.8) {
+//                do {
+//                    try imageData.write(to: imagePath)
+//                    let imageObject = ImageObject(imagename: imageUUID, index: memo.imagePaths.count)
+//                    do {
+//                        try realm.write {
+//                            memo.imagePaths.append(imageObject)
+//                        }
+//                    } catch {
+//                        throw RealmManagerError.cantAddImage
+//                    }
+//                } catch {
+//                    throw RealmManagerError.cantAddImage
+//                }
+//            }
+//        }
+//        do {
+//            try realm.write {
+//                folder.memolist.append(memo)
+//            }
+//        } catch {
+//            throw RealmManagerError.cantAddMemoInFolder
+//        }
+//    }
