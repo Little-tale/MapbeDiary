@@ -30,6 +30,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
         snapShot()
         
         homeView.backButton.addTarget(self, action: #selector(onlyDismiss), for: .touchUpInside)
+        
     }
     
     private func collectionViewDataSource(){
@@ -67,7 +68,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
 extension SearchViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let datas = searchViewModel.outPutModel.value else { return }
+        guard searchViewModel.outPutModel.value != nil else { return }
         // let data = datas[indexPath.item]
         let realData = dataSource?.itemIdentifier(for: indexPath)
         guard let realData else { return }
@@ -86,7 +87,7 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
         
         guard let index =  indexPaths.map({ $0.row }).max() else {return}
         guard let end = searchViewModel.endPageBool else {return}
-        guard let currnt = searchViewModel.currentPage.value else {return}
+        guard searchViewModel.currentPage.value != nil else {return}
         print(searchViewModel.pageNation)
         
         if searchViewModel.pageNation - 2 < index,
@@ -113,18 +114,19 @@ extension SearchViewController {
             var snapshot = NSDiffableDataSourceSnapshot<Section,Document>()
             snapshot.appendSections([.search]) //
             snapshot.appendItems(kakaoData)
-            dataSource?.apply(snapshot, animatingDifferences: true)
+            dataSource?.apply(snapshot, animatingDifferences: true) 
         }
     }
     
 }
-
+// MARK: 서치바 서치 할시
 extension SearchViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchViewModel.outPutModel.value = []
         searchViewModel.currentPage.value = 1
         searchViewModel.pageNation = 15
         searchViewModel.searchTextOb.value?.searchText = searchBar.text ?? ""
+        view.endEditing(true)
     }
 }
 

@@ -98,9 +98,9 @@ class AddViewModel {
     }
     
     private func saveButtonClicked(){
-        guard let start = coordinateTrigger.value else { return }
         
         if let result = urlSuccessOutPut.value {
+            guard let start = coordinateTrigger.value else { return }
             print("마커",result.memoImage ?? "")
             let location = Location(lat: start.lat, lon: start.lon)
             print(result)
@@ -113,7 +113,10 @@ class AddViewModel {
         } else {
             guard let modify = memoSuccessOutPut.value else { return }
             do {
-                try repository.modifyMemo(structure: modify)
+                guard let modifyEnd else {return}
+                print("###",modifyEnd)
+                try repository.modifyMemo(structure: modifyEnd)
+                
             } catch (let error) {
                 realmError.value = error as? RealmManagerError
             }

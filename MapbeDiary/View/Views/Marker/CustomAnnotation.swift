@@ -40,13 +40,13 @@ class ArtWorkMarkerView: MKAnnotationView {
             }
             
             if let imagePath = FileManagers.shard.loadImageMarkerImage(memoId: memoId) {
-                let image = UIImage(contentsOfFile: imagePath)?.resizeImage(newWidth: 30)
+                let image = UIImage(contentsOfFile: imagePath)?.resizeImage(newWidth: 50)
                 
-                centerOffset = CGPoint(x: 0, y: -30)
+                centerOffset = CGPoint(x: 0, y: -50)
                 calloutOffset = CGPoint(x: 0, y: 10)
                 self.image = image
             } else {
-                image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 40)
+                image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 30)
                 canShowCallout = true
                 centerOffset = CGPoint(x: 0, y: -30)
                 calloutOffset = CGPoint(x: 0, y: 10)

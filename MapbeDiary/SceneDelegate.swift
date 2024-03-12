@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 import IQKeyboardManagerSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -16,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         // MARK: 아이큐 키보드
@@ -24,14 +24,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
         
-        var tabbarCon = UITabBarController()
+        let tabbarCon = UITabBarController()
         tabbarCon.tabBar.backgroundColor = .white
+        
         let first = MapViewController()
         first.tabBarItem.image = UIImage(systemName: "star")
-        tabbarCon.viewControllers = [TestViewController(),first]
+        
+        let allList = AllMemoListViewController()
+        allList.tabBarItem.image = UIImage(systemName: "star")
+        
+        tabbarCon.viewControllers = [TestViewController(),first,allList]
         let test = UINavigationController(rootViewController: AddMemoViewController())
-        window?.rootViewController = tabbarCon //test // tabbarCon
-        window?.makeKeyAndVisible()
+        
+        let repository = RealmRepository()
+        if let folder = repository.findAllFolderArray().first {
+            SingleToneDataViewModel.shared.shardFolderOb.value = folder
+            window?.rootViewController = tabbarCon
+            window?.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

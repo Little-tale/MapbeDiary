@@ -37,6 +37,7 @@ struct addViewOutStruct {
     var detailContents: String?
     var memoId: String?
     
+    
     init(title: String?, titlePlacHolder: String?, folder: Folder, folderImage: String? = nil) {
         var text = title ?? AddViewSection.defaultTitle
         print("text",text)
@@ -61,6 +62,7 @@ struct memoModifyOutstruct {
     var folder: Folder
     var detailContents: String?
     var memoId: String
+    var modiFy = false
     
     init(memo: Memo, folder:Folder) {
         self.title = memo.title
@@ -144,7 +146,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         homeView.textFieldList.forEach { [weak self] textfield in
             guard let self else { return }
             var value = addViewModel.urlSuccessOutPut.value
-            var modify = addViewModel.memoSuccessOutPut.value
+            var modify = addViewModel.modifyEnd
             switch textfield.tag {
             case 0:
                 value?.title = titleTestter(textField: textfield)
@@ -163,7 +165,6 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
             } else {
                 addViewModel.modifyEnd = modify
             }
-            
         }
         addViewModel.saveButtonTrigger.value = ()
         backDelegate?.backButtonClicked()
@@ -323,6 +324,8 @@ extension AddMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
             addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
         } else {
             addViewModel.modifyEnd?.memoImage = pickImage
+            addViewModel.modifyEnd?.modiFy = true
+            homeView.AddTitleDateView.imageView.image = pickImage
         }
         
     }
@@ -359,6 +362,8 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
                     self?.addViewModel.urlSuccessOutPut.value = value
                 } else {
                     self?.addViewModel.modifyEnd?.memoImage = image
+                    self?.homeView.AddTitleDateView.imageView.image = image
+                    self?.addViewModel.modifyEnd?.modiFy = true
                 }
                 
             }

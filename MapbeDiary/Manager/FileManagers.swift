@@ -55,17 +55,26 @@ class FileManagers {
             return false
         }
     }
+    func saveMarkerZipImageForMemo(memoId: String, image: UIImage) -> Bool{
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return false}
+        let memoImagesDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagePath = memoImagesDirectory.appendingPathComponent("\(memoId)-40.jpeg")
+        do {
+            try imageData.write(to: imagePath)
+            return true
+        } catch {
+            return false
+        }
+    }
     
     // MARK: 마커이미지를 가져옵니다.
     func loadImageMarkerImage(memoId: String) -> String?{
         let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let imagePath = memoPath.appendingPathComponent("\(memoId).jpeg")
+        let imagePath = memoPath.appendingPathComponent("\(memoId)-40.jpeg")
         if FileManager.default.fileExists(atPath: imagePath.path()){
             return imagePath.path()
         } else {
             return nil
         }
     }
-    
-    
 }

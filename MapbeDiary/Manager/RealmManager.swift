@@ -67,12 +67,18 @@ class RealmRepository {
     func modifyMemo(structure: memoModifyOutstruct) throws {
         do {
             try realm.write {
-                realm.create(Memo.self, value: [
-                    "title": structure.title,
-                    "contents": structure.content,
-                    "phoneNumber": structure.phoneNumber ?? "",
-                    "detailContents": structure.detailContents ?? ""
-                ])
+                do {
+                  let id = try ObjectId(string: structure.memoId)
+                    realm.create(Memo.self, value: [
+                        "id": id,
+                        "title": structure.title,
+                        "contents": structure.content ?? "",
+                        "phoneNumber": structure.phoneNumber ?? "",
+                        "detailContents": structure.detailContents ?? ""
+                    ], update: .modified)
+                } catch {
+                    throw RealmManagerError.cantModifyMemo
+                }
             }
         } catch {
             throw RealmManagerError.cantModifyMemo
@@ -175,6 +181,11 @@ class RealmRepository {
         if let image = model.memoImage {
             if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, image: image) {
                 print("makeMemoMarkerAtFolders",image)
+                let imageZip = image.resizingImage(targetSize: CGSize(width: 40, height: 30))
+                if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, image: imageZip) {
+                } else {
+                    throw RealmManagerError.cantAddImage
+                }
             }else {
                 throw RealmManagerError.cantAddImage
             }
@@ -211,6 +222,11 @@ class RealmRepository {
     func findAllMemoArray() -> [Memo] {
         let data = findAllMemo()
         return Array(data)
+    }
+    func findAllMemoAtFolder(folder: Folder) -> [Memo] {
+        let folderList = folder.memolist
+        let memos = Array(folderList)
+        return memos
     }
     
     // MARK: 모든 폴더를 가져옵니다. 단 Array 입니다.

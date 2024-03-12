@@ -11,30 +11,29 @@ import CoreLocation
 import Toast
 import FloatingPanel
 
-struct testV {
-    var title: String
-    var lat : String
-    var lon : String
-    var image: String?
+
+struct PanelConfiguration {
+    var coordinate: CLLocationCoordinate2D?
+    var configureAddMemoViewController: ((AddMemoViewController) -> Void)?
 }
 
 class MapViewController: BaseHomeViewController<MapHomeView> {
     
     var floatPanel: FloatingPanelController?
     
-    var folder = RealmRepository().findAllFolderArray()[0]
+    var folder: Folder?
     
     var repository = RealmRepository()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        subscribe()
         settingMapView() /// 맵뷰 세팅
         
-        checkDeviewlocationAuthorization()
+        checkDeviewlocationAuthorization() // 디바이스 권한
     
-        addTestAnnotations()
+        addTestAnnotations() // 시작할때 폴더 기준으로
         
         homeView.location = {[weak self] result in
             print("asdsadsad")
@@ -45,7 +44,6 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
             addLongAnnotation(cl2: result) // 롱프레스
         }
         homeView.searchBar.delegate = self
-        
     }
     // MARK: 맵뷰 세팅
     func settingMapView(){
@@ -109,6 +107,17 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     }
 
 }
+
+extension MapViewController {
+    func subscribe(){
+        SingleToneDataViewModel.shared.shardFolderOb.bind { [weak self] folder in
+            guard let self else { return }
+            guard let folder else { return }
+            self.folder = folder
+        }
+    }
+}
+
 // MARK: 서치바 딜리게이트 -> 실제론 그저 다음뷰에서 처리하게 넘김
 extension MapViewController : UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -148,6 +157,7 @@ extension MapViewController : UISearchBarDelegate {
     
 }
 
+
 extension MapViewController: MKMapViewDelegate { // 수정해
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -182,10 +192,6 @@ extension MapViewController: MKMapViewDelegate { // 수정해
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
     // MARK: 롱프레스 업데이트 플로팅 패널
-    struct PanelConfiguration {
-        var coordinate: CLLocationCoordinate2D?
-        var configureAddMemoViewController: ((AddMemoViewController) -> Void)?
-    }
 
     func updateFloatingPanel(with configuration: PanelConfiguration) {
         removeExistingPanelIfNeeded { [weak self] in
@@ -194,6 +200,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
     }
 
     private func setupPanel(with configuration: PanelConfiguration) {
+        guard let folder else { return }
         let newPanel = settingPanel()
         
         if let navigationController = newPanel.contentViewController as? UINavigationController,
@@ -223,8 +230,8 @@ extension MapViewController: FloatingPanelControllerDelegate {
             completion()
         }
     }
-    
 }
+
 // MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
     func backButtonClicked() {
