@@ -15,6 +15,8 @@ class MemosHomeBaseView: BaseView {
         let view = UIImageView(image:  UIImage(named: "emptyFolder"))
         return view
     }()
+    
+    
     private let emptyMent: UILabel = {
         let view = UILabel()
         let text = "어랏! 아무것도 없어요!" // 나중에 !까지만 바꾸게

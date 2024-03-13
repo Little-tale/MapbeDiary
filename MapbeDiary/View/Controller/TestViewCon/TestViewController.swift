@@ -7,10 +7,11 @@
 
 import UIKit
 import SnapKit
-
+import AnimatedGradientView
 
 class TestViewController: UIViewController{
     private let backView = UIView()
+   
     let t = AddTitleDateImageView()
  
     
@@ -27,7 +28,6 @@ class TestViewController: UIViewController{
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
-
         
         t.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
@@ -42,7 +42,7 @@ class TestViewController: UIViewController{
         testNavi()
         backView.layer.cornerRadius = 24
         
-    
+        
     }
     
     func testNavi(){

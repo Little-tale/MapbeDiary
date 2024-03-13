@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let allList = UINavigationController(rootViewController: AllMemoListViewController())
         allList.tabBarItem.image = UIImage(systemName: "star")
         
-        tabbarCon.viewControllers = [TestViewController(),first,allList]
+        tabbarCon.viewControllers = [FirstMakeFolderViewControlelr(),first,allList]
         let test = UINavigationController(rootViewController: AddMemoViewController())
         
         let repository = RealmRepository()

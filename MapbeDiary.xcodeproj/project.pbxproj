@@ -53,6 +53,9 @@
 		7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533C2B9C406000B712BC /* ErrorSection.swift */; };
 		7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C533E2B9C716E00B712BC /* DateFormetter.swift */; };
 		7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */; };
+		7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */; };
+		7B6C201D2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */; };
+		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
 		7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */; };
 		7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373342B9D86CC0016E851 /* SearchViewController.swift */; };
 		7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373362B9D86FB0016E851 /* SearchBaseView.swift */; };
@@ -133,6 +136,8 @@
 		7B1C533C2B9C406000B712BC /* ErrorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSection.swift; sourceTree = "<group>"; };
 		7B1C533E2B9C716E00B712BC /* DateFormetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormetter.swift; sourceTree = "<group>"; };
 		7B1C53402B9C7CAB00B712BC /* TextFieldSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSection.swift; sourceTree = "<group>"; };
+		7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderBaseView.swift; sourceTree = "<group>"; };
+		7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderViewControlelr.swift; sourceTree = "<group>"; };
 		7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
 		7BA373342B9D86CC0016E851 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BA373362B9D86FB0016E851 /* SearchBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseView.swift; sourceTree = "<group>"; };
@@ -166,6 +171,7 @@
 				7B1137562B99A89100D6BBD1 /* SnapKit in Frameworks */,
 				7B1137492B99A2E400D6BBD1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */,
+				7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */,
 				7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */,
 				7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */,
 				7B1137442B99A27700D6BBD1 /* Realm in Frameworks */,
@@ -297,6 +303,7 @@
 				7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */,
 				7BA373342B9D86CC0016E851 /* SearchViewController.swift */,
 				7BB8ECC72B9F487900C88F17 /* AllMemoListViewController.swift */,
+				7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -310,6 +317,7 @@
 				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
 				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
 				7BB8ECC32B9F3AAC00C88F17 /* MemosHomeBaseView.swift */,
+				7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -450,6 +458,7 @@
 				7B11375B2B99A8C000D6BBD1 /* IQKeyboardManagerSwift */,
 				7B11375E2B99A8E200D6BBD1 /* DGCharts */,
 				7B1137892B99C2F100D6BBD1 /* Toast */,
+				7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -532,6 +541,7 @@
 				7B11375A2B99A8C000D6BBD1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */,
 				7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -628,6 +638,7 @@
 				7B1C53412B9C7CAB00B712BC /* TextFieldSection.swift in Sources */,
 				7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
+				7B6C201D2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift in Sources */,
 				7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmManager.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
@@ -647,6 +658,7 @@
 				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
+				7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
 				7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */,
@@ -1066,6 +1078,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1118,6 +1138,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
+			productName = TextFieldEffects;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
