@@ -14,6 +14,8 @@ class MapHomeView: BaseView {
     let mapView = MKMapView(frame: .zero)
     let searchBar = UISearchBar(frame: .zero)
     
+    var mapviewModel = MapViewModel()
+    
     // MARK: 로케이션 메니저
     var locationManager: CLLocationManager!
     

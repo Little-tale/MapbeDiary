@@ -7,12 +7,23 @@
 
 import Foundation
 
+struct addModel {
+    let lat: String
+    let lon: String
+    var folder: Folder
+    
+    init(lat: String, lon: String, folder: Folder) {
+        self.lat = lat
+        self.lon = lon
+        self.folder = folder
+    }
+}
 
 
 class AddViewModel {
     // ------- In Put ------
     // lat: String, lon: String, folder: Folder
-    let coordinateTrigger: Observable<(addViewStruct)?> = Observable(nil)
+    let coordinateTrigger: Observable<(addModel)?> = Observable(nil)
     
     let changeFolder: Observable<Folder?> = Observable(nil)
     
@@ -20,6 +31,10 @@ class AddViewModel {
     
     // MARK: 수정시 Input ------
     let modifyTrigger: Observable<String?> = Observable(nil)
+    
+    
+    // MARK: 공통 iNput -------
+    
     
     // ------- Out Put -----
     let urlSuccessOutPut: Observable<addViewOutStruct?> = Observable(nil)
@@ -31,6 +46,7 @@ class AddViewModel {
     let urlErrorOutPut: Observable<URLSessionManagerError?> = Observable(nil)
     
     let realmError: Observable<RealmManagerError?> = Observable(nil)
+    
     
     // ------- Static -------
     let repository = RealmRepository()
@@ -114,7 +130,7 @@ class AddViewModel {
                 guard let modifyEnd else {return}
                 print("###",modifyEnd)
                 try repository.modifyMemo(structure: modifyEnd)
-                if let image = modifyEnd.memoImage {
+                if let image = modifyEnd.markerImage {
                     imagePag()
                 }
             } catch (let error) {
@@ -126,12 +142,12 @@ class AddViewModel {
     // MARK: 이미지 저장 수정해야함
     func imagePag(){
         guard let modifyEnd = modifyEnd,
-        let memoImage = modifyEnd.memoImage else { return }
+        let memoImage = modifyEnd.markerImage else { return }
     
-        if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.memoId, image: memoImage) {
+        if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.locationMemoId, image: memoImage) {
             realmError.value = RealmManagerError.canModifiMemo
         } else {
-            if !FileManagers.shard.saveMarkerImageForMemo(memoId: modifyEnd.memoId, image: memoImage) {
+            if !FileManagers.shard.saveMarkerImageForMemo(memoId: modifyEnd.locationMemoId, image: memoImage) {
                 realmError.value = RealmManagerError.canModifiMemo
             }
         }
@@ -155,6 +171,13 @@ class AddViewModel {
             case .failure(let failure):
                 print(failure.alertMessage)
             }
+        }
+    }
+    
+    
+    private func textFiledTestster(string: String){
+        if string.count >= 16 {
+            
         }
     }
 }

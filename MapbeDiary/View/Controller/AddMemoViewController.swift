@@ -13,17 +13,7 @@ import Toast
 protocol BackButtonDelegate: AnyObject {
     func backButtonClicked()
 }
-struct addViewStruct {
-    let lat: String
-    let lon: String
-    var folder: Folder
-    
-    init(lat: String, lon: String, folder: Folder) {
-        self.lat = lat
-        self.lon = lon
-        self.folder = folder
-    }
-}
+
 
 struct addViewOutStruct {
     var title: String
@@ -33,10 +23,9 @@ struct addViewOutStruct {
     var folderimage: String
     var regDate = Date() // 일단 대기
     var memoImage: UIImage?
+
     var folder: Folder
-    var detailContents: String?
     var memoId: String?
-    
     
     init(title: String?, titlePlacHolder: String?, folder: Folder, folderImage: String? = nil) {
         var text = title ?? AddViewSection.defaultTitle
@@ -47,8 +36,6 @@ struct addViewOutStruct {
         self.folder = folder
         self.content = ""
         self.folderimage = folderImage ?? ImageSection.defaultFolderImage.rawValue
-        
-        
     }
 }
 
@@ -58,29 +45,29 @@ struct memoModifyOutstruct {
     var phoneNumber: String?
     var folderimage: String?
     var regDate: Date
-    var memoImage: UIImage?
+    var markerImage: UIImage?
     var folder: Folder
-    var detailContents: String?
-    var memoId: String
+    var locationMemoId: String
     var modiFy = false
     
-    init(memo: Memo, folder:Folder) {
+    init(memo: LocationMemo, folder:Folder) {
         self.title = memo.title
         self.content = memo.contents
         self.phoneNumber = memo.phoneNumber
         self.regDate = memo.regdate
         self.folder = folder
-        self.detailContents = memo.detailContents
-        self.memoId = memo.id.stringValue
+        self.locationMemoId = memo.id.stringValue
         
         if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
-            memoImage = UIImage(contentsOfFile: iamgePath)
+            markerImage = UIImage(contentsOfFile: iamgePath)
         }
         
     }
 }
 
 final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
+    
+    
     var addViewModel = AddViewModel()
     
     // delegate
@@ -93,8 +80,6 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         subscribe()
         folderButtonSetting()
         buttonActionSetting()
-        
-        homeView.detailTextView.delegate = self
         
         homeView.AddTitleDateView.imageChangeButton.addTarget(self, action: #selector(changeImageButtonClicked), for: .touchUpInside)
     }
@@ -173,6 +158,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
         }
         addViewModel.saveButtonTrigger.value = ()
         backDelegate?.backButtonClicked()
+        SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
     }
    
     func titleTestter(textField : UITextField) -> String{
@@ -246,16 +232,16 @@ extension AddMemoViewController {
             
             homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
             // 이미지
-            homeView.AddTitleDateView.imageView.image = model.memoImage ?? UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+            homeView.AddTitleDateView.imageView.image = model.markerImage ?? UIImage(named: ImageSection.defaultMarkerImage.rawValue)
             // 타이틀
             homeView.AddTitleDateView.titleTextField.text = model.title
             // 간편메모
             homeView.AddTitleDateView.simpleMemoTextField.text = model.content
             // 전화번호
             homeView.phoneTextField.text = model.phoneNumber
-            // 디테일
-            homeView.detailTextView.text = model.detailContents
         }
+        
+        
        
     }
 }
@@ -330,7 +316,7 @@ extension AddMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
         if addViewModel.coordinateTrigger.value != nil {
             addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
         } else {
-            addViewModel.modifyEnd?.memoImage = pickImage
+            addViewModel.modifyEnd?.markerImage = pickImage
             addViewModel.modifyEnd?.modiFy = true
             homeView.AddTitleDateView.imageView.image = pickImage
         }
@@ -368,7 +354,7 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
                     value?.memoImage = image
                     self?.addViewModel.urlSuccessOutPut.value = value
                 } else {
-                    self?.addViewModel.modifyEnd?.memoImage = image.resizeImage(newWidth: 30)
+                    self?.addViewModel.modifyEnd?.markerImage = image.resizeImage(newWidth: 30)
                     self?.homeView.AddTitleDateView.imageView.image = image
                     self?.addViewModel.modifyEnd?.modiFy = true
                 }
@@ -378,17 +364,3 @@ extension AddMemoViewController: PHPickerViewControllerDelegate {
     }
 }
 
-extension AddMemoViewController: UITextViewDelegate{
-    func textViewDidChange(_ textView: UITextView) {
-        if addViewModel.coordinateTrigger.value != nil {
-            var value = addViewModel.urlSuccessOutPut.value
-            value?.detailContents = textView.text
-            addViewModel.urlSuccessOutPut.value = value
-          
-        } else {
-            addViewModel.modifyEnd?.detailContents = textView.text
-        }
-        
-    }
-    
-}

@@ -13,10 +13,12 @@ final class AddBaseView: BaseView {
     let AddTitleDateView = AddTitleDateImageView()
     let folderButton: UIButton = CustomButton.folderButton()
     
+    let viewModel = TextFiledTesterViewModel()
+    
     let saveButton: UIButton = {
         let view = UIButton()
         var configu = UIButton.Configuration.plain()
-        configu.title = "저장"
+        configu.title = "저장" 
         view.configuration = configu
         return view
     }()
@@ -34,14 +36,11 @@ final class AddBaseView: BaseView {
        let view = UILabel()
         view.text = AddViewSection.phoneNumberTextLabel.placeHolder
         view.textColor = .black
-        view.font = .systemFont(ofSize: 12, weight: .bold)
+        view.font = JHFont.UIKit.bo12
         return view
     }()
 
     let phoneTextField = UITextField(frame: .zero)
-    
-    var textFieldClosure: ((UITextField) -> Void)?
-    
     
     let stackView: UIStackView = {
        let view = UIStackView()
@@ -51,16 +50,6 @@ final class AddBaseView: BaseView {
         view.alignment = .center
         return view
     }()
-    
-    private var detailTextTitle: UILabel = {
-        let view = UILabel(frame: .zero)
-        view.font = .systemFont(ofSize: 14, weight: .bold)
-        view.text = "자세한 이야기"
-        return view
-    }()
-    
-    var detailTextView = PlaceholderTextView()
-    
     
     lazy var textFieldList = [AddTitleDateView.titleTextField, AddTitleDateView.simpleMemoTextField, phoneTextField]
     
@@ -73,8 +62,6 @@ final class AddBaseView: BaseView {
         stackView.addArrangedSubview(phonNumberLabel)
         stackView.addArrangedSubview(phoneTextField)
         backView.addSubview(folderButton)
-        backView.addSubview(detailTextTitle)
-        backView.addSubview(detailTextView)
         
     }
     
@@ -112,15 +99,6 @@ final class AddBaseView: BaseView {
             make.top.equalTo(stackView.snp.bottom).offset(8)
             make.height.equalTo(30)
         }
-        detailTextTitle.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(backView).inset(12)
-            make.top.equalTo(folderButton.snp.bottom).offset(6)
-        }
-        detailTextView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(backView).inset(12)
-            make.top.equalTo(detailTextTitle.snp.bottom).offset(8)
-            make.height.equalTo(150)
-        }
     }
     
     
@@ -138,12 +116,11 @@ final class AddBaseView: BaseView {
         backView.layer.cornerRadius = 24
         backView.backgroundColor = .white
         
-        
         phonNumberLabel.textAlignment = .center
+        
         AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
         
-        
-        detailTextView.placeholderText = "자세한 메모는 여기에~!"
+        textFieldTester()
     }
     
     private func textFieldSetting(){
@@ -162,5 +139,29 @@ final class AddBaseView: BaseView {
         }
     }
     
-    
+    private func textFieldTester(){
+        textFieldList.forEach { [weak self] textfield in
+            guard let self else { return }
+            textfield.delegate = self
+        }
+    }
+}
+
+extension AddBaseView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+        
+        let inputModel = TextFiledModel(text: text, rangeStart: range.location, rangeLength: range.length, replacing: string)
+        
+        switch textField.tag {
+        case 0:
+            viewModel.titleTester.value = inputModel
+        case 1:
+            viewModel.simpleMemoTester.value = inputModel
+        case 2:
+            viewModel.phoneTextTester.value = inputModel
+        default: break
+        }
+        return viewModel.canAllowed.value
+    }
 }

@@ -15,8 +15,9 @@ class RealmRepository {
     // 레포지터리 패턴
     let realm = try! Realm()
     let folderModel = Folder.self
-    let memoModel = Memo.self
+    let locationMemoModel = LocationMemo.self
     let locationModel = Location.self
+    let detailMemoModel = DetailMemo.self
     
     // MARK: 단순히 도큐먼트 위치를 호출하는 메서드
     func printURL(){
@@ -25,7 +26,7 @@ class RealmRepository {
     
     // MARK:  --------
     
-    // MARK: folder를 생성하는 메서드 V ->
+    // MARK: folder를 생성하는 메서드 V -> 2차 테이블구조 V
     func makeFolder(folderName: String) throws {
         var index = 0
         if !realm.objects(folderModel).isEmpty {
@@ -40,22 +41,27 @@ class RealmRepository {
             throw RealmManagerError.canMakeFolder
         }
     }
+    
+    
+    func makeLocation(title: String,lat: String, long: String) {
+        
+    }
+    
     // MARK: 메모를 만들어 드립니다. V
-    func makeMemoModel(title: String, contents: String?, location: Location, phoneNum: String?) -> Memo {
-        return Memo(title: title, location: location, contents: contents, phoneNumber: phoneNum)
+    func makeMemoModel(title: String, contents: String?, location: Location, phoneNum: String?) -> LocationMemo {
+        return LocationMemo(title: title, location: location, contents: contents, phoneNumber: phoneNum)
     }
     
     // MARK: 메모를 진짜 만들어드립니다...>!
-    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) throws -> Memo?  {
-        var memo: Memo?
+    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) throws -> LocationMemo?  {
+        var memo: LocationMemo?
         do {
             try realm.write {
-                memo = realm.create(Memo.self, value: [
+                memo = realm.create(LocationMemo.self, value: [
                     "title": addViewStruct.title,
                     "location": location,
                     "contents": addViewStruct.content,
-                    "phoneNumber": addViewStruct.phoneNumber ?? "",
-                    "detailContents": addViewStruct.detailContents ?? ""
+                    "phoneNumber": addViewStruct.phoneNumber ?? ""
                 ])
             }
         } catch {
@@ -68,13 +74,12 @@ class RealmRepository {
         do {
             try realm.write {
                 do {
-                  let id = try ObjectId(string: structure.memoId)
-                    realm.create(Memo.self, value: [
+                  let id = try ObjectId(string: structure.locationMemoId)
+                    realm.create(LocationMemo.self, value: [
                         "id": id,
                         "title": structure.title,
                         "contents": structure.content ?? "",
-                        "phoneNumber": structure.phoneNumber ?? "",
-                        "detailContents": structure.detailContents ?? ""
+                        "phoneNumber": structure.phoneNumber ?? ""
                     ], update: .modified)
                 } catch {
                     throw RealmManagerError.cantModifyMemo
@@ -107,32 +112,40 @@ class RealmRepository {
     }
     
     // MARK: 메모 날짜를 통해 메모를 찾습니다.
-    func findMemo(date: Date) -> Memo?{
-        let findMemo = realm.objects(memoModel).where { $0.regdate == date }
+    func findMemo(date: Date) -> LocationMemo?{
+        let findMemo = realm.objects(locationMemoModel).where { $0.regdate == date }
         let memo = findMemo.first
         return memo
     }
+    
     // MARK: ID를 통해 메모를 찾습니다.
-    func findMemo(ojID: ObjectId) -> Memo? {
-        let findMemo = realm.objects(memoModel).where { $0.id == ojID }
+    func findMemo(ojID: ObjectId) -> LocationMemo? {
+        let findMemo = realm.objects(locationMemoModel).where { $0.id == ojID }
         let memo = findMemo.first
         return memo
     }
     // MARK: 메모를 통해 속한 폴더를 찾습니다.
-    func findMemoAtFolder(memo: Memo) -> Folder?{
+    func findMemoAtFolder(memo: LocationMemo) -> Folder?{
         let findFoler = memo.parents.first
         return findFoler
+    }
+    
+    // MARK: 폴더를 통해 메모를 찾습니다.
+    /// 폴더를 통해 메모를 찾습니다.
+    func findLocationMemoForFolder(folder: Folder) -> [LocationMemo] {
+        let locations = Array(folder.LocationMemo)
+        return locations
     }
     
     
     // MARK: 폴더를 먼저 만들었다면 이후에 메모를 넣습니다.
     /// 폴더가 있고 Memo 객체가 있어야 폴더에 추가해드립니다. 중복 방지 해놓았습니다.
-    func makeMemoAtFolder(folder: Folder, memo: Memo) throws {
+    func makeMemoAtFolder(folder: Folder, memo: LocationMemo) throws {
         do {
             try realm.write {
-                let isMemo = folder.memolist.contains(memo)
+                let isMemo = folder.LocationMemo.contains(memo)
                 if !isMemo {
-                    folder.memolist.append(memo)
+                    folder.LocationMemo.append(memo)
                 } else { print("중복이 존재해 안해요!") }
             }
         } catch {
@@ -160,7 +173,7 @@ class RealmRepository {
         let folder = model.folder
         do {
             try realm.write {
-                folder.memolist.append(memo)
+                folder.LocationMemo.append(memo)
             }
         } catch {
             throw RealmManagerError.cantAddMemoInFolder
@@ -174,8 +187,8 @@ class RealmRepository {
     
     // MARK: 모든 메모를 가져옵니다. V
     /// 모든 메모를 가져옵니다.
-    func findAllMemo() -> Results<Memo>{
-        return realm.objects(Memo.self)
+    func findAllMemo() -> Results<LocationMemo>{
+        return realm.objects(LocationMemo.self)
     }
     
     // MARK: 모든 폴더를 가져옵니다. V
@@ -186,12 +199,12 @@ class RealmRepository {
     
     // MARK: 모든 메모를 가져옵니다. 단 Array 입니다.
     /// 모든 메모를 가져옵니다. 단 Array 입니다.
-    func findAllMemoArray() -> [Memo] {
+    func findAllMemoArray() -> [LocationMemo] {
         let data = findAllMemo()
         return Array(data)
     }
-    func findAllMemoAtFolder(folder: Folder) -> [Memo] {
-        let folderList = folder.memolist
+    func findAllMemoAtFolder(folder: Folder) -> [LocationMemo] {
+        let folderList = folder.LocationMemo
         let memos = Array(folderList)
         return memos
     }
@@ -214,7 +227,7 @@ class RealmRepository {
             
         do {
             try realm.write {
-                realm.create(memoModel, value: value, update: .modified)
+                realm.create(locationMemoModel, value: value, update: .modified)
             }
         } catch {
             throw RealmManagerError.canModifiMemo
@@ -230,31 +243,7 @@ class RealmRepository {
         }
     }
     
-    // MARK: 이미지 추가
-    /// 메모 아이디 와 UIImage를 통해 이미지를 저장합니다.
-    func addImageToMemo(memoId: ObjectId, image: UIImage, imageName: String) throws {
-        let imagePath = getFolderPathForMemoId(memoId: memoId).appendingPathComponent(imageName)
-        
-        // UIImage를 파일 시스템에 저장
-        if let imageData = image.jpegData(compressionQuality: 0.8) {
-            try? imageData.write(to: imagePath)
-        }
-        
-        // Realm에 ImageObject 추가
-        do {
-            try realm.write {
-                let imageObject = ImageObject()
-                imageObject.imagename = imageName
-                
-                // orderIndex와 다른 속성 설정
-                if let memo = realm.object(ofType: Memo.self, forPrimaryKey: memoId) {
-                    memo.imagePaths.append(imageObject)
-                }
-            }
-        } catch {
-            throw RealmManagerError.cantAddImage
-        }
-    }
+   
     
     // MARK: 메모 아이디 기준으로 폴더 생성
     func getFolderPathForMemoId(memoId: ObjectId) -> URL {
@@ -279,7 +268,7 @@ class RealmRepository {
         do {
             try realm.write {
                 if let object = realm.objects(folderModel).where ({ $0.id == select.id}).first{
-                    realm.delete(object.memolist)
+                    realm.delete(object.LocationMemo)
                     realm.delete(object)
                 }
             }
@@ -306,7 +295,7 @@ class RealmRepository {
     func removeMemoID(id: ObjectId) throws{
         do {
             try realm.write {
-                let data = realm.objects(memoModel).where { $0.id == id }
+                let data = realm.objects(locationMemoModel).where { $0.id == id }
                 realm.delete(data)
             }
         } catch {
@@ -314,7 +303,7 @@ class RealmRepository {
         }
     }
     // MARK: 메모 자체를 넘기면 메모를 제거합니다.
-    func removeMemo(memo: Memo) throws{
+    func removeMemo(memo: LocationMemo) throws{
         do{
             try realm.write {
                 realm.delete(memo)
@@ -344,23 +333,17 @@ class RealmRepository {
         }
     }
     
-    func deleteAllImageFromMemo(memoId: ObjectId) throws {
+    func deleteAllImageFromLocationMemo(memoId: ObjectId) throws {
         let memoIdString = memoId.stringValue
         // 1. 마커 이미지 제거
         if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: memoIdString){
             throw RealmManagerError.cantDeleteImage
         }
-        
-        // 2. 이미지 리스트 파일들 제거
-        let memo = realm.objects(memoModel).where { $0.id == memoId }.first
+
+        // 2. 메모 제거
+        let memo = realm.objects(locationMemoModel).where { $0.id == memoId }.first
         guard let memo else { throw RealmManagerError.cantDeleteMemo }
-        let memoImageList = Array(memo.imagePaths)
-        
-        memoImageList.forEach { [weak self] imageObject in
-            guard self != nil else { return }
-            if !FileManagers.shard.removeImageListAtMemo(memoidString: memoIdString, ImageIdString: imageObject.id.stringValue) {
-            }
-        }
+       
         // 3. 메모 제거
         do {
             try realm.write {
@@ -373,7 +356,15 @@ class RealmRepository {
  
     
 }
-
+/*
+ let memoImageList = Array(memo.imagePaths)
+ 
+ memoImageList.forEach { [weak self] imageObject in
+     guard self != nil else { return }
+     if !FileManagers.shard.removeImageListAtMemo(memoidString: memoIdString, ImageIdString: imageObject.id.stringValue) {
+     }
+ }
+ */
 
 // MARK: 뭔가 꼬임 이거 재수정 바람 목적과 맞지 않음
 //    func makeMemoAtFolder(folder: Folder, model: addViewOutStruct, location: Location) throws {
@@ -409,3 +400,31 @@ class RealmRepository {
 //            throw RealmManagerError.cantAddMemoInFolder
 //        }
 //    }
+
+/*
+ // MARK: 이미지 추가
+ /// 메모 아이디 와 UIImage를 통해 이미지를 저장합니다.
+ func addImageToMemo(memoId: ObjectId, image: UIImage, imageName: String) throws {
+     let imagePath = getFolderPathForMemoId(memoId: memoId).appendingPathComponent(imageName)
+     
+     // UIImage를 파일 시스템에 저장
+     if let imageData = image.jpegData(compressionQuality: 0.8) {
+         try? imageData.write(to: imagePath)
+     }
+     
+     // Realm에 ImageObject 추가
+     do {
+         try realm.write {
+             let imageObject = ImageObject()
+             imageObject.imagename = imageName
+             
+             // orderIndex와 다른 속성 설정
+             if let memo = realm.object(ofType: LocationMemo.self, forPrimaryKey: memoId) {
+                 memo.imagePaths.append(imageObject)
+             }
+         }
+     } catch {
+         throw RealmManagerError.cantAddImage
+     }
+ }
+ */

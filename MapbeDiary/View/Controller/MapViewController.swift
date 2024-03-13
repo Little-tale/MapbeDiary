@@ -21,11 +21,6 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     
     var floatPanel: FloatingPanelController?
     
-    var folder: Folder?
-    
-    var repository = RealmRepository()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         subscribe()
@@ -58,16 +53,11 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         let fvc = FloatingPanelController(delegate: self)
         let vc = AddMemoViewController()
         vc.backDelegate = self
-        
         fvc.set(contentViewController: vc) // 다음뷰
-        
-        fvc.layout = FloatingCustomLayout() // 커스텀
-        
+        fvc.layout = FloatingLocationLayout() // 커스텀
         fvc.invalidateLayout() // 레이아웃 if need
         fvc.isRemovalInteractionEnabled = false // 내려가기 방지
-        
         fvc.addPanel(toParent: self,animated: true) // 관리뷰
-        
         fvc.surfaceView.layer.cornerRadius = 20
         fvc.surfaceView.clipsToBounds = true
         return fvc
@@ -75,14 +65,18 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
-        repository.findAllMemoArray().forEach { [weak self] memo in
-            guard let self else { return }
-            addCustomNoFocusforMemo(memo: memo)
+        print("in Out")
+        if let locations = homeView.mapviewModel.locationsOutput.value {
+            print("in Out!!!")
+            locations.forEach { [weak self] location in
+                guard let self else { return }
+                addCustomNoFocusforMemo(memo: location)
+            }
         }
     }
     
     // MARK: 메모를 통해 커스텀 어노테이션 설정
-    func addCustomNoFocusforMemo(memo: Memo){
+    func addCustomNoFocusforMemo(memo: LocationMemo){
         let location = memo.location
         guard let location else { return }
         let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
@@ -110,15 +104,26 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
 
 }
 
+
 extension MapViewController {
     func subscribe(){
         SingleToneDataViewModel.shared.mapViewFloderOut.bind { [weak self] folder in
             guard let self else { return }
             guard let folder else { return }
-            self.folder = folder
+            homeView.mapviewModel.folderInput.value = folder
             removeAll()
             addTestAnnotations()
+    
         }
+        
+        homeView.mapviewModel.locationsOutput.bind { [weak self] locations in
+            guard let self else { return }
+            guard let locations else { return }
+            locations.forEach { location in
+                self.addCustomNoFocusforMemo(memo: location)
+            }
+        }
+
     }
 }
 
@@ -202,15 +207,16 @@ extension MapViewController: FloatingPanelControllerDelegate {
             self?.setupPanel(with: configuration)
         }
     }
-
+    //MARK: 판넬 가기 설정
     private func setupPanel(with configuration: PanelConfiguration) {
-        guard let folder else { return }
+
+        guard let folder = homeView.mapviewModel.folderInput.value else { return }
         let newPanel = settingPanel()
         
         if let addMemoVc = newPanel.contentViewController as? AddMemoViewController {
             
             if let coordinate = configuration.coordinate {
-                let coordinateStruct = addViewStruct(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
+                let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
                 
                 addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
             }
@@ -269,8 +275,8 @@ extension MapViewController: CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
         homeView.mapView.setRegion(region, animated: true)
     }
-    // MARK: @@@@컴팩트 알아보기
     
+    // MARK: @@@@컴팩트 알아보기
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkDeviewlocationAuthorization()
     }
@@ -282,7 +288,7 @@ extension MapViewController {
     
     /// 사용자의 디바이스의 권한을 확인합니다.
     func checkDeviewlocationAuthorization(){
-        
+
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             /// 만약 디바이스 자체 권한이 활성화 라면 (열겨헝)
@@ -323,7 +329,6 @@ extension MapViewController {
         case .authorizedAlways, .authorizedWhenInUse:
             
             homeView.mapView.showsUserLocation = true
-            
             homeView.locationManager.startUpdatingLocation()
 
         default:
@@ -338,6 +343,7 @@ extension MapViewController {
         homeView.locationManager.requestWhenInUseAuthorization()
     }
 }
+
 
 
 

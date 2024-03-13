@@ -7,14 +7,10 @@
 
 import UIKit
 // MARK: 사용할 모델
-struct AllMemoModel {
-    var folder: Folder
-    var Memo: [Memo]
-}
 
-class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
+class AllMemoLocationListViewController: BaseHomeViewController<LacationMemosHomeBaseView> {
     
-    var dataSource: UICollectionViewDiffableDataSource<Folder,Memo>?
+    var dataSource: UICollectionViewDiffableDataSource<Folder,LocationMemo>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +19,6 @@ class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
         navigationSetting()
         subscribe()
         test()
-        
-        
     }
     deinit {
         print("AllMemoListViewController",self)
@@ -46,9 +40,9 @@ class AllMemoListViewController: BaseHomeViewController<MemosHomeBaseView> {
 
 
 // MARK: 데이터 소스
-extension AllMemoListViewController {
+extension AllMemoLocationListViewController {
     private func collectionViewDataSource(){
-        let cellRegister = UICollectionView.CellRegistration<MemoSimpleCollectionViewCell,Memo>{
+        let cellRegister = UICollectionView.CellRegistration<MemoSimpleCollectionViewCell,LocationMemo>{
             [weak self] cell, indexPath, item in
             guard self != nil else { return }
             cell.titleLabel.text = item.title
@@ -64,7 +58,7 @@ extension AllMemoListViewController {
             
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Folder,Memo>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<Folder,LocationMemo>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             
             return collectionView.dequeueConfiguredReusableCell(using: cellRegister, for: indexPath, item: itemIdentifier)
         })
@@ -94,23 +88,23 @@ extension AllMemoListViewController {
         }
     }
     
-    private func deleteAlert(memo: Memo){
+    private func deleteAlert(memo: LocationMemo){
         showAlert(title: "삭제", message: "지우시면 복구하실수 없습니다!", actionTitle: "삭제하기") { [weak self] action in
             guard let self else {return}
             homeView.allMemoViewModel.removeMemo.value = memo
         }
     }
-    private func modifyAction(memo: Memo) {
+    private func modifyAction(memo: LocationMemo) {
         print(#function)
     }
     
 }
 
-extension AllMemoListViewController {
+extension AllMemoLocationListViewController {
     //MARK: SnapShot
     private func snapShot(){
         if let data = homeView.allMemoViewModel.outPutTrigger.value {
-            var snaphot = NSDiffableDataSourceSnapshot<Folder   ,Memo>()
+            var snaphot = NSDiffableDataSourceSnapshot<Folder   ,LocationMemo>()
             
             snaphot.appendSections([data.folder])
             snaphot.appendItems(data.Memo,toSection: data.folder)

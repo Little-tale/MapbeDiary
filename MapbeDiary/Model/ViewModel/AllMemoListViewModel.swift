@@ -8,10 +8,16 @@
 import Foundation
 
 
+
+struct AllMemoModel {
+    var folder: Folder
+    var Memo: [LocationMemo]
+}
+
 class AllMemoListViewModel {
     var inputTrigger: Observable<Folder?> = Observable(nil)
     
-    var removeMemo: Observable<Memo?> = Observable(nil)
+    var removeMemo: Observable<LocationMemo?> = Observable(nil)
     
     var reloadTrigger: Observable<Void?> = Observable(nil)
     
@@ -56,9 +62,9 @@ class AllMemoListViewModel {
     }
     
     // MARK: 메모를 지웁니다!!
-    private func deleteMemo(memo: Memo){
+    private func deleteMemo(memo: LocationMemo){
         do {
-            try repo.deleteAllImageFromMemo(memoId: memo.id)
+            try repo.deleteAllImageFromLocationMemo(memoId: memo.id)
         } catch {
             realmError.value = error as? RealmManagerError
         }

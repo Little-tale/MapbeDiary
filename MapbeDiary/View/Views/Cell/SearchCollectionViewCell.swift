@@ -36,10 +36,10 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
         }
     }
     override func designView() {
-        placeNameLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        roadNameLabel.font = .systemFont(ofSize: 15, weight: .light)
+        placeNameLabel.font = JHFont.UIKit.bo20
+        roadNameLabel.font = JHFont.UIKit.bo15
+        
     }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         cleartext()

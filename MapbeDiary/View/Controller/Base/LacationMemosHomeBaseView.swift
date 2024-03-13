@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MemosHomeBaseView: BaseView {
+class LacationMemosHomeBaseView: BaseView {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
     private let emptyImage: UIImageView = {
@@ -73,7 +73,7 @@ class MemosHomeBaseView: BaseView {
     }
 }
 
-extension MemosHomeBaseView {
+extension LacationMemosHomeBaseView {
     func createLayout() -> UICollectionViewLayout{
         var configu = UICollectionLayoutListConfiguration(appearance: .plain)
         configu.showsSeparators = true
