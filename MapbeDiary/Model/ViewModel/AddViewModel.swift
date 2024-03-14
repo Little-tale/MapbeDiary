@@ -162,7 +162,7 @@ class AddViewModel {
             guard let self else { return }
             switch result {
             case .success(let success):
-                if let memo = repository.findMemo(ojID: success),
+                if let memo = repository.findLocationMemo(ojID: success),
                    let folder = repository.findMemoAtFolder(memo: memo){
                     let model = memoModifyOutstruct(memo: memo, folder: folder)
                     memoSuccessOutPut.value = model

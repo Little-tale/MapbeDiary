@@ -264,7 +264,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.last?.coordinate{
             // MARK: TS 이부분에서 트러블 슈팅 발생 그렇다면 위치가 변할때만 호출되게 변경
             setRegion(location: location)
-            homeView.locationManager.distanceFilter = 10 // 10미터 변화 할때만 호출
+            homeView.locationManager.distanceFilter = 10 //m 10미터 변화 할때만 호출
             // homeView.locationManager.stopUpdatingLocation()
         }else {
             homeView.locationManager.stopUpdatingLocation()

@@ -10,10 +10,21 @@ import SnapKit
 
 final class MemoSettingBaseView: BaseView {
     
+    let memoViewModel = AboutMemoViewModel()
+    
     private let titleLabel: UILabel = {
        let view = UILabel()
         view.text = "장소의 기억"
         view.font = JHFont.UIKit.bo24
+        return view
+    }()
+    
+    let saveButton: UIButton = {
+        var configuration = UIButton.Configuration.filled()
+        let view = UIButton(frame: .zero)
+        configuration.baseBackgroundColor = .green
+        configuration.title = "저장"
+        view.configuration = configuration
         return view
     }()
     
@@ -35,10 +46,9 @@ final class MemoSettingBaseView: BaseView {
     
     override func configureHierarchy() {
         addSubview(titleLabel)
+        addSubview(saveButton)
         addSubview(memoTextView)
-        
         addSubview(memoTextCountLabel)
-        
         addSubview(imageCounterLabel)
         addSubview(addImageButton)
         addSubview(colletionView)
@@ -48,6 +58,11 @@ final class MemoSettingBaseView: BaseView {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
             make.top.equalTo(safeAreaLayoutGuide).offset(10)
+        }
+        saveButton.snp.makeConstraints { make in
+            make.trailing.equalTo(memoTextView.snp.trailing)
+            make.top.equalTo(safeAreaLayoutGuide).offset(8)
+            make.height.equalTo(30)
         }
         memoTextView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
@@ -73,13 +88,14 @@ final class MemoSettingBaseView: BaseView {
         
         colletionView.snp.makeConstraints { make in
             make.top.equalTo(addImageButton.snp.bottom).offset(10)
-            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(130)
         }
     }
     
     override func designView() {
         memoTextView.font = JHFont.UIKit.li20
-       //  colletionView
+        
     }
     
     private func settingCountLabel(_ num: Int) {
@@ -93,6 +109,10 @@ final class MemoSettingBaseView: BaseView {
             settingCountLabel(num)
         }
         memoTextView.memoTextViewModel.maxLines = 4
+    }
+    
+    override func register() {
+        colletionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
 }
 

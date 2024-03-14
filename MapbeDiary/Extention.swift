@@ -155,6 +155,7 @@ extension UIImage {
 
 // MARK: 텍스트 필드
 extension UITextField {
+    
     func setPlaceholderColor(_ placeholderColor: UIColor) {
         attributedPlaceholder = NSAttributedString(
             string: placeholder ?? "",
@@ -186,7 +187,6 @@ extension UILabel {
         attributeString.addAttribute(.foregroundColor ,value: UIColor.green, range: range)
         
         attributedText = attributeString
-
     }
 }
 
@@ -221,20 +221,24 @@ extension UIViewController {
     
 }
 
-
+// MARK: Cell LayOut
 
 extension UICollectionView {
-    
     static func configureMemoImagesLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         
         let spacing : CGFloat = 10
         let cellWidth = UIScreen.main.bounds.width - (spacing * 3)
-        
-        layout.itemSize = CGSize(width: cellWidth / 4, height: (cellWidth) / 4) // 셀의 크기
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        layout.scrollDirection = .horizontal
 
+        layout.itemSize = CGSize(width: cellWidth / 3.5, height: (cellWidth) / 3.5) // 셀의 크기
+        layout.sectionInset = UIEdgeInsets(
+            top: 0,
+            left: spacing,
+            bottom: 0,
+            right: spacing
+        )
+        layout.minimumLineSpacing = 26
+        layout.scrollDirection = .horizontal
         return layout
     }
 }

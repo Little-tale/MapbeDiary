@@ -89,6 +89,11 @@ class RealmRepository {
             throw RealmManagerError.cantModifyMemo
         }
     }
+    
+    // MARK: LocationMemo를 통해 DetailMemo를 가져오거나 만들어 옵니다
+//    func findLocationMemoForDetailMemo(location: LocationMemo){
+//        
+//    }
   
     private func reSortedOfFolder(handler: @escaping(Result<Void,RealmManagerError>) -> Void) throws {
         let allFolder = realm.objects(folderModel).sorted(byKeyPath: "index", ascending: true)
@@ -112,14 +117,18 @@ class RealmRepository {
     }
     
     // MARK: 메모 날짜를 통해 메모를 찾습니다.
-    func findMemo(date: Date) -> LocationMemo?{
+    func findLocationMemo(date: Date) -> LocationMemo?{
         let findMemo = realm.objects(locationMemoModel).where { $0.regdate == date }
         let memo = findMemo.first
         return memo
     }
+    func findFirstLocationMemo() -> LocationMemo? {
+        let first = realm.objects(locationMemoModel).first
+        return first
+    }
     
     // MARK: ID를 통해 메모를 찾습니다.
-    func findMemo(ojID: ObjectId) -> LocationMemo? {
+    func findLocationMemo(ojID: ObjectId) -> LocationMemo? {
         let findMemo = realm.objects(locationMemoModel).where { $0.id == ojID }
         let memo = findMemo.first
         return memo
@@ -255,6 +264,28 @@ class RealmRepository {
             try? FileManager.default.createDirectory(at: folderPath, withIntermediateDirectories: false, attributes: nil)
         }
         return folderPath
+    }
+    
+    
+    func makeDetailMemo(_ model: AboutMemoModel,_ location: LocationMemo) -> Result<DetailMemo,RealmManagerError> {
+        guard let text = model.memoText else { return .failure(.cantMakeDetailMemo) }
+        
+        let memoModel = DetailMemo(detailContents: text, modifyDate: nil)
+        do {
+            try realm.write {
+                realm.add(memoModel)
+            }
+            
+            try realm.write {
+                if location.detailMemos.contains(memoModel){
+                    return
+                }
+                location.detailMemos.append(memoModel)
+            }
+        } catch {
+            return .failure(.cantMakeDetailMemo)
+        }
+        return .success( memoModel )
     }
     
     // MARK: -------------- Remove ---------------------

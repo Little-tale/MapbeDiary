@@ -70,6 +70,7 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
     var addViewModel = AddViewModel()
     
+    
     // delegate
     weak var backDelegate: BackButtonDelegate?
     
@@ -247,7 +248,7 @@ extension AddLocationMemoViewController {
 }
 
 extension AddLocationMemoViewController {
-    
+
     func backButtonClicked() {
         // ismiss(animated: true)
         backDelegate?.backButtonClicked()
@@ -257,6 +258,7 @@ extension AddLocationMemoViewController {
 
 // MARK: imagePicker
 extension AddLocationMemoViewController {
+    
     func checkCameraAuthorization() {
         checkedAutCamera()
     }
@@ -291,7 +293,7 @@ extension AddLocationMemoViewController {
     }
     
     // MARK: ImagePicker Open
-    func showImagePicker(){
+    private func showImagePicker(){
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
         imagePicker.delegate = self

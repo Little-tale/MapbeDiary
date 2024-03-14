@@ -19,6 +19,8 @@ enum RealmManagerError: Error {
     case cantDeleteImage
     case cantFindObjectId
     case cantModifyMemo
+    case sameDetailMemoError
+    case cantMakeDetailMemo
     
     var alertMessage: String {
         switch self {
@@ -44,6 +46,10 @@ enum RealmManagerError: Error {
             "파일을 찾지 못했어요!"
         case .cantModifyMemo:
             "수정 할수 없어요!"
+        case .sameDetailMemoError:
+            "중복된 메모입니다!"
+        case .cantMakeDetailMemo:
+            "추가 메모를 작성할수가 없어요 관리자에 문의 해주세요!"
         }
     }
 }
