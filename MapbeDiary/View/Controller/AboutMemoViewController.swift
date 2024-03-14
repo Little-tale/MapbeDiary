@@ -124,7 +124,7 @@ extension AboutMemoViewController: UIImagePickerControllerDelegate, UINavigation
 extension AboutMemoViewController:PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        <#code#>
+        //
     }
     
 }
