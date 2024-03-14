@@ -10,6 +10,7 @@ import UIKit
 enum JHFont {}
 
 extension JHFont {
+    
     enum UIKit {
         static var re10: UIFont = .systemFont(ofSize: 10, weight: .regular)
         static var bo10: UIFont = .systemFont(ofSize: 10, weight: .bold)
@@ -41,6 +42,7 @@ extension JHFont {
         static var bo20: UIFont = .systemFont(ofSize: 20, weight: .bold)
         
         
+        static var bo24: UIFont = .systemFont(ofSize: 24, weight: .bold)
     }
 }
 

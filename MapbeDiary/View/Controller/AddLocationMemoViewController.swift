@@ -65,7 +65,7 @@ struct memoModifyOutstruct {
     }
 }
 
-final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
+final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
     
     var addViewModel = AddViewModel()
@@ -185,7 +185,7 @@ final class AddMemoViewController: BaseHomeViewController<AddBaseView>{
     
 }
 
-extension AddMemoViewController {
+extension AddLocationMemoViewController {
     private func subscribe() {
         addViewModel.urlSuccessOutPut.bind { [weak self] sussesModel in
             guard let self else {return}
@@ -246,7 +246,7 @@ extension AddMemoViewController {
     }
 }
 
-extension AddMemoViewController {
+extension AddLocationMemoViewController {
     
     func backButtonClicked() {
         // ismiss(animated: true)
@@ -256,7 +256,7 @@ extension AddMemoViewController {
 }
 
 // MARK: imagePicker
-extension AddMemoViewController {
+extension AddLocationMemoViewController {
     func checkCameraAuthorization() {
         checkedAutCamera()
     }
@@ -300,7 +300,7 @@ extension AddMemoViewController {
     }
 }
 // MARK: PHP피커 딜리게이트
-extension AddMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension AddLocationMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
@@ -325,7 +325,7 @@ extension AddMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
 }
 
 // MARK: PHP 피커
-extension AddMemoViewController {
+extension AddLocationMemoViewController {
     func checkUserPhotoAuthorization() {
         var configurataion = PHPickerConfiguration()
         configurataion.selectionLimit = 1
@@ -336,7 +336,7 @@ extension AddMemoViewController {
     }
 }
 
-extension AddMemoViewController: PHPickerViewControllerDelegate {
+extension AddLocationMemoViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         
         picker.dismiss(animated: true)

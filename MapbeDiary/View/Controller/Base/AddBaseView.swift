@@ -12,7 +12,6 @@ final class AddBaseView: BaseView {
     private let backView = UIView()
     let AddTitleDateView = AddTitleDateImageView()
     let folderButton: UIButton = CustomButton.folderButton()
-    
     let viewModel = TextFiledTesterViewModel()
     
     let saveButton: UIButton = {
@@ -151,7 +150,7 @@ extension AddBaseView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
         
-        let inputModel = TextFiledModel(text: text, rangeStart: range.location, rangeLength: range.length, replacing: string)
+        let inputModel = TextViewModel(text: text, rangeStart: range.location, rangeLength: range.length, replacing: string)
         
         switch textField.tag {
         case 0:

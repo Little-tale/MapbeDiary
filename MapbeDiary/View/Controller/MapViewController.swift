@@ -14,7 +14,7 @@ import FloatingPanel
 
 struct PanelConfiguration {
     var coordinate: CLLocationCoordinate2D?
-    var configureAddMemoViewController: ((AddMemoViewController) -> Void)?
+    var configureAddMemoViewController: ((AddLocationMemoViewController) -> Void)?
 }
 
 class MapViewController: BaseHomeViewController<MapHomeView> {
@@ -51,7 +51,7 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행
     func settingPanel() -> FloatingPanelController{
         let fvc = FloatingPanelController(delegate: self)
-        let vc = AddMemoViewController()
+        let vc = AddLocationMemoViewController()
         vc.backDelegate = self
         fvc.set(contentViewController: vc) // 다음뷰
         fvc.layout = FloatingLocationLayout() // 커스텀
@@ -213,7 +213,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         guard let folder = homeView.mapviewModel.folderInput.value else { return }
         let newPanel = settingPanel()
         
-        if let addMemoVc = newPanel.contentViewController as? AddMemoViewController {
+        if let addMemoVc = newPanel.contentViewController as? AddLocationMemoViewController {
             
             if let coordinate = configuration.coordinate {
                 let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)

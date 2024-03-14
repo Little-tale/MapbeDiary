@@ -33,8 +33,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let allList = UINavigationController(rootViewController: AllMemoLocationListViewController())
         allList.tabBarItem.image = UIImage(systemName: "star")
         
-        tabbarCon.viewControllers = [AboutLocationViewController(),first,allList]
-        let test = UINavigationController(rootViewController: AddMemoViewController())
+        tabbarCon.viewControllers = [AboutLocationViewController(),AboutMemoViewController(),first,allList]
+        let test = UINavigationController(rootViewController: AddLocationMemoViewController())
         
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {

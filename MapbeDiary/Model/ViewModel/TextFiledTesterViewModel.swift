@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TextFiledModel {
+struct TextViewModel {
     var text: String
     var rangeStart: Int
     var rangeLength: Int
@@ -17,9 +17,9 @@ struct TextFiledModel {
 
 class TextFiledTesterViewModel {
     
-    let titleTester: Observable<TextFiledModel?> = Observable(nil)
-    let simpleMemoTester: Observable<TextFiledModel?> = Observable(nil)
-    let phoneTextTester: Observable<TextFiledModel?> = Observable(nil)
+    let titleTester: Observable<TextViewModel?> = Observable(nil)
+    let simpleMemoTester: Observable<TextViewModel?> = Observable(nil)
+    let phoneTextTester: Observable<TextViewModel?> = Observable(nil)
     
     
     var canAllowed: Observable<Bool> = Observable(true)
@@ -42,7 +42,7 @@ class TextFiledTesterViewModel {
         }
     }
     
-    private func maxLanthTester(model: TextFiledModel, count: Int) -> Bool {
+    private func maxLanthTester(model: TextViewModel, count: Int) -> Bool {
         let newText = (model.text as NSString).replacingCharacters(in: NSRange(location: model.rangeStart, length: model.rangeLength), with: model.replacing)
         return newText.count <= count
     }

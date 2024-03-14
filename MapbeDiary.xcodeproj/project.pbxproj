@@ -45,7 +45,7 @@
 		7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */; };
 		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
 		7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */; };
-		7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */; };
+		7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */; };
 		7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */; };
 		7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */; };
 		7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C53382B9C345F00B712BC /* CustomButton.swift */; };
@@ -69,6 +69,10 @@
 		7BB250E32BA1C63300FDE898 /* MemosEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */; };
 		7BB250E52BA1C74F00FDE898 /* LocationAboutMemosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */; };
 		7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */; };
+		7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */; };
+		7BB250EC2BA1EBF200FDE898 /* MemoTextview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250EB2BA1EBF200FDE898 /* MemoTextview.swift */; };
+		7BB250EE2BA1EC5800FDE898 /* MemoTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250ED2BA1EC5800FDE898 /* MemoTextViewModel.swift */; };
+		7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */; };
 		7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */; };
 		7BB8ECC42B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */; };
 		7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */; };
@@ -134,7 +138,7 @@
 		7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
-		7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
+		7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationMemoViewController.swift; sourceTree = "<group>"; };
 		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTitleDateImageView.swift; path = ../AddTitleDateImageView.swift; sourceTree = "<group>"; };
 		7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingLocationLayout.swift; sourceTree = "<group>"; };
 		7B1C53382B9C345F00B712BC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -157,6 +161,10 @@
 		7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemosEmptyView.swift; sourceTree = "<group>"; };
 		7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAboutMemosView.swift; sourceTree = "<group>"; };
 		7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFiledTesterViewModel.swift; sourceTree = "<group>"; };
+		7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoSettingBaseView.swift; sourceTree = "<group>"; };
+		7BB250EB2BA1EBF200FDE898 /* MemoTextview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTextview.swift; sourceTree = "<group>"; };
+		7BB250ED2BA1EC5800FDE898 /* MemoTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTextViewModel.swift; sourceTree = "<group>"; };
+		7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoViewController.swift; sourceTree = "<group>"; };
 		7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseImageView.swift; sourceTree = "<group>"; };
 		7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LacationMemosHomeBaseView.swift; sourceTree = "<group>"; };
 		7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoSimpleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -312,11 +320,12 @@
 				7B1137822B99B59D00D6BBD1 /* Tab */,
 				7B1137762B99AC9B00D6BBD1 /* Base */,
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
-				7B1137972B9B394500D6BBD1 /* AddMemoViewController.swift */,
+				7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */,
 				7BA373342B9D86CC0016E851 /* SearchViewController.swift */,
 				7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */,
 				7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */,
 				7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */,
+				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -324,6 +333,8 @@
 		7B1137762B99AC9B00D6BBD1 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				7BB250EF2BA1F02E00FDE898 /* CollectionView */,
+				7BB250EA2BA1EBE100FDE898 /* TextView */,
 				7BB250E12BA1C5C900FDE898 /* Sub */,
 				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
 				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
@@ -333,6 +344,7 @@
 				7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */,
 				7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */,
 				7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */,
+				7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -416,6 +428,22 @@
 				7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */,
 			);
 			path = Sub;
+			sourceTree = "<group>";
+		};
+		7BB250EA2BA1EBE100FDE898 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				7BB250EB2BA1EBF200FDE898 /* MemoTextview.swift */,
+				7BB250ED2BA1EC5800FDE898 /* MemoTextViewModel.swift */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
+		7BB250EF2BA1F02E00FDE898 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		7BB8ECBA2B9DF72F00C88F17 /* View */ = {
@@ -650,6 +678,7 @@
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
 				7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */,
+				7BB250EE2BA1EC5800FDE898 /* MemoTextViewModel.swift in Sources */,
 				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,
 				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
 				7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */,
@@ -685,13 +714,16 @@
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
+				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
-				7B1137982B9B394500D6BBD1 /* AddMemoViewController.swift in Sources */,
+				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
 				7B1137872B99BF6200D6BBD1 /* MapSection.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
+				7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */,
 				7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
+				7BB250EC2BA1EBF200FDE898 /* MemoTextview.swift in Sources */,
 				7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */,
 				7BB250E52BA1C74F00FDE898 /* LocationAboutMemosView.swift in Sources */,
 			);

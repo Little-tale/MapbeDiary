@@ -192,6 +192,7 @@ extension UILabel {
 
 // CollecionViewCell ANIME
 extension UIViewController {
+    
     func collectionViewCellAnimation(cell: UICollectionViewCell){
         UIView.animate(withDuration: 0.08, animations: {
             cell.backgroundColor = .green // 선택됐을 때의 색
@@ -220,3 +221,20 @@ extension UIViewController {
     
 }
 
+
+
+extension UICollectionView {
+    
+    static func configureMemoImagesLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let spacing : CGFloat = 10
+        let cellWidth = UIScreen.main.bounds.width - (spacing * 3)
+        
+        layout.itemSize = CGSize(width: cellWidth / 4, height: (cellWidth) / 4) // 셀의 크기
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.scrollDirection = .horizontal
+
+        return layout
+    }
+}
