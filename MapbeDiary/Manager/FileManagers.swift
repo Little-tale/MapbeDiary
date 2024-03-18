@@ -7,6 +7,24 @@
 
 import UIKit
 
+enum fileManagerError: Error{
+    case cantFindDocuments
+    case cantFindImages
+    case cantRemoveImages
+    
+    var message: String {
+        switch self {
+        case .cantFindDocuments:
+            return "사용자님의 데이터를 찾을수가 없습니다."
+        case .cantFindImages:
+            return "이미지들을 찾을수가 없습니다."
+        case .cantRemoveImages:
+            return "이미지를 지울수 없습니다."
+        }
+    }
+}
+
+
 class FileManagers {
     private init () {}
     static let shard = FileManagers()
@@ -127,6 +145,126 @@ class FileManagers {
             }
         }
         return true
+    }
+    
+    // MARK: detailMemoId 를 폴더로 (중복체크) ImageOJID 를 이미지 이름으로
+    /// detailMemoId 를 폴더로 (중복체크) ImageOJID 를 이미지 이름으로
+    func createMemoImage(detailMemoId: String,imgOJId: String, data: Data) -> Bool {
+        // 1. 디렉토리 가져오기
+        guard let directory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
+        
+        // 2. 폴더 경로를 생성
+        let fileUrl = directory.appendingPathComponent(detailMemoId)
+        
+        // 3. 폴더가 없으면 새로 생성
+        if !fileManager.fileExists(atPath: fileUrl.path()) {
+            do {
+                try fileManager.createDirectory(at: fileUrl, withIntermediateDirectories: true)
+            } catch {
+                return false
+            }
+        }
+        
+        // 4. 이미지 경로 설정
+        let imageUrl = fileUrl.appendingPathComponent("\(imgOJId).jpeg")
+        
+        // 5. 이미지 경로 중복 체크후 -> 중복일시 수행 안함.
+        if fileManager.fileExists(atPath: imageUrl.path()) {
+            return false
+        }
+        
+        // 6. 이미지 데이터 압축 -> 저장
+        guard let imageData = UIImage(data: data)?.jpegData(compressionQuality: 0.8) else {
+            return false
+        }
+        
+        do {
+            try imageData.write(to: imageUrl)
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    // MARK: DetailId 를 통해 이미지 데이터들을 반환해드립니다.
+    func findDetailImageData(detailID: String, imageIds: [String]) -> Result<[Data],fileManagerError>{
+        guard let diretory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return .failure(.cantFindDocuments)
+        }
+        
+        let folderUrl = diretory.appendingPathComponent("\(detailID)")
+        
+        var imageDatas: [Data] = []
+        
+        for imageId in imageIds {
+            let imageUrl = folderUrl.appendingPathComponent("\(imageId).jpeg")
+            do { 
+                let imageData = try Data(contentsOf: imageUrl)
+                imageDatas.append(imageData)
+            } catch {
+                return .failure(.cantFindImages)
+            }
+        }
+        return .success(imageDatas)
+    }
+    
+    /// 디테일 이미지 리스트를 제거합니다.
+    func removeDetailImageList(detailId: String, imageIds: [String] ) -> Result<Void,fileManagerError> {
+        // 1. 도큐먼트
+        guard let document = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return .failure(.cantFindDocuments)
+        }
+        
+        let folderUrl = document.appendingPathComponent("\(detailId)")
+      
+        for imageId in imageIds {
+           
+            let imageUrl = folderUrl.appendingPathComponent("\(imageId).jpeg")
+            
+            if fileManager.fileExists(atPath: imageUrl.path()){
+                do {
+                    try fileManager.removeItem(atPath: imageUrl.path())
+                } catch {
+                    return .failure(.cantRemoveImages)
+                }
+            }
+        }
+        // 이미지를 모두 지운 후 폴더가 비어있는지 확인
+        if let files = try? fileManager.contentsOfDirectory(atPath: folderUrl.path), files.isEmpty {
+            do {
+                try fileManager.removeItem(at: folderUrl)
+            } catch {
+                return .success(())
+            }
+        }
+        return .success(())
+    }
+    
+    // MARK: 이미지 하나만 지웁니다.
+    /// 디테일 이미지 단일만 지웁니다.
+    func removeDetailImage(detailId: String, imageId: String) -> Result<Void, fileManagerError> {
+        guard let document = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return .failure(.cantFindDocuments)
+        }
+        let folderUrl = document.appendingPathComponent("\(detailId)")
+      
+        let imageUrl = folderUrl.appendingPathComponent("\(imageId).jpeg")
+        
+        if fileManager.fileExists(atPath: imageUrl.path()){
+            do {
+                try fileManager.removeItem(atPath: imageUrl.path())
+            } catch {
+                return .failure(.cantRemoveImages)
+            }
+        }
+        if let files = try? fileManager.contentsOfDirectory(atPath: folderUrl.path), files.isEmpty {
+            do {
+                try fileManager.removeItem(at: folderUrl)
+            } catch {
+                return .success(())
+            }
+        }
+        return .success(())
     }
     
     

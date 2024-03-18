@@ -11,13 +11,48 @@ import CoreLocation
 import Toast
 import FloatingPanel
 
+enum PanelViewControllerType {
+    case addLocation
+    case modiFiLocation
+    
+    func createViewController() -> UIViewController {
+        switch self {
+        case .addLocation:
+            return AddLocationMemoViewController()
+        case .modiFiLocation:
+            return AboutLocationViewController()
+        }
+    }
+}
+enum PanelLayoutType {
+    case detail
+    case custom
+    
+    var layout : FloatingPanelLayout {
+        switch self {
+        case .detail:
+            return FloatingCustomMemoLayout()
+        case .custom:
+            return FloatingLocationLayout()
+        }
+    }
+}
+
 
 struct PanelConfiguration {
     var coordinate: CLLocationCoordinate2D?
-    var configureAddMemoViewController: ((AddLocationMemoViewController) -> Void)?
+    var viewType: PanelViewControllerType
+    var configureAddMemoViewController: ((UIViewController) -> Void)?
+    var layoutType: PanelLayoutType
+    
+    func setUpViewController() -> UIViewController {
+        let vc = viewType.createViewController()
+        configureAddMemoViewController?(vc)
+        return vc
+    }
 }
 
-class MapViewController: BaseHomeViewController<MapHomeView> {
+final class MapViewController: BaseHomeViewController<MapHomeView> {
     
     var floatPanel: FloatingPanelController?
     
@@ -25,21 +60,15 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         super.viewDidLoad()
         subscribe()
         settingMapView() /// 맵뷰 세팅
-        
         checkDeviewlocationAuthorization() // 디바이스 권한
-    
         addTestAnnotations() // 시작할때 폴더 기준으로
+        settinglongPressClosure()
+        userLocationAction()
+        locationMemosButtonAction()
         
-        homeView.location = {[weak self] result in
-            print("asdsadsad")
-            guard let self else {return}
-            removeAll() // 일단 다 지우기
-            addTestAnnotations() // 렘 정보 가져오기
-            updateFloatingPanel(with: PanelConfiguration(coordinate: result)) // 판넬 업데이트
-            addLongAnnotation(cl2: result) // 롱프레스
-        }
         homeView.searchBar.delegate = self
     }
+    
     // MARK: 맵뷰 세팅
     func settingMapView(){
         homeView.locationManager = CLLocationManager()
@@ -49,12 +78,12 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     }
     
     // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행
-    func settingPanel() -> FloatingPanelController{
+    func settingPanel(view: UIViewController, layout: PanelLayoutType) -> FloatingPanelController{
         let fvc = FloatingPanelController(delegate: self)
-        let vc = AddLocationMemoViewController()
-        vc.backDelegate = self
+        let vc = view
         fvc.set(contentViewController: vc) // 다음뷰
-        fvc.layout = FloatingLocationLayout() // 커스텀
+        fvc.layout = layout.layout
+        // FloatingLocationLayout() // 커스텀
         fvc.invalidateLayout() // 레이아웃 if need
         fvc.isRemovalInteractionEnabled = false // 내려가기 방지
         fvc.addPanel(toParent: self,animated: true) // 관리뷰
@@ -62,7 +91,10 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
         fvc.surfaceView.clipsToBounds = true
         return fvc
     }
-    
+
+}
+// MARK: 어노테이션
+extension MapViewController {
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
         print("in Out")
@@ -91,17 +123,48 @@ class MapViewController: BaseHomeViewController<MapHomeView> {
     func addLongAnnotation(cl2: CLLocationCoordinate2D){
         let anno = MKPointAnnotation()
         anno.coordinate = cl2
-        let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapAlertSection.noneName , coordinate: cl2)
+        let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapAlertSection.noneName , coordinate: cl2, bool: true)
         homeView.mapView.addAnnotation(location)
         homeView.mapView.setCenter(location.coordinate, animated: true)
         homeView.mapView.selectAnnotation(location, animated: true)
     }
     
+    // MARK: 어노테이션 전부 지우기
     func removeAll(){
         let anotaions = homeView.mapView.annotations
         homeView.mapView.removeAnnotations(anotaions)
     }
+}
 
+// MARK: 버튼 액션
+extension MapViewController {
+    func userLocationAction(){
+        homeView.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            checkDeviewlocationAuthorization()
+            if let locationInfo = homeView.locationManager.location {
+                addLongAnnotation(cl2: locationInfo.coordinate)
+                updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, complite: nil)
+            }
+        }), for: .touchUpInside)
+    }
+    
+    func locationMemosButtonAction(){
+        homeView.locationMemosButton.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            movetoLocationListView()
+        }), for: .touchUpInside)
+    }
+    
+    func movetoLocationListView(){
+        let vc = AllMemoLocationListViewController()
+        let folder = SingleToneDataViewModel.shared.shardFolderOb.value
+        vc.homeView.allMemoViewModel.inputTrigger.value = folder
+        vc.locationDelegate = self
+        vc.modalPresentationStyle = .popover
+        present(vc, animated: true)
+    }
+    
 }
 
 
@@ -154,10 +217,11 @@ extension MapViewController : UISearchBarDelegate {
             }
             removeAll()
             /// 판넬 업데이트
-            updateFloatingPanel(with: PanelConfiguration(coordinate: location, configureAddMemoViewController: { viewCon in
-                viewCon.addViewModel.searchTitle = data.placeName
-            }))
-            
+            updatePanel(coordi: location, viewType: .addLocation, layout: .custom) { viewCon in
+                if let vc = viewCon as? AddLocationMemoViewController {
+                    vc.addViewModel.searchTitle = data.placeName
+                }
+            }
             addLongAnnotation(cl2: location)
         }
         
@@ -182,50 +246,91 @@ extension MapViewController: MKMapViewDelegate { // 수정해
         print("asdsadsa")
         return nil
     }
-    // MARK: 기존것을 선택했을때,
+    // MARK: 기존것을 선택했을때, 회고 해결...!
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-       
-        if let annotaion = view.annotation as? CustomAnnotation {
+        print("롱: didSelect")
+        if let annotaion = view.annotation as? CustomAnnotation,
+           !annotaion.long{
             homeView.mapView.setCenter(annotaion.coordinate, animated: true)
-            if let memoid = annotaion.memoId {
-                print("@@@@",annotaion)
-                updateFloatingPanel(with: PanelConfiguration(configureAddMemoViewController: { viewController in
-                    viewController.addViewModel.modifyTrigger.value = memoid
-                }))
-            }
-            
+            //locationModify(annotaion) // 일단 이렇게
+            locationDetailModify(annotaion)
         }
     }
     
+    private func locationModify(_ anno: CustomAnnotation){
+        if let memoid = anno.locationId {
+            updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] viewController in
+                guard self != nil else { return }
+                if let vc = viewController as? AddLocationMemoViewController {
+                    vc.addViewModel.modifyTrigger.value = memoid
+                }
+            }
+        }
+    }
+    
+    private func locationDetailModify(_ anno: CustomAnnotation){
+        print("롱? :locationDetailModify" )
+        updatePanel(coordi: nil, viewType: .modiFiLocation, layout: .detail) { [weak self] vc in
+            guard let viewController = vc as? AboutLocationViewController else { return }
+            guard self != nil else { return }
+            viewController.viewModel.inputLocationId.value = anno.locationId
+        }
+    }
 }
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
+    
     // MARK: 롱프레스 업데이트 플로팅 패널
+    func settinglongPressClosure(){
+        homeView.locationClosure = {[weak self] result in
+            print("롱프레스 감지")
+            guard let self else {return}
+            removeAll() // 일단 다 지우기
+            addTestAnnotations() // 렘 정보 가져오기
+            updatePanel(coordi: result, viewType: .addLocation, layout: .custom, complite: nil ) // 판넬 업데이트
+            addLongAnnotation(cl2: result)// 롱프레스
+        }
+    }
+    
+    func updatePanel(coordi:  CLLocationCoordinate2D?, viewType:PanelViewControllerType,layout: PanelLayoutType , complite: ((UIViewController) -> Void)?){
+        updateFloatingPanel(with:PanelConfiguration(coordinate: coordi, viewType: viewType, configureAddMemoViewController: { [weak self] vc in
+            guard self != nil else { return }
+            complite?(vc)
+        }, layoutType: layout))
+        print("롱 updatePanel",layout)
+    }
 
-    func updateFloatingPanel(with configuration: PanelConfiguration) {
+    private func updateFloatingPanel(with configuration: PanelConfiguration) {
         removeExistingPanelIfNeeded { [weak self] in
             self?.setupPanel(with: configuration)
         }
+        
     }
     //MARK: 판넬 가기 설정
     private func setupPanel(with configuration: PanelConfiguration) {
 
         guard let folder = homeView.mapviewModel.folderInput.value else { return }
-        let newPanel = settingPanel()
         
-        if let addMemoVc = newPanel.contentViewController as? AddLocationMemoViewController {
-            
+        var vc = configuration.setUpViewController()
+        
+        // ADDVIewCon 일때
+        if let addMemoVcon = vc as? AddLocationMemoViewController {
+            addMemoVcon.backDelegate = self
             if let coordinate = configuration.coordinate {
                 let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
                 
-                addMemoVc.addViewModel.coordinateTrigger.value = coordinateStruct
+                addMemoVcon.addViewModel.coordinateTrigger.value = coordinateStruct
             }
-            
-            // 클로저를 통한 추가 설정
-            configuration.configureAddMemoViewController?(addMemoVc)
-            
-            newPanel.move(to: .half, animated: true)
+            vc = addMemoVcon
         }
+        // LocationMemo일때
+        if let locationMemo = vc as? AboutLocationViewController {
+            locationMemo.backdelegate = self
+            locationMemo.locationDelegate = self 
+        }
+        
+        let newPanel = settingPanel(view: vc, layout: configuration.layoutType)
+        newPanel.move(to: .half, animated: true)
         floatPanel = newPanel
     }
 
@@ -245,13 +350,39 @@ extension MapViewController: FloatingPanelControllerDelegate {
 // MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
     func backButtonClicked() {
+        print("$$$$1")
         floatPanel?.removePanelFromParent(animated: true) {
             [weak self] in
+            print("$$$$$2")
             guard let self else {return}
             floatPanel = nil
+            addTestAnnotations()
         }
         removeAll()
-        addTestAnnotations()
+    }
+}
+// MARK: 로케이션 수정
+extension MapViewController: AboutmodifyLocation {
+    func getModifyInfo(with lcation: LocationMemo) {
+        updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] vc in
+            guard self != nil else { return }
+            guard let viewController = vc as? AddLocationMemoViewController else { return }
+            print("*****   updatePanel ")
+            viewController.addViewModel.modifyTrigger.value = lcation.id.stringValue
+        }
+    }
+}
+extension MapViewController: LocationDelegate {
+    func getLocationInfo(memo: LocationMemo) {
+        
+        updatePanel(coordi: nil, viewType: .modiFiLocation, layout: .detail) { [weak self] vc in
+            guard let self,
+            let viewController = vc as? AboutLocationViewController else { return }
+            guard let locations = memo.location else { return }
+            guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
+            viewController.viewModel.inputLocationMemo.value = memo
+            addLongAnnotation(cl2: location)
+        }
     }
 }
 
@@ -264,7 +395,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.last?.coordinate{
             // MARK: TS 이부분에서 트러블 슈팅 발생 그렇다면 위치가 변할때만 호출되게 변경
             setRegion(location: location)
-            homeView.locationManager.distanceFilter = 10 //m 10미터 변화 할때만 호출
+            homeView.locationManager.distanceFilter = 20 //m 10미터 변화 할때만 호출
             // homeView.locationManager.stopUpdatingLocation()
         }else {
             homeView.locationManager.stopUpdatingLocation()
@@ -327,10 +458,9 @@ extension MapViewController {
             }
             // MARK: 이시점에서 현위치 가져올수 있음
         case .authorizedAlways, .authorizedWhenInUse:
-            
             homeView.mapView.showsUserLocation = true
             homeView.locationManager.startUpdatingLocation()
-
+            
         default:
             homeView.makeToast(MapAlertSection.noneAct.message,duration: 1.0, position: .bottom)
         }
@@ -356,3 +486,9 @@ extension MapViewController {
 //        homeView.mapView.addAnnotation(pin)
 //    }
 //}
+/*
+ /*
+  // 클로저를 통한 추가 설정
+  configuration.configureAddMemoViewController?(addMemoVc)
+  */
+ */

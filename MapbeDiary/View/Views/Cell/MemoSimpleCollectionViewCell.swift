@@ -22,9 +22,10 @@ final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
     }
     override func configureLayout() {
         imageView.snp.makeConstraints { make in
-            make.size.equalTo(80)
+            make.size.equalTo(CGSize(width: 80, height: 80))
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(14)
-            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(14)
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(14)
+            //make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(14)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -40,10 +41,15 @@ final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
         
         dateLabel.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(4)
-            
-            make.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom).inset(8)
+            make.bottom.equalTo(imageView.snp.bottom)
         }
+        
+        imageView.snp.makeConstraints { make in
+            make.bottom.lessThanOrEqualTo(contentView.safeAreaLayoutGuide).inset(14)
+        }
+
     }
+    
     override func designView() {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12

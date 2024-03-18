@@ -14,6 +14,7 @@ enum Section: CaseIterable {
 final class SearchViewController: BaseHomeViewController<SearchBaseView> {
     
     let searchViewModel = SearchViewModel()
+    
     var dataSource: UICollectionViewDiffableDataSource<Section,Document>?
     
     var kakaoDataClosure: ((Document) -> Void )?
@@ -22,12 +23,15 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeView.collectionView.delegate = self
-        collectionViewSettup()
-        searchBarSetup()
         subscribe()
-        collectionViewDataSource()
-        snapShot()
+        searchBarSetup()
+        homeView.collectionView.delegate = self
+        
+        collectionViewSettup()
+        
+        collectionViewDataSource() //
+        
+        snapShot() // 그릇이 있어야 해서 뒤에
         
         homeView.backButton.addTarget(self, action: #selector(onlyDismiss), for: .touchUpInside)
         
@@ -47,6 +51,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section,Document>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            
             return collectionView.dequeueConfiguredReusableCell(using: cellregister, for: indexPath, item: itemIdentifier)
         })
         

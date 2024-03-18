@@ -67,9 +67,7 @@ struct memoModifyOutstruct {
 
 final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
-    
     var addViewModel = AddViewModel()
-    
     
     // delegate
     weak var backDelegate: BackButtonDelegate?
@@ -158,7 +156,9 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
             }
         }
         addViewModel.saveButtonTrigger.value = ()
+        
         backDelegate?.backButtonClicked()
+        
         SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
     }
    
@@ -262,7 +262,7 @@ extension AddLocationMemoViewController {
     func checkCameraAuthorization() {
         checkedAutCamera()
     }
-    func checkedAutCamera(){
+    private func checkedAutCamera(){
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined: // 한번도 혹은 아무튼 요청
             AVCaptureDevice.requestAccess(for: .video) { [weak self] bool in

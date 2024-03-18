@@ -63,12 +63,19 @@ class AllMemoListViewModel {
     
     // MARK: 메모를 지웁니다!!
     private func deleteMemo(memo: LocationMemo){
-        do {
-            try repo.deleteAllImageFromLocationMemo(memoId: memo.id)
-        } catch {
-            realmError.value = error as? RealmManagerError
+
+        repo.deleteLocationMemo(memo) { [weak self] results in
+            guard let self else { return }
+            switch results {
+            case .success(let success):
+                
+                SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
+                
+            case .failure(let failure):
+                realmError.value = failure
+            }
         }
-        SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
+                
     }
     deinit{
         print("AllMemoListViewModel", self  )

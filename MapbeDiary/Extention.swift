@@ -17,14 +17,35 @@ extension UIViewController {
         let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
         alert.addAction(okButton)
 
-        present(alert,animated: true)
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let self else { return }
+            present(alert,animated: true)
+        }
     }
     func showAPIErrorAlert(repo: RealmManagerError) {
         let alert = UIAlertController(title: "Error_alert_title".localized, message: repo.alertMessage, preferredStyle: .alert)
         
         let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
         alert.addAction(okButton)
-        present(alert,animated: true)
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let self else { return }
+            present(alert,animated: true)
+        }
+    }
+    
+    func showAPIErrorAlert(file: fileManagerError) {
+
+        let alert = UIAlertController(title: "Error_alert_title".localized, message: file.message, preferredStyle: .alert)
+        
+        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
+        alert.addAction(okButton)
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let self else { return }
+            present(alert,animated: true)
+        }
     }
     
     func showAlertHandler(title: String, message: String,actionTitle: String, handler: @escaping (UIAlertAction) -> Void ) {
@@ -34,6 +55,19 @@ extension UIViewController {
         let okButton = UIAlertAction(title: actionTitle, style: .destructive, handler: handler)
         
         alert.addAction(okButton)
+        present(alert, animated: true)
+    }
+    
+    func showAlertHandlerCancel(title: String, message: String, actionTitle: String, handler: @escaping (UIAlertAction) -> Void ) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okButton = UIAlertAction(title: actionTitle, style: .default, handler: handler)
+        let cancelButton = UIAlertAction(title: "Cancel_check_title" .localized, style: .destructive)
+        
+        alert.addAction(okButton)
+        alert.addAction(cancelButton)
+        
         present(alert, animated: true)
     }
     
@@ -67,6 +101,8 @@ extension UIViewController {
             showAlert(title: MapAlertSection.requestFail.title, message: MapAlertSection.requestFail.message)
         }
     }
+    
+    
     
 }
 // MARK: 다국어 확장
@@ -147,9 +183,10 @@ extension UIImage {
             guard let self else { return }
             draw(in: CGRect(origin: .zero, size: size))
         }
-        
         return renderImage
     }
+
+    
 }
 
 
@@ -231,14 +268,52 @@ extension UICollectionView {
         let cellWidth = UIScreen.main.bounds.width - (spacing * 3)
 
         layout.itemSize = CGSize(width: cellWidth / 3.5, height: (cellWidth) / 3.5) // 셀의 크기
+        
         layout.sectionInset = UIEdgeInsets(
             top: 0,
-            left: spacing,
+            left: 20,
             bottom: 0,
-            right: spacing
+            right: 20
         )
-        layout.minimumLineSpacing = 26
+        
+        layout.minimumLineSpacing = 20
+        
         layout.scrollDirection = .horizontal
         return layout
+    }
+}
+
+// MARK: Date
+extension Date {
+    func localDate() -> String {
+        let timeformetter = DateFormatter()
+        
+        timeformetter.locale = .current
+        timeformetter.timeZone = .current
+        timeformetter.dateStyle = .long
+        
+        let someString = timeformetter.string(from: self)
+        return someString
+    }
+}
+
+
+//MARK: 노티피케이션
+extension Notification.Name {
+    static let didSaveActionDetailMemo = Notification.Name("SaveDetailMemo")
+}
+
+// MARK: Toast
+protocol ToastPro {}
+
+extension ToastPro where Self: UIViewController {
+    func showToastBody(title: String, message: String, complite: ((Bool) -> Void)? = nil ) {
+        self.view.makeToast(message,
+                            duration: 1.5,
+                            point: CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2),
+                            title: title,
+                            image: .cantAdd) { didTap in
+            complite?(didTap)
+        }
     }
 }

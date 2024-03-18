@@ -25,6 +25,7 @@ class BaseView: UIView {
         designView()
         register()
         subscribe()
+        tester()
     }
     
     func configureHierarchy(){
@@ -40,6 +41,9 @@ class BaseView: UIView {
         
     }
     func subscribe(){
+        
+    }
+    func tester(){
         
     }
     

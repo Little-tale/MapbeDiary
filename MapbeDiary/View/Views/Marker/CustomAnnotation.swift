@@ -11,16 +11,18 @@ class CustomAnnotation: NSObject, MKAnnotation {
     static let reusableIdentifier = "CustomAnnotation"
     
     var memoRegDate: Date? // 메모 데이트를 통해 역으로도 찾을수 있게
-    var memoId: String?
+    var locationId: String?
     var coordinate: CLLocationCoordinate2D
     var title: String?
+    var long: Bool
 
     
-    init(memoRegDate: Date?,memoId: String?,title: String? ,coordinate: CLLocationCoordinate2D) {
+    init(memoRegDate: Date?,memoId: String?,title: String? ,coordinate: CLLocationCoordinate2D, bool: Bool? = nil ) {
         self.memoRegDate = memoRegDate
         self.coordinate = coordinate
         self.title = title
-        self.memoId = memoId
+        self.locationId = memoId
+        self.long = bool ?? false 
     }
     
 }
@@ -31,7 +33,7 @@ class ArtWorkMarkerView: MKAnnotationView {
         willSet {
             guard let artWork = newValue as? CustomAnnotation else { return }
             
-            guard let memoId = artWork.memoId else {
+            guard let memoId = artWork.locationId else {
                 canShowCallout = true
                 calloutOffset = CGPoint(x: 0, y: 10)
                 centerOffset = CGPoint(x: 0, y: -30)

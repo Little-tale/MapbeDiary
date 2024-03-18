@@ -54,7 +54,6 @@ class LacationMemosHomeBaseView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
-        
     }
     
     func emptyLauout(screen: CGFloat) {

@@ -10,11 +10,12 @@ import Foundation
 
 class MapViewModel {
     
-    var folderInput: Observable<Folder?> = Observable(nil)
+    let  folderInput: Observable<Folder?> = Observable(nil)
 
-    var locationsOutput: Observable<[LocationMemo]?> = Observable(nil)
+    let locationsOutput: Observable<[LocationMemo]?> = Observable(nil)
     
-    var reloadInput: Observable<Void?> = Observable(nil)
+
+    let reloadInput: Observable<Void?> = Observable(nil)
     
     var repository = RealmRepository()
     init(){

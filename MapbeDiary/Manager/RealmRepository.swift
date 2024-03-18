@@ -18,6 +18,7 @@ class RealmRepository {
     let locationMemoModel = LocationMemo.self
     let locationModel = Location.self
     let detailMemoModel = DetailMemo.self
+    let imageModel = ImageObject.self
     
     // MARK: 단순히 도큐먼트 위치를 호출하는 메서드
     func printURL(){
@@ -42,9 +43,13 @@ class RealmRepository {
         }
     }
     
-    
     func makeLocation(title: String,lat: String, long: String) {
         
+    }
+    // MARK: 어떤 타입이든 보내기
+    func fetchItems<T: Object>(type: T.Type) -> Results<T> {
+        let items = realm.objects(type.self)
+        return items
     }
     
     // MARK: 메모를 만들어 드립니다. V
@@ -133,6 +138,21 @@ class RealmRepository {
         let memo = findMemo.first
         return memo
     }
+    
+    func findLocationMemo(ojidString: String, compite: @escaping (Result<LocationMemo, RealmManagerError>) -> Void){
+        do {
+            let objectId =  try ObjectId(string: ojidString)
+            let memo = findLocationMemo(ojID: objectId)
+            guard let memo else {
+                compite(.failure(.cantFindLocationMemo))
+                return
+            }
+            compite(.success(memo))
+        } catch {
+            compite(.failure(.cantFindObjectId))
+        }
+    }
+    
     // MARK: 메모를 통해 속한 폴더를 찾습니다.
     func findMemoAtFolder(memo: LocationMemo) -> Folder?{
         let findFoler = memo.parents.first
@@ -266,12 +286,12 @@ class RealmRepository {
         return folderPath
     }
     
-    
+    // MARK: 디테일 메모를 생성하면서 로케이션 메모에 등록합니다.
     func makeDetailMemo(_ model: AboutMemoModel,_ location: LocationMemo) -> Result<DetailMemo,RealmManagerError> {
         guard let text = model.memoText else { return .failure(.cantMakeDetailMemo) }
         
         let memoModel = DetailMemo(detailContents: text, modifyDate: nil)
-        do {
+        do { 
             try realm.write {
                 realm.add(memoModel)
             }
@@ -286,6 +306,69 @@ class RealmRepository {
             return .failure(.cantMakeDetailMemo)
         }
         return .success( memoModel )
+    }
+    
+    // MARK: 디테일 메모 이미지를 저장합니다.
+    /// 디테일 메모 이미지를 저장합니다. 반복문이 필요합니다.
+    func makeDetailMemoImage(dtMemo: DetailMemo, imageData: Data) -> Result<Void,RealmManagerError>{
+        var index = 0
+        
+        if let lastImage = dtMemo.imagePaths.sorted(byKeyPath: "orderIndex", ascending: false).first {
+              index = lastImage.orderIndex + 1
+        }
+        
+        if index >= 3 {
+            return .failure(.cantAddImage)
+        }
+        
+        let imageObject = ImageObject(index: index)
+
+        do {
+            try realm.write {
+                realm.add(imageObject)
+                dtMemo.imagePaths.append(imageObject)
+            }
+        } catch {
+            return .failure(.cantAddImage)
+        }
+        
+        if !FileManagers.shard.createMemoImage(
+            detailMemoId: dtMemo.id.stringValue,
+            imgOJId: imageObject.id.stringValue,
+            data: imageData
+        ) {
+            return .failure(.cantAddImage)
+        }
+        
+        return .success(())
+    }
+    
+    ///  디테일 이미지 리스트 가져오기
+    func findDetailImagesList(detail: DetailMemo) -> [ImageObject] {
+        return Array(detail.imagePaths)
+    }
+    
+    /// 디테일 메모를 업데이트
+    func updateDetailMemo(memoModel: AboutMemoModel) -> Result<Void,RealmManagerError> {
+        guard let memo = memoModel.inputMemoMeodel,
+              let text = memoModel.memoText else {
+            print("error\(memoModel.inputMemoMeodel), \(memoModel.memoText)")
+            return .failure(.cantModifyMemo)
+        }
+        // 이미지는 알아서 업데이트 되게 해버림 즉 텍스트만 업데이트하면 된다.!
+        do {
+            try realm.write {
+                let value: [String: Any] = [
+                    "id": memo.id,
+                    "detailContents": text
+                ]
+                realm.create(detailMemoModel, value: value, update: .modified)
+            }
+        } catch {
+            print("여기임?")
+            return .failure(.canModifiMemo)
+        }
+        return .success(())
     }
     
     // MARK: -------------- Remove ---------------------
@@ -364,29 +447,196 @@ class RealmRepository {
         }
     }
     
-    func deleteAllImageFromLocationMemo(memoId: ObjectId) throws {
+    private func deleteAllImageFromLocationMemo(memoId: ObjectId, compltion: (Result<Void, RealmManagerError>) -> Void) {
         let memoIdString = memoId.stringValue
         // 1. 마커 이미지 제거
         if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: memoIdString){
-            throw RealmManagerError.cantDeleteImage
+            compltion(.failure(.cantDeleteImage))
         }
 
         // 2. 메모 제거
         let memo = realm.objects(locationMemoModel).where { $0.id == memoId }.first
-        guard let memo else { throw RealmManagerError.cantDeleteMemo }
-       
+        guard let memo else {
+            compltion(.failure(.cantDeleteMemo))
+            return
+        }
+
         // 3. 메모 제거
         do {
             try realm.write {
                 realm.delete(memo)
             }
         } catch {
-            throw RealmManagerError.cantDeleteMemo
+            compltion(.failure(.cantDeleteMemo))
+        }
+        compltion(.success(()))
+    }
+    /// 디테일 메모에 있는 이미지들을 지웁니다. + 디테일도 지웁니다.
+    func removeAllImageObjects(detail: DetailMemo) -> Result<Void,RealmManagerError> {
+        let images = findDetailImagesList(detail: detail)
+        do {
+            for image in images {
+                try realm.write {
+                    realm.delete(image)
+                }
+            }
+        } catch {
+            return .failure(.cantDeleteImage)
+        }
+        return .success(())
+    }
+    
+    /// 디테일메모를 지웁니다.
+    func removeDetail(_ detail: DetailMemo) -> Result<Void,RealmManagerError> {
+        do {
+            try realm.write {
+                realm.delete(detail)
+            }
+        } catch {
+            return .failure(.cantDeleteDetailMemo)
+        }
+        return .success(())
+    }
+    
+    
+    func removeImageObject(_ image: ImageObject) -> Result<Void,RealmManagerError> {
+        // 1. 인덱스가 무엇이지 알아내기
+        // 2. 객체를 지우기
+        // 3. 재정렬 해주기
+        let index = image.orderIndex
+        do {
+            try realm.write {
+                realm.delete(image)
+                let datas = realm.objects(imageModel).where { $0.orderIndex > index }
+                for data in datas {
+                    data.orderIndex -= 1
+                }
+            }
+        } catch {
+            return .failure(.cantDeleteImage)
+        }
+        return .success(())
+    }
+    
+    func removeImageObjectFromModify(_ image: ImageObject) -> Result<Void,RealmManagerError>{
+        let realmImage = realm.objects(imageModel).where{ $0.id == image.id }
+        
+        let index = image.orderIndex
+        do {
+            try realm.write {
+                realm.delete(image)
+                let datas = realm.objects(imageModel).where { $0.orderIndex > index }
+                for data in datas {
+                    data.orderIndex -= 1
+                }
+            }
+        } catch {
+            return .failure(.cantDeleteImage)
+        }
+        return .success(())
+    }
+    
+    // MARK: DetailMemo를 제거할때
+    func deleteDetailMemo(_ detail: DetailMemo, complition: @escaping(Result<Void, RealmManagerError>) -> Void ){
+        
+        // 0. 이미지 리스트 가져오기
+        let detailImages = findDetailImagesList(detail: detail)
+        
+        // 1. 이미지 먼저 지우기 시도
+        let imageIdString = detailImages.map { $0.id.stringValue }
+        
+        let results = FileManagers.shard.removeDetailImageList(detailId: detail.id.stringValue, imageIds: Array(imageIdString))
+        
+        switch results {
+        case .success():
+            break
+        case .failure(_):
+            complition(.failure(.cantDeleteImage))
+        }
+        
+        // 2. 이미지 테이블 지우기 시도
+        let removeResults = removeAllImageObjects(detail: detail)
+        
+        switch removeResults {
+        case .success(_):
+            break
+        case .failure(let failure):
+            complition(.failure(failure))
+        }
+        
+        // 3. detail 삭제
+        let detailRemove = removeDetail(detail)
+        switch detailRemove {
+        case .success(let success):
+            complition(.success(success))
+        case .failure(let failure):
+            complition(.failure(failure))
         }
     }
- 
+    
+    // MARK: ImageObject(이미지파일도) 만 제거할때
+    func deleteImageAndImgObject(_ imgOJ: ImageObject, complite: @escaping(Result<Void,RealmManagerError>) -> Void){
+        
+        let dtail = imgOJ.parents.first
+        guard let dtail else { return }
+        // 이미지 먼저 제거
+        let results = FileManagers.shard.removeDetailImage(detailId: dtail.id.stringValue, imageId: imgOJ.id.stringValue)
+        switch results {
+        case .success(_):
+            let imageResults = removeImageObject(imgOJ)
+            switch imageResults {
+            case .success(let success):
+                complite(.success(success))
+            case .failure(let failure):
+                complite(.failure(failure))
+            }
+        case .failure(_):
+            complite(.failure(.cantDeleteImage))
+        }
+    }
+    
+    func deleteLocationMemo(_ location: LocationMemo, complite: @escaping(Result<Void,RealmManagerError>) -> Void){
+        // 너무 많은 작업이 있을것 같음으로
+        let group = DispatchGroup()
+        var firstError: RealmManagerError?
+        
+        // DetailMemo -> 이미지까지 다 지우는걸 반복
+        for detail in location.detailMemos {
+            group.enter()
+            deleteDetailMemo(detail) { [weak self] result in
+                guard let self else { complite(.failure(.cantDeleteLocationMemo))
+                    return
+                }
+                
+                if case .failure(let failure) = result,
+                   firstError == nil {
+                    firstError = failure
+                }
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            
+            if let firstError {
+                complite(.failure(firstError))
+            }
+            
+            self.deleteAllImageFromLocationMemo(memoId: location.id) { result in
+                switch result {
+                case .success(let success):
+                    complite(.success(success))
+                case .failure(let failure):
+                    complite(.failure(failure))
+                }
+            }
+        }
+    }
+    
     
 }
+
+
 /*
  let memoImageList = Array(memo.imagePaths)
  

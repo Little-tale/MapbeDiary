@@ -8,7 +8,13 @@
 import UIKit
 // MARK: 사용할 모델
 
+protocol LocationDelegate: AnyObject {
+    func getLocationInfo(memo: LocationMemo)
+}
+
 class AllMemoLocationListViewController: BaseHomeViewController<LacationMemosHomeBaseView> {
+    
+    weak var locationDelegate: LocationDelegate?
     
     var dataSource: UICollectionViewDiffableDataSource<Folder,LocationMemo>?
     
@@ -46,14 +52,16 @@ extension AllMemoLocationListViewController {
             [weak self] cell, indexPath, item in
             guard self != nil else { return }
             cell.titleLabel.text = item.title
+            
             cell.dateLabel.text = DateFormetters.shared.localDate(item.regdate)
             print("제발!!!!cellRegister",item.title)
+            
             cell.subTitleLabel.text = item.contents
             let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id.stringValue)
             if let image {
                 cell.imageView.image = UIImage(contentsOfFile: image)
             }else {
-                cell.imageView.image = UIImage(named: "Image")
+                cell.imageView.image = .emptyAnnotation
             }
             
         }
@@ -96,6 +104,8 @@ extension AllMemoLocationListViewController {
     }
     private func modifyAction(memo: LocationMemo) {
         print(#function)
+        locationDelegate?.getLocationInfo(memo: memo)
+        dismiss(animated: true)
     }
     
 }
@@ -110,6 +120,7 @@ extension AllMemoLocationListViewController {
             snaphot.appendItems(data.Memo,toSection: data.folder)
             
             // MARK: diff를 계산하지 않고 Reload한다.
+            // dataSource?.apply(snaphot) // 변화를 감지 못해 서울시
             dataSource?.applySnapshotUsingReloadData(snaphot)
         }
     }

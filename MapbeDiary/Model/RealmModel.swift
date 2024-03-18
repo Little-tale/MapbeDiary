@@ -64,7 +64,6 @@ class LocationMemo: Object {
 }
 
 class DetailMemo: Object {
-    
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var detailContents: String // 세부 메모
     @Persisted var regDate: Date
@@ -80,7 +79,6 @@ class DetailMemo: Object {
         self.regDate = Date()
         self.modifeyDate = modifyDate ?? Date()
     }
-    
 }
 
 class ImageObject: Object {
@@ -88,11 +86,12 @@ class ImageObject: Object {
     @Persisted var imagename: String // 이미지 이름은 UUID 로 할수도
     @Persisted var regDate: Date // 생성 날짜
     @Persisted var orderIndex: Int // 후에 정렬이나 순서 교체 염두
+    @Persisted(originProperty: "imagePaths") var parents: LinkingObjects<DetailMemo>
     
     convenience
-    init(imagename: String, index: Int) {
+    init( index: Int) {
         self.init()
-        self.imagename = imagename
+        self.imagename = UUID().uuidString
         self.regDate = Date()
         self.orderIndex = index
     }

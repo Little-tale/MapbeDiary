@@ -17,6 +17,8 @@ class MemoAboutBaseView: BaseView {
     
     private let line = UIView()
     
+    let memoAboutViewModel = LocationMemosViewModel()
+    
     override func configureHierarchy() {
         addSubview(locationtitleLabel)
         addSubview(locationMemoLabel)
@@ -25,31 +27,36 @@ class MemoAboutBaseView: BaseView {
         addSubview(phoneImage)
         addSubview(line)
     }
+   
     override func configureLayout() {
         locationtitleLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(90)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(14)
             make.top.equalTo(safeAreaLayoutGuide).offset(10)
         }
+        
         locationMemoLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(locationtitleLabel)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(100)
             make.top.equalTo(locationtitleLabel.snp.bottom).offset(10)
-        }
-        regDate.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(12)
-            make.top.equalTo(locationMemoLabel.snp.bottom).offset(8)
         }
         phoneNumberLabel.snp.makeConstraints { make in
             make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
-            make.top.equalTo(regDate.snp.bottom).offset(4)
+            make.top.equalTo(regDate.snp.bottom).offset(6)
         }
         phoneImage.snp.makeConstraints { make in
             make.trailing.equalTo(phoneNumberLabel.snp.leading).inset( -4 )
             make.size.equalTo(20)
             make.centerY.equalTo(phoneNumberLabel)
         }
+        
+        regDate.snp.makeConstraints { make in
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(12)
+            make.bottom.equalTo(line.snp.top).inset( -8 )
+        }
         line.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
-            make.top.equalTo(phoneNumberLabel.snp.bottom).offset(10)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.height.equalTo(1)
         }
     }
@@ -57,21 +64,25 @@ class MemoAboutBaseView: BaseView {
     override func designView() {
         regDate.textAlignment = .right
         phoneNumberLabel.textAlignment = .right
-        locationtitleLabel.font = JHFont.UIKit.bo20
-        
-        regDate.font = JHFont.UIKit.li11
-        phoneNumberLabel.font = JHFont.UIKit.bo12
+        locationtitleLabel.font = JHFont.UIKit.bo24
+        locationtitleLabel.numberOfLines = 2
+        locationMemoLabel.numberOfLines = 3
+        regDate.font = JHFont.UIKit.me17
+        phoneNumberLabel.font = JHFont.UIKit.bo15
         phoneImage.image = UIImage(systemName: "phone.fill")
         
         line.backgroundColor = .systemGray
-        dummy()
     }
-    
-    func dummy(){
-        locationtitleLabel.text = "sadasd"
-        phoneNumberLabel.text = "asdsadas"
-        regDate.text = "asdasda"
-        phoneNumberLabel.text = "sadasdsa"
-        
+  
+    override func subscribe() {
+        memoAboutViewModel.infoOuput.bind { [weak self] location in
+            guard let self else { return }
+            guard let location else { return }
+            locationtitleLabel.text = location.locationName
+            locationMemoLabel.text = location.locationMemo
+            regDate.text = location.regDate
+            phoneNumberLabel.text = location.phoneNumber
+            phoneImage.isHidden = location.phoneNumber?.isEmpty ?? true
+        }
     }
 }
