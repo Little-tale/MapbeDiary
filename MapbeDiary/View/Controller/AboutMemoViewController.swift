@@ -117,7 +117,7 @@ extension AboutMemoViewController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
             guard let self else { return }
-            if let detailMemo = homeView.memoViewModel.inputModel.value?.inputMemoMeodel {
+            if (homeView.memoViewModel.inputModel.value?.inputMemoMeodel) != nil {
                 // MARK: 여기서 부터 로직을 수정
                 homeView.memoViewModel.removeImage.value = index
             } else {
@@ -289,6 +289,7 @@ extension AboutMemoViewController {
             // 이게 하나씩 실시간 저장하는 거였을건데 기능 드랍
             // homeView.memoViewModel.inputImage.value = data
             let imageData = homeView.memoViewModel.emptyModel.value.iamgeData
+            
             homeView.memoViewModel.emptyModel.value.iamgeData.append(data)
             let imageObject = ImageObject(index: imageData.count)
             homeView.memoViewModel.emptyModel.value.imageObject?.append(imageObject)

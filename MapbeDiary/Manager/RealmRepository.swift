@@ -341,34 +341,9 @@ class RealmRepository {
         }
         return .success(())
     }
-    // MARK: 업데이트 전용 메모 이미지 로직
-    func updateDetailMemoImage(dtMemo: DetailMemo, imageObjects: [ImageObject], imageData: [Data], complite: @escaping (Result<Void, RealmManagerError>) -> Void ){
-        // 실제 렘에 기록되고 있는 모델들
-        let imageList = findDetailImagesList(detail: dtMemo)
-        // 새롭게 들어온 이미지
-        let newImageObject = imageObjects.filter { imageObject in
-            !imageList.contains { $0.id == imageObject.id }
-        }
-        // 새로운 이미지 갯수
-        let newImageObjectCount = newImageObject.count
-        for newImage in newImageObject {
-            do {
-                try realm.write {
-                    realm.add(newImage)
-                    dtMemo.imagePaths.append(newImage)
-                }
-            }catch {
-                complite(.failure(.cantAddImage))
-            }
-        }
-        print("Realm이 가지고 있는", imageList)
-        print("새로운 친구: ",newImageObject,newImageObjectCount)
-        
-        let originerIdStrings = imageList.map { $0.id.stringValue }
-        let newIdStrings = newImageObject.map { $0.id.stringValue }
-        
-        FileManagers.shard.detailImageListUpdate(dtMemoId: dtMemo.id.stringValue, originId: originerIdStrings, imageObjectId: newIdStrings, imageData: imageData)
-    }
+    
+    
+    
     
     ///  디테일 이미지 리스트 가져오기
     func findDetailImagesList(detail: DetailMemo) -> [ImageObject] {
@@ -498,7 +473,7 @@ class RealmRepository {
         }
         compltion(.success(()))
     }
-    /// 디테일 메모에 있는 이미지들을 지웁니다. + 디테일도 지웁니다.
+    /// 디테일 메모에 있는 이미지들을 지웁니다.
     func removeAllImageObjects(detail: DetailMemo) -> Result<Void,RealmManagerError> {
         let images = findDetailImagesList(detail: detail)
         do {
@@ -645,6 +620,7 @@ class RealmRepository {
                 group.leave()
             }
         }
+        
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
             
@@ -739,3 +715,139 @@ class RealmRepository {
      }
  }
  */
+// MARK: 업데이트 전용 메모 이미지 로직
+//    func updateDetailMemoImage(dtMemo: DetailMemo, imageObjects: [ImageObject], imageData: [Data], complite: @escaping (Result<Void, RealmManagerError>) -> Void ){
+//
+//
+//    }
+/*
+ 
+ // 실제 렘에 기록되고 있는 모델들
+ let imageList = findDetailImagesList(detail: dtMemo)
+ 
+ // dtMemo 입장에서 가지고 있었지만, imageObject에 없는 ImageObject 찾기 제거 대상
+ let dtMemoNoHaveMine = imageList.filter { original in
+     !imageObjects.contains { imYours in
+         imYours.id == original.id
+     }
+ }
+ 
+ // imageObjects입장에서 dtMemo가 가지고있지 않는 새로운 것들을 필터
+ let newImageObjects = imageObjects.filter { newImageObject in
+     !imageList.contains { noHave in
+         noHave.id == newImageObject.id
+     }
+ }
+ 
+ if newImageObjects.count < dtMemoNoHaveMine.count {
+     do {
+         try realm.write {
+             for removeOj in dtMemoNoHaveMine {
+                 let results = FileManagers.shard.removeDetailImage(detailId: dtMemo.id.stringValue, imageId: removeOj.id.stringValue)
+                 if case.failure = results {
+                     complite(.failure(.cantDeleteDetailMemo))
+                 }
+                 realm.delete(removeOj)
+             }
+             complite(.success(()))
+         }
+     } catch {
+         complite(.failure(.cantDeleteMemo))
+     }
+ } else if newImageObjects.count == dtMemoNoHaveMine.count {
+     return
+ } else {
+     
+ }
+ // 파일 메니저에서 먼저 제거
+ let deleteImagesId = dtMemoNoHaveMine.map { $0.id.stringValue }
+ print("&&& 제거 대상 ",deleteImagesId.count)
+ 
+ // 파일 매니저에서 사진 업로드
+ let newImageIds = newImageObjects.map { $0.id.stringValue }
+ print("&&& 업로드 대상 ",newImageIds.count)
+ print("&&& 변경할 대상", imageData)
+ FileManagers.shard.updateDetailImage(dtMemoId: dtMemo.id.stringValue, delete: deleteImagesId, newImage: newImageIds, data: imageData) {  rusults in
+     if case.failure = rusults {
+         complite(.failure(.canModifiMemo))
+     }
+ }
+ 
+ print("새로운 느낌",newImageObjects.count, "없어진 느낌...ㅠ", dtMemoNoHaveMine.count)
+ do {
+     try realm.write {
+         for removeOj in dtMemoNoHaveMine {
+             realm.delete(removeOj)
+         }
+         for newImageObject in newImageObjects {
+             realm.add(newImageObject)
+             dtMemo.imagePaths.append(newImageObject)
+         }
+         complite(.success(()))
+     }
+ } catch {
+     complite(.failure(.cantDeleteMemo))
+ }
+
+}
+ */
+/*
+ FileManagers.shard.detailImageListUpdate(dtMemoId: dtMemo.id.stringValue, originId: originerIdStrings, imageObjectId: newIdStrings, imageData: imageData)
+ */
+/*
+do {
+   try realm.write {
+       let deleteObject = imageList.filter { listItem in
+           imageObjects.contains { $0.id == listItem.id }
+       }
+       print(deleteObject.count)
+       for removeObject in deleteObject {
+           let results = FileManagers.shard.removeDetailImage(detailId: dtMemo.id.stringValue, imageId: removeObject.id.stringValue)
+           
+           switch results {
+           case .success:
+               break
+           case .failure:
+               complite(.failure(.cantDeleteImage))
+           }
+           realm.delete(removeObject)
+       }
+   }
+} catch {
+   print("Error")
+}
+
+// 새로운 이미지 갯수
+let newImageObjectCount = newImageObject.count
+for newImage in newImageObject {
+   do {
+       try realm.write {
+           realm.add(newImage)
+           dtMemo.imagePaths.append(newImage)
+       }
+   }catch {
+       complite(.failure(.cantAddImage))
+   }
+}
+print("Realm이 가지고 있는", imageList)
+print("새로운 친구: ",newImageObject,newImageObjectCount)
+
+let originerIdStrings = imageList.map { $0.id.stringValue }
+
+let newIdStrings = newImageObject.map { $0.id.stringValue }
+*/
+/*
+ 
+ //        var originObject = imageList.filter { imageObject in
+ //            imageObjects.contains { $0.id == imageObject.id }
+ //        }
+         
+         
+ 
+ */
+//        // 새롭게 들어온 이미지 아마 2
+//        var newImageObject = imageList.filter { imageObject in
+//            !imageObjects.contains { $0.id == imageObject.id }
+//        }
+        
+        

@@ -267,16 +267,88 @@ class FileManagers {
         return .success(())
     }
     
+    // MARK: 코드 리펙토링 해야함
     func detailImageListUpdate(dtMemoId: String, originId: [String] ,imageObjectId: [String], imageData: [Data]){
         // 1. 일단 폴더로 접근
         guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return // 치명적 이슈
         }
+        // 지우면 안되는 파일 담아놓기
+        let originerFile = originId.map { $0 + ".jpeg" }
+        var imageDatas = imageData
+        
         let folderUrl = documents.appendingPathComponent(dtMemoId)
-        
-        try? fileManager.contentsOfDirectory(atPath: dtMemoId)
-        
+        // 폴더에 속한 모든 파일 가져오기
+        do {
+            let allFileList = try fileManager.contentsOfDirectory(at: folderUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            dump(allFileList)
+            for imageUrl in allFileList {
+                // 마지막 경로 컴포턴츠 로 걸러보기
+                print(imageUrl.lastPathComponent)
+                let ifDeleteImage = imageUrl.lastPathComponent
+                
+                // 만약 원하지 않는 이미지에 속하지 않는다면
+                if !originerFile.contains(ifDeleteImage){
+                    print("??????? ")
+                    do {
+                        try fileManager.removeItem(at:  folderUrl.appendingPathComponent(ifDeleteImage))
+                    } catch {
+                        print("이때는 삭제를 실패 했을경우 \n ")
+                    }
+                }
+            }
+        } catch {
+            print("폴더 접근에 실패한 케이스")
+        }
+       
+        let originalCount = originerFile.count
+        print("오리진 ", originalCount)
+        print("들어온 ", imageDatas.count)
+        if originalCount != 0 {
+            for index in 0...originalCount - 1 {
+                imageDatas.removeFirst()
+            }
+        }
+        if imageObjectId.count == imageDatas.count {
+            for (idString, imageData) in zip(imageObjectId, imageDatas){
+                do {
+                    let imageUrl = folderUrl.appendingPathComponent(idString + ".jpeg")
+                    try imageData.write(to: imageUrl)
+                } catch {
+                    print("이미지 저장 실패")
+                }
+            }
+        }
     }
     
     
+   
+    
 }
+
+
+
+/*
+ func updateDetailImage(dtMemoId: String, delete: [String], newImage: [String], data:[Data], complite: @escaping (Result<Void,fileManagerError>) -> Void ) {
+     var data = data
+     // 지우고
+     print(delete.count)
+     for idToRemove in delete {
+         data.removeFirst()
+         let results = removeDetailImage(detailId: dtMemoId, imageId: idToRemove)
+         if case.failure = results {
+             complite(.failure(.cantRemoveImages))
+         }
+     }
+     
+     // 채우기
+     for (index,newImageId) in newImage.enumerated() {
+         let bool = createMemoImage(detailMemoId: dtMemoId, imgOJId: newImageId, data: data[index])
+         if !bool{
+             complite(.failure(.cantFindImages))
+         }
+     }
+ 
+     complite(.success(()))
+ }
+ */

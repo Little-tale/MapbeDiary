@@ -73,10 +73,10 @@ final class AboutMemoViewModel {
             removeAciton()
         }
         // 단일 이미지 제거
-        removeImage.bind { [weak self] imageObject in
+        removeImage.bind { [weak self] indexPath in
             guard let self else { return }
-            guard let imageObject else { return }
-            removeJustImage(imageObject)
+            guard let indexPath else { return }
+            removeJustImage(indexPath)
         }
         inputImage.bind { [weak self] data in
             guard let self else { return }
@@ -87,7 +87,7 @@ final class AboutMemoViewModel {
     // MARK: 전뷰에 결정에 따라 로직 분리 일단 엠티모델에 넣기
     private func proceccing(_ model: AboutMemoModel) {
        var proceccingModel = model
-        
+        dump(model.inputMemoMeodel?.imagePaths)
         if let detailMemoModel = model.inputMemoMeodel {
             if let imageOj = model.inputMemoMeodel?.imagePaths {
                 let before = Array(imageOj)
@@ -152,43 +152,74 @@ final class AboutMemoViewModel {
 
             switch results {
             case .success(_):
-                dismissOutPut.value = ()
+                updateImageObject()
             case .failure(let failure):
                 print("여기인가?")
                 repoErrorPut.value = failure
                 return
             }
-            updateImageObject()
+           
         }
         NotificationCenter.default.post(name: .didSaveActionDetailMemo, object: nil)
     }
     
     // MARK: 로직 변경해야함.
     private func removeJustImage(_ indexPath: IndexPath){
-        guard let imageObject = emptyModel.value.imageObject?[indexPath.item] else {
+        guard (emptyModel.value.imageObject?[indexPath.item]) != nil else {
             return
         }
-        // 1. 일단 렘에 반영
-        let results = repository.removeImageObjectFromModify(imageObject)
-        switch results {
-        case .success:
-            break
-        case .failure(let failure):
-            repoErrorPut.value = failure
-        }
+
         emptyModel.value.imageObject?.remove(at: indexPath.item)
         emptyModel.value.iamgeData.remove(at: indexPath.item)
+        dump(emptyModel.value)
         let test = emptyModel.value.imageObject
         print("^^^^",test?.forEach({ $0.id.stringValue }))
     }
     
     private func updateImageObject(){
         guard let detailMemo = emptyModel.value.inputMemoMeodel else { return }
-        guard let imageModel = emptyModel.value.imageObject else { return }
+        guard let imageModel = emptyModel.value.imageObject else { return  dismissOutPut.value = () }
+        
         let imageData = emptyModel.value.iamgeData
-        print("새로운 친구 섞임",imageModel)
-        repository.updateDetailMemoImage(dtMemo: detailMemo, imageObjects:imageModel, imageData: imageData)
+        
+        let results = repository.removeAllImageObjects(detail: detailMemo)
+        
+        if case .failure = results {
+            repoErrorPut.value = .cantModifyMemo
+        }
+        
+        imageData.forEach { data in
+            let result = repository.makeDetailMemoImage(dtMemo: detailMemo, imageData: data)
+            if case .failure(let failure) = results {
+                repoErrorPut.value = failure
+                return
+            }
+        }
+        dismissOutPut.value = ()
     }
+    
+    
+    /*
+     print(imageModel)
+     repository.updateDetailMemoImage(dtMemo: detailMemo, imageObjects:imageModel, imageData: imageData) { [weak self] result in
+         switch result {
+         case .success(let success):
+             print(success)
+             
+             self?.dismissOutPut.value = ()
+         case .failure(let failure):
+             print(failure)
+         }
+     }
+     */
+    // 1. 일단 렘에 반영 -> 이러면 뒤로가면 사고임
+//        let results = repository.removeImageObjectFromModify(imageObject)
+//        switch results {
+//        case .success:
+//            break
+//        case .failure(let failure):
+//            repoErrorPut.value = failure
+//        }
     //        repository.deleteImageAndImgObject(imgOJ) { [weak self] results in
     //            guard let self else { return }
     //            switch results {
