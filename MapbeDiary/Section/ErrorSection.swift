@@ -21,6 +21,10 @@ enum RealmManagerError: Error {
     case cantModifyMemo
     case sameDetailMemoError
     case cantMakeDetailMemo
+    case cantAddImageObject
+    case cantDeleteDetailMemo
+    case cantDeleteLocationMemo
+    case cantFindLocationMemo
     
     var alertMessage: String {
         switch self {
@@ -32,7 +36,7 @@ enum RealmManagerError: Error {
             "폴더를 제거할 수 없습니다. 잠시후 재시도 해주세요!"
         case .cantSortedOfFolder:
             "폴더 정렬에 실패 했습니다... 관리자에게 문의해주세요!"
-        case .cantDeleteMemo:
+        case .cantDeleteMemo, .cantDeleteDetailMemo, .cantDeleteLocationMemo:
             "메모를 제거할 수 없습니다. 잠시후 재시도 해주세요!"
         case .cantAddMemoInFolder:
             "폴더에 메모를 넣는중 에러가 발생했습니다.\n잠시후 재시도 바랍니다."
@@ -50,6 +54,10 @@ enum RealmManagerError: Error {
             "중복된 메모입니다!"
         case .cantMakeDetailMemo:
             "추가 메모를 작성할수가 없어요 관리자에 문의 해주세요!"
+        case .cantAddImageObject:
+            "이미지를 추가하실수 없습니다!"
+        case .cantFindLocationMemo:
+            "메모를 찾을수가 없어요!"
         }
     }
 }

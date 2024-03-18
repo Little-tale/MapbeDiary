@@ -31,6 +31,7 @@ extension JHFont {
         static var me16: UIFont = .systemFont(ofSize: 16, weight: .medium)
         static var bo16: UIFont = .systemFont(ofSize: 16, weight: .bold)
         
+        static var re17: UIFont = .systemFont(ofSize: 17, weight: .regular)
         static var li17: UIFont = .systemFont(ofSize: 17, weight: .light)
         static var me17: UIFont = .systemFont(ofSize: 17, weight: .medium)
         static var bo17: UIFont = .systemFont(ofSize: 17, weight: .bold)
