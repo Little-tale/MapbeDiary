@@ -339,8 +339,35 @@ class RealmRepository {
         ) {
             return .failure(.cantAddImage)
         }
-        
         return .success(())
+    }
+    // MARK: 업데이트 전용 메모 이미지 로직
+    func updateDetailMemoImage(dtMemo: DetailMemo, imageObjects: [ImageObject], imageData: [Data], complite: @escaping (Result<Void, RealmManagerError>) -> Void ){
+        // 실제 렘에 기록되고 있는 모델들
+        let imageList = findDetailImagesList(detail: dtMemo)
+        // 새롭게 들어온 이미지
+        let newImageObject = imageObjects.filter { imageObject in
+            !imageList.contains { $0.id == imageObject.id }
+        }
+        // 새로운 이미지 갯수
+        let newImageObjectCount = newImageObject.count
+        for newImage in newImageObject {
+            do {
+                try realm.write {
+                    realm.add(newImage)
+                    dtMemo.imagePaths.append(newImage)
+                }
+            }catch {
+                complite(.failure(.cantAddImage))
+            }
+        }
+        print("Realm이 가지고 있는", imageList)
+        print("새로운 친구: ",newImageObject,newImageObjectCount)
+        
+        let originerIdStrings = imageList.map { $0.id.stringValue }
+        let newIdStrings = newImageObject.map { $0.id.stringValue }
+        
+        FileManagers.shard.detailImageListUpdate(dtMemoId: dtMemo.id.stringValue, originId: originerIdStrings, imageObjectId: newIdStrings, imageData: imageData)
     }
     
     ///  디테일 이미지 리스트 가져오기
@@ -521,17 +548,20 @@ class RealmRepository {
     func removeImageObjectFromModify(_ image: ImageObject) -> Result<Void,RealmManagerError>{
         let realmImage = realm.objects(imageModel).where{ $0.id == image.id }
         
-        let index = image.orderIndex
-        do {
-            try realm.write {
-                realm.delete(image)
-                let datas = realm.objects(imageModel).where { $0.orderIndex > index }
-                for data in datas {
-                    data.orderIndex -= 1
+        if let imageObjecct = realmImage.first {
+            let index = imageObjecct.orderIndex
+            do {
+                try realm.write {
+                    realm.delete(imageObjecct)
+                    let datas = realm.objects(imageModel).where { $0.orderIndex > index }
+                    for data in datas {
+                        data.orderIndex -= 1
+                    }
                 }
+            } catch {
+                return .failure(.cantDeleteImage)
             }
-        } catch {
-            return .failure(.cantDeleteImage)
+            return .success(())
         }
         return .success(())
     }

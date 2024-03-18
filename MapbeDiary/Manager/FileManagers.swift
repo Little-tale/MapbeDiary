@@ -267,5 +267,16 @@ class FileManagers {
         return .success(())
     }
     
+    func detailImageListUpdate(dtMemoId: String, originId: [String] ,imageObjectId: [String], imageData: [Data]){
+        // 1. 일단 폴더로 접근
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return // 치명적 이슈
+        }
+        let folderUrl = documents.appendingPathComponent(dtMemoId)
+        
+        try? fileManager.contentsOfDirectory(atPath: dtMemoId)
+        
+    }
+    
     
 }

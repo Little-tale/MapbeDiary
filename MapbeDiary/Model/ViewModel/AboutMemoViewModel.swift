@@ -144,8 +144,8 @@ final class AboutMemoViewModel {
             case .failure(let error):
                 repoErrorPut.value = error
             }
-        } else if let location = inputModel.value?.inputLoactionInfo,
-                  let memo = inputModel.value?.inputMemoMeodel{
+        } else if inputModel.value?.inputLoactionInfo != nil,
+                inputModel.value?.inputMemoMeodel != nil{
             // 수정시 ......
             
             let results = repository.updateDetailMemo(memoModel: emptyModel.value)
@@ -158,6 +158,7 @@ final class AboutMemoViewModel {
                 repoErrorPut.value = failure
                 return
             }
+            updateImageObject()
         }
         NotificationCenter.default.post(name: .didSaveActionDetailMemo, object: nil)
     }
@@ -168,7 +169,7 @@ final class AboutMemoViewModel {
             return
         }
         // 1. 일단 렘에 반영
-        let results = repository.removeImageObject(imageObject)
+        let results = repository.removeImageObjectFromModify(imageObject)
         switch results {
         case .success:
             break
@@ -181,18 +182,22 @@ final class AboutMemoViewModel {
         print("^^^^",test?.forEach({ $0.id.stringValue }))
     }
     
-    private func removeImageLast(){
-//        repository.deleteImageAndImgObject(imgOJ) { [weak self] results in
-//            guard let self else { return }
-//            switch results {
-//            case .success:
-//                inputModel.value = inputModel.value
-//            case .failure(let failure):
-//                repoErrorPut.value = failure
-//            }
-//        }
+    private func updateImageObject(){
+        guard let detailMemo = emptyModel.value.inputMemoMeodel else { return }
+        guard let imageModel = emptyModel.value.imageObject else { return }
+        let imageData = emptyModel.value.iamgeData
+        print("새로운 친구 섞임",imageModel)
+        repository.updateDetailMemoImage(dtMemo: detailMemo, imageObjects:imageModel, imageData: imageData)
     }
-    
+    //        repository.deleteImageAndImgObject(imgOJ) { [weak self] results in
+    //            guard let self else { return }
+    //            switch results {
+    //            case .success:
+    //                inputModel.value = inputModel.value
+    //            case .failure(let failure):
+    //                repoErrorPut.value = failure
+    //            }
+    //        }
     
     private func removeAciton(){
         guard let detail = inputModel.value?.inputMemoMeodel else {
