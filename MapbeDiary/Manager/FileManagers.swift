@@ -305,7 +305,7 @@ class FileManagers {
         print("오리진 ", originalCount)
         print("들어온 ", imageDatas.count)
         if originalCount != 0 {
-            for index in 0...originalCount - 1 {
+            for _ in 0...originalCount - 1 {
                 imageDatas.removeFirst()
             }
         }

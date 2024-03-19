@@ -347,6 +347,7 @@ class RealmRepository {
     
     ///  디테일 이미지 리스트 가져오기
     func findDetailImagesList(detail: DetailMemo) -> [ImageObject] {
+        print("!!!!",Array(detail.imagePaths).count)
         return Array(detail.imagePaths)
     }
     
@@ -522,21 +523,21 @@ class RealmRepository {
     
     func removeImageObjectFromModify(_ image: ImageObject) -> Result<Void,RealmManagerError>{
         let realmImage = realm.objects(imageModel).where{ $0.id == image.id }
+        let remalmArray = Array(realmImage)
         
-        if let imageObjecct = realmImage.first {
-            let index = imageObjecct.orderIndex
+        remalmArray.forEach { imageP in
             do {
                 try realm.write {
-                    realm.delete(imageObjecct)
+                    let index = image.orderIndex
+                    realm.delete(image)
                     let datas = realm.objects(imageModel).where { $0.orderIndex > index }
                     for data in datas {
                         data.orderIndex -= 1
                     }
                 }
             } catch {
-                return .failure(.cantDeleteImage)
+                return
             }
-            return .success(())
         }
         return .success(())
     }

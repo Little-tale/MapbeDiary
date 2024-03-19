@@ -9,18 +9,19 @@ import Foundation
 
 struct AboutMemoModel {
     var memoText: String?
-    var iamgeData: [Data] = []
+    var viewImageData: [Data] = []
     var imageModify = false
     // New 새로 생성시에는 이모델
     var inputLoactionInfo: LocationMemo?
     var inputMemoMeodel: DetailMemo?
-    var imageObject: [ImageObject]?
+    var removeImageObject: [ImageObject] = []
+    var originalImageObject: [ImageObject] = []
 }
 
 final class AboutMemoViewModel {
     
     //MARK: Input -------------
-    let emptyModel: Observable<AboutMemoModel> =  Observable(AboutMemoModel(memoText: nil, iamgeData: []))
+    let emptyModel: Observable<AboutMemoModel> =  Observable(AboutMemoModel(memoText: nil, viewImageData: []))
     
     let inputModel: Observable<AboutMemoModel?> = Observable(nil)
     
@@ -91,14 +92,16 @@ final class AboutMemoViewModel {
         if let detailMemoModel = model.inputMemoMeodel {
             if let imageOj = model.inputMemoMeodel?.imagePaths {
                 let before = Array(imageOj)
-                proceccingModel.imageObject = before
                 
                 let beforeData = before.map { $0.id.stringValue }
+                proceccingModel.originalImageObject = repository.findDetailImagesList(detail: detailMemoModel)
+                print("will",repository.findDetailImagesList(detail: detailMemoModel))
                 let results = FileManagers.shard.findDetailImageData(detailID: detailMemoModel.id.stringValue, imageIds: beforeData)
                 
                 switch results {
                 case .success(let success):
-                    proceccingModel.iamgeData = success
+                    proceccingModel.viewImageData = success
+                   
                 case .failure(let failure):
                     fileErrorPut.value = failure
                 }
@@ -128,7 +131,7 @@ final class AboutMemoViewModel {
             switch results {
             case .success (let success):
                 print("#### 여기 아닌가???")
-                for image in model.iamgeData {
+                for image in model.viewImageData {
                     
                     let results = repository.makeDetailMemoImage(dtMemo: success, imageData:image)
                     
@@ -147,7 +150,7 @@ final class AboutMemoViewModel {
         } else if inputModel.value?.inputLoactionInfo != nil,
                 inputModel.value?.inputMemoMeodel != nil{
             // 수정시 ......
-            
+
             let results = repository.updateDetailMemo(memoModel: emptyModel.value)
 
             switch results {
@@ -165,70 +168,104 @@ final class AboutMemoViewModel {
     
     // MARK: 로직 변경해야함.
     private func removeJustImage(_ indexPath: IndexPath){
-        guard (emptyModel.value.imageObject?[indexPath.item]) != nil else {
+
+        guard let inputModelValue = inputModel.value?.inputMemoMeodel else {
             return
         }
+        dump(emptyModel.value.originalImageObject)
+        var originalCount = emptyModel.value.originalImageObject.count
+        print( originalCount )
+        let removeCount = emptyModel.value.removeImageObject.count
+           
 
-        emptyModel.value.imageObject?.remove(at: indexPath.item)
-        emptyModel.value.iamgeData.remove(at: indexPath.item)
+        // model.inputMemoMeodel?.imagePaths
+        if indexPath.item <= originalCount {
+            let willRemove = emptyModel.value.originalImageObject[indexPath.item]
+            print("asdsad", willRemove)
+            emptyModel.value.removeImageObject.append(willRemove)
+            emptyModel.value.originalImageObject.remove(at: indexPath.item)
+        }
+        emptyModel.value.viewImageData.remove(at: indexPath.item)
         dump(emptyModel.value)
-        let test = emptyModel.value.imageObject
-        print("^^^^",test?.forEach({ $0.id.stringValue }))
+        print("will Removre",emptyModel.value.removeImageObject)
     }
     
     private func updateImageObject(){
         guard let detailMemo = emptyModel.value.inputMemoMeodel else { return }
-        guard let imageModel = emptyModel.value.imageObject else { return  dismissOutPut.value = () }
+    
+//        let imageModel = emptyModel.value.removewimageObject else { return  dismissOutPut.value = () }
         
-        let imageData = emptyModel.value.iamgeData
+        if !emptyModel.value.imageModify{ return  }
+        var imageData = emptyModel.value.viewImageData
+        let removeObjects = emptyModel.value.removeImageObject
+        let originerCount = repository.findDetailImagesList(detail: detailMemo).count
         
-        let results = repository.removeAllImageObjects(detail: detailMemo)
-        
-        if case .failure = results {
-            repoErrorPut.value = .cantModifyMemo
+        // 1. 먼저 제거되어야 할 대상이 있다면 대상을 제거 하면서 이미지 제거
+        if !removeObjects.isEmpty {
+            let removeOBIds = removeObjects.map { $0.id.stringValue }
+            // FileManager에서 이미지 제거
+            let results = FileManagers.shard.removeDetailImageList(detailId: detailMemo.id.stringValue, imageIds: removeOBIds)
+            if case.failure(let fail) = results {
+                fileErrorPut.value = fail
+            }
+            // Realm에 반영
+            print("********))))",removeObjects)
+            removeObjects.forEach {  ImageObject in
+                // guard let self else { return }
+                print("**********",ImageObject)
+                let result = repository.removeImageObjectFromModify(ImageObject)
+                
+                if case.failure(let failure) = result {
+                    repoErrorPut.value = failure
+                    return
+                }
+            }
         }
+        // 2. 삭제 대상의 갯수를 통해 추가되어야할 로직으로 분리 후 수행
         
-        imageData.forEach { data in
-            let result = repository.makeDetailMemoImage(dtMemo: detailMemo, imageData: data)
-            if case .failure(let failure) = results {
-                repoErrorPut.value = failure
-                return
+        let remainingObjectCount = originerCount - removeObjects.count
+        
+        if !imageData.isEmpty{
+            if remainingObjectCount == 0 {
+                imageData.forEach { [weak self] data in
+                    guard let self else { return }
+                    let result = repository.makeDetailMemoImage(dtMemo: detailMemo , imageData: data)
+                    if case.failure(let failure) = result {
+                        repoErrorPut.value = failure
+                        return
+                    }
+                }
+            } else {
+                for delete in 0..<remainingObjectCount {
+                    imageData.removeFirst()
+                }
+                imageData.forEach { [weak self] data in
+                    guard let self else { return }
+                    let result = repository.makeDetailMemoImage(dtMemo: detailMemo , imageData: data)
+                    if case.failure(let failure) = result {
+                        repoErrorPut.value = failure
+                        return
+                    }
+                }
             }
         }
         dismissOutPut.value = ()
     }
     
-    
-    /*
-     print(imageModel)
-     repository.updateDetailMemoImage(dtMemo: detailMemo, imageObjects:imageModel, imageData: imageData) { [weak self] result in
-         switch result {
-         case .success(let success):
-             print(success)
-             
-             self?.dismissOutPut.value = ()
-         case .failure(let failure):
-             print(failure)
-         }
-     }
-     */
-    // 1. 일단 렘에 반영 -> 이러면 뒤로가면 사고임
-//        let results = repository.removeImageObjectFromModify(imageObject)
-//        switch results {
-//        case .success:
-//            break
-//        case .failure(let failure):
-//            repoErrorPut.value = failure
-//        }
-    //        repository.deleteImageAndImgObject(imgOJ) { [weak self] results in
-    //            guard let self else { return }
-    //            switch results {
-    //            case .success:
-    //                inputModel.value = inputModel.value
-    //            case .failure(let failure):
+    //        let results = repository.removeAllImageObjects(detail: detailMemo)
+            
+    //        if case .failure = results {
+    //            repoErrorPut.value = .cantModifyMemo
+    //        }
+    //
+    //        imageData.forEach { data in
+    //            let result = repository.makeDetailMemoImage(dtMemo: detailMemo, imageData: data)
+    //            if case .failure(let failure) = results {
     //                repoErrorPut.value = failure
+    //                return
     //            }
     //        }
+
     
     private func removeAciton(){
         guard let detail = inputModel.value?.inputMemoMeodel else {
@@ -244,7 +281,7 @@ final class AboutMemoViewModel {
                         repoErrorPut.value = failure
                     }
                 }
-        print( emptyModel.value.imageObject ?? "")
+        print( emptyModel.value.removeImageObject ?? "")
     }
     
     
@@ -285,3 +322,33 @@ final class AboutMemoViewModel {
      }
  }
  */
+/*
+ print(imageModel)
+ repository.updateDetailMemoImage(dtMemo: detailMemo, imageObjects:imageModel, imageData: imageData) { [weak self] result in
+     switch result {
+     case .success(let success):
+         print(success)
+         
+         self?.dismissOutPut.value = ()
+     case .failure(let failure):
+         print(failure)
+     }
+ }
+ */
+// 1. 일단 렘에 반영 -> 이러면 뒤로가면 사고임
+//        let results = repository.removeImageObjectFromModify(imageObject)
+//        switch results {
+//        case .success:
+//            break
+//        case .failure(let failure):
+//            repoErrorPut.value = failure
+//        }
+//        repository.deleteImageAndImgObject(imgOJ) { [weak self] results in
+//            guard let self else { return }
+//            switch results {
+//            case .success:
+//                inputModel.value = inputModel.value
+//            case .failure(let failure):
+//                repoErrorPut.value = failure
+//            }
+//        }

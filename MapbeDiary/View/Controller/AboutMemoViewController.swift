@@ -76,7 +76,7 @@ extension AboutMemoViewController {
 // ActionSheet
 extension AboutMemoViewController {
     func showPhotoActionSheet() {
-        let max = homeView.memoViewModel.emptyModel.value.iamgeData.count
+        let max = homeView.memoViewModel.emptyModel.value.viewImageData.count
         
         let alert = UIAlertController(title: "사진 가져오기", message: nil, preferredStyle: .actionSheet)
     
@@ -120,15 +120,16 @@ extension AboutMemoViewController {
             if (homeView.memoViewModel.inputModel.value?.inputMemoMeodel) != nil {
                 // MARK: 여기서 부터 로직을 수정
                 homeView.memoViewModel.removeImage.value = index
+                homeView.memoViewModel.emptyModel.value.imageModify = true
             } else {
-                homeView.memoViewModel.emptyModel.value.iamgeData.remove(at: index.item)
+                homeView.memoViewModel.emptyModel.value.viewImageData.remove(at: index.item)
                 
             }
         }
         
         let photoViewAction = UIAlertAction(title: "뷰어로 이동", style: .default) { [weak self] _ in
             guard let self else { return }
-            let imageDatas = homeView.memoViewModel.emptyModel.value.iamgeData
+            let imageDatas = homeView.memoViewModel.emptyModel.value.viewImageData
             
             let imageData = imageDatas[index.item]
             let vc = CustomImageViewer()
@@ -209,6 +210,7 @@ extension AboutMemoViewController: UIImagePickerControllerDelegate, UINavigation
         print(pickImage)
         if let imageData = pickImage.jpegData(compressionQuality: 1) {
             handleImageAction(data: imageData)
+            
         }
     }
 }
@@ -288,16 +290,21 @@ extension AboutMemoViewController {
         if homeView.memoViewModel.emptyModel.value.inputMemoMeodel != nil {
             // 이게 하나씩 실시간 저장하는 거였을건데 기능 드랍
             // homeView.memoViewModel.inputImage.value = data
-            let imageData = homeView.memoViewModel.emptyModel.value.iamgeData
+//            let imageData = homeView.memoViewModel.emptyModel.value.iamgeData
+//            
+//            homeView.memoViewModel.emptyModel.value.iamgeData.append(data)
+//            let imageObject = ImageObject(index: imageData.count)
+//            homeView.memoViewModel.emptyModel.value.removewimageObject?.append(imageObject)
             
-            homeView.memoViewModel.emptyModel.value.iamgeData.append(data)
-            let imageObject = ImageObject(index: imageData.count)
-            homeView.memoViewModel.emptyModel.value.imageObject?.append(imageObject)
+            homeView.memoViewModel.emptyModel.value.viewImageData.append(data)
+            
+            homeView.memoViewModel.emptyModel.value.imageModify = true
+            
+            
         } else {
             // print(data)
-            homeView.memoViewModel.emptyModel.value.iamgeData.append(data)
-            
-            print("####",homeView.memoViewModel.emptyModel.value.iamgeData)
+            homeView.memoViewModel.emptyModel.value.viewImageData.append(data)
+            print("####",homeView.memoViewModel.emptyModel.value.viewImageData)
         }
         
         
@@ -306,9 +313,9 @@ extension AboutMemoViewController {
 
 extension AboutMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("SSS",homeView.memoViewModel.emptyModel.value.iamgeData.count)
+        print("SSS",homeView.memoViewModel.emptyModel.value.viewImageData.count)
         
-        return homeView.memoViewModel.emptyModel.value.iamgeData.count
+        return homeView.memoViewModel.emptyModel.value.viewImageData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -317,7 +324,7 @@ extension AboutMemoViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
     
-        let data = homeView.memoViewModel.emptyModel.value.iamgeData[indexPath.item]
+        let data = homeView.memoViewModel.emptyModel.value.viewImageData[indexPath.item]
         
         DispatchQueue.main.async {
             cell.backgoundImage.image = UIImage(data: data)

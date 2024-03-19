@@ -26,6 +26,7 @@ final class CustomImageViewer: UIViewController, UIScrollViewDelegate {
         
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -34,6 +35,7 @@ final class CustomImageViewer: UIViewController, UIScrollViewDelegate {
         settingScollerView()
         backButtonSetting()
         imageView.frame = scrollView.bounds
+        
     }
     
     private func settingScollerView(){
@@ -55,7 +57,9 @@ final class CustomImageViewer: UIViewController, UIScrollViewDelegate {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName:"chevron.backward")
         config.baseForegroundColor = .white
+        
         backButton.configuration = config
+        
         backButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             dismiss(animated: true)

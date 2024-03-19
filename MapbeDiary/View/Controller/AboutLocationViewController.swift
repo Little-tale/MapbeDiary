@@ -158,6 +158,7 @@ extension AboutLocationViewController {
         let action = UIAlertAction(title: MapAlertSection.delete.actionTitle, style: .destructive) { [weak self] _ in
             guard let self else { return }
             viewModel.removeLocationMemo.value = ()
+            
         }
         let cancel = UIAlertAction(title: MapAlertSection.delete.cancelTitle, style: .default)
         
