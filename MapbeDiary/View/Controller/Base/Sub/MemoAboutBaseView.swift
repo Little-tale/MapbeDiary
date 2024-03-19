@@ -12,6 +12,7 @@ class MemoAboutBaseView: BaseView {
     let locationtitleLabel = UILabel()
     let locationMemoLabel = UILabel()
     let regDate = UILabel()
+    let modiFyLocationButton = UIButton()
     let phoneNumberLabel = UILabel()
     private let phoneImage = UIImageView()
     
@@ -21,6 +22,7 @@ class MemoAboutBaseView: BaseView {
     
     override func configureHierarchy() {
         addSubview(locationtitleLabel)
+        addSubview(modiFyLocationButton)
         addSubview(locationMemoLabel)
         addSubview(regDate)
         addSubview(phoneNumberLabel)
@@ -40,16 +42,20 @@ class MemoAboutBaseView: BaseView {
             make.trailing.equalTo(safeAreaLayoutGuide).inset(100)
             make.top.equalTo(locationtitleLabel.snp.bottom).offset(10)
         }
-        phoneNumberLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
-            make.top.equalTo(regDate.snp.bottom).offset(6)
+        modiFyLocationButton.snp.makeConstraints { make in
+            make.bottom.equalTo(phoneNumberLabel.snp.top).offset( -4 )
+            make.size.equalTo(30)
+            make.trailing.equalTo(regDate)
         }
         phoneImage.snp.makeConstraints { make in
             make.trailing.equalTo(phoneNumberLabel.snp.leading).inset( -4 )
             make.size.equalTo(20)
             make.centerY.equalTo(phoneNumberLabel)
         }
-        
+        phoneNumberLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(regDate).inset(8)
+            make.bottom.equalTo(regDate.snp.top).offset( -6 )
+        }
         regDate.snp.makeConstraints { make in
             make.trailing.equalTo(safeAreaLayoutGuide).inset(12)
             make.bottom.equalTo(line.snp.top).inset( -8 )
@@ -71,7 +77,9 @@ class MemoAboutBaseView: BaseView {
         phoneNumberLabel.font = JHFont.UIKit.bo15
         phoneImage.image = UIImage(systemName: "phone.fill")
         
-        line.backgroundColor = .systemGray
+        line.backgroundColor = .wheetPink
+        
+        
     }
   
     override func subscribe() {

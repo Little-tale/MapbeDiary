@@ -290,7 +290,7 @@ extension AddLocationMemoViewController {
     
     // MARK: goSetting
     func cameraSettingAlert(){
-        showAlert(title: MapTextSection.camera.title, message: MapTextSection.camera.message, actionTitle: MapTextSection.camera.actionTitle) {
+        showAlert(title: MapTextSection.camera.alertMessage, message: MapTextSection.camera.actionTitle, actionTitle: MapTextSection.camera.actionTitle) {
             [weak self] action in
             guard let self else {return}
             goSetting()

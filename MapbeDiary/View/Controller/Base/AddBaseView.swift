@@ -114,7 +114,7 @@ final class AddBaseView: BaseView {
     override func designView() {
         textFieldSetting()
         backView.layer.cornerRadius = 24
-        backView.backgroundColor = .wheetSkin
+        backView.backgroundColor = .wheetLightBrown
 
         phonNumberLabel.textAlignment = .center
         

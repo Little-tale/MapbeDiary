@@ -75,6 +75,9 @@ final class DatailTableViewCell: BaseTableViewCell {
         detailContents.font = JHFont.UIKit.bo20
         regDateLabel.font = JHFont.UIKit.li17
         regDateLabel.textAlignment = .right
+        
+        contentView.backgroundColor = .wheetSide
+        detailcollectionView.backgroundColor = .wheetSide
     }
     
     override func registers() {

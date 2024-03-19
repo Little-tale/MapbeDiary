@@ -26,6 +26,7 @@ class CustomLocationButton: UIButton {
     init(frame: CGRect, imageType: ImageType) {
         super.init(frame: frame)
         configu(imageType: imageType)
+        addTarget(self, action: #selector(buttonActionControll), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -46,5 +47,16 @@ class CustomLocationButton: UIButton {
         case .AllMemo:
             setImage(imageType.imageAsset.resizeImage(newWidth: 36) , for: .normal)
         }
+    }
+    @objc
+    private func buttonActionControll(){
+        isUserInteractionEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            [weak self] in
+            guard let self else { return }
+            isUserInteractionEnabled = true
+        }
+        
     }
 }

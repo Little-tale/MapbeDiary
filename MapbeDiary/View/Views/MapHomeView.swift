@@ -43,12 +43,12 @@ class MapHomeView: BaseView {
         }
         userLocationButton.snp.makeConstraints { make in
             make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(35)
+            make.centerY.equalTo(safeAreaLayoutGuide).offset( 50 )
             make.size.equalTo(50)
         }
         locationMemosButton.snp.makeConstraints { make in
             make.centerX.equalTo(userLocationButton)
-            make.bottom.equalTo(userLocationButton.snp.top).inset( -18 )
+            make.bottom.equalTo(userLocationButton.snp.top).inset( -30 )
             make.size.equalTo(40)
         }
     }
@@ -99,4 +99,6 @@ class MapHomeView: BaseView {
         }
         print(sender.state == .ended)
     }
+    
+    
 }

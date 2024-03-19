@@ -14,7 +14,7 @@ final class LocationAboutMemosView: BaseView {
         var configuration = UIButton.Configuration.plain()
         let view = UIButton(frame: .zero)
         configuration.image = UIImage(systemName: "chevron.backward")
-        configuration.baseForegroundColor = .black
+        configuration.baseForegroundColor = .wheetBlack
         view.configuration = configuration
         return view
     }()
@@ -28,7 +28,7 @@ final class LocationAboutMemosView: BaseView {
         return view
     }()
     
-    let modiFyLocationButton = UIButton()
+    
     
     let memoAboutBaseView = MemoAboutBaseView()
     let memoEmptyView = MemosEmptyView()
@@ -41,7 +41,7 @@ final class LocationAboutMemosView: BaseView {
         addSubview(backButton)
         addSubview(allDeleteButton)
         addSubview(memoAboutBaseView)
-        addSubview(modiFyLocationButton)
+       
         addSubview(detailTableView)
         addSubview(memoEmptyView)
         addSubview(detailAddButton)
@@ -56,15 +56,11 @@ final class LocationAboutMemosView: BaseView {
         }
         
         allDeleteButton.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
-            make.top.equalTo(safeAreaLayoutGuide).offset( 5 )
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
+            make.top.equalTo(safeAreaLayoutGuide).offset( 8 )
             make.height.equalTo(20)
         }
-        modiFyLocationButton.snp.makeConstraints { make in
-            make.trailing.equalTo(allDeleteButton)
-            make.size.equalTo(30)
-            make.bottom.equalTo(memoAboutBaseView.snp.bottom).inset( 30 )
-        }
+      
         memoAboutBaseView.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset( 5 )
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
@@ -91,6 +87,7 @@ final class LocationAboutMemosView: BaseView {
     override func designView() {
         detailButtonSetting()
         detailTableView.separatorColor = .systemGray
+        detailTableView.backgroundColor = .wheetSide
         modifyLocationButtonSetting()
     }
     
@@ -103,6 +100,8 @@ final class LocationAboutMemosView: BaseView {
     func tableViewDelegateDataSource(){
         detailTableView.rowHeight = UITableView.automaticDimension
         detailTableView.estimatedRowHeight = 240
+        detailTableView.layer.cornerRadius = 24
+        detailTableView.clipsToBounds = true 
     }
     
     private func detailButtonSetting(){
@@ -117,7 +116,8 @@ final class LocationAboutMemosView: BaseView {
     private func modifyLocationButtonSetting(){
         var configu = UIButton.Configuration.plain()
         configu.image = .annotaionModify.resizeImage(newWidth: 30)
-        modiFyLocationButton.configuration = configu
+       
+        memoAboutBaseView.modiFyLocationButton.configuration = configu
     }
 }
 

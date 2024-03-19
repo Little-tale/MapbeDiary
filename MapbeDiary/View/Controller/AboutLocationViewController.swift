@@ -12,7 +12,7 @@ protocol AboutmodifyLocation: AnyObject {
     func getModifyInfo(with lcation: LocationMemo)
 }
 
-class AboutLocationViewController: BaseHomeViewController<LocationAboutMemosView> {
+final class AboutLocationViewController: BaseHomeViewController<LocationAboutMemosView> {
     
     let viewModel = AboutLocationViewModel()
     var disPatchQueItem: DispatchWorkItem?
@@ -29,17 +29,23 @@ class AboutLocationViewController: BaseHomeViewController<LocationAboutMemosView
         detailAddButtonAction()
         backButtonAction()
         annotationModifyAction()
+        backgroundSetting()
     }
     
-    func delegateDataSource() {
+    private func delegateDataSource() {
         homeView.detailTableView.dataSource = self
         homeView.detailTableView.delegate = self
         homeView.detailTableView.rowHeight = UITableView.automaticDimension
         homeView.detailTableView.estimatedRowHeight = 200
+       
     }
 
-    func settingNotification(){
+    private func settingNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataLocation), name: .didSaveActionDetailMemo, object: nil)
+    }
+    
+    private func backgroundSetting(){
+        homeView.backgroundColor = .wheetLightBrown
     }
 }
 
@@ -73,7 +79,7 @@ extension AboutLocationViewController {
         }), for: .touchUpInside)
     }
     func annotationModifyAction(){
-        homeView.modiFyLocationButton.addAction(UIAction(handler: { [weak self] _ in  print("여기인가????")
+        homeView.memoAboutBaseView.modiFyLocationButton.addAction(UIAction(handler: { [weak self] _ in  print("여기인가????")
             guard let self else { return }
             print("여기인가????")
             modifyCheckAction()

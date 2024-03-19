@@ -297,7 +297,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
             guard self != nil else { return }
             complite?(vc)
         }, layoutType: layout))
-        print("롱 updatePanel",layout)
+        
     }
 
     private func updateFloatingPanel(with configuration: PanelConfiguration) {
@@ -451,7 +451,7 @@ extension MapViewController {
             allowLocation()
             
         case .denied:
-            showAlert(title: MapTextSection.checkUserAut.title, message: MapTextSection.checkUserAut.message, actionTitle: MapTextSection.checkUserAut.actionTitle) {
+            showAlert(title: MapTextSection.checkUserAut.alertTitle, message: MapTextSection.checkUserAut.alertMessage, actionTitle: MapTextSection.checkUserAut.actionTitle) {
                 [weak self] action in
                 guard let self else {return}
                 goSetting()
@@ -462,7 +462,7 @@ extension MapViewController {
             homeView.locationManager.startUpdatingLocation()
             
         default:
-            homeView.makeToast(MapTextSection.noneAct.message,duration: 1.0, position: .bottom)
+            homeView.makeToast(MapTextSection.noneAct.alertMessage,duration: 1.0, position: .bottom)
         }
     }
     

@@ -65,7 +65,7 @@ extension AboutMemoViewController {
     private func dismisButtonClicked(){
         homeView.backButton.addAction(UIAction(handler: {[weak self] _ in
             guard let self else { return }
-            showAlert(title: MapTextSection.dismiss.title, message: MapTextSection.dismiss.message, actionTitle: MapTextSection.dismiss.actionTitle) { _ in
+            showAlert(title: MapTextSection.dismiss.alertTitle, message: MapTextSection.dismiss.alertMessage, actionTitle: MapTextSection.dismiss.actionTitle) { _ in
                 self.dismiss(animated: true)
             }
         }), for: .touchUpInside)
@@ -254,7 +254,7 @@ extension AboutMemoViewController:PHPickerViewControllerDelegate {
 extension AboutMemoViewController {
     /// 카메라 세팅시
     func cameraSettingAlert(){
-        showAlert(title: MapTextSection.camera.title, message: MapTextSection.camera.message, actionTitle: MapTextSection.camera.actionTitle) {
+        showAlert(title: MapTextSection.camera.alertTitle, message: MapTextSection.camera.alertMessage, actionTitle: MapTextSection.camera.actionTitle) {
             [weak self] action in
             guard let self else {return}
             goSetting()
@@ -388,7 +388,7 @@ extension AboutMemoViewController {
         homeView.memoViewModel.warningTitle.bind { [weak self] textSection in
             guard let self else { return }
             guard let textSection else { return }
-            showToastBody(title: textSection.title, message: textSection.message)
+            showToastBody(title: textSection.alertTitle, message: textSection.alertMessage)
         }
     }
 }

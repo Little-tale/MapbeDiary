@@ -33,10 +33,10 @@ class MemosEmptyView: BaseView {
     
     override func designView() {
         emptyLabel.numberOfLines = 2
-        emptyLabel.text = "장소의 기억을\n남겨보세요!"
+        emptyLabel.text = MapTextSection.emptyLabelText
         emptyLabel.textAlignment = .center
         emptyLabel.font = JHFont.UIKit.me17
-        emptyLabel.textColor = .cyan
+        emptyLabel.textColor = .wheetBlack
         emptyButton.setImage(.detailEmpty, for: .normal)
     }
 }
