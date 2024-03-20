@@ -14,6 +14,7 @@ final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView>
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingImageCounter()
         settingSaveButton() // Save
         collectionViewDelegatDatasource()
         imageSettingButtonAction() // imageAddButton
@@ -22,13 +23,16 @@ final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView>
         subscribe()
     
         homeView.memoTextView.text = homeView.memoViewModel.inputModel.value?.inputMemoMeodel?.detailContents ?? ""
-    
-        
     }
     
     private func collectionViewDelegatDatasource(){
         homeView.colletionView.delegate = self
         homeView.colletionView.dataSource = self
+    }
+    
+    private func settingImageCounter(){
+        
+
     }
     
 }
@@ -367,6 +371,7 @@ extension AboutMemoViewController {
         
         homeView.memoViewModel.emptyModel.bind { [weak self] model in
             guard let self else { return }
+            homeView.imageCounterSetting()
             homeView.colletionView.reloadData()
         }
         homeView.memoViewModel.fileErrorPut.bind {[weak self] error in

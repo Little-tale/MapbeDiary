@@ -64,10 +64,10 @@ final class MemoSettingBaseView: BaseView {
     let colletionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.configureMemoImagesLayout())
     
     override func configureHierarchy() {
-        addSubview(titleLabel)
         addSubview(backButton)
         addSubview(saveButton)
         addSubview(deleteButton)
+        addSubview(titleLabel)
         addSubview(memoTextView)
         addSubview(memoTextCountLabel)
         addSubview(imageCounterLabel)
@@ -76,23 +76,25 @@ final class MemoSettingBaseView: BaseView {
     }
     
     override func configureLayout() {
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide).offset(10)
-        }
+       
         backButton.snp.makeConstraints { make in
             make.leading.equalTo(safeAreaLayoutGuide).offset(10)
-            make.centerY.equalTo(titleLabel)
+            make.centerY.equalTo(saveButton)
         }
         saveButton.snp.makeConstraints { make in
             make.trailing.equalTo(memoTextView.snp.trailing)
-            make.centerY.equalTo(titleLabel)
+            make.top.equalTo(safeAreaLayoutGuide).offset(4)
+            // make.centerY.equalTo(titleLabel)
             make.height.equalTo(27)
         }
-        
         deleteButton.snp.makeConstraints { make in
             make.trailing.equalTo(saveButton.snp.leading).inset( -4 )
             make.top.height.equalTo(saveButton)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(saveButton.snp.bottom).offset(10)
         }
         
         memoTextView.snp.makeConstraints { make in
@@ -126,7 +128,6 @@ final class MemoSettingBaseView: BaseView {
     
     override func designView() {
         memoTextView.font = JHFont.UIKit.li20
-        
     }
     
     private func settingCountLabel(_ num: Int) {
@@ -146,6 +147,10 @@ final class MemoSettingBaseView: BaseView {
         colletionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         
         colletionView.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusebleIdentifier)
+    }
+    
+    func imageCounterSetting(){
+        imageCounterLabel.text = "\(memoViewModel.emptyModel.value.viewImageData.count) / \(memoViewModel.maxImageCount)"
     }
 }
 

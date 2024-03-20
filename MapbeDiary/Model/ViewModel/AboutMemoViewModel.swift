@@ -182,10 +182,12 @@ final class AboutMemoViewModel {
         print( originalCount )
            
 
-        // model.inputMemoMeodel?.imagePaths
-        if indexPath.item <= originalCount, originalCount != 0 {
+        // 원본 | A | B | C | >= index + 1
+        // 이때는 원본을 건드는 것으로 간주하는것.
+        if (indexPath.item + 1) <= originalCount, originalCount != 0 {
+            // 지웢질 에정으로 던짐
             let willRemove = emptyModel.value.originalImageObject[indexPath.item]
-            print("asdsad", willRemove)
+            
             emptyModel.value.removeImageObject.append(willRemove)
             emptyModel.value.originalImageObject.remove(at: indexPath.item)
         }
