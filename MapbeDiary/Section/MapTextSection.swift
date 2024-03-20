@@ -91,4 +91,7 @@ enum MapTextSection {
     
     static let beginningSoon: String = "준비중 이에요!"
     static let emptyLabelText: String = "장소의 기억을\n남겨보세요!"
+    static let emptySearcBarText: String = "장소를 검색해보세요!"
+    static let searchEmptyText: String = "검색하실 장소를\n입력해주세요!"
+    static let cancel: String = "취소"
 }

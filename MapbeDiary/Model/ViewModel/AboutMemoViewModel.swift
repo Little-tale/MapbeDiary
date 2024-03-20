@@ -14,6 +14,7 @@ struct AboutMemoModel {
     // New 새로 생성시에는 이모델
     var inputLoactionInfo: LocationMemo?
     var inputMemoMeodel: DetailMemo?
+    
     var removeImageObject: [ImageObject] = []
     var originalImageObject: [ImageObject] = []
 }
@@ -182,12 +183,13 @@ final class AboutMemoViewModel {
            
 
         // model.inputMemoMeodel?.imagePaths
-        if indexPath.item <= originalCount {
+        if indexPath.item <= originalCount, originalCount != 0 {
             let willRemove = emptyModel.value.originalImageObject[indexPath.item]
             print("asdsad", willRemove)
             emptyModel.value.removeImageObject.append(willRemove)
             emptyModel.value.originalImageObject.remove(at: indexPath.item)
         }
+        
         emptyModel.value.viewImageData.remove(at: indexPath.item)
         dump(emptyModel.value)
         print("will Removre",emptyModel.value.removeImageObject)
@@ -196,7 +198,7 @@ final class AboutMemoViewModel {
     private func updateImageObject(){
         guard let detailMemo = emptyModel.value.inputMemoMeodel else { return }
         
-        if !emptyModel.value.imageModify{ return  }
+        if !emptyModel.value.imageModify{ return }
         var imageData = emptyModel.value.viewImageData
         let removeObjects = emptyModel.value.removeImageObject
         let originerCount = repository.findDetailImagesList(detail: detailMemo).count

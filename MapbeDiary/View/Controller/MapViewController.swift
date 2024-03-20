@@ -75,6 +75,7 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         homeView.locationManager.delegate = self
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
+        view.backgroundColor = .wheetLightBrown
     }
     
     // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행

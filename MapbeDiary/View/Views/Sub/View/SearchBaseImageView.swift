@@ -12,10 +12,10 @@ class SearchBaseImageView: BaseView{
     private let imageView = UIImageView(frame: .zero)
     private let emptyLabel: UILabel = {
         let view = UILabel()
-        view.text = "검색하실 장소를\n입력해주세요!"
+        view.text = MapTextSection.searchEmptyText
         view.textAlignment = .center
         view.numberOfLines = 2
-        view.textColor = .green
+        view.textColor = .wheetDarkBrown
         return view
     }()
     

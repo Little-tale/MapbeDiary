@@ -34,7 +34,7 @@ class MapHomeView: BaseView {
     }
     override func configureLayout() {
         mapView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(4)
@@ -73,18 +73,17 @@ class MapHomeView: BaseView {
     }
     // MARK: 회고 해야해
     func searchBarSetting(){
-        searchBar.setTextFieldBackground(color: .darkKarky, transparentBackground: true)
-        searchBar.placeholder = "장소를 검색해 보세요!"
+        searchBar.setTextFieldBackground(color: .wheetSideBrown, transparentBackground: true)
+        searchBar.placeholder = MapTextSection.emptySearcBarText
         
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.wheetDarkBrown])
             
-            textField.textColor = .white
+            textField.textColor = .wheetDarkBrown
             
             if let leftView = textField.leftView as? UIImageView {
-                leftView.tintColor = .white
+                leftView.tintColor = .wheetDarkBrown
             }
-            
         }
     }
     

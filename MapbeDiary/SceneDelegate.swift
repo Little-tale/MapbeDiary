@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
+        // let navigationController = UINavigationController(rootViewController: MapViewController())
         
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {

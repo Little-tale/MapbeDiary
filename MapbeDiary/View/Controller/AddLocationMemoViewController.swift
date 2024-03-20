@@ -104,10 +104,14 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
             
             self?.checkUserPhotoAuthorization()
         }
+        let cancel = ActionRouter.cancel.cancel
         
         alert.addAction(camera)
         alert.addAction(gellery)
+        alert.addAction(cancel)
         present(alert, animated: true)
+        
+        
     }
     
     func buttonActionSetting() {

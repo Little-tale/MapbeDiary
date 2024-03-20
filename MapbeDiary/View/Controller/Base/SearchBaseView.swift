@@ -51,11 +51,11 @@ class SearchBaseView: BaseView {
     }
     override func designView() {
         searchBar.setTextFieldBackground(color: .white, transparentBackground: true)
-        searchBar.placeholder = "장소를 검색해 보세요!"
+        searchBar.placeholder = MapTextSection.emptySearcBarText
     
         backButton.setBackgroundImage(UIImage(systemName: "chevron.backward.circle.fill"), for: .normal)
         backButton.clipsToBounds = true
-        backButton.tintColor = .systemGreen
+        backButton.tintColor = .wheetSideBrown
        
     }
 }
@@ -65,7 +65,7 @@ extension SearchBaseView {
     func createLayout() -> UICollectionViewLayout {
         var configu = UICollectionLayoutListConfiguration(appearance: .plain)
         configu.showsSeparators = true
-        
+        configu.backgroundColor = .wheetLightBrown
         let layout = UICollectionViewCompositionalLayout.list(using: configu)
         
         return layout

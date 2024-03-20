@@ -146,7 +146,7 @@ class AddViewModel {
         guard let modifyEnd = modifyEnd,
         let memoImage = modifyEnd.markerImage else { return }
         
-        if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.locationMemoId, image: memoImage.resizingImage(targetSize: CGSize(width: 50, height: 50))) {
+        if !FileManagers.shard.saveMarkerZipImageForMemo(memoId: modifyEnd.locationMemoId, image: memoImage.resizingImage(targetSize: CGSize(width: 30, height: 30)) ) {
             
             realmError.value = RealmManagerError.canModifiMemo
         } else {

@@ -112,7 +112,7 @@ extension String {
         return NSLocalizedString(self, comment: "")
     }
 }
-// MARK: 표현식 설정
+// MARK: 표현식 설정 회고
 extension String {
     static func testString(text: String) -> String{
         let result = text.replacingOccurrences(of: "[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]", with: "", options: .regularExpression)
@@ -219,7 +219,7 @@ extension UILabel {
         // MARK: 범위 + 대소문자 구분없이
         let range = (fullText as NSString).range(of: targetString, options: .caseInsensitive)
         
-        attributeString.addAttribute(.foregroundColor ,value: UIColor.green, range: range)
+        attributeString.addAttribute(.foregroundColor ,value: UIColor.wheetOrange , range: range)
         
         attributedText = attributeString
     }

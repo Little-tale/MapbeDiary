@@ -23,6 +23,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewCollerSetting()
         subscribe()
         searchBarSetup()
         homeView.collectionView.delegate = self
@@ -36,6 +37,10 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
         homeView.backButton.addTarget(self, action: #selector(onlyDismiss), for: .touchUpInside)
         
     }
+    private func viewCollerSetting(){
+        homeView.backgroundColor = .wheetLightBrown
+        homeView.collectionView.backgroundColor = .wheetLightBrown
+    }
     
     private func collectionViewDataSource(){
         let cellregister = UICollectionView.CellRegistration<SearchCollectionViewCell,Document> {
@@ -48,6 +53,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
             
             cell.roadNameLabel.text = item.roadAddressName
             cell.roadNameLabel.asFont(targetString: searchViewModel.searchTextOb.value?.searchText ?? "")
+            cell.backgroundColor = .wheetSideBrown
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section,Document>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -127,10 +133,15 @@ extension SearchViewController {
 // MARK: 서치바 서치 할시
 extension SearchViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.isUserInteractionEnabled = false
         searchViewModel.outPutModel.value = []
         searchViewModel.currentPage.value = 1
         searchViewModel.pageNation = 15
         searchViewModel.searchTextOb.value?.searchText = searchBar.text ?? ""
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            searchBar.isUserInteractionEnabled = true
+        }
         view.endEditing(true)
     }
 }
@@ -151,6 +162,7 @@ extension SearchViewController {
         }
     }
 }
+
 extension SearchViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

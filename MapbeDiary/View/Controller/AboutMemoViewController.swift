@@ -345,7 +345,7 @@ extension AboutMemoViewController: ToastPro {
         let phpPicker = PHPickerViewController(configuration: configurataion)
         
         phpPicker.delegate = self
-        
+
         present(phpPicker, animated: true)
     }
 }
