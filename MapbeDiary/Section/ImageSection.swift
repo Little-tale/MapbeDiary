@@ -5,9 +5,19 @@
 //  Created by Jae hyung Kim on 3/9/24.
 //
 
-import Foundation
+import UIKit.UIImage
 
 enum ImageSection: String {
-    case defaultMarkerImage = "google-309740_1280"
+    case defaultMarkerImage = "defaultMarker"
     case defaultFolderImage = "defaultFolderImage"
+    
+    
+    var image: UIImage {
+        switch self {
+        case .defaultMarkerImage:
+            return .defaultMarker
+        case .defaultFolderImage:
+            return .defaultFolder
+        }
+    }
 }

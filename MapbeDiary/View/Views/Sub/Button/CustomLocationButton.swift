@@ -59,4 +59,8 @@ class CustomLocationButton: UIButton {
         }
         
     }
+    
+    deinit{
+        print("deinit : ",self)
+    }
 }

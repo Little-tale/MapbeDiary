@@ -42,9 +42,9 @@ class ArtWorkMarkerView: MKAnnotationView {
             guard let memoId = artWork.locationId else {
                 canShowCallout = true
                 imageView = nil
-                calloutOffset = CGPoint(x: 0, y: 10)
-                centerOffset = CGPoint(x: 0, y: -30)
-                image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 30)
+                // calloutOffset = CGPoint(x: 0, y: 10)
+                centerOffset = CGPoint(x: 10, y: -40)
+                image = .defaultMarker.resizeImage(newWidth: 40)
                 return
             }
             
@@ -54,18 +54,18 @@ class ArtWorkMarkerView: MKAnnotationView {
                 let image = UIImage(contentsOfFile: imagePath)
                 
                 centerOffset = CGPoint(x: 0, y: -50)
-                calloutOffset = CGPoint(x: 0, y: 10)
+                // calloutOffset = CGPoint(x: 10, y: 10)
                 
-                imageView?.image = image?.resizingImage(targetSize: CGSize(width: 60, height: 40))
+                imageView?.image = image?.resizingImage(targetSize: CGSize(width: 70, height: 50))
                 
                 imageView?.isUserInteractionEnabled = true
             } else {
-                image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 30)
-                centerOffset = CGPoint(x: 0, y: -30)
-                calloutOffset = CGPoint(x: 0, y: 10)
+                image = ImageSection.defaultMarkerImage.image.resizeImage(newWidth: 40)
+                centerOffset = CGPoint(x: 0, y: -40)
+                //calloutOffset = CGPoint(x: 10, y: 10)
             }
             canShowCallout = true
-            calloutOffset = CGPoint(x: -5, y: 5)
+            calloutOffset = CGPoint(x: 0, y: 5)
         }
     }
     

@@ -118,7 +118,7 @@ final class AddBaseView: BaseView {
 
         phonNumberLabel.textAlignment = .center
         
-        AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+        AddTitleDateView.imageView.image = ImageSection.defaultMarkerImage.image
         
         textFieldTester()
     }
