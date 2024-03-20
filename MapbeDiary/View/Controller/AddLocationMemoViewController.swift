@@ -94,17 +94,15 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
     func showActionSheet(){
         let alert = UIAlertController(title: MapTextSection.bringPhoto.alertTitle, message: nil, preferredStyle: .actionSheet)
-        let camera = ActionRouter.camera.actions {
+        let camera = ActionRouter().actions(.camera) {
             [weak self] in
-            
             self?.checkCameraAuthorization()
         }
-        let gellery = ActionRouter.gallery.actions {
+        let gellery = ActionRouter().actions(.gallery) {
             [weak self] in
-            
             self?.checkUserPhotoAuthorization()
         }
-        let cancel = ActionRouter.cancel.cancel
+        let cancel = ActionRouter().cancel
         
         alert.addAction(camera)
         alert.addAction(gellery)

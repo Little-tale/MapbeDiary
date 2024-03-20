@@ -78,25 +78,25 @@ extension AboutMemoViewController {
     func showPhotoActionSheet() {
         let max = homeView.memoViewModel.emptyModel.value.viewImageData.count
         
-        let alert = UIAlertController(title: "사진 가져오기", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Alert_get_photo".localized, message: nil, preferredStyle: .actionSheet)
     
-        let camera = ActionRouter.camera.actions {
+        let camera = ActionRouter().actions(.camera, actionHandler: {
             [weak self] in
             guard let self else { return }
-            print("assad???? ")
+           
             if checkMax(max: max){
                 checkCameraAuthorization()
             }
-        }
-        let gellery = ActionRouter.gallery.actions {
+        })
+        let gellery = ActionRouter().actions(.gallery, actionHandler: {
             [weak self] in
             guard let self else { return }
             if checkMax(max: max){
                 checkUserPhotoAuthorization(max: homeView.memoViewModel.maxImageCount - max )
             }
-        }
+        })
         
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let cancel = UIAlertAction(title: "Cancel_check_title".localized, style: .cancel)
         alert.addAction(camera)
         alert.addAction(gellery)
         alert.addAction(cancel)
@@ -107,7 +107,7 @@ extension AboutMemoViewController {
     private func checkMax(max: Int) -> Bool{
         print("MAX : \(max)")
         if max == homeView.memoViewModel.maxImageCount {
-            showToastBody(title: "이미지 제한", message: "이미지는 총 3개만 추가하실수 있어요!", complite: nil)
+            showToastBody(title: "Alert_image_max_title".localized, message: "Alert_image_max_detail".localized, complite: nil)
             return false
         }
         return true
@@ -115,7 +115,7 @@ extension AboutMemoViewController {
     
     func showPhotoViewActionSheet(index: IndexPath){
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+        let deleteAction = UIAlertAction(title: "Alert_delete".localized, style: .destructive) { [weak self] _ in
             guard let self else { return }
             if (homeView.memoViewModel.inputModel.value?.inputMemoMeodel) != nil {
                 // MARK: 여기서 부터 로직을 수정
@@ -127,7 +127,7 @@ extension AboutMemoViewController {
             }
         }
         
-        let photoViewAction = UIAlertAction(title: "뷰어로 이동", style: .default) { [weak self] _ in
+        let photoViewAction = UIAlertAction(title: "Alert_go_viewer".localized, style: .default) { [weak self] _ in
             guard let self else { return }
             let imageDatas = homeView.memoViewModel.emptyModel.value.viewImageData
             
@@ -141,7 +141,7 @@ extension AboutMemoViewController {
             }
         }
         
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let cancel = UIAlertAction(title: "Cancel_check_title".localized, style: .cancel)
         
         alert.addAction(deleteAction)
         alert.addAction(photoViewAction)
@@ -230,12 +230,12 @@ extension AboutMemoViewController:PHPickerViewControllerDelegate {
                 DispatchQueue.main.async {
                     guard let self else { return }
                     if error != nil {
-                        self.showAlert(title: "이미지 로드실패", message: "테스트")
+                        self.showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
                         return
                     }
                     guard let data = image.jpegData(compressionQuality: 1) else { print("Data Fail")
                         
-                        self.showAlert(title: "이미지 로드실패", message: "테스트")
+                        self.showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
                         return
                     }
                     

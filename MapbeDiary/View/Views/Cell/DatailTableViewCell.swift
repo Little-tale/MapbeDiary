@@ -91,11 +91,11 @@ final class DatailTableViewCell: BaseTableViewCell {
         infoButton.tintColor = .systemGreen
         
         infoButton.menu = UIMenu(children: [
-            UIAction(title: "수정", handler: { [weak self] _ in
+            UIAction(title: "Alert_modify_title".localized, handler: { [weak self] _ in
                 guard let self else { return }
                 menuModifyAction?()
             }),
-            UIAction(title: "삭제", handler: { [weak self] _ in
+            UIAction(title: "Alert_delete".localized, handler: { [weak self] _ in
                 guard let self else { return }
                 menuDeleteAction?()
             })
@@ -108,10 +108,10 @@ extension DatailTableViewCell {
     static func configureCellLayout() -> UICollectionViewFlowLayout {
         let layout = CenterFlowLayout()
         if let size = UIScreen.current?.bounds.size {
-            print("성공")
+            print("Alert_success_title".localized)
             layout.itemSize = CGSize(width: size.width - 40, height: 200)
         } else {
-            print("실패")
+            print("Alert_fail_title".localized)
             layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40 , height: 200)
         }
         layout.scrollDirection = .horizontal

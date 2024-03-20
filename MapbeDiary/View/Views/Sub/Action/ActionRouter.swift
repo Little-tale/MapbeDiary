@@ -7,20 +7,34 @@
 
 import UIKit
 
-enum ActionRouter: String {
-    case camera = "카메라"
-    case gallery = "갤러리"
-    case cancel = "취소"
+struct ActionRouter {
     
-    func actions(actionHandler: @escaping ()-> Void) -> UIAlertAction {
-        let action = UIAlertAction(title: self.rawValue, style: .default) { action in
+    enum ActionType {
+        case camera
+        case gallery
+        case cancel
+        
+        var title: String {
+            switch self {
+            case .camera:
+                return "Authority_Camera".localized
+            case .gallery:
+                return "Authority_Gallery".localized
+            case .cancel:
+                return "Cancel_check_title".localized
+            }
+        }
+    }
+    
+    func actions(_ type: ActionType, actionHandler: @escaping ()-> Void) -> UIAlertAction {
+        let action = UIAlertAction(title: type.title , style: .default) { action in
             actionHandler()
         }
         
         return action
     }
     var cancel: UIAlertAction {
-        let action = UIAlertAction(title: self.rawValue, style: .cancel)
+        let action = UIAlertAction(title: ActionType.cancel.title, style: .cancel)
         return action
     }
 }

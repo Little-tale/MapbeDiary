@@ -54,7 +54,6 @@ extension AllMemoLocationListViewController {
             cell.titleLabel.text = item.title
             
             cell.dateLabel.text = DateFormetters.shared.localDate(item.regdate)
-            print("제발!!!!cellRegister",item.title)
             
             cell.subTitleLabel.text = item.contents
             let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id.stringValue)
@@ -79,12 +78,12 @@ extension AllMemoLocationListViewController {
     private func test(){
         homeView.swifeAction = {[weak self] indexPath in
             
-            let action = UIContextualAction(style: .destructive, title: "제거") { action, view, whatif in
+            let action = UIContextualAction(style: .destructive, title: "Alert_delete".localized) { action, view, whatif in
                 guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
                 self?.deleteAlert(memo: data)
                 whatif(true)
             }
-            let modifyAction = UIContextualAction(style: .normal, title: "세부수정") { action, view, whatIf in
+            let modifyAction = UIContextualAction(style: .normal, title: "detail_modify_title".localized) { action, view, whatIf in
                 guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
                 self?.modifyAction(memo: data)
                 whatIf(true)
@@ -97,7 +96,7 @@ extension AllMemoLocationListViewController {
     }
     
     private func deleteAlert(memo: LocationMemo){
-        showAlert(title: "삭제", message: "지우시면 복구하실수 없습니다!", actionTitle: "삭제하기") { [weak self] action in
+        showAlert(title: "Alert_delete".localized, message: "Alert_cantRecover".localized, actionTitle: "Did_delete".localized) { [weak self] action in
             guard let self else {return}
             homeView.allMemoViewModel.removeMemo.value = memo
         }

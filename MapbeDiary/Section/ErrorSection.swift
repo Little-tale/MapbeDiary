@@ -29,43 +29,58 @@ enum RealmManagerError: Error {
     var alertMessage: String {
         switch self {
         case .canMakeFolder:
-            "폴더를 생성할 수 없습니다. 잠시후 재시도 해주세요!"
+            "Error_cant_make_folder".localized
+            
         case .canMakeMemo:
-            "메모를 생성할 수 없습니다. 잠시후 재시도 해주세요!"
+            "Error_cant_make_location_memo".localized
+            
         case .cantDeleteOfFolder:
-            "폴더를 제거할 수 없습니다. 잠시후 재시도 해주세요!"
+            "Error_cant_delete_folder".localized
+            
         case .cantSortedOfFolder:
-            "폴더 정렬에 실패 했습니다... 관리자에게 문의해주세요!"
+            "Error_cant_sorted_Folder".localized
+            
         case .cantDeleteMemo, .cantDeleteDetailMemo, .cantDeleteLocationMemo:
-            "메모를 제거할 수 없습니다. 잠시후 재시도 해주세요!"
+            "Error_cant_delete_local_memo".localized
+            
         case .cantAddMemoInFolder:
-            "폴더에 메모를 넣는중 에러가 발생했습니다.\n잠시후 재시도 바랍니다."
+            "Error_cant_add_memo_in_folder".localized
+            
         case .canModifiMemo:
-            "메모를 수정할 수 없습니다. 관리자에게 문의해주세요!"
+            "Error_cant_modify_memo".localized
+            
         case .cantAddImage:
-            "이미지 추가중 문제가 발생했습니다. 관리자에 문의 해주세요!"
+            "Error_cant_add_image".localized
+            
         case .cantDeleteImage:
-            "이미지 제거중 문제가 발생했습니다. 관리자에 문의 해주세요!"
+            "Error_cant_delete_image".localized
+            
         case .cantFindObjectId:
-            "파일을 찾지 못했어요!"
+            "Error_cant_find_File".localized
+            
         case .cantModifyMemo:
-            "수정 할수 없어요!"
+            "Error_you_cant_modify_memo".localized
+            
         case .sameDetailMemoError:
-            "중복된 메모입니다!"
+            "Error_same_memo".localized
+            
         case .cantMakeDetailMemo:
-            "추가 메모를 작성할수가 없어요 관리자에 문의 해주세요!"
+            "Error_cant_make_detail_Memo".localized
+            
         case .cantAddImageObject:
-            "이미지를 추가하실수 없습니다!"
+            "Error_you_cant_add_image".localized
+            
         case .cantFindLocationMemo:
-            "메모를 찾을수가 없어요!"
+            "Error_cant_find_location_memo".localized
+            
         }
     }
 }
 
 
 enum cameraError {
-    static var titleString: String = "가져오기 싪패"
-    static var messageString: String = "사진을 가져오는 도중 문제가 발생했습니다!"
+    static var titleString: String = "Error_camera_cant_take".localized
+    static var messageString: String = "Error_cant_take_image".localized
 }
 
 

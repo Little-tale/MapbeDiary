@@ -22,7 +22,7 @@ final class LocationAboutMemosView: BaseView {
     let allDeleteButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let view = UIButton(frame: .zero)
-        configuration.title = "삭제"
+        configuration.title = "Alert_delete".localized
         configuration.baseForegroundColor = .red
         view.configuration = configuration
         return view

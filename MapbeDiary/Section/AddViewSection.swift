@@ -23,13 +23,13 @@ enum AddViewSection {
         case .phoneNumberTextLabel:
             "Add_phone_number_text_label".localized
         case .phoneNuberTextField:
-            "전화번호가 있나요?"
+            "If_phone_number".localized
         default :
             ""
         }
     }
     static var saveButtonText: String = "Add_save_button_text".localized
     static var defaultTitle: String = "Add_default_Text".localized
-    static let chagngeButtonTitle: String = "이미지 변경"
+    static let chagngeButtonTitle: String = "Image_change".localized
 }
 

@@ -14,7 +14,7 @@ final class MemoSettingBaseView: BaseView {
     
     private let titleLabel: UILabel = {
        let view = UILabel()
-        view.text = "장소의 기억"
+        view.text = "Memories_of_place".localized
         view.font = JHFont.UIKit.bo24
         return view
     }()
@@ -23,7 +23,7 @@ final class MemoSettingBaseView: BaseView {
         var configuration = UIButton.Configuration.filled()
         let view = UIButton(frame: .zero)
         configuration.baseBackgroundColor = .green
-        configuration.title = "저장"
+        configuration.title = "Add_save_button_text".localized
         view.configuration = configuration
         return view
     }()
@@ -32,7 +32,7 @@ final class MemoSettingBaseView: BaseView {
         var configuration = UIButton.Configuration.filled()
         let view = UIButton(frame: .zero)
         configuration.baseBackgroundColor = .red
-        configuration.title = "삭제"
+        configuration.title = "Alert_delete".localized
         view.configuration = configuration
         return view
     }()
@@ -56,7 +56,7 @@ final class MemoSettingBaseView: BaseView {
     let addImageButton: UIButton = {
         var configuration = UIButton.Configuration.tinted()
         let view = UIButton(frame: .zero)
-        configuration.title = "이미지 추가"
+        configuration.title = "Add_image_title".localized
         view.configuration = configuration
         return view
     }()

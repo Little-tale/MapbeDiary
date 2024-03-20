@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   MapbeDiary
 
@@ -9,6 +9,8 @@
 "Error_alert_title" = "Error";
 
 "Alert_check_title" = "check";
+
+"Cancel_check_title" = "Cancel";
 
 "Kakao_error_message_type1" = "There was a problem with the service, please restart it!";
 
@@ -27,3 +29,111 @@
 "Add_save_button_text" = "SAVE";
 
 "Add_default_Text" = "none title";
+
+"Authority_Camera" = "Camera";
+
+"Authority_Gallery" = "Gallery";
+
+"Alert_requestFail" = "Can't move settings";
+
+"Alert_noneAct" = "Location permissions";
+
+"Alert_checkUserLocalAut" = "Location permission is required";
+
+"Alert_panelError" = "Fatal error";
+
+"Alert_camera" = "Camera permissions";
+
+"Alert_delete" = "Delete";
+
+"Alert_dismiss" = "Return";
+
+"Alert_essentialTitle" = "Text is required!";
+
+"Alert_bringPhoto" = "Importing photos";
+
+"Alert_checkNeedLocalAut" = "Allow location permissions";
+
+"Alert_needAdmin" = "Contact your administrator!";
+
+"Alert_needACameraAut" = "Please allow camera permissions!";
+
+"Alert_cantRecover" = "If you delete it,\nYou can't recover it.";
+
+"Alert_none_reflect_saves" = "The save was not reflected!";
+
+"Alert_require_Text" = "Text is required!";
+
+"Alert_move" = "Move";
+
+"Text_take_Memo" = "Take notes!";
+
+"Bring_soon" = "Coming soon!";
+
+"Leave_memory" = "Memorize a place!";
+
+"Search_place" = "Search for a place!";
+
+"Search_empty_text" = "Please enter a place to search!";
+
+"If_phone_number" = "Do you have a phone number?";
+
+"Image_change" = "Change";
+
+"Error_cant_make_folder" = "Unable to create a folder, please try again later!";
+
+"Error_cant_make_location_memo" = "Unable to create a memo, please try again later!";
+
+"Error_cant_delete_folder" = "Unable to remove a folder, please try again later!";
+
+"Error_cant_sorted_Folder" = "Failed to sort the folder... Please contact your administrator!";
+
+"Error_cant_delete_local_memo" = "Unable to remove a local memo, please try again later!";
+
+"Error_cant_add_memo_in_folder" = "An error occurred while adding a memo to a folder. Please try again later!";
+
+"Error_cant_modify_memo" = "Unable to modify the memo, please contact an administrator!";
+
+"Error_cant_add_image" = "There was a problem adding an image, please contact your admin!";
+
+"Error_cant_delete_image" = "There was a problem removing an image, please contact your administrator!";
+
+"Error_cant_find_File" = "No file found!";
+
+"Error_you_cant_modify_memo" =  "You can't modify this memo!";
+
+"Error_same_memo" = "This is a duplicate memo!";
+
+"Error_cant_make_detail_Memo" = "Unable to create additional memo, please contact admin!";
+
+"Error_you_cant_add_image" = "cannot add an image!";
+
+"Error_cant_find_location_memo" = "cannot find the memo!";
+
+"Error_camera_cant_take" = "Cannot take camera";
+
+"Error_cant_take_image" = "There was a problem importing the image!";
+
+"Alert_modify_title" = "Modify";
+
+"Alert_success_title" = "Success";
+
+"Alert_fail_title" = "Failure";
+
+"Memories_of_place" = "Memories of place";
+
+"Add_image_title" = "Add Image";
+
+"detail_modify_title" = "Edit details";
+
+"Did_delete" = "Delete";
+
+"Alert_get_photo" = "Importing photos";
+
+"Alert_image_max_title" = "Image restrictions";
+
+"Alert_image_max_detail" = "You can only add a total of three images.";
+
+"Alert_go_viewer" = "Move to the viewer";
+
+"Alert_cant_load_image" = "Failed to load image";

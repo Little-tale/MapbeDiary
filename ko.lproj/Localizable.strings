@@ -29,3 +29,111 @@
 "Add_save_button_text" = "저장";
 
 "Add_default_Text" = "제목 없음";
+
+"Authority_Camera" = "카메라";
+
+"Authority_Gallery" = "갤러리";
+
+"Alert_requestFail" = "설정 이동 불가";
+
+"Alert_noneAct" = "위치 권환";
+
+"Alert_checkUserLocalAut" = "위치 권한이 필요합니다.";
+
+"Alert_panelError" = "치명적 오류";
+
+"Alert_camera" = "카메라 권한";
+
+"Alert_delete" = "삭제";
+
+"Alert_dismiss" = "뒤로가기";
+
+"Alert_essentialTitle" = "텍스트 필수!";
+
+"Alert_bringPhoto" = "사진 가져오기";
+
+"Alert_checkNeedLocalAut" = "위치권한을 허용 해주세요";
+
+"Alert_needAdmin" = "관리자에게 문의하세요!";
+
+"Alert_needACameraAut" = "카메라 권한을 허용해주세요";
+
+"Alert_cantRecover" = "삭제하시면 복구 하실수 없습니다.";
+
+"Alert_none_reflect_saves" = "저장이 반영되지 않았습니다!";
+
+"Alert_require_Text" = "텍스트는 필수입니다!";
+
+"Alert_move" = "이동";
+
+"Text_take_Memo" = "메모를 남겨요!";
+
+"Bring_soon" = "준비중 이에요!";
+
+"Leave_memory" = "장소의 기억을\n남겨보세요!";
+
+"Search_place" = "장소를 검색해보세요!";
+
+"Search_empty_text" = "검색하실 장소를\n입력해주세요!";
+
+"If_phone_number" = "전화번호가 있나요?";
+
+"Image_change" = "이미지 변경";
+
+"Error_cant_make_folder" = "폴더를 생성할 수 없습니다. 잠시후 재시도 해주세요!";
+
+"Error_cant_make_location_memo" = "메모를 생성할 수 없습니다. 잠시후 재시도 해주세요!";
+
+"Error_cant_delete_folder" = "폴더를 제거할 수 없습니다. 잠시후 재시도 해주세요!";
+
+"Error_cant_sorted_Folder" = "폴더 정렬에 실패 했습니다... 관리자에게 문의해주세요!";
+
+"Error_cant_delete_local_memo" = "로컬 메모를 제거할 수 없습니다. 잠시후 재시도 해주세요!";
+
+"Error_cant_add_memo_in_folder" = "폴더에 메모를 넣는중 에러가 발생했습니다.\n잠시후 재시도 바랍니다.";
+
+"Error_cant_modify_memo" = "메모를 수정할 수 없습니다. 관리자에게 문의해주세요!";
+
+"Error_cant_add_image" = "이미지 추가중 문제가 발생했습니다. 관리자에 문의 해주세요!";
+
+"Error_cant_delete_image" = "이미지 제거중 문제가 발생했습니다. 관리자에 문의 해주세요!";
+
+"Error_cant_find_File" = "파일을 찾지 못했어요!";
+
+"Error_you_cant_modify_memo" = "수정할 수가 없어요!";
+
+"Error_same_memo" = "중복된 메모입니다!";
+
+"Error_cant_make_detail_Memo" = "추가 메모를 작성할 수가 없어요! 관리자에 문의 해주세요!";
+
+"Error_you_cant_add_image" = "이미지를 추가하실수 없습니다!";
+
+"Error_cant_find_location_memo" = "메모를 찾을수가 없어요!";
+
+"Error_camera_cant_take" = "가져오기 싪패";
+
+"Error_cant_take_image" = "사진을 가져오는 도중\n문제가 발생했습니다!";
+
+"Alert_modify_title" = "수정";
+
+"Alert_success_title" = "성공";
+
+"Alert_fail_title" = "실패";
+
+"Memories_of_place" = "장소의 기억";
+
+"Add_image_title" = "이미지 추가";
+
+"detail_modify_title" = "세부수정";
+
+"Did_delete" = "삭제하기";
+
+"Alert_get_photo" = "사진 가져오기";
+
+"Alert_image_max_title" = "이미지 제한";
+
+"Alert_image_max_detail" = "이미지는 총 3개만 추가하실수 있어요!";
+
+"Alert_go_viewer" = "뷰어로 이동";
+
+"Alert_cant_load_image" = "이미지 로드 실패";

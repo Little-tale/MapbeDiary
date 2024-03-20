@@ -21,43 +21,43 @@ enum MapTextSection {
     var alertTitle: String? {
         switch self{
         case .requestFail:
-            return "설정 이동 불가"
+            return "Alert_requestFail".localized
         case .noneAct:
-            return "위치권한"
+            return "Alert_noneAct".localized
         case .checkUserAut:
-            return "위치 권한이 필요합니다."
+            return "Alert_checkUserLocalAut".localized
         case .panelError:
-            return "치명적 오류"
+            return "Alert_panelError".localized
         case .camera:
-            return "카메라 권한"
+            return "Alert_camera".localized
         case .delete:
-            return "삭제"
+            return "Alert_delete".localized
         case .dismiss:
-            return "뒤로가기"
+            return "Alert_dismiss".localized
         case .essentialTitle:
-            return "텍스트 필수!"
+            return "Alert_essentialTitle".localized
         case .bringPhoto:
-            return "사진 가져오기"
+            return "Alert_bringPhoto".localized
         }
     }
     var alertMessage: String? {
         switch self {
         case .requestFail:
-            return "설정 이동 불가"
+            return "Alert_requestFail".localized
         case .noneAct :
-            return "위치권한을 허용 해주세요"
+            return "Alert_checkNeedLocalAut".localized
         case .checkUserAut:
-            return "위치권한을 허용 해주세요"
+            return "Alert_checkNeedLocalAut".localized
         case .panelError:
-            return "관리자에게 문의하세요!"
+            return "Alert_needAdmin".localized
         case .camera:
-            return  "카메라 권한을 허용 해주세요"
+            return  "Alert_needACameraAut".localized
         case .delete:
-            return "삭제 하시면 복구 하실수 없습니다!"
+            return "Alert_cantRecover".localized
         case .dismiss:
-            return "저장이 반영되지 않았습니다!"
+            return "Alert_none_reflect_saves".localized
         case .essentialTitle:
-            return "텍스트는 필수입니다!"
+            return "Alert_require_Text".localized
         case .bringPhoto:
             return nil
         }
@@ -65,17 +65,17 @@ enum MapTextSection {
     var actionTitle:String? {
         switch self {
         case .requestFail:
-            return "확인"
+            return "Alert_check_title".localized
         case .noneAct:
             return nil
         case .checkUserAut, .camera:
-            return "이동"
+            return "Alert_move".localized
         case .panelError:
             return nil
         case .delete:
-            return "삭제"
+            return "Alert_delete".localized
         case .dismiss:
-            return "뒤로가기"
+            return "Alert_dismiss".localized
         case .essentialTitle:
             return nil
         case .bringPhoto:
@@ -83,15 +83,15 @@ enum MapTextSection {
         }
     }
     var cancelTitle: String{
-            return "취소"
+        return "Cancel_check_title".localized
     }
     
-    static let noneName: String = "메모를 남겨요!"
-    static let saveTitle: String = "저장"
+    static let noneName: String = "Text_take_Memo".localized
+    static let saveTitle: String = "Add_save_button_text".localized
     
-    static let beginningSoon: String = "준비중 이에요!"
-    static let emptyLabelText: String = "장소의 기억을\n남겨보세요!"
-    static let emptySearcBarText: String = "장소를 검색해보세요!"
-    static let searchEmptyText: String = "검색하실 장소를\n입력해주세요!"
-    static let cancel: String = "취소"
+    static let beginningSoon: String = "Bring_soon".localized
+    static let emptyLabelText: String = "Leave_memory".localized
+    static let emptySearcBarText: String = "Search_place".localized
+    static let searchEmptyText: String = "Search_empty_text".localized
+    static let cancel: String = "Cancel_check_title".localized
 }
