@@ -363,6 +363,7 @@ extension MapViewController: BackButtonDelegate {
 }
 // MARK: 로케이션 수정
 extension MapViewController: AboutmodifyLocation {
+    
     func getModifyInfo(with lcation: LocationMemo) {
         updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] vc in
             guard self != nil else { return }
@@ -373,18 +374,40 @@ extension MapViewController: AboutmodifyLocation {
     }
 }
 extension MapViewController: LocationDelegate {
+    
     func getLocationInfo(memo: LocationMemo) {
-        
-        updatePanel(coordi: nil, viewType: .modiFiLocation, layout: .detail) { [weak self] vc in
-            guard let self,
-            let viewController = vc as? AboutLocationViewController else { return }
-            guard let locations = memo.location else { return }
-            guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
-            viewController.viewModel.inputLocationMemo.value = memo
-            addLongAnnotation(cl2: location)
+
+        guard let locations = memo.location else { return }
+        guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
+        let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
+            guard let self else { return false }
+            guard let annotation = annotation as? CustomAnnotation else { return false }
+            return annotation.coordinate.latitude == location.latitude && annotation.coordinate.longitude == location.longitude
         }
+        
+        guard let custom  = userAnnotation as? CustomAnnotation else { return }
+        homeView.mapView.selectAnnotation(custom, animated: true)
     }
 }
+/*
+ 1번째 방법
+ let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
+ homeView.mapView.setRegion(region, animated: true)
+ 
+ 2번째 방법
+ guard let locations = memo.location else { return }
+ guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
+ let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
+     guard let self else { return false }
+     guard let annotation = annotation as? CustomAnnotation else { return false }
+     return annotation.coordinate.latitude == location.latitude && annotation.coordinate.longitude == location.longitude
+ }
+ 
+ guard let custom  = userAnnotation as? CustomAnnotation else { return }
+ homeView.mapView.selectAnnotation(custom, animated: true)
+ 
+ //        }
+ */
 
 // ----------------------------------------------------------
 

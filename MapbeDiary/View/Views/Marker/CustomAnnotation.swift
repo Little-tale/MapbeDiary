@@ -6,7 +6,6 @@
 //
 
 import MapKit
-
 class CustomAnnotation: NSObject, MKAnnotation {
     static let reusableIdentifier = "CustomAnnotation"
     
@@ -27,14 +26,22 @@ class CustomAnnotation: NSObject, MKAnnotation {
     
 }
 
+// 이미지 뷰 넣어서 하는거 고려
+// 이미지 뷰를 넣어서 했을떄 랑 아니였을때의 메모리 사용량 비교
+// imageView.image = nil 을 안했을때 문제점
 class ArtWorkMarkerView: MKAnnotationView {
+    var imageView: UIImageView?
     
     override var annotation: MKAnnotation? {
         willSet {
+            image = nil
+            imageView?.image = nil
+            imageView = nil
             guard let artWork = newValue as? CustomAnnotation else { return }
-            
+           
             guard let memoId = artWork.locationId else {
                 canShowCallout = true
+                imageView = nil
                 calloutOffset = CGPoint(x: 0, y: 10)
                 centerOffset = CGPoint(x: 0, y: -30)
                 image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 30)
@@ -42,21 +49,39 @@ class ArtWorkMarkerView: MKAnnotationView {
             }
             
             if let imagePath = FileManagers.shard.loadImageMarkerImage(memoId: memoId) {
-                let image = UIImage(contentsOfFile: imagePath)?.resizingImage(targetSize: CGSize(width: 50, height: 50))
+                settingView()
+                
+                let image = UIImage(contentsOfFile: imagePath)
                 
                 centerOffset = CGPoint(x: 0, y: -50)
                 calloutOffset = CGPoint(x: 0, y: 10)
-                self.image = image
+                
+                imageView?.image = image?.resizingImage(targetSize: CGSize(width: 60, height: 40))
+                
+                imageView?.isUserInteractionEnabled = true
             } else {
                 image = UIImage(named: "google-309740_1280")?.resizeImage(newWidth: 30)
-                canShowCallout = true
                 centerOffset = CGPoint(x: 0, y: -30)
                 calloutOffset = CGPoint(x: 0, y: 10)
             }
-            
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)
         }
+    }
+    
+    
+    private func settingView(){
+        imageView = UIImageView()
+        imageView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        if let imageView {
+            addSubview(imageView)
+        }
+        
+    }
+    
+    deinit {
+        print("dinit: ", self)
     }
 }
 

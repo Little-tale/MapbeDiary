@@ -190,7 +190,7 @@ class RealmRepository {
         if let image = model.memoImage {
             if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, image: image) {
                 print("makeMemoMarkerAtFolders",image)
-                let imageZip = image.resizingImage(targetSize: CGSize(width: 500, height: 500))
+                let imageZip = image.resizingImage(targetSize: CGSize(width: 50, height: 50))
                 if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, image: imageZip) {
                 } else {
                     throw RealmManagerError.cantAddImage
