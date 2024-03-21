@@ -137,3 +137,19 @@
 "Alert_go_viewer" = "Move to the viewer";
 
 "Alert_cant_load_image" = "Failed to load image";
+
+"Setting_title" = "Settings";
+
+"Deleting_title" = "Deleting";
+
+"Deleting_complite_title" = "The deletion is complete.";
+
+"Setting_section_version" = "App version information";
+
+"Setting_section_policies" = "Terms and policies";
+
+"Setting_section_help" = "Help Center";
+
+"Setting_section_reset" = "Reset Data";
+
+"Web_Staring" = "Loading";

@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-
-
 // Setting Model
 struct SettingModel:Hashable {
     let title : String
@@ -34,14 +31,36 @@ enum SettingSection: CaseIterable {
         switch self {
         case .setting:
             return  [
-                SettingModel(title: "앱 버전 정보", detail: "1.0", actionType: .appVersion),
-                SettingModel(title: "약관 및 정책", detail: nil, actionType: .termsAndConditions)
+                SettingModel(
+                    title: "Setting_section_version".localized,
+                    detail: "1.0",
+                    actionType: .appVersion
+                ),
+                
+                SettingModel(
+                    title: "Setting_section_policies".localized,
+                    detail: nil,
+                    actionType: .termsAndConditions
+                )
             ]
         case .info:
-            return [SettingModel(title: "고객 센터", detail: nil, actionType: .customerSupport)]
+            return [
+                SettingModel(
+                    title: "Setting_section_help".localized,
+                    detail: nil,
+                    actionType: .customerSupport
+                )
+            ]
         case .delete:
-            return [SettingModel(title: "초기화", detail: nil, actionType: .initialize)]
+            return [
+                SettingModel(
+                    title: "Setting_section_reset".localized,
+                    detail: nil,
+                    actionType: .initialize
+                )
+            ]
         }
+        
     }
 }
 

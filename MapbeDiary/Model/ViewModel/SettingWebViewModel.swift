@@ -16,7 +16,7 @@ class SettingWebViewModel {
     
     var outputNaviTitle: Observable<String?> = Observable(nil)
     
-   
+    var webLoadCompilte: Observable<Void?> = Observable(nil)
     
     init(){
         inputSettingActionType.bind { [weak self] settingAction in
@@ -53,9 +53,9 @@ class SettingWebViewModel {
         case .appVersion:
             break
         case .termsAndConditions:
-            outputNaviTitle.value = "약관내용"
+            outputNaviTitle.value = "Setting_section_policies".localized
         case .customerSupport:
-            outputNaviTitle.value = "고객 센터"
+            outputNaviTitle.value = "Setting_section_help".localized
         case .initialize:
             break
         }

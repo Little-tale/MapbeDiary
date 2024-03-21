@@ -43,7 +43,7 @@ class ArtWorkMarkerView: MKAnnotationView {
                 canShowCallout = true
                 imageView = nil
                 // calloutOffset = CGPoint(x: 0, y: 10)
-                centerOffset = CGPoint(x: 10, y: -40)
+                centerOffset = CGPoint(x: 0, y: -20)
                 image = .defaultMarker.resizeImage(newWidth: 40)
                 return
             }
@@ -53,7 +53,7 @@ class ArtWorkMarkerView: MKAnnotationView {
                 
                 let image = UIImage(contentsOfFile: imagePath)
                 
-                centerOffset = CGPoint(x: 0, y: -50)
+                centerOffset = CGPoint(x: 0, y: -25)
                 // calloutOffset = CGPoint(x: 10, y: 10)
                 
                 imageView?.image = image?.resizingImage(targetSize: CGSize(width: 70, height: 50))
@@ -61,8 +61,7 @@ class ArtWorkMarkerView: MKAnnotationView {
                 imageView?.isUserInteractionEnabled = true
             } else {
                 image = ImageSection.defaultMarkerImage.image.resizeImage(newWidth: 40)
-                centerOffset = CGPoint(x: 0, y: -40)
-                //calloutOffset = CGPoint(x: 10, y: 10)
+                centerOffset = CGPoint(x: 0, y: -20)
             }
             canShowCallout = true
             calloutOffset = CGPoint(x: 0, y: 5)

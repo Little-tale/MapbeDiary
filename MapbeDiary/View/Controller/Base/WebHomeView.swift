@@ -16,11 +16,17 @@ class WebHomeView: BaseView{
     override func configureHierarchy() {
         addSubview(webView)
     }
+    
     override func configureLayout() {
         webView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
-    } 
+    }
+    
+    override func register() {
+        webView.navigationDelegate = self
+    }
+    
     // MARK: 회고
     override func subscribe() {
         viewModel.outputURL.bind { [weak self] urlRequest in
@@ -36,5 +42,11 @@ class WebHomeView: BaseView{
             }
         }
     }
+}
 
+// 회고 ->
+extension WebHomeView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        viewModel.webLoadCompilte.value = ()
+    }
 }

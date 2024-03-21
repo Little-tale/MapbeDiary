@@ -137,3 +137,19 @@
 "Alert_go_viewer" = "뷰어로 이동";
 
 "Alert_cant_load_image" = "이미지 로드 실패";
+
+"Setting_title" = "설정";
+
+"Deleting_title" = "삭제중";
+
+"Deleting_complite_title" = "삭제가 완료 되었습니다!";
+
+"Setting_section_version" = "앱 버전 정보";
+
+"Setting_section_policies" = "약관 및 정책";
+
+"Setting_section_help" = "고객 센터";
+
+"Setting_section_reset" = "초기화";
+
+"Web_Staring" = "불러오고 있어요!";

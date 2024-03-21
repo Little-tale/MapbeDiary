@@ -59,6 +59,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+// MARK: 가로모드 고정
+extension AppDelegate {
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+}
+
+
 // 원결 알림 노티피케이션 센터 딜리게이트
 extension AppDelegate: UNUserNotificationCenterDelegate {
     

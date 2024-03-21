@@ -42,6 +42,7 @@ final class SettingViewController: BaseHomeViewController<SettingHomeView>, Toas
 }
 // MARK: 네비게이션 LeftBarButtonSetting
 extension SettingViewController {
+    /// 좌측 버튼 설정
     private func navigationLeftButtonSetting(){
         
         let button = CustomLocationButton(frame: .zero, imageType: .naviBackButton)
@@ -55,17 +56,22 @@ extension SettingViewController {
         
        navigationItem.leftBarButtonItem = leftUIBarButton
     }
-    
+    /// 좌측 버튼 액션
     private func leftBackButton(){
         print(#function)
         SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
         dismiss(animated: true)
         
     }
-    
+    /// 네비게이션 타이틀 세팅
     private func settingMainNaviTitleView(){
-        navigationItem.title = "설정"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 24, weight: .bold)]
+        navigationItem.title = "Setting_title".localized
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font : UIFont.systemFont(
+                ofSize: 20, weight: .bold
+            ),
+            NSAttributedString.Key.foregroundColor : UIColor.wheetBlack
+        ]
     }
     
 }
@@ -113,7 +119,7 @@ extension SettingViewController {
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
 }
-
+// MARK: 컬렉션뷰 딜리게이트 -> 선택관련
 extension SettingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource?.itemIdentifier(for: indexPath) else { return }
@@ -144,7 +150,7 @@ extension SettingViewController: UICollectionViewDelegate {
         showAlertHandlerCancel(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, actionTitle: MapTextSection.delete.actionTitle) { [weak self] _ in
             guard let self else { return }
             activity = CustomIndicator(view: homeView, navigationController: navigationController, tabBarController: nil)
-            activity?.showActivityIndicator(title: "삭제중")
+            activity?.showActivityIndicator(title: "Deleting_title".localized)
             homeView.settingViewModel.removeTrigger.value = ()
         }
     }
@@ -155,7 +161,7 @@ extension SettingViewController: UICollectionViewDelegate {
 extension SettingViewController {
     func subscribe(){
         homeView.settingViewModel.alertError.bind {[ weak self ] error in
-            guard let weakSelf = self else { return }
+            guard self != nil else { return }
             guard let error else { return }
             DispatchQueue.main.async {
                 [weak self] in
@@ -166,11 +172,11 @@ extension SettingViewController {
         }
         homeView.settingViewModel.successOut.bind {[weak self] void in
             guard void != nil else { return }
-            guard let weakSelf = self else { return }
+            guard self != nil else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 guard let self else { return }
                 activity?.stopActivity()
-                homeView.makeToast("삭제가 완료되었습니다!")
+                homeView.makeToast("Deleting_complite_title".localized)
             }
         }
         
