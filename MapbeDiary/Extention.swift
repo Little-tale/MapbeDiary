@@ -58,7 +58,7 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
-    func showAlertHandlerCancel(title: String, message: String, actionTitle: String, handler: @escaping (UIAlertAction) -> Void ) {
+    func showAlertHandlerCancel(title: String?, message: String?, actionTitle: String?, handler: @escaping (UIAlertAction) -> Void ) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

@@ -56,6 +56,8 @@
 		7B30DD752BAC359E00D789B5 /* WebHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD742BAC359E00D789B5 /* WebHomeView.swift */; };
 		7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */; };
 		7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */; };
+		7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */; };
+		7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */; };
 		7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */; };
 		7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */; };
 		7B54A7DB2BAB3C620039BC7F /* SettingHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */; };
@@ -166,6 +168,8 @@
 		7B30DD742BAC359E00D789B5 /* WebHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebHomeView.swift; sourceTree = "<group>"; };
 		7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewModel.swift; sourceTree = "<group>"; };
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
+		7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIndicator.swift; sourceTree = "<group>"; };
 		7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationButton.swift; sourceTree = "<group>"; };
 		7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewStackButtonView.swift; sourceTree = "<group>"; };
 		7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHomeView.swift; sourceTree = "<group>"; };
@@ -437,6 +441,7 @@
 				7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */,
 				7B54A7DE2BAB4C8C0039BC7F /* SeettingViewModel.swift */,
 				7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */,
+				7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
+				7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -782,8 +788,10 @@
 				7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */,
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */,
+				7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
+				7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */,
 				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 				7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */,

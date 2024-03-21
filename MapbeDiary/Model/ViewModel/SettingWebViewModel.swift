@@ -16,6 +16,8 @@ class SettingWebViewModel {
     
     var outputNaviTitle: Observable<String?> = Observable(nil)
     
+   
+    
     init(){
         inputSettingActionType.bind { [weak self] settingAction in
             guard let self else { return }
@@ -58,4 +60,5 @@ class SettingWebViewModel {
             break
         }
     }
+ 
 }

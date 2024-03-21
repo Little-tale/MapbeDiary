@@ -10,6 +10,8 @@ import SnapKit
 
 final class SettingHomeView: BaseView {
     
+    let settingViewModel = SettingViewModel()
+    
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: setCollectionViewLayout())
     
     override func configureHierarchy() {

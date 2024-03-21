@@ -6,16 +6,16 @@
 //
 
 import UIKit
+import Toast
 
-
-
-final class SettingViewController: BaseHomeViewController<SettingHomeView> {
+final class SettingViewController: BaseHomeViewController<SettingHomeView>, ToastPro {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection,SettingModel>
     
     private typealias CellRegistry = UICollectionView.CellRegistration<UICollectionViewCell,SettingModel>
     
     private var dataSource: DataSource?
+    private var activity: CustomIndicator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,8 @@ final class SettingViewController: BaseHomeViewController<SettingHomeView> {
         settingMainNaviTitleView() // 네비게이션 중앙 설정
         settingDataSource() // 컴포지셔널 데이터 소스 세팅
         settingSnapShot() // 스냅샷 세팅
-        delegateSetting()
+        delegateSetting() // 딜리게이트 셋팅
+        subscribe() // 뷰모델 구독
     }
     
     private func delegateSetting(){
@@ -50,6 +51,7 @@ extension SettingViewController {
         print(#function)
         SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
         dismiss(animated: true)
+        
     }
     
     private func settingMainNaviTitleView(){
@@ -124,8 +126,41 @@ extension SettingViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         case .initialize:
             print("초기화") // 완전 초기화
+            CanICheckDelete()
+        }
+    }
+    
+    private func CanICheckDelete(){
+        /// removeFolderInEveryThing
+        showAlertHandlerCancel(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, actionTitle: MapTextSection.delete.actionTitle) { [weak self] _ in
+            guard let self else { return }
+            activity = CustomIndicator(view: homeView, navigationController: navigationController, tabBarController: nil)
+            activity?.showActivityIndicator(title: "삭제중")
+            homeView.settingViewModel.removeTrigger.value = ()
         }
     }
 }
 
 
+extension SettingViewController {
+    func subscribe(){
+        homeView.settingViewModel.alertError.bind { error in
+            guard let error else { return }
+            DispatchQueue.main.async {
+                [weak self] in
+                    guard let self else { return }
+                activity?.stopActivity()
+                showAPIErrorAlert(repo: error)
+            }
+        }
+        homeView.settingViewModel.successOut.bind { void in
+            guard void != nil else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self else { return }
+                activity?.stopActivity()
+                homeView.makeToast("삭제가 완료되었습니다!")
+            }
+        }
+        
+    }
+}

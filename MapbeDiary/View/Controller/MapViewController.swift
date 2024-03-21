@@ -176,7 +176,9 @@ extension MapViewController {
     func moveToSettingBttonAction(){
         homeView.buttonStack.settingButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            let nvc = UINavigationController(rootViewController: SettingViewController())
+            let vc = SettingViewController()
+            vc.homeView.settingViewModel.inputFolder.value = homeView.mapviewModel.folderInput.value
+            let nvc = UINavigationController(rootViewController: vc)
             nvc.modalPresentationStyle = .fullScreen
             present(nvc, animated: true )
         }), for: .touchUpInside)

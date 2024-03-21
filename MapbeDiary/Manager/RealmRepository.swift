@@ -166,6 +166,14 @@ class RealmRepository {
         return locations
     }
     
+    // MARK: 로케이션을 통해 모든 디테일 메모를 찾습니다.
+   /// 로케이션을 통해 모든 디테일 메모를 찾습니다.
+    func findDetailMemoForLocation(location: LocationMemo) -> [DetailMemo] {
+        let details = Array(location.detailMemos)
+        return details
+    }
+    
+    
     
     // MARK: 폴더를 먼저 만들었다면 이후에 메모를 넣습니다.
     /// 폴더가 있고 Memo 객체가 있어야 폴더에 추가해드립니다. 중복 방지 해놓았습니다.
@@ -424,6 +432,16 @@ class RealmRepository {
             throw RealmManagerError.cantDeleteMemo
         }
     }
+    func removewMemo2(memo:LocationMemo, complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+        do{
+            try realm.write {
+                realm.delete(memo)
+            }
+            complite(.success(()))
+        } catch{
+            complite(.failure( .cantDeleteMemo ))
+        }
+    }
     
     func deleteImageFromMemoAt(memoId: ObjectId, imageName: String) throws {
         let imagePath = getFolderPathForMemoId(memoId: memoId).appendingPathComponent(imageName)
@@ -633,6 +651,67 @@ class RealmRepository {
             }
         }
     }
+    
+    // 폴더 / 안에 로케이션들/ 메모들 / 이미지리스트
+    //
+    //MARK: 폴더내의 모든 데이터를 제거합니다.
+    func removeFolderInEveryThing(folder : Folder, complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+        // 1. 내부 이미지 모두 제거 작업 시작 ->
+        
+        // 1.1 내부 로케이션 메모 모으기
+        let locationMemos = findAllMemoAtFolder(folder: folder)
+        // 1.2 내부 디테일 메모 모으기
+        var details: [DetailMemo] = []
+        
+        for locationMemo in locationMemos {
+            let datas = Array(locationMemo.detailMemos)
+            datas.forEach { details.append($0) }
+        }
+        if details.isEmpty {
+            complite(.success(()))
+        }
+        // 이미지 패스 가져오면서 바로 지우기 시도
+        for detail in details {
+            let datas = Array(detail.imagePaths)
+            datas.forEach { [weak self] object in
+                guard let self else { return }
+                // 3. 내부 디테일 이미지 제거 시도
+                let results = FileManagers.shard.removeDetailImage(detailId: detail.id.stringValue, imageId: object.id.stringValue)
+                
+                if case.failure = results {
+                    complite(.failure(.cantDeleteMemo))
+                }
+                
+                let resultss = removeImageObject(object)
+                
+                if case.failure = results {
+                    complite(.failure(.cantDeleteMemo))
+                }
+            }
+            let result = removeDetail(detail)
+            if case.failure(let failure) = result {
+                complite(.failure(failure))
+            }
+        }
+        // 4. 내부 마커 이미지 모두제거
+        locationMemos.forEach { [weak self] location in
+            guard let self else { return }
+            if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: location.id.stringValue) {
+                complite(.failure(.cantDeleteImage))
+            }
+            // 5. 내부 로케이션 메모 제거
+            removewMemo2(memo: location) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let success):
+                    complite(.success(success))
+                case .failure(let failure):
+                    complite(.failure(failure))
+                }
+            }
+        }
+    }
+    
 }
 
 
