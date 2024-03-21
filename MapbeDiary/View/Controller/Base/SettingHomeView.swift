@@ -22,6 +22,13 @@ final class SettingHomeView: BaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
+    override func designView() {
+        collectionView.layer.cornerRadius = 20
+        collectionView.clipsToBounds = true
+    }
+    deinit {
+        print("deinit: SettingHomeView")
+    }
 }
 
 

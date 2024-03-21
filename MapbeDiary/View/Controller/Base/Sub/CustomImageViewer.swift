@@ -84,13 +84,15 @@ final class CustomImageViewer: UIViewController, UIScrollViewDelegate {
     }
     
     func loadImage(data: Data) {
-        DispatchQueue.global().async { [weak self ] in
-            guard let self else { return }
+        DispatchQueue.global().async { [weak self] in
+            guard let weakSelf = self else { return }
             DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data)
-                self.activityIndicator.stopAnimating()
+                [weak self] in
+                guard let self else { return }
+                imageView.image = UIImage(data: data)
+                activityIndicator.stopAnimating()
                 print("불러옴")
-                self.activityIndicator.isHidden = true
+                activityIndicator.isHidden = true
             }
         }
     }

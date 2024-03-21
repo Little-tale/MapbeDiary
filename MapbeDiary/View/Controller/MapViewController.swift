@@ -454,22 +454,23 @@ extension MapViewController {
     func checkDeviewlocationAuthorization(){
 
         DispatchQueue.global().async { [weak self] in
-            guard let self else { return }
+            guard let weakSelf = self else { return }
             /// 만약 디바이스 자체 권한이 활성화 라면 (열겨헝)
             if CLLocationManager.locationServicesEnabled() {
                 let authorization: CLAuthorizationStatus
                 
-                authorization = homeView.locationManager.authorizationStatus
+                authorization = weakSelf.homeView.locationManager.authorizationStatus
                 
                 DispatchQueue.main.async { 
                     [weak self] in
                     guard let self else { return }
                     // 유저 위치 권한 상태 확인
-                    self.checkUserLocationAuthorization(authoriztionState: authorization)
+                    checkUserLocationAuthorization(authoriztionState: authorization)
                 }
             } else {
-                DispatchQueue.main.async {
-                    self.goSetting()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    goSetting()
                 }
             }
             

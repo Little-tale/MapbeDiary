@@ -267,10 +267,11 @@ extension AboutLocationViewController {
         }
         
         viewModel.repositoryErrorOutPut.bind {[weak self] error in
-            guard let self else { return }
+            guard let weakSelf = self else { return }
             guard let error else { return }
-            DispatchQueue.main.async {
-                self.showAPIErrorAlert(repo: error)
+            DispatchQueue.main.async {[weak self] in
+                guard let self else { return }
+                showAPIErrorAlert(repo: error)
             }
         }
         viewModel.dismissAction.bind { [weak self] void in

@@ -11,7 +11,7 @@ import UIKit
 
 
 //MARK: RalmRepository
-class RealmRepository {
+final class RealmRepository {
     // 레포지터리 패턴
     let realm = try! Realm()
     let folderModel = Folder.self
@@ -670,6 +670,40 @@ class RealmRepository {
         if details.isEmpty {
             complite(.success(()))
         }
+        removeDetailsMemos(details) { result in
+            if case.failure(let failure) = result {
+                complite(.failure(failure))
+            }
+        }
+        // 4. 내부 마커 이미지 모두제거
+        removeLocationMemos(locationMemos) { [weak self] results in
+            guard let self else { return }
+            complite(results)
+        }
+    }
+    
+    
+    /// 로케이션 메모배열의 모든 데이터를 지웁니다.
+    func removeLocationMemos(_ locations: [LocationMemo], complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+        locations.forEach { [weak self] location in
+            guard let self else { return }
+            if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: location.id.stringValue) {
+                complite(.failure(.cantDeleteImage))
+            }
+            // 5. 내부 로케이션 메모 제거
+            removewMemo2(memo: location) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let success):
+                    complite(.success(success))
+                case .failure(let failure):
+                    complite(.failure(failure))
+                }
+            }
+        }
+    }
+    
+    func removeDetailsMemos(_ details: [DetailMemo], complite: @escaping (Result<Void,RealmManagerError>) -> Void){
         // 이미지 패스 가져오면서 바로 지우기 시도
         for detail in details {
             let datas = Array(detail.imagePaths)
@@ -693,24 +727,8 @@ class RealmRepository {
                 complite(.failure(failure))
             }
         }
-        // 4. 내부 마커 이미지 모두제거
-        locationMemos.forEach { [weak self] location in
-            guard let self else { return }
-            if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: location.id.stringValue) {
-                complite(.failure(.cantDeleteImage))
-            }
-            // 5. 내부 로케이션 메모 제거
-            removewMemo2(memo: location) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let success):
-                    complite(.success(success))
-                case .failure(let failure):
-                    complite(.failure(failure))
-                }
-            }
-        }
     }
+    
     
 }
 

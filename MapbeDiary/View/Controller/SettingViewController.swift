@@ -19,6 +19,7 @@ final class SettingViewController: BaseHomeViewController<SettingHomeView>, Toas
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        colorSetting()
         navigationLeftButtonSetting() // 네비게이션 좌측 버튼세팅
         settingMainNaviTitleView() // 네비게이션 중앙 설정
         settingDataSource() // 컴포지셔널 데이터 소스 세팅
@@ -30,6 +31,14 @@ final class SettingViewController: BaseHomeViewController<SettingHomeView>, Toas
     private func delegateSetting(){
         homeView.collectionView.delegate = self
     }
+    private func colorSetting(){
+        homeView.backgroundColor = .wheetSideBrown
+    }
+    
+    deinit {
+        print("deinit: SettingViewController")
+    }
+    
 }
 // MARK: 네비게이션 LeftBarButtonSetting
 extension SettingViewController {
@@ -142,9 +151,11 @@ extension SettingViewController: UICollectionViewDelegate {
 }
 
 
+// MARK: 회고 -> 강함 참조
 extension SettingViewController {
     func subscribe(){
-        homeView.settingViewModel.alertError.bind { error in
+        homeView.settingViewModel.alertError.bind {[ weak self ] error in
+            guard let weakSelf = self else { return }
             guard let error else { return }
             DispatchQueue.main.async {
                 [weak self] in
@@ -153,8 +164,9 @@ extension SettingViewController {
                 showAPIErrorAlert(repo: error)
             }
         }
-        homeView.settingViewModel.successOut.bind { void in
+        homeView.settingViewModel.successOut.bind {[weak self] void in
             guard void != nil else { return }
+            guard let weakSelf = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 guard let self else { return }
                 activity?.stopActivity()
