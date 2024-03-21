@@ -62,16 +62,17 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         settingMapView() /// 맵뷰 세팅
         checkDeviewlocationAuthorization() // 디바이스 권한
         addTestAnnotations() // 시작할때 폴더 기준으로
-        settinglongPressClosure()
-        userLocationAction()
-        locationMemosButtonAction()
+        settinglongPressClosure() // 롱프레스
+        userLocationAction() // 유저 버튼 액션
+        locationMemosButtonAction() // 메모 버튼 액션
+        moveToSettingBttonAction() // 세팅 버튼 액션
         
         homeView.searchBar.delegate = self
     }
     
     // MARK: 맵뷰 세팅
     func settingMapView(){
-        homeView.locationManager = CLLocationManager()
+        
         homeView.locationManager.delegate = self
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
@@ -140,8 +141,9 @@ extension MapViewController {
 // MARK: 버튼 액션
 extension MapViewController {
     func userLocationAction(){
-        homeView.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
+        homeView.buttonStack.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
+            
             checkDeviewlocationAuthorization()
             if let locationInfo = homeView.locationManager.location {
                 if !finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
@@ -153,7 +155,7 @@ extension MapViewController {
     }
     
     func locationMemosButtonAction(){
-        homeView.locationMemosButton.addAction(UIAction(handler: { [weak self] _ in
+        homeView.buttonStack.locationMemosButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             removeExistingPanelIfNeeded { [weak self] in
                 guard let self else { return }
@@ -169,6 +171,15 @@ extension MapViewController {
         vc.locationDelegate = self
         vc.modalPresentationStyle = .popover
         present(vc, animated: true)
+    }
+    
+    func moveToSettingBttonAction(){
+        homeView.buttonStack.settingButton.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            let nvc = UINavigationController(rootViewController: SettingViewController())
+            nvc.modalPresentationStyle = .fullScreen
+            present(nvc, animated: true )
+        }), for: .touchUpInside)
     }
     
 }
@@ -339,7 +350,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         newPanel.move(to: .half, animated: true)
         floatPanel = newPanel
     }
-
+    // MARK: 판넬을 내리고 싶을때
     private func removeExistingPanelIfNeeded(completion: @escaping () -> Void) {
         if let existingPanel = floatPanel {
             existingPanel.removePanelFromParent(animated: true) { [weak self] in
@@ -379,6 +390,7 @@ extension MapViewController: AboutmodifyLocation {
         }
     }
 }
+
 extension MapViewController: LocationDelegate {
     
     func getLocationInfo(memo: LocationMemo) {
@@ -393,7 +405,7 @@ extension MapViewController: LocationDelegate {
 extension MapViewController {
     func finduserAnnotationOrNew(CL2D: CLLocationCoordinate2D) -> Bool {
         let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
-            guard let self else { return false }
+            guard self != nil else { return false }
             guard let annotation = annotation as? CustomAnnotation else { return false }
             return annotation.coordinate.latitude == CL2D.latitude && annotation.coordinate.longitude == CL2D.longitude
         }
@@ -408,7 +420,9 @@ extension MapViewController {
 // MARK: MAPView Loaction 권한 과 위치세팅
 extension MapViewController: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {  // locations [] 를 통해 위치정보를 볼수있다.
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      
+        // locations [] 를 통해 위치정보를 볼수있다.
         if let location = locations.last?.coordinate{
             // MARK: TS 이부분에서 트러블 슈팅 발생 그렇다면 위치가 변할때만 호출되게 변경
             setRegion(location: location)
@@ -462,7 +476,7 @@ extension MapViewController {
     /// 유저가 앱에 대해서 위치 정보를 주었는지 확인합니다.
     func checkUserLocationAuthorization(authoriztionState: CLAuthorizationStatus){
         print(authoriztionState.rawValue)
-        
+
         switch authoriztionState {
         case .notDetermined: // 설정한 적이 없거나 한번만 허용후 다시 올때
             allowLocation()

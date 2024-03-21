@@ -605,7 +605,7 @@ class RealmRepository {
         for detail in location.detailMemos {
             group.enter()
             deleteDetailMemo(detail) { [weak self] result in
-                guard let self else { complite(.failure(.cantDeleteLocationMemo))
+                guard self != nil else { complite(.failure(.cantDeleteLocationMemo))
                     return
                 }
                 

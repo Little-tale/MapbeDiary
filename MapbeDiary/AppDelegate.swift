@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // 파이어 베이스 연결
         FirebaseApp.configure()
+        
         // 원격 알림 등록(fireBase와 무관함)
         UNUserNotificationCenter.current().delegate = self
 
@@ -81,7 +82,18 @@ extension AppDelegate: MessagingDelegate {
 
     func application(application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        let tokken = deviceToken.reduce("") {
+//            $0 + String(format: "%02X", $1)
+//        }
+        
       Messaging.messaging().apnsToken = deviceToken
     }
     
+    // 리스폰스에 대한 정보 가져오는 -> 푸시를 클릭했을때 즉 추적이 가능합니다.
+    // 사ㅏ용자가 푸시를 클릭하고 앱이 열렸을 때 호출
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(#function)
+        print(response)
+        print(response.notification.request.content)
+    }
 }

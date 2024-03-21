@@ -9,19 +9,18 @@ import SnapKit
 import MapKit
 
 
-class MapHomeView: BaseView {
+final class MapHomeView: BaseView {
     
     let mapView = MKMapView(frame: .zero)
     
-    let userLocationButton = CustomLocationButton(frame: .zero, imageType: .location)
-    let locationMemosButton = CustomLocationButton(frame: .zero, imageType: .AllMemo)
-    
     let searchBar = UISearchBar(frame: .zero)
+    
+    let buttonStack = MapViewStackButtonView(frame: .zero)
     
     var mapviewModel = MapViewModel()
     
     // MARK: 로케이션 메니저
-    var locationManager: CLLocationManager!
+    var locationManager = CLLocationManager()
     
     var locationClosure: ((CLLocationCoordinate2D) -> Void)?
     
@@ -29,9 +28,9 @@ class MapHomeView: BaseView {
     override func configureHierarchy() {
         addSubview(mapView)
         addSubview(searchBar)
-        addSubview(userLocationButton)
-        addSubview(locationMemosButton)
+        addSubview(buttonStack)
     }
+    
     override func configureLayout() {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -41,21 +40,21 @@ class MapHomeView: BaseView {
             make.horizontalEdges.equalTo(mapView).inset(34)
             make.height.equalTo(60)
         }
-        userLocationButton.snp.makeConstraints { make in
+        buttonStack.snp.makeConstraints { make in
             make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset( 50 )
-            make.size.equalTo(50)
-        }
-        locationMemosButton.snp.makeConstraints { make in
-            make.centerX.equalTo(userLocationButton)
-            make.bottom.equalTo(userLocationButton.snp.top).inset( -30 )
-            make.size.equalTo(40)
+            make.centerY.equalTo(safeAreaLayoutGuide).offset(30)
         }
     }
     override func register() {
         mapView.register(ArtWorkMarkerView.self, forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusebleIdentifier)
+        settingMapView() // MapView Setting
+        settingLongTabForMapView()
     }
     override func designView() {
+        searchBarSetting()
+    }
+    
+    private func settingMapView(){
         //
         let location = CLLocationCoordinate2D(latitude:37.5664056, longitude: 126.9778222)
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
@@ -63,16 +62,18 @@ class MapHomeView: BaseView {
         
         mapView.mapType = .standard
         mapView.backgroundColor = .brown
-        searchBarSetting()
-        
+    }
+    
+    private func settingLongTabForMapView(){
         // MARK: 롱탭
         let longtap = UILongPressGestureRecognizer(target: self , action: #selector(longTap))
         
         mapView.addGestureRecognizer(longtap)
-        
     }
+    
+    
     // MARK: 회고 해야해
-    func searchBarSetting(){
+    private func searchBarSetting(){
         searchBar.setTextFieldBackground(color: .wheetSideBrown, transparentBackground: true)
         searchBar.placeholder = MapTextSection.emptySearcBarText
         
@@ -80,11 +81,21 @@ class MapHomeView: BaseView {
             textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.wheetDarkBrown])
             
             textField.textColor = .wheetDarkBrown
-            
             if let leftView = textField.leftView as? UIImageView {
                 leftView.tintColor = .wheetDarkBrown
             }
         }
+        
+        
+    }
+    // MARK: 회고 -> 서치바 그림자를 왜 주지 못하는가
+    private func settingSearchBarShadow(){
+//        searchBar.searchTextField.layer.borderWidth = 1
+//        searchBar.searchTextField.layer.shadowColor = UIColor.wheetDark.cgColor
+//        searchBar.searchTextField.layer.shadowOpacity = 0.5
+//        searchBar.searchTextField.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        searchBar.searchTextField.layer.shadowRadius = 5
+        // searchBar.layer.masksToBounds = true
     }
     
     @objc func longTap(sender: UIGestureRecognizer){
@@ -101,3 +112,22 @@ class MapHomeView: BaseView {
     
     
 }
+
+
+/*
+ userLocationButton.snp.makeConstraints { make in
+     make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+     make.centerY.equalTo(safeAreaLayoutGuide).offset( 50 )
+     make.size.equalTo(50)
+ }
+ locationMemosButton.snp.makeConstraints { make in
+     make.centerX.equalTo(userLocationButton)
+     make.bottom.equalTo(userLocationButton.snp.top).inset( -30 )
+     make.size.equalTo(40)
+ }
+ settingButton.snp.makeConstraints { make in
+     make.centerX.equalTo(locationMemosButton)
+     make.bottom.equalTo(locationMemosButton.snp.top).inset(-30)
+     make.size.equalTo(40)
+ }
+ */
