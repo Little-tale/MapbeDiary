@@ -59,6 +59,8 @@ final class MemoSettingBaseView: BaseView {
         var configuration = UIButton.Configuration.tinted()
         let view = UIButton(frame: .zero)
         configuration.title = "Add_image_title".localized
+        configuration.baseBackgroundColor = .wheetBlue
+        configuration.baseForegroundColor = .wheetBlack
         view.configuration = configuration
         return view
     }()

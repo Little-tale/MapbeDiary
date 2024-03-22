@@ -305,7 +305,12 @@ extension AddLocationMemoViewController {
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        present(imagePicker, animated: true)
+        DispatchQueue.main.async {
+            [ weak self ] in
+            guard let self else { return }
+            present(imagePicker, animated: true)
+        }
+      
     }
 }
 // MARK: PHP피커 딜리게이트

@@ -267,7 +267,7 @@ extension AboutLocationViewController {
         }
         
         viewModel.repositoryErrorOutPut.bind {[weak self] error in
-            guard let weakSelf = self else { return }
+            guard self != nil else { return }
             guard let error else { return }
             DispatchQueue.main.async {[weak self] in
                 guard let self else { return }

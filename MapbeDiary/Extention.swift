@@ -55,7 +55,10 @@ extension UIViewController {
         let okButton = UIAlertAction(title: actionTitle, style: .destructive, handler: handler)
         
         alert.addAction(okButton)
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            [weak self] in guard let self else { return }
+            present(alert, animated: true)
+        }
     }
     
     func showAlertHandlerCancel(title: String?, message: String?, actionTitle: String?, handler: @escaping (UIAlertAction) -> Void ) {
@@ -68,7 +71,10 @@ extension UIViewController {
         alert.addAction(okButton)
         alert.addAction(cancelButton)
         
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            [weak self] in guard let self else { return }
+            present(alert, animated: true)
+        }
     }
     
     func showAlert(title: String?, message: String?,actionTitle: String?, handler: @escaping (UIAlertAction) -> Void) {
@@ -81,15 +87,20 @@ extension UIViewController {
         
         alert.addAction(okButton)
         alert.addAction(cancelButton)
-    
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            [weak self] in guard let self else { return }
+            present(alert, animated: true)
+        }
     }
     
     func showAlert(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
         alert.addAction(okButton)
-        present(alert, animated: true )
+        DispatchQueue.main.async {
+            [weak self] in guard let self else { return }
+            present(alert, animated: true)
+        }
     }
     
     

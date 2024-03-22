@@ -88,7 +88,7 @@ final class DatailTableViewCell: BaseTableViewCell {
         infoButton.setImage(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), for: .normal)
         
         infoButton.showsMenuAsPrimaryAction = true
-        infoButton.tintColor = .systemGreen
+        infoButton.tintColor = .wheetDarkBrown
         
         infoButton.menu = UIMenu(children: [
             UIAction(title: "Alert_modify_title".localized, handler: { [weak self] _ in
