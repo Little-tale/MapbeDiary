@@ -88,9 +88,6 @@ class AddViewModel {
             case .success(let success):
                 proccing(model:success, folder: folder)
             case .failure(let fail):
-                if case.failRequest = fail {
-                    return
-                }
                 urlErrorOutPut.value = fail
             }
         }
@@ -99,7 +96,6 @@ class AddViewModel {
     // MARK: API 모델을 알맞은 모델로 수정합니다.
     private func proccing(model : KaKakaoCordinateModel, folder: Folder) {
         var data = addViewOutStruct(title:AddViewSection.defaultTitle,titlePlacHolder: model.documents.first?.roadAddress.addressName, folder: folder)
-        
         
         if let searchTitle {
             data.titlePlacHolder = searchTitle

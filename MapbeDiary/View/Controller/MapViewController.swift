@@ -141,14 +141,19 @@ extension MapViewController {
 // MARK: 버튼 액션
 extension MapViewController {
     func userLocationAction(){
+        
         homeView.buttonStack.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             
             checkDeviewlocationAuthorization()
+            
             if let locationInfo = homeView.locationManager.location {
+                
                 if !finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
+                    
                     addLongAnnotation(cl2: locationInfo.coordinate)
                     updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, complite: nil)
+                    
                 }
             }
         }), for: .touchUpInside)
@@ -270,6 +275,7 @@ extension MapViewController: MKMapViewDelegate { // 수정해
         print("롱: didSelect")
         if let annotaion = view.annotation as? CustomAnnotation,
            !annotaion.long{
+            
             homeView.mapView.setCenter(annotaion.coordinate, animated: true)
             //locationModify(annotaion) // 일단 이렇게
             locationDetailModify(annotaion)
@@ -352,6 +358,9 @@ extension MapViewController: FloatingPanelControllerDelegate {
         newPanel.move(to: .half, animated: true)
         floatPanel = newPanel
     }
+    
+    
+    
     // MARK: 판넬을 내리고 싶을때
     private func removeExistingPanelIfNeeded(completion: @escaping () -> Void) {
         if let existingPanel = floatPanel {
@@ -405,13 +414,21 @@ extension MapViewController: LocationDelegate {
 }
 
 extension MapViewController {
+    
     func finduserAnnotationOrNew(CL2D: CLLocationCoordinate2D) -> Bool {
+        
+        // where First 순회 조건 참조
         let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
             guard self != nil else { return false }
+            
             guard let annotation = annotation as? CustomAnnotation else { return false }
+            
             return annotation.coordinate.latitude == CL2D.latitude && annotation.coordinate.longitude == CL2D.longitude
+            
         }
+        
         guard let custom  = userAnnotation as? CustomAnnotation else { return false }
+        
         homeView.mapView.selectAnnotation(custom, animated: true)
         return true
     }
@@ -428,7 +445,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.last?.coordinate{
             // MARK: TS 이부분에서 트러블 슈팅 발생 그렇다면 위치가 변할때만 호출되게 변경
             setRegion(location: location)
-            homeView.locationManager.distanceFilter = 20 //m 10미터 변화 할때만 호출
+            homeView.locationManager.distanceFilter = 100 //m 10미터 변화 할때만 호출
             // homeView.locationManager.stopUpdatingLocation()
         }else {
             homeView.locationManager.stopUpdatingLocation()

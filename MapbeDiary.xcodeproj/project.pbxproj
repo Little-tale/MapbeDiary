@@ -70,6 +70,10 @@
 		7B6C201D2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */; };
 		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
 		7B7BE6492BAD6E6B0072F40F /* NetWorkServiceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */; };
+		7B7BE64B2BAD948C0072F40F /* OnboardingSlderImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */; };
+		7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */; };
+		7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */; };
+		7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */; };
 		7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */; };
 		7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373342B9D86CC0016E851 /* SearchViewController.swift */; };
 		7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373362B9D86FB0016E851 /* SearchBaseView.swift */; };
@@ -183,6 +187,10 @@
 		7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderViewControlelr.swift; sourceTree = "<group>"; };
 		7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MapbeDiary.entitlements; sourceTree = "<group>"; };
 		7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkServiceMonitor.swift; sourceTree = "<group>"; };
+		7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlderImageViewController.swift; sourceTree = "<group>"; };
+		7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
+		7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardBaseView.swift; sourceTree = "<group>"; };
+		7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
 		7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
 		7BA373342B9D86CC0016E851 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BA373362B9D86FB0016E851 /* SearchBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseView.swift; sourceTree = "<group>"; };
@@ -373,6 +381,8 @@
 				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
 				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
 				7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */,
+				7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */,
+				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -394,6 +404,7 @@
 				7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */,
 				7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */,
 				7B30DD742BAC359E00D789B5 /* WebHomeView.swift */,
+				7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -433,6 +444,7 @@
 		7B11378B2B99E95900D6BBD1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B7BE6542BAD9C060072F40F /* Onboard */,
 				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
 				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
 				7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */,
@@ -467,6 +479,13 @@
 			path = Button;
 			sourceTree = "<group>";
 		};
+		7B7BE6542BAD9C060072F40F /* Onboard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboard;
+			sourceTree = "<group>";
+		};
 		7BA373392B9D88430016E851 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +506,7 @@
 				7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */,
 				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
 				7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */,
+				7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -730,12 +750,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
+				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */,
 				7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */,
 				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
 				7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */,
 				7BB251012BA31EBF00FDE898 /* CameraService.swift in Sources */,
 				7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */,
 				7BA3733B2B9D88540016E851 /* SearchCollectionViewCell.swift in Sources */,
@@ -765,6 +787,7 @@
 				7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */,
 				7B54A7DB2BAB3C620039BC7F /* SettingHomeView.swift in Sources */,
 				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
+				7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */,
 				7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */,
 				7BF1A44E2BA359460086D5D8 /* MapTextSection.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
@@ -779,6 +802,7 @@
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */,
+				7B7BE64B2BAD948C0072F40F /* OnboardingSlderImageViewController.swift in Sources */,
 				7B54A7E12BAB58490039BC7F /* SettingReusableView.swift in Sources */,
 				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,

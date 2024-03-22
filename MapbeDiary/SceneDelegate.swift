@@ -31,12 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.makeKeyAndVisible()
             
         } else {
-            try? repository.makeFolder(folderName: "추억의 공간")
-            if let folder = repository.findAllFolderArray().first {
-                SingleToneDataViewModel.shared.shardFolderOb.value = folder
-                window?.rootViewController = MapViewController()
-                window?.makeKeyAndVisible()
-            }
+            window?.rootViewController = OnboardViewController()
+            window?.makeKeyAndVisible()
         }
     }
 
