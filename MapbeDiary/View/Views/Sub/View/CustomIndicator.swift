@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 struct CustomIndicator {
     let backGroundView = UIView() // 뒷배경
@@ -24,22 +25,28 @@ struct CustomIndicator {
         return tabBarController?.tabBar.frame.height ?? 0
     }
     
+    
     func showActivityIndicator(title: String){
-        settingActivityIndicator()
         backGroundView.addSubview(activityIndicator)
-        settingsettingActivityView()
-        settingLoadingLabel(title)
         activityIndicator.addSubview(loadingTextLabel)
         activityIndicator.addSubview(activityView)
+       
+        settingActivityIndicator()
+        settingsettingActivityView()
+        settingLoadingLabel(title)
+        
         settingBackgoround()
+        
         activityView.startAnimating()
     }
     
     private func settingActivityIndicator(){
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        activityIndicator.center = CGPoint(x: view.frame.size.width * 0.5, y: view.frame.size.height * 0.5)
         activityIndicator.layer.cornerRadius = 10
         activityIndicator.backgroundColor = .wheetSideBrown
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        activityIndicator.center = CGPoint(x: view.frame.size.width * 0.5, y: view.frame.size.height * 0.5)
+        
+        
     }
     
     private func settingsettingActivityView(){
@@ -55,7 +62,7 @@ struct CustomIndicator {
         loadingTextLabel.textColor = .wheetDarkBrown
         loadingTextLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         loadingTextLabel.sizeToFit()
-        loadingTextLabel.center = CGPoint(x: activityView.center.x, y: activityView.center.y + 40)
+        loadingTextLabel.center = CGPoint(x: activityView.center.x, y: activityView.center.y + 50)
         
     }
     

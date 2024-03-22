@@ -22,7 +22,8 @@ final class MemoSettingBaseView: BaseView {
     let saveButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         let view = UIButton(frame: .zero)
-        configuration.baseBackgroundColor = .green
+        configuration.baseBackgroundColor = .wheetGreen
+        configuration.baseForegroundColor = .wheetBlack
         configuration.title = "Add_save_button_text".localized
         view.configuration = configuration
         return view
@@ -31,7 +32,8 @@ final class MemoSettingBaseView: BaseView {
     let deleteButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         let view = UIButton(frame: .zero)
-        configuration.baseBackgroundColor = .red
+        configuration.baseBackgroundColor = .wheetDarkPink
+        configuration.baseForegroundColor = .wheetPink
         configuration.title = "Alert_delete".localized
         view.configuration = configuration
         return view
@@ -42,7 +44,7 @@ final class MemoSettingBaseView: BaseView {
         let view = UIButton(frame: .zero)
         
         configuration.image = UIImage(systemName: "chevron.backward")
-        
+        configuration.baseForegroundColor = .wheetBlack
         view.configuration = configuration
         return view
     }()
@@ -128,6 +130,7 @@ final class MemoSettingBaseView: BaseView {
     
     override func designView() {
         memoTextView.font = JHFont.UIKit.li20
+        colletionView.backgroundColor = .wheetSideBrown
     }
     
     private func settingCountLabel(_ num: Int) {

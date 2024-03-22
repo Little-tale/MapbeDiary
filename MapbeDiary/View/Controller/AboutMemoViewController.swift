@@ -14,7 +14,7 @@ final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView>
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingImageCounter()
+        settingBackground()
         settingSaveButton() // Save
         collectionViewDelegatDatasource()
         imageSettingButtonAction() // imageAddButton
@@ -30,8 +30,8 @@ final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView>
         homeView.colletionView.dataSource = self
     }
     
-    private func settingImageCounter(){
-        
+    private func settingBackground(){
+        homeView.backgroundColor = .wheetSideBrown
 
     }
     

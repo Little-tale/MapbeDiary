@@ -85,17 +85,16 @@ final class MapHomeView: BaseView {
                 leftView.tintColor = .wheetDarkBrown
             }
         }
-        
-        
+        settingSearchBarShadow()
     }
+    
     // MARK: 회고 -> 서치바 그림자를 왜 주지 못하는가
     private func settingSearchBarShadow(){
-//        searchBar.searchTextField.layer.borderWidth = 1
-//        searchBar.searchTextField.layer.shadowColor = UIColor.wheetDark.cgColor
-//        searchBar.searchTextField.layer.shadowOpacity = 0.5
-//        searchBar.searchTextField.layer.shadowOffset = CGSize(width: 5, height: 5)
-//        searchBar.searchTextField.layer.shadowRadius = 5
-        // searchBar.layer.masksToBounds = true
+        searchBar.layer.shadowColor = UIColor.black.cgColor
+        searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+        searchBar.layer.shadowRadius = 4.0
+        searchBar.layer.shadowOpacity = 0.5
+        searchBar.clipsToBounds = false
     }
     
     @objc func longTap(sender: UIGestureRecognizer){
@@ -131,3 +130,10 @@ final class MapHomeView: BaseView {
      make.size.equalTo(40)
  }
  */
+
+//        searchBar.searchTextField.layer.borderWidth = 1
+//        searchBar.searchTextField.layer.shadowColor = UIColor.wheetDark.cgColor
+//        searchBar.searchTextField.layer.shadowOpacity = 0.5
+//        searchBar.searchTextField.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        searchBar.searchTextField.layer.shadowRadius = 5
+        // searchBar.layer.masksToBounds = true

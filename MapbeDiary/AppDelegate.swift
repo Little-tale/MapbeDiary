@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        
         // 메시지 대리자 설정
         Messaging.messaging().delegate = self
         
@@ -63,6 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
+    }
+    // MARK: 앱실행시
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
     }
 }
 
