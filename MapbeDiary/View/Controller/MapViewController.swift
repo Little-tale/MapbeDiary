@@ -127,7 +127,9 @@ extension MapViewController {
         anno.coordinate = cl2
         let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapTextSection.noneName , coordinate: cl2, bool: true)
         homeView.mapView.addAnnotation(location)
-        homeView.mapView.setCenter(location.coordinate, animated: true)
+//        homeView.mapView.setCenter(location.coordinate, animated: true)
+        // MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        setRegion(location: location.coordinate)
         homeView.mapView.selectAnnotation(location, animated: true)
     }
     
@@ -453,7 +455,7 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     // MARK: 셋 리전
     func setRegion(location: CLLocationCoordinate2D){
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: 800, longitudinalMeters: 800)
         homeView.mapView.setRegion(region, animated: true)
     }
     
