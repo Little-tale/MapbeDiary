@@ -60,21 +60,21 @@ enum URLSessionManagerError: Error{
     var errorMessage: String {
         switch self {
         case .nodata:
-            return "데이터 모델 에러"
+            return "API_error_Response".localized
         case .noResponse:
-            return "noResponse 에러"
+            return"API_error_Response".localized
         case .errorResponseCode:
-            return "errorResponseCode 에러"
+            return "API_error_Response".localized
         case .failRequest:
-            return "failRequest 에러"
+            return "API_error_Request".localized
         case .errorDecoding:
-            return "errorDecoding 에러"
+            return "API_error_Response".localized
         case .cantStatusCoding:
-            return "cantStatusCoding 에러"
+            return "API_error_Response".localized
         case .componatsError:
-            return "componatsError 에러"
+            return "API_error_Response".localized
         case .unknownError:
-            return "unknownError 에러"
+            return "API_error_Response".localized
         case .apiError(let apiTypeError):
             return apiTypeError.message
         }

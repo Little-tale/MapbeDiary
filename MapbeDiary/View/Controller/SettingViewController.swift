@@ -129,13 +129,18 @@ extension SettingViewController: UICollectionViewDelegate {
             break
         case .termsAndConditions:
             print("약관 / ") // 웹뷰로 노션페이지 보내주기
+            if !NetWorkServiceMonitor.shared.isConnected {
+                networkCheckToast() ; return
+            }
             let vc = SettingWebViewController()
             vc.homeView.viewModel.inputSettingActionType.value = item.actionType
             navigationController?.pushViewController(vc, animated: true)
             break
         case .customerSupport:
             print("고객센터") // 노션페이지
-            
+            if !NetWorkServiceMonitor.shared.isConnected {
+                networkCheckToast() ; return
+            }
             let vc = SettingWebViewController()
             vc.homeView.viewModel.inputSettingActionType.value = item.actionType
             navigationController?.pushViewController(vc, animated: true)
@@ -154,7 +159,12 @@ extension SettingViewController: UICollectionViewDelegate {
             homeView.settingViewModel.removeTrigger.value = ()
         }
     }
+    
+    private func networkCheckToast(){
+        showToastBody(title: "API_Check_Title".localized, message: "API_error_Request".localized)
+    }
 }
+
 
 
 // MARK: 회고 -> 강함 참조
@@ -179,6 +189,5 @@ extension SettingViewController {
                 homeView.makeToast("Deleting_complite_title".localized)
             }
         }
-        
     }
 }

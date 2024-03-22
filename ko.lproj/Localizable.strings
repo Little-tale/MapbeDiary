@@ -153,3 +153,9 @@
 "Setting_section_reset" = "초기화";
 
 "Web_Staring" = "불러오고 있어요!";
+
+"API_error_Response" = "요청을 실패 하였습니다\n관리자에게 문의 해주세요!";
+
+"API_error_Request" = "인터넷 연결 상태를\n확인해주세요!";
+
+"API_Check_Title" = "네트워크가 꺼져있음";

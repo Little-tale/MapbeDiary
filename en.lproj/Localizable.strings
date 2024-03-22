@@ -153,3 +153,9 @@
 "Setting_section_reset" = "Reset Data";
 
 "Web_Staring" = "Loading";
+
+"API_error_Response" = "The request failed\nPlease contact administrator!";
+
+"API_error_Request" = "Please check your internet connection!";
+
+"API_Check_Title" = "Network is off";

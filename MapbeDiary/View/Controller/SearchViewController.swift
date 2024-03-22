@@ -47,6 +47,8 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
             [weak self]
             cell, indexPath, item in
             guard let self else { return }
+            // 스크린샷 용 더미
+         
             
             cell.placeNameLabel.text = item.placeName
             cell.placeNameLabel.asFont(targetString: searchViewModel.searchTextOb.value?.searchText ?? "")

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
         // let navigationController = UINavigationController(rootViewController: MapViewController())
-        
+        NetWorkServiceMonitor.shared.startMonitor() // 네트워크 상태 감시
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {
             

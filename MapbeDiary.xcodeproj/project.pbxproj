@@ -69,6 +69,7 @@
 		7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */; };
 		7B6C201D2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */; };
 		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
+		7B7BE6492BAD6E6B0072F40F /* NetWorkServiceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */; };
 		7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */; };
 		7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373342B9D86CC0016E851 /* SearchViewController.swift */; };
 		7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373362B9D86FB0016E851 /* SearchBaseView.swift */; };
@@ -181,6 +182,7 @@
 		7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderBaseView.swift; sourceTree = "<group>"; };
 		7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderViewControlelr.swift; sourceTree = "<group>"; };
 		7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MapbeDiary.entitlements; sourceTree = "<group>"; };
+		7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkServiceMonitor.swift; sourceTree = "<group>"; };
 		7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
 		7BA373342B9D86CC0016E851 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BA373362B9D86FB0016E851 /* SearchBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseView.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				7B1C533E2B9C716E00B712BC /* DateFormetter.swift */,
 				7BB251002BA31EBF00FDE898 /* CameraService.swift */,
 				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
+				7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */,
 				7BF0A7F02BA6B8A800D40942 /* CenterFlowLayout.swift in Sources */,
 				7B30DD752BAC359E00D789B5 /* WebHomeView.swift in Sources */,
+				7B7BE6492BAD6E6B0072F40F /* NetWorkServiceMonitor.swift in Sources */,
 				7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
@@ -993,6 +997,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MapbeDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MapBeMemo;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 메모를 제공하기 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 갤러리 권한이 필요합니다.";
@@ -1030,6 +1035,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MapbeDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MapBeMemo;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 메모를 제공하기 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 갤러리 권한이 필요합니다.";
