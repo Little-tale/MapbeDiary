@@ -68,6 +68,8 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         moveToSettingBttonAction() // 세팅 버튼 액션
         
         homeView.searchBar.delegate = self
+        
+        
     }
     
     // MARK: 맵뷰 세팅
@@ -127,8 +129,6 @@ extension MapViewController {
         anno.coordinate = cl2
         let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapTextSection.noneName , coordinate: cl2, bool: true)
         homeView.mapView.addAnnotation(location)
-//        homeView.mapView.setCenter(location.coordinate, animated: true)
-        // MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         setRegion(location: location.coordinate)
         homeView.mapView.selectAnnotation(location, animated: true)
     }
@@ -524,6 +524,7 @@ extension MapViewController {
     func allowLocation(){
         homeView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         homeView.locationManager.requestWhenInUseAuthorization()
+    
     }
 }
 
@@ -544,4 +545,10 @@ extension MapViewController {
   // 클로저를 통한 추가 설정
   configuration.configureAddMemoViewController?(addMemoVc)
   */
+ */
+
+
+/*
+ //        homeView.mapView.setCenter(location.coordinate, animated: true)
+         // MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
  */

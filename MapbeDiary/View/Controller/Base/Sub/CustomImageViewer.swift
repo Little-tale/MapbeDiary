@@ -85,7 +85,7 @@ final class CustomImageViewer: UIViewController, UIScrollViewDelegate {
     
     func loadImage(data: Data) {
         DispatchQueue.global().async { [weak self] in
-            guard let weakSelf = self else { return }
+            guard self != nil else { return }
             DispatchQueue.main.async {
                 [weak self] in
                 guard let self else { return }

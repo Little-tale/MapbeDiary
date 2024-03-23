@@ -69,6 +69,9 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
     var addViewModel = AddViewModel()
     
+    // 이미지 서비스 클래스 선정
+    var imageService: ImageService?
+    
     // delegate
     weak var backDelegate: BackButtonDelegate?
     
@@ -100,7 +103,7 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         }
         let gellery = ActionRouter().actions(.gallery) {
             [weak self] in
-            self?.checkUserPhotoAuthorization()
+            self?.checkGerreyAuthorization()
         }
         let cancel = ActionRouter().cancel
         
@@ -108,8 +111,6 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         alert.addAction(gellery)
         alert.addAction(cancel)
         present(alert, animated: true)
-        
-        
     }
     
     func buttonActionSetting() {
@@ -266,28 +267,52 @@ extension AddLocationMemoViewController {
 // MARK: imagePicker
 extension AddLocationMemoViewController {
     
+    // 카메라 권한 확인 로직입니다.
     func checkCameraAuthorization() {
-        checkedAutCamera()
-    }
-    private func checkedAutCamera(){
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .notDetermined: // 한번도 혹은 아무튼 요청
-            AVCaptureDevice.requestAccess(for: .video) { [weak self] bool in
-                guard let self else { return }
-                if bool {
-                    showImagePicker()
-                } else {
-                    cameraSettingAlert()
-                }
+        imageService = ImageService(presntationViewController: self, pickerMode: .camera)
+        imageService?.checkCameraPermission(compltion: { [weak self] bool in
+            guard let self else { return }
+            if !bool {
+                cameraSettingAlert()
+            } else {
+                startImage()
             }
-        case .restricted, .denied:
-            cameraSettingAlert()
-        case .authorized:
-            showImagePicker()
-        @unknown default:
-            cameraSettingAlert()
+        })
+        // checkedAutCamera()
+    }
+    
+    // 갤러리를 선택했을때 권한 확인 로직입니다.
+    private func checkGerreyAuthorization(){
+        imageService = ImageService(presntationViewController: self, pickerMode: .maximer(1))
+        startImage()
+    }
+    
+    // MARK: 이미지 로직입니다.
+    private func startImage(){
+        imageService?.pickImage(complite: {[weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let images):
+                let image = images?.first
+                changeImage(image)
+            case .failure(let fail):
+                print(fail)
+            }
+        })
+    }
+    
+    // MARK: 상황별 이미지 저장 로직
+    private func changeImage(_ image: UIImage?){
+        guard let image else { return }
+        if addViewModel.coordinateTrigger.value != nil {
+            var value = addViewModel.urlSuccessOutPut.value
+            value?.memoImage = image
+            addViewModel.urlSuccessOutPut.value = value
+        } else {
+            addViewModel.modifyEnd?.markerImage = image //.resizeImage(newWidth: 100)
+            homeView.AddTitleDateView.imageView.image = image
+            addViewModel.modifyEnd?.modiFy = true
         }
-        
     }
     
     // MARK: goSetting
@@ -298,83 +323,96 @@ extension AddLocationMemoViewController {
             goSetting()
         }
     }
-    
-    // MARK: ImagePicker Open
-    private func showImagePicker(){
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        DispatchQueue.main.async {
-            [ weak self ] in
-            guard let self else { return }
-            present(imagePicker, animated: true)
-        }
-      
-    }
-}
-// MARK: PHP피커 딜리게이트
-extension AddLocationMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        picker.dismiss(animated: true)
-      
-        guard let pickImage = info[.originalImage] as? UIImage else {
-            showAlert(title: cameraError.titleString, message: cameraError.messageString)
-            return
-        }
-        if addViewModel.coordinateTrigger.value != nil {
-            addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
-        } else {
-            addViewModel.modifyEnd?.markerImage = pickImage
-            addViewModel.modifyEnd?.modiFy = true
-            homeView.AddTitleDateView.imageView.image = pickImage
-        }
-        
-    }
 }
 
-// MARK: PHP 피커
-extension AddLocationMemoViewController {
-    func checkUserPhotoAuthorization() {
-        var configurataion = PHPickerConfiguration()
-        configurataion.selectionLimit = 1
-        configurataion.filter = .any(of: [.images])
-        let phpPicker = PHPickerViewController(configuration: configurataion)
-        phpPicker.delegate = self
-        present(phpPicker, animated: true)
-    }
-}
 
-extension AddLocationMemoViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        
-        picker.dismiss(animated: true)
-        
-        guard let firstResults = results.first,
-              firstResults.itemProvider.canLoadObject(ofClass: UIImage.self) else {
-            return
-        }
-        firstResults.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-            DispatchQueue.main.async {
-                guard let image = image as? UIImage else {return}
-                print(image)
-                if self?.addViewModel.coordinateTrigger.value != nil {
-                    var value = self?.addViewModel.urlSuccessOutPut.value
-                    value?.memoImage = image
-                    self?.addViewModel.urlSuccessOutPut.value = value
-                } else {
-                    self?.addViewModel.modifyEnd?.markerImage = image//.resizeImage(newWidth: 100)
-                    self?.homeView.AddTitleDateView.imageView.image = image
-                    self?.addViewModel.modifyEnd?.modiFy = true
-                }
-                
-            }
-        }
-    }
-}
+//    // MARK: ImagePicker Open
+//    private func showImagePicker(){
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.sourceType = .camera
+//        imagePicker.delegate = self
+//        imagePicker.allowsEditing = true
+//        DispatchQueue.main.async {
+//            [ weak self ] in
+//            guard let self else { return }
+//            present(imagePicker, animated: true)
+//        }
+//    }
 
+//// MARK: PHP피커 딜리게이트
+//extension AddLocationMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true)
+//    }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        
+//        picker.dismiss(animated: true)
+//      
+//        guard let pickImage = info[.originalImage] as? UIImage else {
+//            showAlert(title: cameraError.titleString, message: cameraError.messageString)
+//            return
+//        }
+//        if addViewModel.coordinateTrigger.value != nil {
+//            addViewModel.urlSuccessOutPut.value?.memoImage = pickImage
+//        } else {
+//            addViewModel.modifyEnd?.markerImage = pickImage
+//            addViewModel.modifyEnd?.modiFy = true
+//            homeView.AddTitleDateView.imageView.image = pickImage
+//        }
+//        
+//    }
+//}
+//
+//// MARK: PHP 피커
+//extension AddLocationMemoViewController {
+//    func checkUserPhotoAuthorization() {
+//        var configurataion = PHPickerConfiguration()
+//        configurataion.selectionLimit = 1
+//        configurataion.filter = .any(of: [.images])
+//        let phpPicker = PHPickerViewController(configuration: configurataion)
+//        phpPicker.delegate = self
+//        present(phpPicker, animated: true)
+//    }
+//}
+//
+//extension AddLocationMemoViewController: PHPickerViewControllerDelegate {
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        
+//        picker.dismiss(animated: true)
+//        
+//        guard let firstResults = results.first,
+//              firstResults.itemProvider.canLoadObject(ofClass: UIImage.self) else {
+//            return
+//        }
+//        firstResults.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+//            DispatchQueue.main.async {
+//                guard let image = image as? UIImage else {return}
+//                print(image)
+//            }
+//        }
+//    }
+//}
+//
+
+/*
+ private func checkedAutCamera(){
+     switch AVCaptureDevice.authorizationStatus(for: .video) {
+     case .notDetermined: // 한번도 혹은 아무튼 요청
+         AVCaptureDevice.requestAccess(for: .video) { [weak self] bool in
+             guard let self else { return }
+             if bool {
+                 showImagePicker()
+             } else {
+                 cameraSettingAlert()
+             }
+         }
+     case .restricted, .denied:
+         cameraSettingAlert()
+     case .authorized:
+         showImagePicker()
+     @unknown default:
+         cameraSettingAlert()
+     }
+ }
+ */

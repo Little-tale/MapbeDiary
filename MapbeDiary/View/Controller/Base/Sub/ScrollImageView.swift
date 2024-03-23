@@ -76,6 +76,7 @@ final class ScrollImageView: BaseView {
             }
         }
         pageController.numberOfPages = photoImageView.count
+        
     }
 }
 // MARK: 페이지 컨튜롤 변화 감지후 스크롤뷰 반영

@@ -87,6 +87,7 @@ extension UIViewController {
         
         alert.addAction(okButton)
         alert.addAction(cancelButton)
+        
         DispatchQueue.main.async {
             [weak self] in guard let self else { return }
             present(alert, animated: true)
