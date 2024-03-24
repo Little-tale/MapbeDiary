@@ -176,7 +176,7 @@ extension AddLocationMemoViewController {
             homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
             // 플레이스 홀더
             
-            homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder
+            homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder ?? MapTextSection.emptyTitleTextFieldPlaceHolder
             // print(model.titlePlacHolder)
             
             // 이미지

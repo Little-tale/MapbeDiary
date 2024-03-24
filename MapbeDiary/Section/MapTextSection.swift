@@ -94,4 +94,5 @@ enum MapTextSection {
     static let emptySearcBarText: String = "Search_place".localized
     static let searchEmptyText: String = "Search_empty_text".localized
     static let cancel: String = "Cancel_check_title".localized
+    static let emptyTitleTextFieldPlaceHolder = "Add_title_text_fileld_text".localized
 }

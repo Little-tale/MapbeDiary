@@ -92,7 +92,7 @@ class AddViewModel {
                     apiRequest(lat: model.lat, lon: model.lon, folder: success)
                     return
                 } else {
-                    print("폴더를 찾지를 모데")
+                    noNetworkProcecing(model)
                 }
             case .failure(let failure):
                 realmError.value = failure
@@ -115,6 +115,10 @@ class AddViewModel {
             }
         }
     }
+    // MARK: 네트워크 없을때 작동합니다.
+    private func noNetworkProcecing(_ model: addModel){
+        proceccingSuccessOutPut.value = addViewOutStruct()
+    }
     
     // MARK: API 모델을 알맞은 모델로 수정합니다.
     private func urlProccing(model : KaKakaoCordinateModel, folder: Folder) {
@@ -127,14 +131,7 @@ class AddViewModel {
         }
         proceccingSuccessOutPut.value = data
     }
-    
-    
-//    private func findFolderName(folder: Folder) {
-//        guard coordinateTrigger.value == nil else { return }
-//        var model = proceccingSuccessOutPut.value
-//        model?.folder = folder
-//        proceccingSuccessOutPut.value = model
-//    }
+
     
     private func saveButtonClicked(){
         let result = tempSaveModel
@@ -225,6 +222,7 @@ class AddViewModel {
             }
         }
     }
+    
     func modifyStartProceccing(memo: LocationMemo, folder: Folder){
         // proceccingSuccessOutPut
         var model = addViewOutStruct(
@@ -259,7 +257,12 @@ class AddViewModel {
 }
 
 
-
+//    private func findFolderName(folder: Folder) {
+//        guard coordinateTrigger.value == nil else { return }
+//        var model = proceccingSuccessOutPut.value
+//        model?.folder = folder
+//        proceccingSuccessOutPut.value = model
+//    }
 //            do {
 //                try repository.makeMemoMarkerAtFolders( model: result, location: location)
 //
