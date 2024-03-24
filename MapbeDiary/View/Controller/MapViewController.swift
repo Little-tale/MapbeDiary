@@ -171,6 +171,7 @@ extension MapViewController {
         }), for: .touchUpInside)
     }
     
+    // MARK: 로케이션 메모들 리스트 뷰 이동
     func movetoLocationListView(){
         let vc = AllMemoLocationListViewController()
         let folder = SingleToneDataViewModel.shared.shardFolderOb.value
@@ -179,7 +180,7 @@ extension MapViewController {
         vc.modalPresentationStyle = .popover
         present(vc, animated: true)
     }
-    
+    // MARK: 세팅 뷰컨이동
     func moveToSettingBttonAction(){
         homeView.buttonStack.settingButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
@@ -344,7 +345,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         if let addMemoVcon = vc as? AddLocationMemoViewController {
             addMemoVcon.backDelegate = self
             if let coordinate = configuration.coordinate {
-                let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder)
+                let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder.id.stringValue)
                 
                 addMemoVcon.addViewModel.coordinateTrigger.value = coordinateStruct
             }
@@ -492,7 +493,7 @@ extension MapViewController {
                     goSetting()
                 }
             }
-            
+            //
         }
     }
     /// 유저가 앱에 대해서 위치 정보를 주었는지 확인합니다.

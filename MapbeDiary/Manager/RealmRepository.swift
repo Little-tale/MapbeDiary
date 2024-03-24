@@ -63,9 +63,9 @@ final class RealmRepository {
         do {
             try realm.write {
                 memo = realm.create(LocationMemo.self, value: [
-                    "title": addViewStruct.title,
+                    "title": addViewStruct.title ?? "",
                     "location": location,
-                    "contents": addViewStruct.content,
+                    "contents": addViewStruct.content ?? "",
                     "phoneNumber": addViewStruct.phoneNumber ?? ""
                 ])
             }
@@ -75,24 +75,21 @@ final class RealmRepository {
         return memo
     }
     // MARK: 메모 수정 버전
-    func modifyMemo(structure: memoModifyOutstruct) throws {
+    func modifyMemo(structure: addViewOutStruct, locationMemo: LocationMemo, complite: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
         do {
             try realm.write {
-                do {
-                  let id = try ObjectId(string: structure.locationMemoId)
-                    realm.create(LocationMemo.self, value: [
-                        "id": id,
-                        "title": structure.title,
-                        "contents": structure.content ?? "",
-                        "phoneNumber": structure.phoneNumber ?? ""
-                    ], update: .modified)
-                } catch {
-                    throw RealmManagerError.cantModifyMemo
-                }
+                let id = locationMemo.id
+                realm.create(LocationMemo.self, value: [
+                    "id": id,
+                    "title": structure.title ?? "",
+                    "contents": structure.content ?? "",
+                    "phoneNumber": structure.phoneNumber ?? ""
+                ], update: .modified)
             }
         } catch {
-            throw RealmManagerError.cantModifyMemo
+            complite(.failure(.cantModifyMemo))
         }
+        complite(.success(()))
     }
     
     // MARK: LocationMemo를 통해 DetailMemo를 가져오거나 만들어 옵니다
@@ -119,6 +116,18 @@ final class RealmRepository {
     // MARK: IndexPath or index 기반 폴더 찾기
     func findFolderAt(indexPathNum: Int){
         
+    }
+    // 폴더를 찾아드립니다.
+    func findFolder(folderId: String, complite: @escaping ((Result<Folder, RealmManagerError>) -> Void)){
+        do {
+            let id = try ObjectId(string: folderId)
+            let fodlers = realm.objects(folderModel).where { $0.id == id }
+            if let folder = fodlers.first{
+                complite(.success(folder))
+            }
+        } catch {
+            complite(.failure(.cantFindObjectId))
+        }
     }
     
     // MARK: 메모 날짜를 통해 메모를 찾습니다.
@@ -189,31 +198,41 @@ final class RealmRepository {
             throw RealmManagerError.cantAddMemoInFolder
         }
     }
+/*
+ if !FileManagers.shard.createMemoImage(
+     detailMemoId: dtMemo.id.stringValue,
+     imgOJId: imageObject.id.stringValue,
+     data: imageData
+ ) {
+     return .failure(.cantAddImage)
+ }
 
+ */
     
-    func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location) throws {
+    func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location,folder:Folder , complite: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
         let memo = try? makeMemoModel(addViewStruct: model, location: location)
         guard let memo else { return }
         
         if let image = model.memoImage {
-            if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, image: image) {
+            if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, imageData: image) {
                 print("makeMemoMarkerAtFolders",image)
-                let imageZip = image.resizingImage(targetSize: CGSize(width: 30, height: 30))
-                if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, image: imageZip) {
+                if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, imageData: image) {
+                    complite(.success(()))
                 } else {
-                    throw RealmManagerError.cantAddImage
+                    complite(.failure(.cantAddImage))
                 }
             }else {
-                throw RealmManagerError.cantAddImage
+                complite(.failure(.cantAddImage))
             }
+        } else {
+            complite(.success(())) // 이미지 없을때
         }
-        let folder = model.folder
         do {
             try realm.write {
                 folder.LocationMemo.append(memo)
             }
         } catch {
-            throw RealmManagerError.cantAddMemoInFolder
+            complite(.failure(.cantAddMemoInFolder))
         }
     }
 
@@ -677,7 +696,7 @@ final class RealmRepository {
         }
         // 4. 내부 마커 이미지 모두제거
         removeLocationMemos(locationMemos) { [weak self] results in
-            guard let self else { return }
+            guard self != nil else { return }
             complite(results)
         }
     }
@@ -692,7 +711,7 @@ final class RealmRepository {
             }
             // 5. 내부 로케이션 메모 제거
             removewMemo2(memo: location) { [weak self] result in
-                guard let self else { return }
+                guard self != nil else { return }
                 switch result {
                 case .success(let success):
                     complite(.success(success))
@@ -718,7 +737,7 @@ final class RealmRepository {
                 
                 let resultss = removeImageObject(object)
                 
-                if case.failure = results {
+                if case.failure = resultss {
                     complite(.failure(.cantDeleteMemo))
                 }
             }

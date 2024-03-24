@@ -8,61 +8,26 @@
 import UIKit
 import Toast
 
+
 protocol BackButtonDelegate: AnyObject {
     func backButtonClicked()
 }
 
-
+// MARK: 수정 혹은 새로운 모델을 통합시킵니다.
 struct addViewOutStruct {
-    var title: String
-    var titlePlacHolder: String
-    var content: String
-    var phoneNumber: String?
-    var folderimage: String
-    var regDate = Date() // 일단 대기
-    var memoImage: UIImage?
-
-    var folder: Folder
-    var memoId: String?
-    
-    init(title: String?, titlePlacHolder: String?, folder: Folder, folderImage: String? = nil) {
-        var text = title ?? AddViewSection.defaultTitle
-        print("text",text)
-        if text == "" { text = AddViewSection.defaultTitle }
-        self.title = text
-        self.titlePlacHolder = titlePlacHolder ?? "Add_title_text_fileld_text".localized
-        self.folder = folder
-        self.content = ""
-        self.folderimage = folderImage ?? ImageSection.defaultFolderImage.rawValue
-    }
-}
-
-struct memoModifyOutstruct {
-    var title: String
+    var title: String?
+    var titlePlacHolder: String?
     var content: String?
     var phoneNumber: String?
     var folderimage: String?
-    var regDate: Date
-    var markerImage: UIImage?
-    var folder: Folder
-    var locationMemoId: String
-    var modiFy = false
-    
-    init(memo: LocationMemo, folder:Folder) {
-        self.title = memo.title
-        self.content = memo.contents
-        self.phoneNumber = memo.phoneNumber
-        self.regDate = memo.regdate
-        self.folder = folder
-        self.locationMemoId = memo.id.stringValue
-        
-        if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
-            markerImage = UIImage(contentsOfFile: iamgePath)
-        }
-        
-    }
+    var regDate = Date() // 일단 대기
+    var memoImage: Data?
+    var memoId: String?
+    var folderName: String?
+    var modifyTrigger: Bool = false
 }
 
+// plceholder없으면 로컬라이제이션 잊지마 마커 이미지도 여기서 해줘야햄
 final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
     var addViewModel = AddViewModel()
@@ -138,30 +103,25 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         print(#function)
         homeView.textFieldList.forEach { [weak self] textfield in
             guard let self else { return }
-            var value = addViewModel.urlSuccessOutPut.value
-            var modify = addViewModel.modifyEnd
+            var value = addViewModel.tempSaveModel
+            // var modify = addViewModel.modifyEnd
             switch textfield.tag {
             case 0:
-                value?.title = titleTestter(textField: textfield)
-                modify?.title = titleTestter(textField: textfield)
+                value.title = titleTestter(textField: textfield)
+                //modify.title = titleTestter(textField: textfield)
             case 1:
-                value?.content = textfield.text ?? ""
-                modify?.content = textfield.text
+                value.content = textfield.text ?? ""
+                //modify.content = textfield.text
             case 2:
-                value?.phoneNumber = textfield.text ?? ""
-                modify?.phoneNumber = textfield.text
+                value.phoneNumber = textfield.text ?? ""
+                //modify.phoneNumber = textfield.text
             default:
                 break
             }
-            if addViewModel.urlSuccessOutPut.value != nil {
-                addViewModel.urlSuccessOutPut.value = value
-            } else {
-                addViewModel.modifyEnd = modify
-            }
+
+            addViewModel.tempSaveModel = value
         }
         addViewModel.saveButtonTrigger.value = ()
-        
-        backDelegate?.backButtonClicked()
         
         SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
     }
@@ -192,25 +152,6 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
 
 extension AddLocationMemoViewController {
     private func subscribe() {
-        addViewModel.urlSuccessOutPut.bind { [weak self] sussesModel in
-            guard let self else {return}
-            guard let sussesModel else {return}
-            homeView.AddTitleDateView.titleTextField.placeholder = sussesModel.titlePlacHolder
-            
-            homeView.folderButton.configuration?.title = MapTextSection.beginningSoon
-            // MARK: 업데이트 사항
-            // sussesModel.folder.folderName
-            
-            homeView.folderButton.configuration?.image = UIImage(named: sussesModel.folderimage)?.resizeImage(newWidth: 20)
-            
-            homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(sussesModel.regDate)
-            
-            if let image = sussesModel.memoImage {
-                homeView.AddTitleDateView.imageView.image = image
-            }
-            
-            print("@@",sussesModel.folder.folderName)
-        }
         
         addViewModel.urlErrorOutPut.bind { [weak self] error in
             guard let error else { return }
@@ -224,31 +165,37 @@ extension AddLocationMemoViewController {
             showAPIErrorAlert(repo: error)
         }
         
-        addViewModel.memoSuccessOutPut.bind { [weak self] model in
+        addViewModel.proceccingSuccessOutPut.bind { [weak self] model in
             guard let self else { return }
             guard let model else { return }
             
-            homeView.folderButton.configuration?.title = model.folder.folderName
+            homeView.folderButton.configuration?.title = folderTitle()//model.folderName
             
-            if let folderImagePath = FileManagers.shard.findFolderImage(folderId: model.folder.id.stringValue) {
-                
-                homeView.folderButton.configuration?.image = UIImage(contentsOfFile: folderImagePath)?.resizeImage(newWidth: 20)
-            } else {
-                homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
-            }
-            
+            homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
+        
             homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
+            // 플레이스 홀더
+            
+            homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder
+            // print(model.titlePlacHolder)
+            
             // 이미지
-            homeView.AddTitleDateView.imageView.image = model.markerImage ?? UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+            checkLocationMemoImage(data: model.memoImage)
             // 타이틀
             homeView.AddTitleDateView.titleTextField.text = model.title
             // 간편메모
             homeView.AddTitleDateView.simpleMemoTextField.text = model.content
             // 전화번호
             homeView.phoneTextField.text = model.phoneNumber
+            // print(homeView.AddTitleDateView.titleTextField.placeholder)
+            
         }
         
-        
+        addViewModel.dismisstrigger.bind { [weak self] void in
+            guard void != nil else { return }
+            guard let self else { return }
+            backDelegate?.backButtonClicked()
+        }
        
     }
 }
@@ -260,6 +207,22 @@ extension AddLocationMemoViewController {
         backDelegate?.backButtonClicked()
     }
     
+    // MARK: 업데이트 사항
+    func checkFolderIamge(string: String?) -> UIImage{
+        return UIImage.defaultFolder
+    }
+    // MARK: 업데이트 사항
+    func folderTitle() -> String{
+        return MapTextSection.beginningSoon
+    }
+    
+    func checkLocationMemoImage(data: Data? ) {
+        if let data {
+            homeView.AddTitleDateView.imageView.image = UIImage(data: data)
+        } else{
+            homeView.AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+        }
+    }
 }
 
 // MARK: imagePicker
@@ -301,15 +264,10 @@ extension AddLocationMemoViewController {
     // MARK: 상황별 이미지 저장 로직
     private func changeImage(_ image: UIImage?){
         guard let image else { return }
-        if addViewModel.coordinateTrigger.value != nil {
-            var value = addViewModel.urlSuccessOutPut.value
-            value?.memoImage = image
-            addViewModel.urlSuccessOutPut.value = value
-        } else {
-            addViewModel.modifyEnd?.markerImage = image //.resizeImage(newWidth: 100)
-            homeView.AddTitleDateView.imageView.image = image
-            addViewModel.modifyEnd?.modiFy = true
-        }
+
+        addViewModel.tempSaveModel.memoImage = image.jpegData(compressionQuality: 1)
+        addViewModel.imageChangeTrigger = true
+        homeView.AddTitleDateView.imageView.image = image
     }
     
     // MARK: goSetting
@@ -321,3 +279,89 @@ extension AddLocationMemoViewController {
         }
     }
 }
+
+
+/*
+ //struct AddOrModifyModel {
+ // var value = addViewModel.proceccingSuccessOutPut.value
+ //value?.memoImage = image.jpegData(compressionQuality: 1)
+ // addViewModel.proceccingSuccessOutPut.value = value
+ //    var title: String?
+ //    var content: String?
+ //    var phoneNumber: String?
+ //    var folderimage: String?
+ //    var regDate: Date?
+ //    var markerImage: UIImage?
+ //    var folder: Folder?
+ //    var location: LocationMemo?
+ //    var locationMemoId: String?
+ //    var modiFy = false
+ //
+ //    init(memo: LocationMemo? = nil, folder:Folder? = nil) {
+ //        self.title = memo.title
+ //        self.content = memo.contents
+ //        self.phoneNumber = memo.phoneNumber
+ //        self.regDate = memo.regdate
+ //        self.folder = folder
+ //        self.locationMemoId = memo.id.stringValue
+ //
+ //        if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
+ //            markerImage = UIImage(contentsOfFile: iamgePath)
+ //        }
+ //
+ //    }
+ //}
+
+ */
+
+// MARK: 업데이트 사항
+// sussesModel.folder.folderName
+
+//            homeView.folderButton.configuration?.image = UIImage(named: sussesModel.folderimage)?.resizeImage(newWidth: 20)
+
+//
+
+/* // MARK:  폴더이미지도 업데이트 사헝
+ if let folderImagePath = FileManagers.shard.findFolderImage(folderId: model.folder.id.stringValue) {
+     
+     homeView.folderButton.configuration?.image = UIImage(contentsOfFile: folderImagePath)?.resizeImage(newWidth: 20)
+ } else {
+ */
+
+/*
+ addViewModel.proceccingSuccessOutPut.bind { [weak self] sussesModel in
+     guard let self else {return}
+     guard let sussesModel else {return}
+     homeView.AddTitleDateView.titleTextField.placeholder = sussesModel.titlePlacHolder
+     
+     homeView.folderButton.configuration?.title = MapTextSection.beginningSoon
+
+     
+     homeView.folderButton.configuration?.image = checkFolderIamge(string: sussesModel.folderimage).resizeImage(newWidth: 20)
+     
+     homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(sussesModel.regDate)
+     
+     if let image = sussesModel.memoImage {
+         homeView.AddTitleDateView.imageView.image = UIImage(data: image)
+     }
+ }
+ */
+/*
+ //        if addViewModel.coordinateTrigger.value != nil {
+ //            var value = addViewModel.proceccingSuccessOutPut.value
+ //            value?.memoImage = image.jpegData(compressionQuality: 1)
+ //            addViewModel.proceccingSuccessOutPut.value = value
+ //        } else {
+ //            addViewModel.modifyEnd?.markerImage = image //.resizeImage(newWidth: 100)
+ //            homeView.AddTitleDateView.imageView.image = image
+ //            addViewModel.modifyEnd?.modiFy = true
+ //        }
+         
+ */
+/*
+ //            if addViewModel.urlSuccessOutPut.value != nil {
+ //                addViewModel.urlSuccessOutPut.value = value
+ //            } else {
+ //                addViewModel.modifyEnd = modify
+ //            }
+ */

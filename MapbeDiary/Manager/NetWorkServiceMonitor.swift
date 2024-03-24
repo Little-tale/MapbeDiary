@@ -18,6 +18,7 @@ final class NetWorkServiceMonitor {
     static let shared = NetWorkServiceMonitor()
     private let queue = DispatchQueue.global()
     private let monitor: NWPathMonitor
+    // 회고
     public private(set) var isConnected: Bool = false
     public private(set) var connectionType: ConnectionType = .unknown
     

@@ -5,7 +5,7 @@
 //  Created by Jae hyung Kim on 3/8/24.
 //
 
-import UIKit
+import UIKit.UIImage
 
 enum fileManagerError: Error{
     case cantFindDocuments
@@ -59,27 +59,46 @@ class FileManagers {
             return nil
         }
     }
+    func makeDataToImage(data: Data){
+        
+    }
     
     
     // MARK: 메모의 관련된 마커이미지 저장 방식 // 덮어씌움
-    func saveMarkerImageForMemo(memoId: String, image: UIImage) -> Bool {
-        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return false }
+    func saveMarkerImageForMemo(memoId: String, imageData: Data) -> Bool {
+        
+        guard let image = UIImage(data: imageData) else { return false}
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.9) else { return false }
+        
         let memoImagesDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
         let imagePath = memoImagesDirectory.appendingPathComponent("\(memoId).jpeg")
+        
         do {
             try imageData.write(to: imagePath)
             return true
         } catch {
             return false
         }
+        
     }
-    func saveMarkerZipImageForMemo(memoId: String, image: UIImage?) -> Bool{
-        guard let image else { return false }
-        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return false }
+    // MARK: 원본 파이일이 있다면 덮어 씌웁니다.
+    func saveMarkerZipImageForMemo(memoId: String, imageData: Data?) -> Bool{
+        guard let imageData,
+              let image = UIImage(data: imageData) else {
+            return false
+        }
+        let resizing = image.resizingImage(targetSize: CGSize(width: 30, height: 30))
+        let imageDa = resizing?.jpegData(compressionQuality: 1)
+        
+        guard let imageDa else { return false }
+        
         let memoImagesDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imagePath = memoImagesDirectory.appendingPathComponent("\(memoId)-40.jpeg")
+        
         do {
-            try imageData.write(to: imagePath)
+            try imageDa.write(to: imagePath)
             return true
         } catch {
             return false
@@ -94,6 +113,22 @@ class FileManagers {
             return imagePath.path()
         } else {
             return nil
+        }
+    }
+    func findMarkerImage(memoId: String, complite: ((Result<Data?,RealmManagerError>) -> Void)) {
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
+        let imagePath = memoPath.appendingPathComponent("\(memoId)-40.jpeg")
+        
+        if fileManager.fileExists(atPath: imagePath.path()) {
+            do {
+                let imageData = try Data(contentsOf: imagePath)
+                complite(.success(imageData))
+            } catch {
+                complite(.failure(.canModifiMemo))
+            }
+        } else {
+            complite(.success(nil))
         }
     }
     
