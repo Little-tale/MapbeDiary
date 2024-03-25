@@ -45,6 +45,19 @@ class FileManagers {
         return nil
     }
     
+    func loadMemoImageUrl(memoId: String) -> URL?{
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(memoId)
+        do {
+            let items = try fileManager.contentsOfDirectory(at: memoPath, includingPropertiesForKeys: nil, options: [])
+            if let imagePath = items.first(where: { $0.pathExtension == "jpeg" }) {
+                return imagePath
+            }
+        } catch {
+            return nil
+        }
+        return nil
+    }
+    
     /// 폴더 이미지를 찾아 드립니다 만약 없다면 nil을 보내니 거기서 판단해주세여
     func findFolderImage(folderId: String) -> String? {
         // 1. 폴더 URL 까지 이동
@@ -111,6 +124,15 @@ class FileManagers {
         let imagePath = memoPath.appendingPathComponent("\(memoId)-40.jpeg")
         if FileManager.default.fileExists(atPath: imagePath.path()){
             return imagePath.path()
+        } else {
+            return nil
+        }
+    }
+    func loadImageMarkerImageUrl(memoId: String) -> URL?{
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagePath = memoPath.appendingPathComponent("\(memoId)-40.jpeg")
+        if FileManager.default.fileExists(atPath: imagePath.path()){
+            return imagePath
         } else {
             return nil
         }

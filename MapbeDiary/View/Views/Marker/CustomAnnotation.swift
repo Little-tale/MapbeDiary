@@ -6,6 +6,8 @@
 //
 
 import MapKit
+import Kingfisher
+
 class CustomAnnotation: NSObject, MKAnnotation {
     static let reusableIdentifier = "CustomAnnotation"
     
@@ -48,17 +50,12 @@ class ArtWorkMarkerView: MKAnnotationView {
                 return
             }
             
-            if let imagePath = FileManagers.shard.loadImageMarkerImage(memoId: memoId) {
+            if let imagePath = FileManagers.shard.loadImageMarkerImageUrl(memoId: memoId) {
                 settingView()
                 
-                let image = UIImage(contentsOfFile: imagePath)
-                
                 centerOffset = CGPoint(x: 0, y: -25)
-                // calloutOffset = CGPoint(x: 10, y: 10)
-                
-                imageView?.image = image
-                
-                //?.resizingImage(targetSize: CGSize(width: 70, height: 50))
+               
+                imageView?.kf.setImage(with: imagePath)
                 
                 imageView?.isUserInteractionEnabled = true
             } else {
@@ -90,8 +87,10 @@ class ArtWorkMarkerView: MKAnnotationView {
 
 
 
-
-
+// calloutOffset = CGPoint(x: 10, y: 10)
+// let image = UIImage(contentsOfFile: imagePath)
+// imageView?.image = image
+//?.resizingImage(targetSize: CGSize(width: 70, height: 50))
 // MARK: 이미지 리사이징 회고 한번더 하기 -> 리사이징 한번에 하려고 하면 너무 깨짐
 //// MARK: 지도위의 특정 지점을 나타내는 데이터 모델
 //final class CustomAnnotation: NSObject, MKAnnotation {

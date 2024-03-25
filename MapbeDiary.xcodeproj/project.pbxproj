@@ -81,6 +81,7 @@
 		7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */; };
 		7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */; };
 		7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */; };
+		7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7BA827352BB18E6E00227F63 /* Kingfisher */; };
 		7BB250DC2BA1BDA900FDE898 /* MemoAboutBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */; };
 		7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DD2BA1C0D500FDE898 /* FontSection.swift */; };
 		7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */; };
@@ -233,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */,
 				7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */,
 				7B11375C2B99A8C000D6BBD1 /* IQKeyboardManagerSwift in Frameworks */,
 				7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */,
@@ -595,6 +597,7 @@
 				7B11375E2B99A8E200D6BBD1 /* DGCharts */,
 				7B1137892B99C2F100D6BBD1 /* Toast */,
 				7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */,
+				7BA827352BB18E6E00227F63 /* Kingfisher */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -678,6 +681,7 @@
 				7B11375D2B99A8E200D6BBD1 /* XCRemoteSwiftPackageReference "Charts" */,
 				7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
+				7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -1268,6 +1272,14 @@
 				minimumVersion = 1.7.0;
 			};
 		};
+		7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1325,6 +1337,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
 			productName = TextFieldEffects;
+		};
+		7BA827352BB18E6E00227F63 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
