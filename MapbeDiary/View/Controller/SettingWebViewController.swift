@@ -34,7 +34,7 @@ extension SettingWebViewController {
         }
         homeView.viewModel.webLoadCompilte.bind { [weak self] void in
             guard let self else { return }
-            guard let void else { return }
+            guard void != nil else { return }
             indicator?.stopActivity()
         }
     }

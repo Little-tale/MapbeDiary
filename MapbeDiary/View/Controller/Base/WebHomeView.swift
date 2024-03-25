@@ -42,6 +42,9 @@ class WebHomeView: BaseView{
             }
         }
     }
+    deinit {
+        print("deinit - WebHomeView")
+    }
 }
 
 // 회고 ->

@@ -6,11 +6,12 @@
 //
 
 import UIKit
-import PhotosUI
-import AVFoundation
+// import PhotosUI
+// import AVFoundation
 import Toast
 
 final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView> {
+    var imageService: ImageService?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +128,6 @@ extension AboutMemoViewController {
                 homeView.memoViewModel.emptyModel.value.imageModify = true
             } else {
                 homeView.memoViewModel.emptyModel.value.viewImageData.remove(at: index.item)
-                
             }
         }
         
@@ -162,97 +162,41 @@ extension AboutMemoViewController {
 extension AboutMemoViewController {
     
     func checkCameraAuthorization() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { [weak self ] bool in
-                guard let self else { return }
-                if bool {
-                    showImagePicker()
-                } else {
-                    cameraSettingAlert()
-                }
-            }
-        case .restricted, .denied:
-            cameraSettingAlert()
-        case .authorized:
-            showImagePicker()
-        @unknown default:
-            cameraSettingAlert()
-        }
-    }
-    
-    private func showImagePicker(){
-        DispatchQueue.main.async { [weak self] in
+        imageService = ImageService(presntationViewController: self, pickerMode: .camera)
+        
+        imageService?.checkCameraPermission(compltion: { [weak self] bool in
             guard let self else { return }
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = .camera
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            present(imagePicker, animated: true)
-        }
+            if bool {
+                cameraImagePicker()
+            } else {
+                cameraSettingAlert()
+            }
+        })
+
     }
+    private func cameraImagePicker(){
+        imageService?.pickImage(complite: { [ weak self ] results in
+            guard let self else { return }
+            switch results{
+            case .success(let images):
+                if let image = images?.first {
+                    guard let image = image.jpegData(compressionQuality: 1.0) else {
+                        return
+                    }
+                    handleImageAction(data: image)
+                }
+            case .failure(let fail):
+                showAlert(title: cameraError.titleString, message: cameraError.messageString)
+            }
+        })
+    }
+    
+
     
 }
 
-
-// MARK: UIImagePicekerDelegate
-extension AboutMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-    
-    // MARK: 회고에 작성
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        picker.dismiss(animated: true)
-        
-        guard let pickImage = info[.originalImage] as? UIImage else {
-            showAlert(title: cameraError.titleString, message: cameraError.messageString)
-            return
-        }
-        print(pickImage)
-        if let imageData = pickImage.jpegData(compressionQuality: 1) {
-            handleImageAction(data: imageData)
-            
-        }
-    }
-}
 
 // MARK: PHPickerViewControllerDelegate
-extension AboutMemoViewController:PHPickerViewControllerDelegate {
-    
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-    
-        for result in results {
-            if !result.itemProvider.canLoadObject(ofClass: UIImage.self){
-                return // UIImage로 변환 실패
-            }
-            result.itemProvider.loadObject(ofClass: UIImage.self) {[weak self] image, error in
-                guard let image = image as? UIImage else {return}
-                DispatchQueue.main.async {
-                    guard let self else { return }
-                    if error != nil {
-                        self.showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
-                        return
-                    }
-                    guard let data = image.jpegData(compressionQuality: 1) else { print("Data Fail")
-                        
-                        self.showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
-                        return
-                    }
-                    
-                    self.handleImageAction(data: data)
-                }
-            }
-            
-        }
-        
-        print(results)
-    }
-    
-}
 
 // MARK: Alerts
 extension AboutMemoViewController {
@@ -297,7 +241,6 @@ extension AboutMemoViewController {
             
             homeView.memoViewModel.emptyModel.value.imageModify = true
             
-            
         } else {
             // print(data)
             homeView.memoViewModel.emptyModel.value.viewImageData.append(data)
@@ -339,18 +282,30 @@ extension AboutMemoViewController: ToastPro {
     
     // MARK: 최대 선택할수 있는 개수를 통해 제한
     func checkUserPhotoAuthorization(max: Int) {
-       
-        var configurataion = PHPickerConfiguration()
-        
-        configurataion.selectionLimit = max
-        
-        configurataion.filter = .any(of: [.images])
-        
-        let phpPicker = PHPickerViewController(configuration: configurataion)
-        
-        phpPicker.delegate = self
-
-        present(phpPicker, animated: true)
+        print(max)
+        imageService = ImageService(presntationViewController: self, pickerMode: .maximer(max))
+        imageService?.pickImage(complite: { [weak self] results in
+            guard let self else { return }
+            switch results {
+            case .success(let images):
+                guard let images else {
+                    imageErrorAlert()
+                    return
+                }
+                for image in images {
+                    guard let imageData =  image.jpegData(compressionQuality: 1.0) else {
+                        imageErrorAlert()
+                        return
+                    }
+                    handleImageAction(data: imageData)
+                }
+            case .failure:
+                imageErrorAlert()
+            }
+        })
+    }
+    private func imageErrorAlert(){
+        showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
     }
 }
 
@@ -398,19 +353,3 @@ extension AboutMemoViewController {
     }
 }
 
-/*
- //        // lcationMemo 만 왔을때의 가정
- //       let first =  homeView.memoViewModel.repository.findFirstLocationMemo()
- //
- //        // MARK: location과 Memo가 같이 왔을때 가정
- //
- //        homeView.memoViewModel.inputModel.value = AboutMemoModel(inputLoactionInfo: first) //inputMemoMeodel: first?.detailMemos.first)
- //
- */
-// 이게 하나씩 실시간 저장하는 거였을건데 기능 드랍
-// homeView.memoViewModel.inputImage.value = data
-//            let imageData = homeView.memoViewModel.emptyModel.value.iamgeData
-//
-//            homeView.memoViewModel.emptyModel.value.iamgeData.append(data)
-//            let imageObject = ImageObject(index: imageData.count)
-//            homeView.memoViewModel.emptyModel.value.removewimageObject?.append(imageObject)

@@ -332,8 +332,8 @@ extension MapViewController: FloatingPanelControllerDelegate {
         removeExistingPanelIfNeeded { [weak self] in
             self?.setupPanel(with: configuration)
         }
-        
     }
+    
     //MARK: 판넬 가기 설정
     private func setupPanel(with configuration: PanelConfiguration) {
 

@@ -15,24 +15,30 @@ import Network
  */
 
 final class NetWorkServiceMonitor {
+    
     static let shared = NetWorkServiceMonitor()
-    private let queue = DispatchQueue.global()
+    
+    private let queue = DispatchQueue.global(qos: .background)
+    
     private let monitor: NWPathMonitor
     // 회고
     public private(set) var isConnected: Bool = false
+    
     public private(set) var connectionType: ConnectionType = .unknown
     
     private init(){
         monitor = NWPathMonitor()
     }
     
+    // IOS 에서 나올수 있는 경우를 Enum 화합니다.
+    // 기본제공되는것은 열거형이 아니기에 이렇게 작업합니다.
     enum ConnectionType {
         case cellular
         case ethernet
         case unknown
         case wifi
     }
-    
+    // 외부에선 이메서드를 통해 모니터를 시작할수 있습니다.
     public func startMonitor( ){
         monitor.start(queue: queue)
         monitor.pathUpdateHandler = {
@@ -56,7 +62,7 @@ final class NetWorkServiceMonitor {
             connectionType = .unknown
         }
     }
-    
+    // MARK: 모니터링을 그만할수 있습니다.
     public func stopMonitoring(){
         monitor.cancel()
     }

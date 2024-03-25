@@ -14,7 +14,7 @@ import Photos
 /// 이미지 선택 방식 정의
 enum ImagePickMode{
     case camera // 한장만 할 경우
-    case maximer(Int) // 여러장이지만 최대정하기
+    case maximer(Int) // 갤러리, 여러장이지만 최대정하기
 }
 enum ImageSearviceError: Error {
     case cantGetImage

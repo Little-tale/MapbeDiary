@@ -56,7 +56,9 @@ class ArtWorkMarkerView: MKAnnotationView {
                 centerOffset = CGPoint(x: 0, y: -25)
                 // calloutOffset = CGPoint(x: 10, y: 10)
                 
-                imageView?.image = image?.resizingImage(targetSize: CGSize(width: 70, height: 50))
+                imageView?.image = image
+                
+                //?.resizingImage(targetSize: CGSize(width: 70, height: 50))
                 
                 imageView?.isUserInteractionEnabled = true
             } else {

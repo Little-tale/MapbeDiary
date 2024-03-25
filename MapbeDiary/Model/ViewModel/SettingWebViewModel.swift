@@ -61,4 +61,7 @@ class SettingWebViewModel {
         }
     }
  
+    deinit {
+        print("deinit - SettingWebViewModel")
+    }
 }

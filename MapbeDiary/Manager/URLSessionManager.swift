@@ -97,9 +97,12 @@ final class URLSessionManager {
         makeRequest(api: api) { componentsResults in
             switch componentsResults {
             case .success(let success):
+                
                     URLSession.shared.dataTask(with: success) {  [weak self]  data, response, error in
                         guard let self else { return }
+                        
                         let errorCase = requestErrorTester(type: type,api: api, data: data, response: response, error: error)
+                        
                         switch errorCase{
                         case .success(let sucsess):
                             DispatchQueue.main.async{

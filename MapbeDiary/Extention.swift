@@ -143,7 +143,6 @@ extension UISearchBar {
             textField.backgroundColor = color
         }
         
-        
     }
 }
 
@@ -157,7 +156,7 @@ extension UIView {
 // MARK: 이미지 크기 리사이징
 extension UIImage {
     
-    // MARK:
+    // MARK: 이미지 리사이징
     func resizingImage(targetSize: CGSize) -> UIImage?{
         let widthScale = targetSize.width / self.size.width
         let heightScale = targetSize.height / self.size.height
