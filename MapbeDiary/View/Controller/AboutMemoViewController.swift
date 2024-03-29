@@ -185,7 +185,7 @@ extension AboutMemoViewController {
                     }
                     handleImageAction(data: image)
                 }
-            case .failure(let fail):
+            case .failure(_):
                 showAlert(title: cameraError.titleString, message: cameraError.messageString)
             }
         })

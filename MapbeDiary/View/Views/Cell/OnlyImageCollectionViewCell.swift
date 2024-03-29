@@ -8,21 +8,7 @@
 import UIKit
 import SnapKit
 
-class ImageChashe {
-    static let shared = ImageChashe()
-    private init(){}
-    
-    private var imageChashe = NSCache<NSString,UIImage>()
-    
-    func image(forKey key: String ) -> UIImage? {
-        return imageChashe.object(forKey: key as NSString)
-    }
-    func setImage(_ image: UIImage, forKey key: String) {
-        imageChashe.setObject(image, forKey: key as NSString)
-    }
-}
-
-class OnlyImageCollectionViewCell: BaseCollectionViewCell {
+final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     
     let backgoundImage = UIImageView()
     
@@ -51,9 +37,7 @@ class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     }
     
     func loadImage(fromPath path: String,_ folder: String? = nil) {
-        if let cachedImage = ImageChashe.shared.image(forKey: path){
-            backgoundImage.image = cachedImage
-        }
+
         if let folder {
             let imageData = FileManagers.shard.findDetailImageData(detailID: folder, imageIds: [path])
             switch imageData {
@@ -65,3 +49,10 @@ class OnlyImageCollectionViewCell: BaseCollectionViewCell {
         }
     }
 }
+
+
+/*
+ //        if let cachedImage = ImageChashe.shared.image(forKey: path){
+ //            backgoundImage.image = cachedImage
+ //        }
+ */

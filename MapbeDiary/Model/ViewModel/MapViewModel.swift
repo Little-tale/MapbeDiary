@@ -30,8 +30,8 @@ class MapViewModel {
         }
         reloadInput.bind { [weak self] void in
             guard let self else { return }
-            guard let void else { return }
-            guard let folder  = folderInput.value else { return }
+            guard void != nil else { return }
+            guard folderInput.value != nil else { return }
             folderInput.value = folderInput.value
         }
     }

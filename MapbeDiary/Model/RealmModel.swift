@@ -86,6 +86,7 @@ class ImageObject: Object {
     @Persisted var imagename: String // 이미지 이름은 UUID 로 할수도
     @Persisted var regDate: Date // 생성 날짜
     @Persisted var orderIndex: Int // 후에 정렬이나 순서 교체 염두
+    
     @Persisted(originProperty: "imagePaths") var parents: LinkingObjects<DetailMemo>
     
     convenience

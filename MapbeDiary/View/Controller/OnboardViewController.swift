@@ -6,8 +6,9 @@
 //
 
 import UIKit
+
  //MARK: 회고 isHidden Vs Alpha
-class OnboardViewController: BaseHomeViewController<OnboardBaseView> {
+final class OnboardViewController: BaseHomeViewController<OnboardBaseView> {
     
     let repository = RealmRepository()
     
@@ -41,9 +42,11 @@ class OnboardViewController: BaseHomeViewController<OnboardBaseView> {
             guard let self else { return }
             startMapView()
         }), for: .touchUpInside)
-        
+    }
+    private func settingAnalatics(){
         
     }
+    
     private func showButton(){
         if !animated {
             animated = true

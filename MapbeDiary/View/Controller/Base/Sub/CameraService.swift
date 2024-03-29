@@ -22,13 +22,16 @@ enum ImageSearviceError: Error {
 
 /// 이미지 관련된 기능을 제공하는 서비스 클래스 입니다.
 final class ImageService: NSObject {
+    
     typealias ImageResult = ( Result<[UIImage]?, ImageSearviceError> ) -> Void
     
     /// 이미지 피커를 띄울 뷰컨을 정의해주세요
     private weak var presntationViewController: UIViewController?
     /// 해당 핸들러를 통해 이미지들을 반환해드립니다.
     private var complitionHandler: ( ( Result<[UIImage]?, ImageSearviceError> ) -> Void )?
+    
     /// 이미지 모드를 정할수 있습니다. 비선택 일시 Single로 합니다.
+
     private var pickerMode: ImagePickMode = .camera
     
     /// 피커를 띄울 부컨과 픽 모드를 선택합니다.
@@ -125,14 +128,17 @@ extension ImageService: PHPickerViewControllerDelegate {
                     // 만약 약한참조로 실패한다면 가져오지 못함을 클라이언트 에게 알립니다.
                     guard let self else {
                         self?.complitionHandler?(.failure(.cantGetImage))
+                        
                         return
                     }
                     // 만약 이미지가 UIImage가 아니라면
                     guard let image = image as? UIImage else {
                         // 이미지를 가져오지 함을 알립니다.
                         complitionHandler?(.failure(.cantGetImage))
+                        
                         return
                     }
+                    
                     // 빈 이미지 배열에 추가시킵니다.
                     images.append(image)
                 }

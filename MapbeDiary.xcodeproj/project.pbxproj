@@ -70,7 +70,6 @@
 		7B6C201D2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */; };
 		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
 		7B7BE6492BAD6E6B0072F40F /* NetWorkServiceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */; };
-		7B7BE64B2BAD948C0072F40F /* OnboardingSlderImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */; };
 		7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */; };
 		7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */; };
 		7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */; };
@@ -82,6 +81,7 @@
 		7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */; };
 		7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */; };
 		7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7BA827352BB18E6E00227F63 /* Kingfisher */; };
+		7BA827382BB1951700227F63 /* ImageChach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA827372BB1951700227F63 /* ImageChach.swift */; };
 		7BB250DC2BA1BDA900FDE898 /* MemoAboutBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */; };
 		7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DD2BA1C0D500FDE898 /* FontSection.swift */; };
 		7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */; };
@@ -188,7 +188,6 @@
 		7B6C201C2BA1766C00EB7166 /* FirstMakeFolderViewControlelr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderViewControlelr.swift; sourceTree = "<group>"; };
 		7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MapbeDiary.entitlements; sourceTree = "<group>"; };
 		7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkServiceMonitor.swift; sourceTree = "<group>"; };
-		7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlderImageViewController.swift; sourceTree = "<group>"; };
 		7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
 		7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardBaseView.swift; sourceTree = "<group>"; };
 		7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +198,7 @@
 		7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		7BA827372BB1951700227F63 /* ImageChach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChach.swift; sourceTree = "<group>"; };
 		7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAboutBaseView.swift; sourceTree = "<group>"; };
 		7BB250DD2BA1C0D500FDE898 /* FontSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSection.swift; sourceTree = "<group>"; };
 		7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +335,7 @@
 				7BB251002BA31EBF00FDE898 /* CameraService.swift */,
 				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
 				7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */,
+				7BA827372BB1951700227F63 /* ImageChach.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -383,7 +384,6 @@
 				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
 				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
 				7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */,
-				7B7BE64A2BAD948C0072F40F /* OnboardingSlderImageViewController.swift */,
 				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
 			);
 			path = Controller;
@@ -758,6 +758,7 @@
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */,
 				7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */,
+				7BA827382BB1951700227F63 /* ImageChach.swift in Sources */,
 				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
 				7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
@@ -806,7 +807,6 @@
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7BA3733F2B9D9F2B0016E851 /* SearchViewModel.swift in Sources */,
-				7B7BE64B2BAD948C0072F40F /* OnboardingSlderImageViewController.swift in Sources */,
 				7B54A7E12BAB58490039BC7F /* SettingReusableView.swift in Sources */,
 				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
@@ -1020,7 +1020,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1039,7 +1039,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1059,7 +1060,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1.1;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MapbeDiary/Info.plist;
@@ -1077,7 +1078,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

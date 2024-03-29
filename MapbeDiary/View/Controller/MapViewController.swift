@@ -419,7 +419,6 @@ extension MapViewController: LocationDelegate {
 extension MapViewController {
     
     func finduserAnnotationOrNew(CL2D: CLLocationCoordinate2D) -> Bool {
-        
         // where First 순회 조건 참조
         let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
             guard self != nil else { return false }
@@ -429,9 +428,7 @@ extension MapViewController {
             return annotation.coordinate.latitude == CL2D.latitude && annotation.coordinate.longitude == CL2D.longitude
             
         }
-        
         guard let custom  = userAnnotation as? CustomAnnotation else { return false }
-        
         homeView.mapView.selectAnnotation(custom, animated: true)
         return true
     }
@@ -444,11 +441,9 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
       
-        // locations [] 를 통해 위치정보를 볼수있다.
         if let location = locations.last?.coordinate{
-            // MARK: TS 이부분에서 트러블 슈팅 발생 그렇다면 위치가 변할때만 호출되게 변경
             setRegion(location: location)
-            homeView.locationManager.distanceFilter = 100 //m 10미터 변화 할때만 호출
+            homeView.locationManager.distanceFilter = 150 // m단위 변화 할때만 호출
             // homeView.locationManager.stopUpdatingLocation()
         }else {
             homeView.locationManager.stopUpdatingLocation()
@@ -472,7 +467,6 @@ extension MapViewController {
     
     /// 사용자의 디바이스의 권한을 확인합니다.
     func checkDeviewlocationAuthorization(){
-
         DispatchQueue.global().async { [weak self] in
             guard let weakSelf = self else { return }
             /// 만약 디바이스 자체 권한이 활성화 라면 (열겨헝)
@@ -481,19 +475,15 @@ extension MapViewController {
                 
                 authorization = weakSelf.homeView.locationManager.authorizationStatus
                 
-                DispatchQueue.main.async { 
-                    [weak self] in
-                    guard let self else { return }
+                DispatchQueue.main.async {
                     // 유저 위치 권한 상태 확인
-                    checkUserLocationAuthorization(authoriztionState: authorization)
+                    weakSelf.checkUserLocationAuthorization(authoriztionState: authorization)
                 }
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    goSetting()
+                DispatchQueue.main.async {
+                    weakSelf.goSetting()
                 }
             }
-            //
         }
     }
     /// 유저가 앱에 대해서 위치 정보를 주었는지 확인합니다.
@@ -522,10 +512,9 @@ extension MapViewController {
     
 
     // 추적 허락 요청
-    func allowLocation(){
+    private func allowLocation(){
         homeView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         homeView.locationManager.requestWhenInUseAuthorization()
-    
     }
 }
 

@@ -25,7 +25,7 @@ enum fileManagerError: Error{
 }
 
 
-class FileManagers {
+final class FileManagers {
     private init () {}
     static let shard = FileManagers()
     
@@ -262,6 +262,29 @@ class FileManagers {
             } catch {
                 return .failure(.cantFindImages)
             }
+        }
+        return .success(imageDatas)
+    }
+    
+    func findDetailImageDataUrl(detailID: String, imageIds: [String]) -> Result<[URL],fileManagerError>{
+        
+        guard let diretory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return .failure(.cantFindDocuments)
+        }
+        
+        let folderUrl = diretory.appendingPathComponent("\(detailID)")
+        
+        var imageDatas: [URL] = []
+        
+        for imageId in imageIds {
+            let imageUrl = folderUrl.appendingPathComponent("\(imageId).jpeg")
+//            do {
+//                let imageData = try Data(contentsOf: imageUrl)
+//                imageDatas.append(imageData)
+//            } catch {
+//                return .failure(.cantFindImages)
+//            }
+            imageDatas.append(imageUrl)
         }
         return .success(imageDatas)
     }

@@ -8,7 +8,7 @@
 import MapKit
 import Kingfisher
 
-class CustomAnnotation: NSObject, MKAnnotation {
+final class CustomAnnotation: NSObject, MKAnnotation {
     static let reusableIdentifier = "CustomAnnotation"
     
     var memoRegDate: Date? // 메모 데이트를 통해 역으로도 찾을수 있게
@@ -31,7 +31,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
 // 이미지 뷰 넣어서 하는거 고려
 // 이미지 뷰를 넣어서 했을떄 랑 아니였을때의 메모리 사용량 비교
 // imageView.image = nil 을 안했을때 문제점
-class ArtWorkMarkerView: MKAnnotationView {
+final class ArtWorkMarkerView: MKAnnotationView {
     var imageView: UIImageView?
     
     override var annotation: MKAnnotation? {

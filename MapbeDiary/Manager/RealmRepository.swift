@@ -13,7 +13,9 @@ import UIKit
 //MARK: RalmRepository
 final class RealmRepository {
     // 레포지터리 패턴
+    
     let realm = try! Realm()
+    
     let folderModel = Folder.self
     let locationMemoModel = LocationMemo.self
     let locationModel = Location.self
@@ -747,8 +749,6 @@ final class RealmRepository {
             }
         }
     }
-    
-    
 }
 
 

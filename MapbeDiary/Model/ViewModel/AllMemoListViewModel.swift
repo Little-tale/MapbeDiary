@@ -67,7 +67,7 @@ class AllMemoListViewModel {
         repo.deleteLocationMemo(memo) { [weak self] results in
             guard let self else { return }
             switch results {
-            case .success(let success):
+            case .success:
                 
                 SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
                 

@@ -67,18 +67,25 @@ final class MapHomeView: BaseView {
     private func settingLongTabForMapView(){
         // MARK: 롱탭
         let longtap = UILongPressGestureRecognizer(target: self , action: #selector(longTap))
-        
         mapView.addGestureRecognizer(longtap)
     }
     
     
     // MARK: 회고 해야해
     private func searchBarSetting(){
+        
         searchBar.setTextFieldBackground(color: .wheetSideBrown, transparentBackground: true)
         searchBar.placeholder = MapTextSection.emptySearcBarText
         
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.wheetDarkBrown])
+            textField.attributedPlaceholder = NSAttributedString(
+                string: textField.placeholder ?? "",
+                attributes: [
+                    NSAttributedString
+                        .Key
+                        .foregroundColor : UIColor.wheetDarkBrown
+                ]
+            )
             
             textField.textColor = .wheetDarkBrown
             if let leftView = textField.leftView as? UIImageView {
@@ -104,6 +111,7 @@ final class MapHomeView: BaseView {
             let locationInView = sender.location(in: mapView)
             // 해당 위치가 속한 뷰에 CGPoint 를 넘겨서 위치를 반환
             let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            
             locationClosure?(locationOnMap) // 위치를 넘겨준다...
         }
         print(sender.state == .ended)

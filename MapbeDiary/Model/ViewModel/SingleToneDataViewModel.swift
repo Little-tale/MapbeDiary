@@ -21,7 +21,7 @@ class SingleToneDataViewModel {
         
         shardFolderOb.bind { [weak self] folder in
             guard let self else { return }
-            guard let folder else { return }
+            guard folder != nil else { return }
             allListFolderOut.value = shardFolderOb.value
             mapViewFloderOut.value = shardFolderOb.value
         }

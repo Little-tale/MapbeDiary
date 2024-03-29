@@ -8,7 +8,7 @@
 import UIKit
 
 
-class CenterFlowLayout: UICollectionViewFlowLayout {
+final class CenterFlowLayout: UICollectionViewFlowLayout {
     // MARK: 스크롤 동작이 완료 될때 contentOffSet을 결정
     // proposedContentOffset -> 스크롤 동작이 끝날때 나온 값
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
@@ -27,6 +27,7 @@ class CenterFlowLayout: UICollectionViewFlowLayout {
         let layoutAtr = layoutAttributesForElements(in: collectionViewBounds)
         // 임시변수
         var tempAtrr: UICollectionViewLayoutAttributes?
+        
         if let layoutAtr{
             // 모든 영역 즉 헤더, 푸터 등이 있어서 그중 셀만 처리할수 있게 한다.
             for attri in layoutAtr {
