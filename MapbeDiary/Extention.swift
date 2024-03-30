@@ -328,6 +328,13 @@ extension ToastPro where Self: UIViewController {
 }
 
 
+protocol ViewModelType {
+    associatedtype Input
+    associatedtype Output
+    
+    func trasform(_ input: Input) -> Output
+}
+
 
 /*
  let size = self.size

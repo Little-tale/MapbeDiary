@@ -59,6 +59,9 @@
 		7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */; };
 		7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */; };
 		7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */; };
+		7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */; };
+		7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */; };
+		7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */; };
 		7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */; };
 		7B54A7DB2BAB3C620039BC7F /* SettingHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */; };
 		7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */; };
@@ -110,6 +113,10 @@
 		7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */; };
 		7BF0A7F02BA6B8A800D40942 /* CenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */; };
 		7BF1A44E2BA359460086D5D8 /* MapTextSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */; };
+		7BF2E7F92BB8067400E83EC1 /* CalenderMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */; };
+		7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF2E7FB2BB8070700E83EC1 /* FSCalendar */; };
+		7BF2E7FE2BB807FF00E83EC1 /* CalenderMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */; };
+		7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +184,9 @@
 		7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIndicator.swift; sourceTree = "<group>"; };
 		7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationButton.swift; sourceTree = "<group>"; };
+		7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MordernCollectionViewLayout.swift; sourceTree = "<group>"; };
+		7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoViewModel.swift; sourceTree = "<group>"; };
+		7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellViewModel.swift; sourceTree = "<group>"; };
 		7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewStackButtonView.swift; sourceTree = "<group>"; };
 		7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHomeView.swift; sourceTree = "<group>"; };
 		7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +237,9 @@
 		7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailTableViewCell.swift; sourceTree = "<group>"; };
 		7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterFlowLayout.swift; sourceTree = "<group>"; };
 		7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextSection.swift; sourceTree = "<group>"; };
+		7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoView.swift; sourceTree = "<group>"; };
+		7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoViewController.swift; sourceTree = "<group>"; };
+		7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */,
+				7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */,
 				7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */,
 				7B11375C2B99A8C000D6BBD1 /* IQKeyboardManagerSwift in Frameworks */,
 				7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */,
@@ -362,6 +376,7 @@
 		7B1137742B99AC5700D6BBD1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7B4F42862BB82ACD0081369D /* MordenCollectionViewLayout */,
 				7B1137772B99ACB100D6BBD1 /* Views */,
 				7B1137752B99AC6600D6BBD1 /* Controller */,
 				7B1137782B99AD4200D6BBD1 /* Observable.swift */,
@@ -385,6 +400,7 @@
 				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
 				7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */,
 				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
+				7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -407,6 +423,7 @@
 				7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */,
 				7B30DD742BAC359E00D789B5 /* WebHomeView.swift */,
 				7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */,
+				7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -446,6 +463,7 @@
 		7B11378B2B99E95900D6BBD1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B4F428B2BB850720081369D /* Cell */,
 				7B7BE6542BAD9C060072F40F /* Onboard */,
 				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
 				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
@@ -459,6 +477,7 @@
 				7B54A7DE2BAB4C8C0039BC7F /* SeettingViewModel.swift */,
 				7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */,
 				7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */,
+				7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -481,6 +500,22 @@
 			path = Button;
 			sourceTree = "<group>";
 		};
+		7B4F42862BB82ACD0081369D /* MordenCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */,
+			);
+			path = MordenCollectionViewLayout;
+			sourceTree = "<group>";
+		};
+		7B4F428B2BB850720081369D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		7B7BE6542BAD9C060072F40F /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +531,7 @@
 				7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */,
 				7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */,
 				7B54A7E02BAB58490039BC7F /* SettingReusableView.swift */,
+				7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -598,6 +634,7 @@
 				7B1137892B99C2F100D6BBD1 /* Toast */,
 				7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */,
 				7BA827352BB18E6E00227F63 /* Kingfisher */,
+				7BF2E7FB2BB8070700E83EC1 /* FSCalendar */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -682,6 +719,7 @@
 				7B1137882B99C2F100D6BBD1 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				7BF2E7FA2BB8070700E83EC1 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -753,6 +791,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BF2E7F92BB8067400E83EC1 /* CalenderMemoView.swift in Sources */,
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
@@ -766,6 +805,7 @@
 				7BB251012BA31EBF00FDE898 /* CameraService.swift in Sources */,
 				7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */,
 				7BA3733B2B9D88540016E851 /* SearchCollectionViewCell.swift in Sources */,
+				7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */,
 				7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */,
 				7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */,
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
@@ -802,6 +842,8 @@
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7BB250DC2BA1BDA900FDE898 /* MemoAboutBaseView.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
+				7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */,
+				7BF2E7FE2BB807FF00E83EC1 /* CalenderMemoViewController.swift in Sources */,
 				7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */,
 				7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */,
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
@@ -815,10 +857,12 @@
 				7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
+				7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
 				7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */,
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */,
+				7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */,
 				7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
@@ -1282,6 +1326,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		7BF2E7FA2BB8070700E83EC1 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1344,6 +1396,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7BF2E7FB2BB8070700E83EC1 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BF2E7FA2BB8070700E83EC1 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

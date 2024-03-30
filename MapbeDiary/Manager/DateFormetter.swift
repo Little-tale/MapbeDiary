@@ -15,6 +15,7 @@ final class DateFormetters {
     
     private let dateformetter = ISO8601DateFormatter()
     private let timeformetter = DateFormatter()
+    private let calendar = Calendar.current
     
     // 2024-03-09T07:27:03.815Z
     func localDate(_ dateString: String) -> String{
@@ -52,6 +53,23 @@ final class DateFormetters {
         // 문자열로 변환하여 반환
         let someString = timeformetter.string(from: date)
         return someString
+    }
+    
+    func calendarCheck(_ date: Date, compareFor: Date) -> Bool {
+        let first = calendar.dateComponents([.year,.month,.day], from: date)
+        let second = calendar.dateComponents([.year,.month,.day], from: compareFor)
+        
+        return  first.year == second.year &&
+                first.month == second.month &&
+                first.day == second.day
+        
+    }
+    
+    func calendarStartEnd(date: Date) -> (start: Date, end: Date) {
+        let start = calendar.startOfDay(for: date)
+        print(start,"시작")
+        let end = calendar.date(byAdding: .day, value: 1, to: start)
+        return (start, end ?? Date())
     }
 }
 

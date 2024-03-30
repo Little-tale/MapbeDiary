@@ -10,7 +10,7 @@ import Foundation
 
 class MapViewModel {
     
-    let  folderInput: Observable<Folder?> = Observable(nil)
+    let folderInput: Observable<Folder?> = Observable(nil)
 
     let locationsOutput: Observable<[LocationMemo]?> = Observable(nil)
     

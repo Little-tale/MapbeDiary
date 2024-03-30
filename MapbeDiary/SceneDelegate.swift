@@ -27,7 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let folder = repository.findAllFolderArray().first {
             
             SingleToneDataViewModel.shared.shardFolderOb.value = folder
-            window?.rootViewController = MapViewController()
+            window?.rootViewController = CalenderMemoViewController()//MapViewController()
+            //
             window?.makeKeyAndVisible()
             
         } else {

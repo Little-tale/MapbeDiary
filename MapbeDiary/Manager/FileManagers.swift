@@ -165,6 +165,15 @@ final class FileManagers {
             return nil
         }
     }
+    func loadImageOrignerMarker(_ memoId: String) -> URL? {
+        let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagePath = memoPath.appendingPathComponent("\(memoId).jpeg")
+        if FileManager.default.fileExists(atPath: imagePath.path()){
+            return imagePath
+        } else {
+            return nil
+        }
+    }
     
     // MARK: 마커 이미지를 제거합니다. 완전 성공 확인
     func removeMarkerImageAtMemo(memoIdString: String) -> Bool {
