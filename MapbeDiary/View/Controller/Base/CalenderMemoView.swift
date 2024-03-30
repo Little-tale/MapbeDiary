@@ -17,6 +17,10 @@ final class CalenderMemoView: BaseView {
     
     let calenderView = FSCalendar(frame: .zero)
     
+    private let emptyImage: UIImageView = {
+        let view = UIImageView(image:  UIImage(named: "emptyFolder"))
+        return view
+    }()
     
     let collectioView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
@@ -30,6 +34,8 @@ final class CalenderMemoView: BaseView {
     override func configureHierarchy() {
         addSubview(calenderView)
         addSubview(collectioView)
+        addSubview(emptyImage)
+        
         settingGesture()
         cellRegistration()
         setDataSource()
@@ -48,11 +54,15 @@ final class CalenderMemoView: BaseView {
             make.top.equalTo(calenderView.snp.bottom)
             make.bottom.equalTo(safeAreaLayoutGuide)
         }
+        emptyImage.snp.makeConstraints { make in
+            make.center.equalTo(collectioView)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(emptyImage.snp.width)
+        }
     }
     
     override func designView() {
         calendarSetting()
-        collectioView.backgroundColor = .red
         collectioView.collectionViewLayout = collectionViewSetting()
     }
     
@@ -71,6 +81,9 @@ final class CalenderMemoView: BaseView {
     
     private func cellRegistration(){
         calendarCellRegist = UICollectionView.CellRegistration<CalendarCollectionViewCell,LocationMemo> { cell, indexPath, item in
+            cell.backgroundColor = .wheetBior
+            cell.layer.cornerRadius = 12
+            cell.clipsToBounds = true
             cell.subscribe(item)
         }
     }
@@ -88,10 +101,15 @@ final class CalenderMemoView: BaseView {
         dataSource?.apply(snapShot)
     }
     
+    private func imageHidden(_ bool: Bool){
+        emptyImage.isHidden = !bool
+    }
+    
     private func bind(){
         viewModel.locationMemos.bind { [weak self] date in
             guard let self else { return }
-            guard date != nil else { return }
+            guard let date else { return }
+            imageHidden(date.isEmpty)
             setSnapShot()
         }
     }
@@ -106,7 +124,7 @@ extension CalenderMemoView {
         guard !isAnimating else { return }
         isAnimating = true
         
-        UIView.animate(withDuration: 0.38) { [weak self] in
+        UIView.animate(withDuration: 0.28) { [weak self] in
             guard let weakself = self else { return }
             if gesture == .up {
                 weakself.calenderView.snp.updateConstraints { make in
