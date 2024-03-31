@@ -8,12 +8,16 @@
 import UIKit
 import FSCalendar
 
+
 class CalenderMemoViewController: BaseHomeViewController<CalenderMemoView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationSetting()
         calenderDelegateSetting()
         bind()
+        
+        firstCome()
     }
     
     private func calenderDelegateSetting(){
@@ -21,20 +25,24 @@ class CalenderMemoViewController: BaseHomeViewController<CalenderMemoView> {
         homeView.calenderView.dataSource = self
     }
     private func bind(){
-        homeView.viewModel.folder.value = homeView.viewModel.repository.findAllFolder().first
-        
-        homeView.viewModel.selectedLocationMemo.bind { [weak self] memo in
-            guard let self else { return }
-            guard let memo else { return }
-            print(memo)
-        }
         homeView.viewModel.reloadTrigger.bind { [weak self] void in
             guard let self,
-            let void else { return }
+            void != nil else { return }
             homeView.calenderView.reloadData()
+            
+        }
+        homeView.viewModel.dismissTrigger.bind { [weak self] void in
+            guard void != nil else { return }
+            self?.dismiss(animated: true)
         }
     }
-
+    
+    private func firstCome(){
+        let date = Date()
+        homeView.calenderView.select(date, scrollToDate: true)
+        homeView.viewModel.date.value = date
+    }
+    
 }
 
 extension CalenderMemoViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
@@ -91,4 +99,33 @@ extension CalenderMemoViewController: FSCalendarDelegate, FSCalendarDataSource, 
         return homeView.viewModel.countDate.value ?? 0
     }
     
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        let result = DateFormetters.shared.checkDaytype(date)
+        switch result {
+        case .sat:
+            return .wheetBlue
+        case .sun:
+            return .wheetPink
+        case .other:
+            return nil
+        }
+    }
+
+    
+}
+
+// MARK: 뒤로가기 세팅 + 네비게이션
+extension CalenderMemoViewController {
+    private func navigationSetting(){
+        navigationItem.title = "날짜별 찾아보기"
+        navigationItem.leftBarButtonItem = backbutton()
+    }
+    
+    private func backbutton() -> UIBarButtonItem{
+        let backbutton = UIBarButtonItem.init(systemItem: .close, primaryAction: UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            dismiss(animated: true)
+        }))
+        return backbutton
+    }
 }

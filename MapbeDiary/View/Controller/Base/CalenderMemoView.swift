@@ -43,6 +43,7 @@ final class CalenderMemoView: BaseView {
         bind()
         
         collectioView.delegate = self
+        calenderView.setCurrentPage(Date(), animated: true)
     }
 
     

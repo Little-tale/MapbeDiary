@@ -17,6 +17,12 @@ final class DateFormetters {
     private let timeformetter = DateFormatter()
     private let calendar = Calendar.current
     
+    enum DayType {
+        case sat
+        case sun
+        case other
+    }
+    
     // 2024-03-09T07:27:03.815Z
     func localDate(_ dateString: String) -> String{
         // ISO8601DateFormatter의 옵션을 설정합니다.
@@ -54,7 +60,8 @@ final class DateFormetters {
         let someString = timeformetter.string(from: date)
         return someString
     }
-    
+
+
     func localDate(_ date: Date, style: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String{
         timeformetter.locale = .current
         timeformetter.timeZone = .current
@@ -66,6 +73,17 @@ final class DateFormetters {
         return someString
     }
     
+    func checkDaytype(_ date: Date) -> DayType {
+        let components = calendar.dateComponents([.weekday] , from: date)
+        guard let weekDay = components.weekday else { return .other}
+        switch weekDay {
+        case 7: return .sat
+        case 1: return .sun
+        default :
+            return .other
+        }
+    }
+    
     func calendarCheck(_ date: Date, compareFor: Date) -> Bool {
         let first = calendar.dateComponents([.year,.month,.day], from: date)
         let second = calendar.dateComponents([.year,.month,.day], from: compareFor)
@@ -73,7 +91,6 @@ final class DateFormetters {
         return  first.year == second.year &&
                 first.month == second.month &&
                 first.day == second.day
-        
     }
     
     func calendarStartEnd(date: Date) -> (start: Date, end: Date) {

@@ -14,7 +14,6 @@ class MapViewModel {
 
     let locationsOutput: Observable<[LocationMemo]?> = Observable(nil)
     
-
     let reloadInput: Observable<Void?> = Observable(nil)
     
     var repository = RealmRepository()
@@ -40,4 +39,6 @@ class MapViewModel {
         let locations = repository.findLocationMemoForFolder(folder: folder)
         locationsOutput.value = locations
     }
+    
+    
 }

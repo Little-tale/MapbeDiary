@@ -22,6 +22,7 @@ class CalenderMemoViewModel {
     let selectedLocationMemo: Observable<LocationMemo?> = Observable(nil)
     let minDateLocationMemo: Observable<LocationMemo?> = Observable(nil)
     let reloadTrigger: Observable<Void?> = Observable(nil)
+    let dismissTrigger: Observable<Void?> = Observable(nil)
     let countDate: Observable<Int?> = Observable(nil)
     
     
@@ -70,6 +71,7 @@ class CalenderMemoViewModel {
         guard let memos = locationMemos.value else { return }
         let memo = memos[indexPath.item]
         selectedLocationMemo.value = memo
+        dismissTrigger.value = ()
     }
     
 }

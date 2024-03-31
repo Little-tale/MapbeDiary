@@ -63,13 +63,9 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         checkDeviewlocationAuthorization() // 디바이스 권한
         addTestAnnotations() // 시작할때 폴더 기준으로
         settinglongPressClosure() // 롱프레스
-        userLocationAction() // 유저 버튼 액션
-        locationMemosButtonAction() // 메모 버튼 액션
-        moveToSettingBttonAction() // 세팅 버튼 액션
-        
+        settingMapButtonAction() // 버튼 액션들
         homeView.searchBar.delegate = self
-        
-        
+
     }
     
     // MARK: 맵뷰 세팅
@@ -142,13 +138,20 @@ extension MapViewController {
 
 // MARK: 버튼 액션
 extension MapViewController {
-    func userLocationAction(){
-        
+    
+    private func settingMapButtonAction(){
+        userLocationAction()
+        locationMemosButtonAction()
+        // movetoLocationListView()
+        moveToSettingBttonAction()
+        moveToCalendarButtonAction()
+    }
+    
+    private func userLocationAction(){
         homeView.buttonStack.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             
-            checkDeviewlocationAuthorization()
-            
+            checkDeviewlocationAuthorization() // 권한 확인
             if let locationInfo = homeView.locationManager.location {
                 
                 if !finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
@@ -161,7 +164,7 @@ extension MapViewController {
         }), for: .touchUpInside)
     }
     
-    func locationMemosButtonAction(){
+    private func locationMemosButtonAction(){
         homeView.buttonStack.locationMemosButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             removeExistingPanelIfNeeded { [weak self] in
@@ -172,7 +175,7 @@ extension MapViewController {
     }
     
     // MARK: 로케이션 메모들 리스트 뷰 이동
-    func movetoLocationListView(){
+    private func movetoLocationListView(){
         let vc = AllMemoLocationListViewController()
         let folder = SingleToneDataViewModel.shared.shardFolderOb.value
         vc.homeView.allMemoViewModel.inputTrigger.value = folder
@@ -180,8 +183,9 @@ extension MapViewController {
         vc.modalPresentationStyle = .popover
         present(vc, animated: true)
     }
+    
     // MARK: 세팅 뷰컨이동
-    func moveToSettingBttonAction(){
+    private func moveToSettingBttonAction(){
         homeView.buttonStack.settingButton.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             let vc = SettingViewController()
@@ -190,6 +194,27 @@ extension MapViewController {
             nvc.modalPresentationStyle = .fullScreen
             present(nvc, animated: true )
         }), for: .touchUpInside)
+    }
+    
+    // MARK: 캘린더 뷰 이동
+    func moveToCalendarButtonAction(){
+        homeView.buttonStack.calendarButton
+            .addAction(UIAction(handler: {[weak self] _ in
+                guard let self else { return }
+                let vc = CalenderMemoViewController()
+                vc.homeView.viewModel.folder.value = homeView
+                    .mapviewModel.folderInput.value
+                let nvc = UINavigationController(rootViewController: vc)
+                
+                vc.homeView.viewModel.selectedLocationMemo.bind { [weak self] memo in
+                    guard let self else { return }
+                    guard let memo else { return }
+                    getLocationInfo(memo: memo)
+                }
+                
+                nvc.modalPresentationStyle = .fullScreen
+                present(nvc, animated: true)
+            }), for: .touchUpInside)
     }
     
 }

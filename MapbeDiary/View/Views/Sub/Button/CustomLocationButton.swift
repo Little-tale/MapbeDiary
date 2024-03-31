@@ -14,6 +14,7 @@ class CustomLocationButton: UIButton {
         case AllMemo
         case setting
         case naviBackButton
+        case calendarButton
         
         var imageAsset: UIImage {
             switch self {
@@ -25,6 +26,8 @@ class CustomLocationButton: UIButton {
                 return UIImage(systemName: "gear.circle") ?? UIImage()
             case .naviBackButton:
                 return UIImage(systemName: "arrow.uturn.backward.circle.fill") ?? UIImage()
+            case .calendarButton:
+                return UIImage(systemName: "calendar.circle.fill") ?? .init()
             }
         }
     }
@@ -54,12 +57,16 @@ class CustomLocationButton: UIButton {
             setBackgroundImage(imageType.imageAsset, for: .normal)
             tintColor = .wheetBlack
         case .naviBackButton:
-            let imageView = UIImageView(image: imageType.imageAsset)
-            imageView.contentMode = .scaleAspectFit
-            imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-            addSubview(imageView)
-            frame = imageView.frame
-            tintColor = .wheetBlack
+            sttingSFImage( imageType.imageAsset,CGRect(x: 4, y: 0, width: 30, height: 30) ,.wheetBlack)
+            
+        case .calendarButton:
+            settingHomeButton()
+            sttingSFImage(
+                imageType.imageAsset,
+                CGRect(x: 2, y: 0, width: 47, height: 47),
+                .white,
+                .scaleAspectFill
+            )
         }
     }
     
@@ -68,6 +75,15 @@ class CustomLocationButton: UIButton {
         layer.shadowOpacity = 0.24
         layer.shadowRadius = 5
         layer.shadowOffset = CGSize(width: 0, height: 2)
+    }
+    
+    private func sttingSFImage(_ image: UIImage,_ react: CGRect ,_ color: UIColor? = nil,_ mode: UIView.ContentMode? = .scaleAspectFit){
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = mode ?? .scaleAspectFit
+        imageView.frame = react
+        addSubview(imageView)
+        frame = imageView.frame
+        tintColor = color
     }
     
     @objc

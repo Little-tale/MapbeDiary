@@ -13,6 +13,7 @@ class MapViewStackButtonView: UIStackView {
     let userLocationButton = CustomLocationButton(frame: .zero, imageType: .location)
     let locationMemosButton = CustomLocationButton(frame: .zero, imageType: .AllMemo)
     let settingButton = CustomLocationButton(frame: .zero, imageType: .setting)
+    let calendarButton = CustomLocationButton(frame: .zero, imageType: .calendarButton)
     
     
     override init(frame: CGRect) {
@@ -29,9 +30,9 @@ class MapViewStackButtonView: UIStackView {
     // 회고 -> 이걸로 순서를 바꾸어야 진짜 바뀜
     private func configureHirachy(){
         addArrangedSubview(settingButton)
+        addArrangedSubview(calendarButton)
         addArrangedSubview(locationMemosButton)
         addArrangedSubview(userLocationButton)
-        
     }
     
     private func setupUI(){
