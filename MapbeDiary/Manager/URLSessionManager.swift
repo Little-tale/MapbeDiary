@@ -9,51 +9,32 @@ import Foundation
 
 // MARK: API 타입 + 각 API의 에러 수집
 protocol APIType{
-    
     var query : [URLQueryItem]? {get} // API 쿼리
-    
     var header : [String: String] {get} // API 헤더
-    
     var method : String? {get} // API 메서드 정의 없으면 기본 GET
-    
     var schem : String?{get} // url 스키마 정의 없으면 기본 "https:"
-    
     var host: String {get} // url 호스트
-    
     var path: String {get} // url path
-    
     /// 에러코드에 따른 에러 케이스를 주셔야합니다.
     func errorCodeCase(stateCode: Int) -> ApiTypeError?
 }
 
 // MARK: API TypeError의 필수 요건
 protocol ApiTypeError: Error {
-    
     var errorCode: Int { get } // 에러코드에 따라 메시지가 반영됩니다.
-    
     var message: String { get } // 이 메시지가 구현됩니다.
-    
 }
 
 // MARK: URLSessinManger 에서 나올수 있는 대략적인 에러
 enum URLSessionManagerError: Error{
-    
     case nodata // 데이터가 없습니다.
-    
     case noResponse // 응답이 없습니다.
-    
     case errorResponseCode // 응답코드가 200이 아니며, 문서에도 없습니다.
-    
     case failRequest // 요청을 실패합니다.
-    
     case errorDecoding // 디코딩을 실패합니다.
-    
     case cantStatusCoding // 상태 코드로 변경할수 없습니다.
-    
     case componatsError // 컴포넌츠 변경에 문제가 발생했습니다.
-    
     case unknownError // 예상치 못한 경우 입니다.
-    
     case apiError(ApiTypeError) // API 관련 에러입니다.
     
     // MARK: 출시일때는 수정해야함.

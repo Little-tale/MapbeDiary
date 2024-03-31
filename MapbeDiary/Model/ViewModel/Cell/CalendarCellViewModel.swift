@@ -21,10 +21,13 @@ final class CalendarCellViewModel: ViewModelType {
     
     func trasform(_ input: Input) -> Output {
         let title = input.locationMemo.title
-        let date = input.locationMemo.regdate.localDate()
+        
+        let dateOf = input.locationMemo.regdate
+        let dateString = DateFormetters.shared.localDate(dateOf, style:.short, timeStyle: .short)
+        
         let url = findLocationImageData(input.locationMemo.id.stringValue)
         
-        return Output(imageData: url, titleLabel: title, dateLabel: date)
+        return Output(imageData: url, titleLabel: title, dateLabel: dateString)
     }
     
     private func findLocationImageData(_ id : String) -> URL? {

@@ -22,6 +22,17 @@ class CalenderMemoViewController: BaseHomeViewController<CalenderMemoView> {
     }
     private func bind(){
         homeView.viewModel.folder.value = homeView.viewModel.repository.findAllFolder().first
+        
+        homeView.viewModel.selectedLocationMemo.bind { [weak self] memo in
+            guard let self else { return }
+            guard let memo else { return }
+            print(memo)
+        }
+        homeView.viewModel.reloadTrigger.bind { [weak self] void in
+            guard let self,
+            let void else { return }
+            homeView.calenderView.reloadData()
+        }
     }
 
 }
@@ -55,11 +66,29 @@ extension CalenderMemoViewController: FSCalendarDelegate, FSCalendarDataSource, 
         return nil
     }
     
+    // MARK: 선택된 날짜 전달
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("선택 날짜",date)
         homeView.viewModel.date.value = date
     }
     
+    // MARK: 최저 날짜 선택
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        let result = homeView.viewModel.minDateLocationMemo.value
+        guard let result else {
+            return .init()
+        }
+        return result.regdate
+    }
     
+    // MARK: 최대 날짜 정하기
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+    
+    // MARK: 캘린더 이벤트 갯수
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        homeView.viewModel.eventDate.value = date
+        return homeView.viewModel.countDate.value ?? 0
+    }
     
 }

@@ -139,15 +139,27 @@ final class RealmRepository {
         return memo
     }
     
+    
     // MARK: 폴더와 날짜를 기준으로 필터링
     func findLocationMemos(folder: Folder, date: Date) -> [LocationMemo] {
         
         let result = DateFormetters.shared.calendarStartEnd(date: date)
-        print(result )
+        // print(result )
         let locationMemos = folder.LocationMemo.where { $0.regdate >= result.start && $0.regdate < result.end }
-        
         return Array(locationMemos)
     }
+    func findLocationMemosCount(_ folder: Folder, date: Date) -> Int {
+        let result = findLocationMemos(folder: folder, date: date)
+        return result.count
+    }
+    
+    func findMinDateLocationMemo(folder: Folder) -> LocationMemo? {
+        let locationMemo = folder.LocationMemo
+        let sorted = locationMemo.sorted(byKeyPath: "regdate", ascending: true)
+        // print("정보가 없나요? ",sorted.first)
+        return sorted.first
+    }
+    
     
     func findFirstLocationMemo() -> LocationMemo? {
         let first = realm.objects(locationMemoModel).first

@@ -33,22 +33,24 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
         titleLabel.text = output.titleLabel
         dateLabel.text = output.dateLabel
         
-        imageView.kf.indicatorType = .activity
-        
-        imageView.kf.setImage(with: output.imageData, options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100)))])
+        if let imageData = output.imageData {
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: imageData, options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100)))])
+        }
     }
     
     
+    
     override func configureLayout() {
-        
         imageView.snp.makeConstraints { make in
             make.verticalEdges.leading.equalTo(contentView.safeAreaLayoutGuide)
+            make.width.equalTo(imageView.snp.height)
         }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.top).offset(10)
-            make.height.equalTo(16)
             make.trailing.equalTo(sideButton.snp.leading).inset(4)
+            make.leading.equalTo(imageView.snp.trailing).offset(4)
         }
         
         sideButton.snp.makeConstraints { make in
@@ -61,6 +63,14 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
             make.trailing.equalTo(titleLabel)
             make.height.equalTo(14)
         }
+    }
+
+    
+    override func designView() {
+        titleLabel.numberOfLines = 2
+        titleLabel.textAlignment = .right
+        titleLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        dateLabel.font = .systemFont(ofSize: 14, weight: .thin)
     }
 }
 

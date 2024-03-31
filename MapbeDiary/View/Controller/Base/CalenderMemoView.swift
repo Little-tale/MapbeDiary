@@ -41,7 +41,10 @@ final class CalenderMemoView: BaseView {
         setDataSource()
         setSnapShot()
         bind()
+        
+        collectioView.delegate = self
     }
+
     
     override func configureLayout() {
         calenderView.snp.makeConstraints { make in
@@ -72,7 +75,6 @@ final class CalenderMemoView: BaseView {
         })
     }
     private func setDataSource(){
-        
         dataSource = DataSource(collectionView: collectioView, cellProvider: {[weak self] collectionView, indexPath, itemIdentifier in
             guard let cell = self?.calendarCellRegist else { return .init() }
             return collectionView.dequeueConfiguredReusableCell(using: cell, for: indexPath, item: itemIdentifier)
@@ -115,7 +117,11 @@ final class CalenderMemoView: BaseView {
     }
    
 }
-
+extension CalenderMemoView : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectIndexPath.value = indexPath
+    }
+}
 
 
 // MARK: 캘린더
@@ -198,5 +204,9 @@ extension CalenderMemoView {
         
         calenderView.allowsMultipleSelection = false
         calenderView.placeholderType = .none
+        
+        
     }
+    
+    
 }

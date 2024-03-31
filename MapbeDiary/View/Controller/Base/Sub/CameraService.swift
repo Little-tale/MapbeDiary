@@ -31,7 +31,6 @@ final class ImageService: NSObject {
     private var complitionHandler: ( ( Result<[UIImage]?, ImageSearviceError> ) -> Void )?
     
     /// 이미지 모드를 정할수 있습니다. 비선택 일시 Single로 합니다.
-
     private var pickerMode: ImagePickMode = .camera
     
     /// 피커를 띄울 부컨과 픽 모드를 선택합니다.
@@ -49,6 +48,26 @@ final class ImageService: NSObject {
             presentUIImagePickerController()
         case .maximer(let int):
             presentPHPickerViewController(max: int)
+        }
+    }
+    
+    // MARK: 카메라 권한 확인
+    /// 이미지 권한을 요청하시면 결론을 내어 드려요.
+    func checkCameraPermission(compltion: @escaping (Bool) -> Void) {
+        print("이미지 서비스의 카메라 권한 확인 서비스가 시작되었습니다. ")
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined: // 권환확인 한번도 안함
+            AVCaptureDevice.requestAccess(for: .video) { bool in
+                DispatchQueue.main.async {
+                    compltion(bool)
+                }
+            }
+        case .restricted, .denied: // 거부된 상황
+            compltion(false)
+        case .authorized: // 허용
+            compltion(true)
+        @unknown default: // 모르는 상황
+            compltion(false)
         }
     }
     
@@ -75,25 +94,6 @@ final class ImageService: NSObject {
         DispatchQueue.main.async {
             [weak self] in
             self?.presntationViewController?.present(picker, animated: true)
-        }
-    }
-    
-    // MARK: 카메라 권한 확인
-    func checkCameraPermission(compltion: @escaping (Bool) -> Void) {
-        print("이미지 서비스의 카메라 권한 확인 서비스가 시작되었습니다. ")
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .notDetermined: // 권환확인 한번도 안함
-            AVCaptureDevice.requestAccess(for: .video) { bool in
-                DispatchQueue.main.async {
-                    compltion(bool)
-                }
-            }
-        case .restricted, .denied: // 거부된 상황
-            compltion(false)
-        case .authorized: // 허용
-            compltion(true)
-        @unknown default: // 모르는 상황
-            compltion(false)
         }
     }
     

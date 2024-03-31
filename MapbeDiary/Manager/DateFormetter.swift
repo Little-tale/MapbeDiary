@@ -55,6 +55,17 @@ final class DateFormetters {
         return someString
     }
     
+    func localDate(_ date: Date, style: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String{
+        timeformetter.locale = .current
+        timeformetter.timeZone = .current
+        
+        timeformetter.dateStyle = style
+        timeformetter.timeStyle = timeStyle
+        
+        let someString = timeformetter.string(from: date)
+        return someString
+    }
+    
     func calendarCheck(_ date: Date, compareFor: Date) -> Bool {
         let first = calendar.dateComponents([.year,.month,.day], from: date)
         let second = calendar.dateComponents([.year,.month,.day], from: compareFor)
