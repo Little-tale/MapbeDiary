@@ -61,11 +61,13 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         subscribe()
         settingMapView() /// 맵뷰 세팅
         checkDeviewlocationAuthorization() // 디바이스 권한
-        addTestAnnotations() // 시작할때 폴더 기준으로
         settinglongPressClosure() // 롱프레스
         settingMapButtonAction() // 버튼 액션들
         homeView.searchBar.delegate = self
-
+        
+      
+        addTestAnnotations() // 시작할때 폴더 기준으로
+      
     }
     
     // MARK: 맵뷰 세팅
@@ -98,6 +100,7 @@ extension MapViewController {
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
         print("in Out")
+        removeAll()
         if let locations = homeView.mapviewModel.locationsOutput.value {
             print("in Out!!!")
             locations.forEach { [weak self] location in
@@ -125,7 +128,7 @@ extension MapViewController {
         anno.coordinate = cl2
         let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapTextSection.noneName , coordinate: cl2, bool: true)
         homeView.mapView.addAnnotation(location)
-        setRegion(location: location.coordinate)
+        setRegion(location: location.coordinate,latM: 500,longM: 500)
         homeView.mapView.selectAnnotation(location, animated: true)
     }
     
@@ -307,9 +310,14 @@ extension MapViewController: MKMapViewDelegate { // 수정해
             homeView.mapView.setCenter(annotaion.coordinate, animated: true)
             //locationModify(annotaion) // 일단 이렇게
             locationDetailModify(annotaion)
+        } else {
+            let clust = view.annotation
+            if let location = clust?.coordinate {
+                setRegion(location: location, latM: 300, longM: 300)
+            }
         }
     }
-    
+
     private func locationModify(_ anno: CustomAnnotation){
         if let memoid = anno.locationId {
             updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] viewController in
@@ -467,7 +475,7 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
       
         if let location = locations.last?.coordinate{
-            setRegion(location: location)
+            setRegion(location: location,latM: 800,longM: 800)
             homeView.locationManager.distanceFilter = 150 // m단위 변화 할때만 호출
             // homeView.locationManager.stopUpdatingLocation()
         }else {
@@ -475,8 +483,8 @@ extension MapViewController: CLLocationManagerDelegate {
         }
     }
     // MARK: 셋 리전
-    func setRegion(location: CLLocationCoordinate2D){
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 800, longitudinalMeters: 800)
+    func setRegion(location: CLLocationCoordinate2D, latM: Double, longM: Double){
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: latM, longitudinalMeters: longM)
         homeView.mapView.setRegion(region, animated: true)
     }
     

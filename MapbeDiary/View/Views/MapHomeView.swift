@@ -47,6 +47,8 @@ final class MapHomeView: BaseView {
     }
     override func register() {
         mapView.register(ArtWorkMarkerView.self, forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusebleIdentifier)
+    
+        
         settingMapView() // MapView Setting
         settingLongTabForMapView()
     }

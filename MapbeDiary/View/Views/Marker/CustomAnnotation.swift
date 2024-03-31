@@ -23,8 +23,10 @@ final class CustomAnnotation: NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.title = title
         self.locationId = memoId
-        self.long = bool ?? false 
+        self.long = bool ?? false
+        
     }
+    
     
 }
 
@@ -39,8 +41,13 @@ final class ArtWorkMarkerView: MKAnnotationView {
             image = nil
             imageView?.image = nil
             imageView = nil
+
+            //displayPriority = .defaultLow
+            
             guard let artWork = newValue as? CustomAnnotation else { return }
-           
+            
+            //
+            
             guard let memoId = artWork.locationId else {
                 canShowCallout = true
                 imageView = nil
@@ -64,7 +71,10 @@ final class ArtWorkMarkerView: MKAnnotationView {
             }
             canShowCallout = true
             calloutOffset = CGPoint(x: 0, y: 5)
+            
+            clusteringIdentifier = "clllasdllasdl"
         }
+
     }
     
     
@@ -78,9 +88,11 @@ final class ArtWorkMarkerView: MKAnnotationView {
         
     }
     
+    
     deinit {
         print("dinit: ", self)
     }
+    
 }
 
 

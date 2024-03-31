@@ -27,6 +27,7 @@ class CalenderMemoViewModel {
     
     
     init() {
+       
         date.bind { [weak self] date in
             guard let self else { return }
             guard let date else { return }
