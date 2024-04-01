@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           }
         }
         return true
+        // 깃 재연결 테스트를 위한 주석
     }
 
     // MARK: UISceneSession Lifecycle
