@@ -28,12 +28,17 @@ enum SettingSection: CaseIterable {
     case delete
     
     var data: [SettingModel] {
+        var version = "1.0.0"
+        if let reactVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            version = reactVersion
+        }
+        
         switch self {
         case .setting:
             return  [
                 SettingModel(
                     title: "Setting_section_version".localized,
-                    detail: "1.0",
+                    detail: version,
                     actionType: .appVersion
                 ),
                 
