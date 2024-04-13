@@ -99,8 +99,8 @@ Too many RelationShip 을 컨트롤하였으며, 각각의 에러들을 Enum으�
 
 ![6](https://github.com/Little-tale/MapbeDiary/assets/116441522/eaaac89f-4d7c-424e-b13f-1e6269991f23)
 
-## Detail메모 삭제와
-Location 삭제
+## Detail메모 삭제와 Location 삭제
+
 ![7](https://github.com/Little-tale/MapbeDiary/assets/116441522/b9a57886-9817-4d40-8b22-ea63ce033418)
 ## longPress 와 저장
 
