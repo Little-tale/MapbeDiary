@@ -102,7 +102,8 @@ final class FileManagers {
               let image = UIImage(data: imageData) else {
             return false
         }
-        let resizing = image.resizingImage(targetSize: CGSize(width: 30, height: 30))
+        // TEST 영역 // 30 30 이였고 다른 메서드 였다. 
+        let resizing = image.resizeImageTo(CGSize(width: 40, height: 40))
         let imageDa = resizing?.jpegData(compressionQuality: 1)
         
         guard let imageDa else { return false }

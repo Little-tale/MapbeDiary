@@ -47,7 +47,6 @@ extension AboutMemoViewController {
             guard let self else { return }
             print("버튼클릭")
             homeView.memoViewModel.emptyModel.value.memoText = homeView.memoTextView.text
-
             homeView.memoViewModel.saveInput.value = ()
         }), for: .touchUpInside)
     }
@@ -88,7 +87,6 @@ extension AboutMemoViewController {
         let camera = ActionRouter().actions(.camera, actionHandler: {
             [weak self] in
             guard let self else { return }
-           
             if checkMax(max: max){
                 checkCameraAuthorization()
             }
@@ -163,7 +161,6 @@ extension AboutMemoViewController {
     
     func checkCameraAuthorization() {
         imageService = ImageService(presntationViewController: self, pickerMode: .camera)
-        
         imageService?.checkCameraPermission(compltion: { [weak self] bool in
             guard let self else { return }
             if bool {
@@ -190,9 +187,7 @@ extension AboutMemoViewController {
             }
         })
     }
-    
 
-    
 }
 
 

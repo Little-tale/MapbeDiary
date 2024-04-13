@@ -28,7 +28,6 @@ final class CalenderMemoView: BaseView {
     
     private var isAnimating = false
     
-
     private var calendarCellRegist: UICollectionView.CellRegistration<CalendarCollectionViewCell,LocationMemo>?
 
     override func configureHierarchy() {

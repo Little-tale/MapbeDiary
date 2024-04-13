@@ -23,10 +23,12 @@ enum ImageSearviceError: Error {
 /// 이미지 관련된 기능을 제공하는 서비스 클래스 입니다.
 final class ImageService: NSObject {
     
+    // 반환할 Result 를 정의
     typealias ImageResult = ( Result<[UIImage]?, ImageSearviceError> ) -> Void
     
     /// 이미지 피커를 띄울 뷰컨을 정의해주세요
     private weak var presntationViewController: UIViewController?
+    
     /// 해당 핸들러를 통해 이미지들을 반환해드립니다.
     private var complitionHandler: ( ( Result<[UIImage]?, ImageSearviceError> ) -> Void )?
     
@@ -37,6 +39,32 @@ final class ImageService: NSObject {
     init(presntationViewController: UIViewController? = nil, pickerMode: ImagePickMode) {
         self.presntationViewController = presntationViewController
         self.pickerMode = pickerMode
+    }
+   
+    
+    // MARK: 카메라 선택시
+    private func presentUIImagePickerController() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera // 카메라로 설정합니다.
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true // 편집을 허용합니다.
+        DispatchQueue.main.async {
+            [weak self] in
+            self?.presntationViewController?.present(imagePicker, animated: true)
+        }
+    }
+    // MARK: 갤러리 선택시
+    private func presentPHPickerViewController(max: Int) {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = max // 선택할수 있는 개수를 정합니다.
+        config.filter = .images // 선택할수 있는 유형을 이미지로 제한합니다.
+        
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        DispatchQueue.main.async {
+            [weak self] in
+            self?.presntationViewController?.present(picker, animated: true)
+        }
     }
     
     /// 이미지를 가져와 드립니다. 그과정에서 어떤 (imagePick or PHPicker ) 는 여기서 해결합니다.
@@ -68,32 +96,6 @@ final class ImageService: NSObject {
             compltion(true)
         @unknown default: // 모르는 상황
             compltion(false)
-        }
-    }
-    
-    // MARK: 카메라 선택시
-    private func presentUIImagePickerController() {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera // 카메라로 설정합니다.
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true // 편집을 허용합니다.
-        DispatchQueue.main.async {
-            [weak self] in
-            self?.presntationViewController?.present(imagePicker, animated: true)
-        }
-    }
-    // MARK: 갤러리 선택시
-    private func presentPHPickerViewController(max: Int) {
-        var config = PHPickerConfiguration()
-        config.selectionLimit = max // 선택할수 있는 개수를 정합니다.
-        config.filter = .images // 선택할수 있는 유형을 이미지로 제한합니다.
-        
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = self
-        DispatchQueue.main.async {
-            [weak self] in
-            self?.presntationViewController?.present(picker, animated: true)
         }
     }
     
@@ -138,7 +140,6 @@ extension ImageService: PHPickerViewControllerDelegate {
                         
                         return
                     }
-                    
                     // 빈 이미지 배열에 추가시킵니다.
                     images.append(image)
                 }
@@ -156,7 +157,7 @@ extension ImageService: PHPickerViewControllerDelegate {
 }
 
 extension ImageService: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+    /// 이미지 피커
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // 사용자가 마무리 됨을 감지합니다.
         picker.dismiss(animated: true)
@@ -169,7 +170,7 @@ extension ImageService: UIImagePickerControllerDelegate, UINavigationControllerD
         // 성공시
         complitionHandler?(.success([image]))
     }
-    
+    /// 이미지 피커 뒤로가기 시도시
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
         complitionHandler?(.success(nil))

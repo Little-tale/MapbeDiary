@@ -158,20 +158,38 @@ extension UIImage {
     
     // MARK: 이미지 리사이징
     func resizingImage(targetSize: CGSize) -> UIImage?{
+        // 원하는 CGSize(width: 원하는하는 넓이, height: 원하는 높이)
+        // MARK: 각각의 원사이즈의 넓이와 높이를 대치해서 나눕니다.
+        // 예를 들어 100 x 150 사이즈를 50 x 50 으로 바꾼다고 가정해보죠.
         let widthScale = targetSize.width / self.size.width
         let heightScale = targetSize.height / self.size.height
+        // 그럼 각각의 스케일이 0.5 & 0.333... 이 될 것이죠?
+        let minAbout = min(widthScale, heightScale) // 그중의 최소를 찾는겁니다.
+        //  넓이 기준인 0.333... 이  나오겠네요!
         
-        let minAbout = min(widthScale, heightScale)
-        
+        // 그럼 다시 원사이즈인 100 x 150을 (100 * 0.3333 ) "" (150 * 0.3333)를 합니다.
         let scaledImageSize = CGSize(width: size.width * minAbout, height: size.height * minAbout)
         
+        // 그럼 사이즈는 33.3.. x 49.95.. 가 되겠군요
+        // 새로 그릴 바탕이 될 UIGraphicsImageRenderer 를 생성합니다.
         let render = UIGraphicsImageRenderer(size: scaledImageSize)
         
+        // 새로 그려질 이미지는
         let scaledImage = render.image { [weak self] _ in
             guard let self else { return }
+            // 위에서 계산된 크기로 그려집니다.
             draw(in: CGRect(origin: .zero, size: scaledImageSize))
         }
         return scaledImage
+    }
+    // 간단히 50 x 50 으로 만들고 싶다고 생각해봅시다.
+    func resizeImageTo(_ targetSize: CGSize) -> UIImage? {
+        // 그래픽 이미지 렌더러( 빈바탕 그린다고 생각해 보죠) 를 생성한후
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        // 그 바탕에 원하는 크기로 그리는 방법입니다.
+        return renderer.image { _ in
+            draw(in: CGRect(origin: .zero, size: targetSize))
+        }
     }
     
     // MARK: 최신 방법

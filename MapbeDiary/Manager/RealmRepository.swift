@@ -269,6 +269,7 @@ final class RealmRepository {
     // MARK: 모든 메모를 가져옵니다. V
     /// 모든 메모를 가져옵니다.
     func findAllMemo() -> Results<LocationMemo>{
+
         return realm.objects(LocationMemo.self)
     }
     

@@ -230,13 +230,15 @@ extension AddLocationMemoViewController {
     
     // 카메라 권한 확인 로직입니다.
     func checkCameraAuthorization() {
+        ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
         imageService = ImageService(presntationViewController: self, pickerMode: .camera)
+        // 이미지 서비스를 통해 권한 확인을 합니다.
         imageService?.checkCameraPermission(compltion: { [weak self] bool in
             guard let self else { return }
             if !bool {
-                cameraSettingAlert()
+                cameraSettingAlert() // 권한이 거부 되었거든 설정으로 안내할 알렛
             } else {
-                startImage()
+                startImage() // 이미지 시작!
             }
         } )
     }
