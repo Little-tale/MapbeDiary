@@ -8,7 +8,7 @@
 만약 이러한 순간들을 보다 구체적으로 기록으로 남길 수 있다면 어떨까요?
 > 
 
-# 소개 사진 ( 이미지 다시 찍어 놓기…. )
+# 소개 사진 
 
 ![GitImage 001](https://github.com/Little-tale/MapbeDiary/assets/116441522/ad505d13-463c-4b0a-91a1-905650908e67)
 
@@ -35,7 +35,7 @@
 - MVVM / Facade /  Router / Repository / strategy / SingleTone
 - URLSession / Decodable
 - CodeBaseUI / SnapKit /  Compositional
-- Realm(Swift) / **FireBase Analytics** / ****FireBase **Crashlytics**
+- Realm(Swift) / **FireBase Analytics** / **FireBase **Crashlytics**
 - FloatingPanel / IQKeyboard / Toast
 - API : KAKAO REST API ( 키워드로 장소 검색하기, 좌표로 주소 변환하기 )
 
@@ -82,8 +82,7 @@ Too many RelationShip 을 컨트롤하였으며, 각각의 에러들을 Enum으�
 
 ![2](https://github.com/Little-tale/MapbeDiary/assets/116441522/186528e0-1492-485e-8530-4cb3094a99b3)
 
-## Detail 메모 
-수정
+## Detail 메모 수정
 
 ![3](https://github.com/Little-tale/MapbeDiary/assets/116441522/ef0fc024-182e-48c6-973e-9c20f9b73a38)
 
