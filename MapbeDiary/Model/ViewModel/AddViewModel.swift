@@ -100,21 +100,33 @@ class AddViewModel {
         }
     }
     
-    
-    // MARK: API 요청을 통해 현지 정보를 가져옵니다.
-    private func apiRequest(lat: String, lon: String, folder: Folder){
-        print(lat, lon)
-        URLSessionManager.shared.fetch(type: KaKakaoCordinateModel.self, api: KakaoApiModel.cordinate(x: lon, y: lat)) {
-            [weak self] results in
-            guard let self else { return }
-            switch results {
-            case .success(let success):
-                urlProccing(model:success, folder: folder)
-            case .failure(let fail): print("카카오 에러쓰")
-                urlErrorOutPut.value = fail
+    /*
+     해당 API 요청건도 수정해 보겠습니다.
+     */
+// MARK: API 요청을 통해 현지 정보를 가져옵니다.
+    private
+    func apiRequest(lat: String, lon:String, folder: Folder) {
+        Task {
+            do {
+                let result = try await URLSessionManagerForConcurrency.shared.fetch(
+                    type: KaKakaoCordinateModel.self,
+                    apiType: KakaoApiModel.cordinate(
+                        x: lon,
+                        y: lat
+                    )
+                )
+                DispatchQueue.main.async { [ unowned self ] in
+                    urlProccing(model: result, folder: folder)
+                }
+            } catch let error as URLSessionManagerError {
+                urlErrorOutPut.value = error
+            } catch {
+                urlErrorOutPut.value = .unknownError
             }
         }
     }
+    
+    
     // MARK: 네트워크 없을때 작동합니다.
     private func noNetworkProcecing(_ model: addModel){
         proceccingSuccessOutPut.value = addViewOutStruct()
