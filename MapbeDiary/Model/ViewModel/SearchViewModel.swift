@@ -21,7 +21,7 @@ struct SearchModel {
 
 
 
-class SearchViewModel {
+final class SearchViewModel {
     
     // MARK: Input
     var searchTextOb: Observable<SearchModel?> = Observable(nil)
@@ -51,25 +51,36 @@ class SearchViewModel {
             requestText(data)
         }
     }
-
-    private func requestText(_ model: SearchModel) {
-        URLSessionManager.shared.fetch(type: KakaoLocalModel.self, api: KakaoApiModel.keywordLocation(text: model.searchText, page: currentPage.value ?? 1, x: model.long, y: model.lat)) {
-            [weak self] result in
-            guard let self else {return}
-            switch result{
-            case .success(let data):
-                endPageBool = data.meta.isEnd
-                print("마지막 페이지",endPageBool ?? "")
-                outPutModel.value?.append(contentsOf: data.documents)
-        
-            case .failure(let fail):
-                outPutError.value = fail
+    /*
+     검색 쪽을 한번 Concurrency 로 변경해 보겠습니다.
+     */
+    
+    private
+    func requestText(_ model: SearchModel) {
+        Task {
+            do {
+                let result = try await URLSessionManagerForConcurrency.shared.fetch(
+                    type: KakaoLocalModel.self,
+                    apiType: KakaoApiModel.keywordLocation(
+                        text: model.searchText,
+                        page: currentPage.value ?? 1,
+                        x: model.long,
+                        y: model.lat
+                    )
+                )
+                endPageBool = result.meta.isEnd
+                outPutModel.value?.append(contentsOf: result.documents)
+            } catch let error as URLSessionManagerError {
+                outPutError.value = error
+            } catch {
+                outPutError.value = .unknownError
             }
         }
     }
     
+    
     deinit {
-        print("사라질께요!", self)
+        print("SearchViewModel: Deinit")
     }
     
 }

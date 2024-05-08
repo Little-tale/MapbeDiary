@@ -76,6 +76,7 @@
 		7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */; };
 		7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */; };
 		7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */; };
+		7B80DA262BEBA132004D025A /* URLSessionManagerForConcurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80DA252BEBA132004D025A /* URLSessionManagerForConcurrency.swift */; };
 		7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */; };
 		7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373342B9D86CC0016E851 /* SearchViewController.swift */; };
 		7BA373372B9D86FB0016E851 /* SearchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373362B9D86FB0016E851 /* SearchBaseView.swift */; };
@@ -202,6 +203,7 @@
 		7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
 		7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardBaseView.swift; sourceTree = "<group>"; };
 		7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
+		7B80DA252BEBA132004D025A /* URLSessionManagerForConcurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManagerForConcurrency.swift; sourceTree = "<group>"; };
 		7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
 		7BA373342B9D86CC0016E851 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BA373362B9D86FB0016E851 /* SearchBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseView.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
 				7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */,
 				7BA827372BB1951700227F63 /* ImageChach.swift */,
+				7B80DA252BEBA132004D025A /* URLSessionManagerForConcurrency.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -865,6 +868,7 @@
 				7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */,
 				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
+				7B80DA262BEBA132004D025A /* URLSessionManagerForConcurrency.swift in Sources */,
 				7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */,
 				7BF0A7F02BA6B8A800D40942 /* CenterFlowLayout.swift in Sources */,
 				7B30DD752BAC359E00D789B5 /* WebHomeView.swift in Sources */,
