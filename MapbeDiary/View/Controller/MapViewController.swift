@@ -57,6 +57,7 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     var floatPanel: FloatingPanelController?
     
     var ifURL: String?
+//    var isActive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,19 +67,34 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         settinglongPressClosure() // 롱프레스
         settingMapButtonAction() // 버튼 액션들
         homeView.searchBar.delegate = self
-        
-      
+        foreGroudWidget()
         addTestAnnotations() // 시작할때 폴더 기준으로
         
         NotificationCenter.default.addObserver(self, selector: #selector(widgetNV), name: .getWidget, object: nil)
         
     }
     
+   
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+////        isActive = true
+//       
+//       
+//    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        isActive = false
+//    
+//    }
     
     func foreGroudWidget(){
         if let ifURL {
             if ifURL == "widget://Search"{
                 homeView.searchBar.becomeFirstResponder()
+            }
+            else {
+                homeView.searchBar.text = ifURL
             }
             self.ifURL = nil
         }
@@ -86,6 +102,9 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     
     @objc
     func widgetNV(_ noti: Notification) {
+//        guard isActive == true else { return }
+       
+        
         if let value = noti.object as? String {
             if value == "widget://Search" {
                 homeView.searchBar.becomeFirstResponder()
@@ -93,10 +112,6 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        foreGroudWidget()
-    }
     // MARK: 맵뷰 세팅
     func settingMapView(){
         

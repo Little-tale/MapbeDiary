@@ -11,7 +11,7 @@
 			<string>widget://Search</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Search</string>
+				<string>widget</string>
 			</array>
 		</dict>
 	</array>

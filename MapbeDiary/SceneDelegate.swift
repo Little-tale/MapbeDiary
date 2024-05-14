@@ -17,8 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-    
-        
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         // MARK: 아이큐 키보드
@@ -33,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SingleToneDataViewModel.shared.shardFolderOb.value = folder
             let vc = MapViewController()
             if let url =  connectionOptions.urlContexts.first?.url {
-                vc.ifURL = url.description
+                vc.ifURL = url.absoluteString
             }
             window?.rootViewController = MapViewController()
             //CalenderMemoViewController()
