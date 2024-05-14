@@ -59,6 +59,7 @@
 		7B2D774D2BF27DEC00D51F49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */; };
 		7B2D77512BF27DEC00D51F49 /* SearchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7B2D77412BF27DEA00D51F49 /* SearchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7B2D775D2BF360B200D51F49 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D775C2BF360B200D51F49 /* TestView.swift */; };
+		7B2D77602BF3798600D51F49 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D775F2BF3798600D51F49 /* Notification.swift */; };
 		7B30DD732BAC190800D789B5 /* SettingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */; };
 		7B30DD752BAC359E00D789B5 /* WebHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD742BAC359E00D789B5 /* WebHomeView.swift */; };
 		7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */; };
@@ -215,6 +216,7 @@
 		7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B2D774E2BF27DEC00D51F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B2D775C2BF360B200D51F49 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		7B2D775F2BF3798600D51F49 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationView.swift; sourceTree = "<group>"; };
 		7B30DD742BAC359E00D789B5 /* WebHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebHomeView.swift; sourceTree = "<group>"; };
 		7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewModel.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
+				7B2D775E2BF3797C00D51F49 /* Extention */,
 				7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */,
 				7B1137852B99BF4F00D6BBD1 /* Section */,
 				7B1137742B99AC5700D6BBD1 /* View */,
@@ -572,6 +575,14 @@
 				7B2D774E2BF27DEC00D51F49 /* Info.plist */,
 			);
 			path = SearchWidget;
+			sourceTree = "<group>";
+		};
+		7B2D775E2BF3797C00D51F49 /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				7B2D775F2BF3798600D51F49 /* Notification.swift */,
+			);
+			path = Extention;
 			sourceTree = "<group>";
 		};
 		7B4F42862BB82ACD0081369D /* MordenCollectionViewLayout */ = {
@@ -962,6 +973,7 @@
 				7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */,
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */,
+				7B2D77602BF3798600D51F49 /* Notification.swift in Sources */,
 				7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */,
 				7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,

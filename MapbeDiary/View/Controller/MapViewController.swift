@@ -56,6 +56,8 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     
     var floatPanel: FloatingPanelController?
     
+    var ifURL: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         subscribe()
@@ -67,9 +69,34 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         
       
         addTestAnnotations() // 시작할때 폴더 기준으로
-      
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(widgetNV), name: .getWidget, object: nil)
+        
     }
     
+    
+    func foreGroudWidget(){
+        if let ifURL {
+            if ifURL == "widget://Search"{
+                homeView.searchBar.becomeFirstResponder()
+            }
+            self.ifURL = nil
+        }
+    }
+    
+    @objc
+    func widgetNV(_ noti: Notification) {
+        if let value = noti.object as? String {
+            if value == "widget://Search" {
+                homeView.searchBar.becomeFirstResponder()
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        foreGroudWidget()
+    }
     // MARK: 맵뷰 세팅
     func settingMapView(){
         

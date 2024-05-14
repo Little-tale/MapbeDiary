@@ -13,7 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+   
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+    
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
@@ -25,8 +29,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NetWorkServiceMonitor.shared.startMonitor() // 네트워크 상태 감시
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {
-            
+            print("Widget : 제발1 ")
             SingleToneDataViewModel.shared.shardFolderOb.value = folder
+            let vc = MapViewController()
+            if let url =  connectionOptions.urlContexts.first?.url {
+                vc.ifURL = url.description
+            }
             window?.rootViewController = MapViewController()
             //CalenderMemoViewController()
             window?.makeKeyAndVisible()
@@ -41,8 +49,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
         }
         print(url)
-    }
+        print("Widget : 제발2 ")
+        print("openURLContexts",url)
+        print("Widget : url")
 
+        NotificationCenter.default.post(name: .getWidget, object: url.description)
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
