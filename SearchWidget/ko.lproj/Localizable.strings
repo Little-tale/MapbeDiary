@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  MapbeDiary
+
+  Created by Jae hyung Kim on 5/28/24.
+  
+*/
+
+"Widget_placholoder" = "장소를 검색해 보세요";
+
+"Widget_main_Text" = "오늘은 어디서";
+
+"Widget_Sub_Text" = "추억을 쌓고 싶으신가요?";

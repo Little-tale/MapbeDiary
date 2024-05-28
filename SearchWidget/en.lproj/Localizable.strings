@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  MapbeDiary
+
+  Created by Jae hyung Kim on 5/28/24.
+  
+*/
+
+"Widget_placholoder" = "Search for a place";
+
+"Widget_main_Text" = "Where do you want to";
+
+"Widget_Sub_Text" = "make memories today?";

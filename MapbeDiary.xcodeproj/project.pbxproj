@@ -66,6 +66,8 @@
 		7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */; };
 		7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */; };
 		7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */; };
+		7B38745A2C059DBB00C24827 /* LocalLizeTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3874572C059BF200C24827 /* LocalLizeTexts.swift */; };
+		7B38745B2C059E0E00C24827 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B3874542C059B1D00C24827 /* Localizable.strings */; };
 		7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */; };
 		7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */; };
 		7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */; };
@@ -223,6 +225,9 @@
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
 		7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIndicator.swift; sourceTree = "<group>"; };
+		7B3874552C059B1D00C24827 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7B3874572C059BF200C24827 /* LocalLizeTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLizeTexts.swift; sourceTree = "<group>"; };
+		7B3874592C059C9500C24827 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationButton.swift; sourceTree = "<group>"; };
 		7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MordernCollectionViewLayout.swift; sourceTree = "<group>"; };
 		7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoViewModel.swift; sourceTree = "<group>"; };
@@ -573,6 +578,8 @@
 				7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */,
 				7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */,
 				7B2D774E2BF27DEC00D51F49 /* Info.plist */,
+				7B3874542C059B1D00C24827 /* Localizable.strings */,
+				7B3874572C059BF200C24827 /* LocalLizeTexts.swift */,
 			);
 			path = SearchWidget;
 			sourceTree = "<group>";
@@ -866,6 +873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B2D774D2BF27DEC00D51F49 /* Assets.xcassets in Resources */,
+				7B38745B2C059E0E00C24827 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,6 +1025,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B38745A2C059DBB00C24827 /* LocalLizeTexts.swift in Sources */,
 				7B2D77492BF27DEA00D51F49 /* SearchWidgetBundle.swift in Sources */,
 				7B2D774B2BF27DEA00D51F49 /* SearchWidget.swift in Sources */,
 			);
@@ -1056,6 +1065,15 @@
 			children = (
 				7B11376B2B99A98000D6BBD1 /* en */,
 				7B11376D2B99A99F00D6BBD1 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		7B3874542C059B1D00C24827 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B3874552C059B1D00C24827 /* en */,
+				7B3874592C059C9500C24827 /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

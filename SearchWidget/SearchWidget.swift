@@ -68,7 +68,7 @@ struct SearchBarView: View {
     var logoView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("이번엔 어디서")
+                Text(LocalLizeTexts.mainText)
                     .multilineTextAlignment(.leading)
                     .padding(.leading)
                     .font(.title2)
@@ -81,7 +81,7 @@ struct SearchBarView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 2))
             }
             
-            Text("추억을 쌓고 싶으신가요?")
+            Text(LocalLizeTexts.subText)
                 .multilineTextAlignment(.leading)
                 .padding(.leading)
                 .font(.subheadline)
@@ -100,7 +100,7 @@ struct FakeSearchView: View {
                     .foregroundStyle(.orange)
                     .frame(width: 25,height: 25)
                     .padding(.leading)
-                Text("장소를 검색해 보세요")
+                Text(LocalLizeTexts.placholder)
                     .font(.callout)
                     .foregroundStyle(.gray)
                     .padding(.leading, 4)
@@ -129,10 +129,6 @@ struct FakeSearchView: View {
                     .stroke(Color.orange, lineWidth: 1.4)
             )
         })
-                //        Link(destination: URL(string: "widget://Search")!,
-                //             label: {
-                //
-                //        })
     }
 }
 
