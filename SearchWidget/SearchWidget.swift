@@ -58,6 +58,7 @@ struct SearchBarView: View {
     var body: some View {
         VStack {
             logoView
+            Spacer()
             FakeSearchView()
                 .widgetURL(URL(string: "widget://Search"))
             Spacer()
@@ -65,12 +66,26 @@ struct SearchBarView: View {
     }
     
     var logoView: some View {
-        HStack {
-            Spacer()
-            Image("logo")
-                .resizable()
-                .frame(width: 20,height: 20)
-                .clipShape(RoundedRectangle(cornerRadius: 2))
+        VStack(alignment: .leading) {
+            HStack {
+                Text("이번엔 어디서")
+                    .multilineTextAlignment(.leading)
+                    .padding(.leading)
+                    .font(.title2)
+                    .bold()
+                    .padding(.top)
+                Spacer()
+                Image("logo")
+                    .resizable()
+                    .frame(width: 20,height: 20)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
+            }
+            
+            Text("추억을 쌓고 싶으신가요?")
+                .multilineTextAlignment(.leading)
+                .padding(.leading)
+                .font(.subheadline)
+                .padding(.bottom, 2)
         }
     }
 }
@@ -85,8 +100,13 @@ struct FakeSearchView: View {
                     .foregroundStyle(.orange)
                     .frame(width: 25,height: 25)
                     .padding(.leading)
+                Text("장소를 검색해 보세요")
+                    .font(.callout)
+                    .foregroundStyle(.gray)
+                    .padding(.leading, 4)
                 
                 Spacer()
+                
                 Image(systemName: "location.magnifyingglass")
                     .resizable()
                     .foregroundStyle(.orange)
