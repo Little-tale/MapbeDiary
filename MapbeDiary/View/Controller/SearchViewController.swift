@@ -38,8 +38,8 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
         
     }
     private func viewCollerSetting(){
-        homeView.backgroundColor = .wheetLightBrown
-        homeView.collectionView.backgroundColor = .wheetLightBrown
+        homeView.backgroundColor = .white
+        homeView.collectionView.backgroundColor = .white
     }
     
     private func collectionViewDataSource(){
@@ -55,7 +55,7 @@ final class SearchViewController: BaseHomeViewController<SearchBaseView> {
             
             cell.roadNameLabel.text = item.roadAddressName
             cell.roadNameLabel.asFont(targetString: searchViewModel.searchTextOb.value?.searchText ?? "")
-            cell.backgroundColor = .wheetSideBrown
+            cell.backgroundColor = .white
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section,Document>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in

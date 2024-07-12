@@ -52,10 +52,17 @@ class SearchBaseView: BaseView {
     override func designView() {
         searchBar.setTextFieldBackground(color: .white, transparentBackground: true)
         searchBar.placeholder = MapTextSection.emptySearcBarText
-    
-        backButton.setBackgroundImage(UIImage(systemName: "chevron.backward.circle.fill"), for: .normal)
+        var backImage = UIImage(systemName: "chevron.backward.circle.fill")
+        backImage?.withRenderingMode(.alwaysTemplate)
+        backImage = backImage?.resizeImage(newWidth: 24)
+        if let back = backImage {
+            backButton.setImage(backImage, for: .normal)
+        } else {
+            backButton.imageView?.image = backImage
+        }
+        
         backButton.clipsToBounds = true
-        backButton.tintColor = .wheetSideBrown
+        backButton.tintColor = .black
        
     }
 }
@@ -65,9 +72,8 @@ extension SearchBaseView {
     func createLayout() -> UICollectionViewLayout {
         var configu = UICollectionLayoutListConfiguration(appearance: .plain)
         configu.showsSeparators = true
-        configu.backgroundColor = .wheetLightBrown
+        configu.backgroundColor = .white
         let layout = UICollectionViewCompositionalLayout.list(using: configu)
-        
         return layout
     }
 }
