@@ -76,7 +76,7 @@ final class CalenderMemoView: BaseView {
     }
     private func setDataSource(){
         dataSource = DataSource(collectionView: collectioView, cellProvider: {[weak self] collectionView, indexPath, itemIdentifier in
-            guard let cell = self?.calendarCellRegist else { return .init() }
+            guard let cell = self?.calendarCellRegist else { return UICollectionViewCell() }
             return collectionView.dequeueConfiguredReusableCell(using: cell, for: indexPath, item: itemIdentifier)
         })
     }

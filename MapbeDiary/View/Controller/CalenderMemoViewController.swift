@@ -9,7 +9,7 @@ import UIKit
 import FSCalendar
 
 
-class CalenderMemoViewController: BaseHomeViewController<CalenderMemoView> {
+final class CalenderMemoViewController: BaseHomeViewController<CalenderMemoView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
