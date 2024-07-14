@@ -176,24 +176,3 @@ extension ImageService: UIImagePickerControllerDelegate, UINavigationControllerD
         complitionHandler?(.success(nil))
     }
 }
-
-
-/*
- let itemProviders = results.map { $0.itemProvider }
- 
- var pickedImages = [UIImage]()
- 
- let group = DispatchGroup()
- 
- for itemProvider in itemProviders{
-     if itemProvider.canLoadObject(ofClass: UIImage.self) {
-         group.enter()
-         itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-             defer { group.leave() }
-             if let image = image as? UIImage {
-                 pickedImages.append(image)
-             }
-         }
-     }
- }
- */
