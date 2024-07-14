@@ -352,30 +352,3 @@ protocol ViewModelType {
     
     func trasform(_ input: Input) -> Output
 }
-
-
-/*
- let size = self.size
- // 원하는 사이즈 / 원래 사이즈
- let widthRatio = targetSize.width / size.width
- let heightRatio = targetSize.height / size.height
- 
- var newSize: CGSize
- // 그값이 윗스가 더 크다면
- if widthRatio > heightRatio {
-     // 사이즈에 0.4? 정도 되는 값으로 곱
-     newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
- } else {
-     newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
- }
- 
- let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
- UIGraphicsBeginImageContextWithOptions(newSize, false, 3.0)
- self.draw(in: rect)
- let newImage = UIGraphicsGetImageFromCurrentImageContext()
- UIGraphicsEndImageContext()
- if let newImage {
-     return newImage
- }
- return nil
- */

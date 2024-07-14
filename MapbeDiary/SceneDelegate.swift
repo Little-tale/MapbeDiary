@@ -46,11 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else {
                 return
         }
-        print(url)
-        print("Widget : 제발2 ")
         print("openURLContexts",url)
-        print("Widget : url")
-
         NotificationCenter.default.post(name: .getWidget, object: url.description)
     }
     
@@ -84,24 +80,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
-
-
-/*
- // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
- // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
- // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
- */
-/*
- //        let tabbarCon = UITabBarController()
- //        tabbarCon.tabBar.backgroundColor = .white
- //
- //        let first = MapViewController()
- //        first.tabBarItem.image = UIImage(systemName: "star")
- //
- //        let allList = UINavigationController(rootViewController: AllMemoLocationListViewController())
- //        allList.tabBarItem.image = UIImage(systemName: "star")
- //
- //        tabbarCon.viewControllers = [TestViewController(),first]
-         
- */
