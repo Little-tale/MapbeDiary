@@ -416,30 +416,3 @@ final class FileManagers {
    
     
 }
-
-
-
-/*
- func updateDetailImage(dtMemoId: String, delete: [String], newImage: [String], data:[Data], complite: @escaping (Result<Void,fileManagerError>) -> Void ) {
-     var data = data
-     // 지우고
-     print(delete.count)
-     for idToRemove in delete {
-         data.removeFirst()
-         let results = removeDetailImage(detailId: dtMemoId, imageId: idToRemove)
-         if case.failure = results {
-             complite(.failure(.cantRemoveImages))
-         }
-     }
-     
-     // 채우기
-     for (index,newImageId) in newImage.enumerated() {
-         let bool = createMemoImage(detailMemoId: dtMemoId, imgOJId: newImageId, data: data[index])
-         if !bool{
-             complite(.failure(.cantFindImages))
-         }
-     }
- 
-     complite(.success(()))
- }
- */

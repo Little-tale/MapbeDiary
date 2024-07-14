@@ -100,12 +100,3 @@ final class DateFormetters {
         return (start, end ?? Date())
     }
 }
-
-/*
- // (3) 날짜 형식 선택
- formatter.dateStyle = .full           // "Friday, January 6, 2023"
- //formatter.dateStyle = .long         // "January 6, 2023"
- //formatter.dateStyle = .medium       // "Jan 6, 2023"
- //formatter.dateStyle = .none         // (날짜 없어짐)
- //formatter.dateStyle = .short        // "1/6/23"
- */
