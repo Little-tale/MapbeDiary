@@ -1,7 +1,7 @@
 
-# 메모 일지도 ReadMe
+# 메모일지도 ReadMe
 
-- 메모일지도 앱은 Swift로 구현한 지도기반 메모앱 입니다.
+- 메모일지도 앱은 Swift로 구현한 지도기반 메모 앱입니다.
 
 > 일상 속, 스쳐 지나가는 수많은 장소들은 종종 생각보다 더 깊은 의미를 지닐 때가 있습니다.
 이런 장소들에 담긴 우리의 추억과 경험은 시간이 지나면서 희미해지기 쉬운데,
@@ -13,29 +13,29 @@
 ![GitImage 001](https://github.com/Little-tale/MapbeDiary/assets/116441522/ad505d13-463c-4b0a-91a1-905650908e67)
 
 
-# 📷 메모 일지도 프로젝트 소개
+# 📷 메모일지도 프로젝트 소개
 
-> 지역을 저장하고 그지역에 대한 기록을 남깁니다.
+> 지도를 기반으로 메모와 사진을 남길수 있는 앱입니다.
 > 
-- 메모 일지도는 지도를 기반으로 메모와 사진을 남길수 있는 앱입니다.
-- 사용자의 위치를 통해 메모를 남길수 있습니다.
-- 특정 장소를 검색해 메모를 남길수 있습니다.
-- 하나의 장소에서 여러 메모를 남길수 있습니다.
-- 지도의 마커를 사용자가 정한 사진으로 변경해 커스텀 할수 있습니다.
-- 여러 장소에 남긴 메모들을 모아 볼수 있습니다.
+- 글과 사진을 기록
+- 지도
+- 장소 검색
+- 커스텀 마커
+- 클러스터링
+- 날짜별 메모 찾기
 
 ## 📸 개발기간
 
-> 3/4 ~ 3/24 ( 2주간 )
+> 3/4 ~ 3/24 ( 약 3주간 )
 > 
 
 # 📷 사용한 기술들
 
 - UIKit / MapKit
-- MVVM / Facade /  Router / Repository / strategy / SingleTone
+- MVVM / Facade / Router / Repository / strategy / SingleTone
 - URLSession / Decodable
-- CodeBaseUI / SnapKit /  Compositional
-- Realm(Swift) / FireBase Analytics / FireBase Crashlytics
+- CodeBaseUI / SnapKit / Compositional
+- Realm(Swift) / FireBase Analytics/Crashlytics
 - FloatingPanel / IQKeyboard / Toast
 - API : KAKAO REST API ( 키워드로 장소 검색하기, 좌표로 주소 변환하기 )
 
@@ -43,30 +43,30 @@
 
 ## MVVM
 
-> 커스텀 Observable 클래스를 생성하여 MVVM Input-output패턴을 통해 
+> Custom Observable 클래스를 생성하여 MVVM Input-output 패턴을 통해 
 비즈니스 로직을 분리하여 재사용성을 높였습니다.
 > 
 
 ## URLSession
 
-> Api 요청시 각각의 에러들을 직접 핸들링 하기위해
-라우터 패턴과 전략적 패턴을 섞어 각 API의 에러코드나 
+> API 요청 시 각각의 에러들을 직접 핸들링 하기 위해
+Router 패턴과 전략적 패턴을 섞어 각 API의 에러코드나 
 URLResponse 등의 에러들을 핸들링 하였습니다.
 > 
 
 ## Realm Swift
 
 > EmbeddedObject와 LinkingObject를 통해 
-Too many RelationShip 을 컨트롤하였으며, 각각의 에러들을 Enum으로 정의해 
+1 : N 관계를 컨트롤 하였으며, 각각의 에러들을 Enum으로 정의해 
 에러를 컨트롤 하였습니다.
 > 
 
 ![스크린샷 2024-03-27 오후 7 04 31](https://github.com/Little-tale/MapbeDiary/assets/116441522/c4249ad9-bb5f-40b1-98c3-7a33b68d79ea)
 
-## FireBase **Crashlytics / FireBase Analytics**
+## FireBase **Crashlytics / Analytics**
 
-- 사용자들이 사용시 문제가 발생한 부분들을 분석해 보완하기 위해 **Crashlytics를 적용하였습니다.**
-- 또한 어떠한 씬에서 많은 이탈이 발생하였는지 분석하기 위해 **FireBase Analytics를 적용하였습니다.**
+- 사용자들이 실사용 시 문제가 발생하면, 해당 부분들을 분석하고 보완하기 위해 **Crashlytics**를 적용하였습니다.
+- 또한 어떠한 뷰에서 많은 이탈이 발생하였는지 분석하기 위해 **Analytics**를 적용하였습니다.
 
 # 📷 앱 흐름도
 
@@ -74,46 +74,20 @@ Too many RelationShip 을 컨트롤하였으며, 각각의 에러들을 Enum으�
 
 # UI ScreenShot 
 
-## 온보딩 화면
+| 온보딩 화면 | 장소 검색 | 마커 장소 등록 | 마커 이미지 변경 |
+|:---:|:---:|:---:|:---:| 
+|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/f81da74a-90ba-4c65-8c82-a88b97416c7a" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/186528e0-1492-485e-8530-4cb3094a99b3" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/ef0fc024-182e-48c6-973e-9c20f9b73a38" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/5e34fea8-4bd9-4ccb-8752-ff1db3709a4b" width="200" height="400"/>|
 
-![1](https://github.com/Little-tale/MapbeDiary/assets/116441522/f81da74a-90ba-4c65-8c82-a88b97416c7a)
 
-## 마커 이미지 변경
+| Detail메모 작성 | Detail메모 작성 (추가) | Detail메모 수정 | Detail메모 삭제 |
+|:---:|:---:|:---:|:---:| 
+|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/917c9678-ead0-4391-9a31-8ba57e5387ca" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/eaaac89f-4d7c-424e-b13f-1e6269991f23" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/b9a57886-9817-4d40-8b22-ea63ce033418" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/22e96509-3fbc-4710-affb-d75470e24d7c" width="200" height="400"/>|
 
-![2](https://github.com/Little-tale/MapbeDiary/assets/116441522/186528e0-1492-485e-8530-4cb3094a99b3)
 
-## Detail 메모 수정
+| 메모 리스트뷰 | 설정 |
+|:---:|:---:|
+<picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/2ea1be05-0a71-4389-b763-d6dc072d6cb8" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/798da9ea-5583-47b0-ad2d-8bf9755feb36" width="200" height="440"/></picture>|
 
-![3](https://github.com/Little-tale/MapbeDiary/assets/116441522/ef0fc024-182e-48c6-973e-9c20f9b73a38)
-
-## 설정창
-
-![4](https://github.com/Little-tale/MapbeDiary/assets/116441522/5e34fea8-4bd9-4ccb-8752-ff1db3709a4b)
-
-## 검색화면과 마커
-
-![5](https://github.com/Little-tale/MapbeDiary/assets/116441522/917c9678-ead0-4391-9a31-8ba57e5387ca)
-
-## Detail메모 작성
-
-![6](https://github.com/Little-tale/MapbeDiary/assets/116441522/eaaac89f-4d7c-424e-b13f-1e6269991f23)
-
-## Detail메모 삭제와 Location 삭제
-
-![7](https://github.com/Little-tale/MapbeDiary/assets/116441522/b9a57886-9817-4d40-8b22-ea63ce033418)
-## longPress 와 저장
-
-![8](https://github.com/Little-tale/MapbeDiary/assets/116441522/22e96509-3fbc-4710-affb-d75470e24d7c)
-
-## 추가 메모 작성
-
-![9](https://github.com/Little-tale/MapbeDiary/assets/116441522/2ea1be05-0a71-4389-b763-d6dc072d6cb8)
-
-## 사용자 마커 액션,
-Memo 버튼 액션,
-List 에서 메모 삭제
-
-![10](https://github.com/Little-tale/MapbeDiary/assets/116441522/798da9ea-5583-47b0-ad2d-8bf9755feb36)
 
 # 새롭게 학습 한 부분 과 고려했던 사항
 
