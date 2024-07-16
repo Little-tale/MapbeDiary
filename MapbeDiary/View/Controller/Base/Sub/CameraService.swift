@@ -16,7 +16,7 @@ enum ImagePickMode{
     case camera // 한장만 할 경우
     case maximer(Int) // 갤러리, 여러장이지만 최대정하기
 }
-enum ImageSearviceError: Error {
+enum ImageServiceError: Error {
     case cantGetImage
 }
 
@@ -24,13 +24,13 @@ enum ImageSearviceError: Error {
 final class ImageService: NSObject {
     
     // 반환할 Result 를 정의
-    typealias ImageResult = ( Result<[UIImage]?, ImageSearviceError> ) -> Void
+    typealias ImageResult = ( Result<[UIImage]?, ImageServiceError> ) -> Void
     
     /// 이미지 피커를 띄울 뷰컨을 정의해주세요
     private weak var presntationViewController: UIViewController?
     
     /// 해당 핸들러를 통해 이미지들을 반환해드립니다.
-    private var complitionHandler: ( ( Result<[UIImage]?, ImageSearviceError> ) -> Void )?
+    private var complitionHandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
     
     /// 이미지 모드를 정할수 있습니다. 비선택 일시 Single로 합니다.
     private var pickerMode: ImagePickMode = .camera

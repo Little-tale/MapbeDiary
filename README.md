@@ -1,7 +1,7 @@
 
 # 메모 일지도 ReadMe
 
-- 메모일지도 app은 Swift로 구현한 지도기반 메모앱입니다.
+- 메모일지도 앱은 Swift로 구현한 지도기반 메모앱 입니다.
 
 > 일상 속, 스쳐 지나가는 수많은 장소들은 종종 생각보다 더 깊은 의미를 지닐 때가 있습니다.
 이런 장소들에 담긴 우리의 추억과 경험은 시간이 지나면서 희미해지기 쉬운데,
@@ -35,7 +35,7 @@
 - MVVM / Facade /  Router / Repository / strategy / SingleTone
 - URLSession / Decodable
 - CodeBaseUI / SnapKit /  Compositional
-- Realm(Swift) / **FireBase Analytics** / **FireBase **Crashlytics**
+- Realm(Swift) / FireBase Analytics / FireBase Crashlytics
 - FloatingPanel / IQKeyboard / Toast
 - API : KAKAO REST API ( 키워드로 장소 검색하기, 좌표로 주소 변환하기 )
 
@@ -119,8 +119,8 @@ List 에서 메모 삭제
 
 ## 네트워크 오프라인 상황에서도 작동하도록
 
-> 네트워크에 연결되어 있지 않은 상태에서도 사용할수 있도록,
-네트워크 상태를 감지하는 클래스를 만들어 사용자가 메모를 남기거나 사진을 남길수 있도록 하였습니다.
+> 네트워크에 연결되어 있지 않은 상태에서도 사용할 수 있도록, <br>
+네트워크 상태를 감지하는 클래스를 만들어 사용자가 메모를 남기거나 사진을 남길 수 있도록 하였습니다.
 > 
 
 ```swift
@@ -145,11 +145,11 @@ final class NetWorkServiceMonitor {
 
 ## 이미지 변경시 변경된 사항만 적용하기
 
-> 이미 사용자가 저장하였던 이미지를 수정하거나 삭제하였을때 
-기존의 방식이였던 지우고 다시 쓰기는 데이터 처리와 성능에 있어 
-비효율적인 방법이라는 판단이 들었습니다.
-이에따라 기존의 데이터와 수정되어야할 데이터를 비교하여 최소한의 비용으로 
-추가 삭제가 될수 있도록 하였습니다.
+> 이미 사용자가 저장하였던 이미지를 수정하거나 삭제하였을 때 <br>
+기존의 방식이었던 지우고 다시 쓰기는 데이터 처리와 성능에 있어 <br>
+비효율적인 방법이라는 판단이 들었습니다. <br>
+이에 따라 기존의 데이터와 수정되어야 할 데이터를 비교하여 최소한의 비용으로 <br> 
+추가 삭제가 될 수 있도록 하였습니다.
 > 
 
 ```swift
@@ -170,10 +170,10 @@ var originalImageObject: [ImageObject] = []
 
 ## 카메라와 갤러리 권한을 관리하는 클래스 (Facade 패턴)
 
-> 현재 프로젝트에는  여러 씬에서 카메라와 이미지 권한을 요구하고, 이미지 받아야 하였습니다. 
-그때마다 해당하는 ViewController 에서 권한을 확인하고 요구하고, 
-이미지를 처리하는 작업을 하는것이 비효율 적인 작업이라고 판단 하여
-Image 권한과 데이터를 전달하여 주는 클래스를 만들어 적용하였습니다.
+> 현재 프로젝트에는 여러 씬에서 카메라와 이미지 권한을 요구하고, 이미지 받아야 하였습니다. <br>
+그때마다 해당하는 ViewController 에서 권한을 확인하고 요구하고, <br>
+이미지를 처리하는 작업을 하는 것이 비효율적인 작업이라고 판단하여 <br>
+Image 권한과 데이터를 전달하여 주는 클래스를 만들어 적용하였습니다. 
 > 
 
 ```swift
@@ -181,18 +181,18 @@ enum ImagePickMode{
     case camera // 한장만 할 경우
     case maximer(Int) // 갤러리, 여러장이지만 최대정하기
 }
-enum ImageSearviceError: Error {
+enum ImageServiceError: Error {
     case cantGetImage
 }
 
 /// 이미지 관련된 기능을 제공하는 서비스 클래스 입니다.
 final class ImageService: NSObject { 
         // 이미지의 결과 타입
-        typealias ImageResult = ( Result<[UIImage]?, ImageSearviceError> ) -> Void
+        typealias ImageResult = ( Result<[UIImage]?, ImageServiceError> ) -> Void
         /// 이미지 피커를 띄울 ViewController
     private weak var presntationViewController: UIViewController?
     /// 이미지 결과 핸들러
-    private var complitionHandler: ( ( Result<[UIImage]?, ImageSearviceError> ) -> Void )?
+    private var complitionHandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
        
     func pickImage(complite: @escaping ImageResult){ ... } 
     
@@ -204,8 +204,8 @@ final class ImageService: NSObject {
 
 # **localization**
 
-> 현재 앱은 한국에서만 사용할수 있는 앱이지만, 한국에 사는 외국인들을 위해
-현지화 작업을 통해 영어 로도 앱을 사용할수 있도록 현지화 작업을 했습니다.
+> 현재 앱은 한국에서만 사용할 수 있는 앱이지만, 한국에 사는 외국인들을 위해 <br>
+현지화 작업을 통해 영어로도 앱을 사용할 수 있도록 현지화 작업을 했습니다.
 > 
 
 ```swift
@@ -233,13 +233,13 @@ final class ImageService: NSObject {
 
 ## Panel 내려가는 도중 새로운 Panel에 의한 ( UI 비동기 Issue )
 
-> Panel을 보고있는 동안 다른 뷰 컨트롤러 Panel을 띄어야 할때 보고있던 Panel이 내려가는 도중 
+> Panel을 보고 있는 동안 다른 뷰 컨트롤러 Panel을 띄어야 할 때 보고 있던 Panel이 내려가는 도중 
 새로운 Panel이 나오게 됨으로써 원래의 Panel이 deinit은 되었으나
-화면에서 사라지지 않는 Issue ( UI 비동기 Issue )  가 있었습니다.
+화면에서 사라지지 않는 Issue ( UI 비동기 Issue ) 가 있었습니다.
 > 
 
-> Panel 이 완전히 내려갔음을 @escaping 으로 감지하여 
-새로운 Panel을 UI에 그리게 함으로써  문제를 해결하였습니다.
+> Panel이 완전히 내려갔음을 @escaping 으로 감지하여 
+새로운 Panel을 UI에 그리게 함으로써 문제를 해결하였습니다.
 > 
 
 ```swift
@@ -268,16 +268,16 @@ final class ImageService: NSObject {
 
 ![imageResizing](https://github.com/Little-tale/MapbeDiary/assets/116441522/0a09eb5b-bd8a-4054-bf7e-022d8a3c949d)
 
-> 버튼이나 마커에 이미지를 적용할때,
-이미지 크기가 너무커서 영역을 벋어나는
+> 버튼이나 마커에 이미지를 적용할 때,
+이미지 크기가 너무 커서 영역을 벗어나는
 이슈가 있었습니다. 
 이미지 크기를 줄이기 위해 이미지 리사이징을
 적용하였는데,
 > 
 
-> 더 나아가, 메모리 효율을 비교하기 위해 이미지 리사이징을 하지 않았을때와
+> 메모리 효율을 비교하기 위해 이미지 리사이징을 하지 않았을 때와
 이미지 리사이징을 하고나서 저장하고 적용 하였을 때를 비교하여 최대한의 효율을 위해
-이미지 리사이징을 한후 저장한 이미지를 불러오는 방법을 채택 하였습니다.
+이미지 리사이징을 한후 저장한 이미지를 불러오는 방법을 채택하였습니다.
 > 
 
 ### 이미지 리사이징 하기전
