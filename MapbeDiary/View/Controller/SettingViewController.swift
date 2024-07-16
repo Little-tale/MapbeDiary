@@ -186,7 +186,7 @@ extension SettingViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 guard let self else { return }
                 activity?.stopActivity()
-                homeView.makeToast("Deleting_complite_title".localized)
+                homeView.makeToast("Deleting_completion_title".localized)
             }
         }
     }

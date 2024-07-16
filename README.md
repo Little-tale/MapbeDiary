@@ -89,7 +89,7 @@ URLResponse 등의 에러들을 핸들링 하였습니다.
 <picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/2ea1be05-0a71-4389-b763-d6dc072d6cb8" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/MapbeDiary/assets/116441522/798da9ea-5583-47b0-ad2d-8bf9755feb36" width="200" height="440"/></picture>|
 
 
-# 새롭게 학습 한 부분 과 고려했던 사항
+# 새롭게 학습한 부분과 고려했던 사항
 
 ## 네트워크 오프라인 상황에서도 작동하도록
 
@@ -117,11 +117,10 @@ final class NetWorkServiceMonitor {
     public func startMonitor(){} 
 ```
 
-## 이미지 변경시 변경된 사항만 적용하기
+## 이미지 변경 시 변경된 사항만 적용하기
 
 > 이미 사용자가 저장하였던 이미지를 수정하거나 삭제하였을 때 <br>
-기존의 방식이었던 지우고 다시 쓰기는 데이터 처리와 성능에 있어 <br>
-비효율적인 방법이라는 판단이 들었습니다. <br>
+기존의 방식이었던 지우고 다시 쓰기는 데이터 처리와 성능에 있어 비효율적인 방법이라는 판단이 들었습니다. <br>
 이에 따라 기존의 데이터와 수정되어야 할 데이터를 비교하여 최소한의 비용으로 <br> 
 추가 삭제가 될 수 있도록 하였습니다.
 > 
@@ -144,8 +143,8 @@ var originalImageObject: [ImageObject] = []
 
 ## 카메라와 갤러리 권한을 관리하는 클래스 (Facade 패턴)
 
-> 현재 프로젝트에는 여러 씬에서 카메라와 이미지 권한을 요구하고, 이미지 받아야 하였습니다. <br>
-그때마다 해당하는 ViewController 에서 권한을 확인하고 요구하고, <br>
+> 현재 프로젝트에는 여러 뷰에서 카메라와 이미지 권한을 요구하고, 이미지 받아야 하였습니다. <br>
+그때마다 해당하는 ViewController에서 권한을 확인하고 요구하고, <br>
 이미지를 처리하는 작업을 하는 것이 비효율적인 작업이라고 판단하여 <br>
 Image 권한과 데이터를 전달하여 주는 클래스를 만들어 적용하였습니다. 
 > 
@@ -153,7 +152,7 @@ Image 권한과 데이터를 전달하여 주는 클래스를 만들어 적용�
 ```swift
 enum ImagePickMode{
     case camera // 한장만 할 경우
-    case maximer(Int) // 갤러리, 여러장이지만 최대정하기
+    case maximum(Int) // 갤러리, 여러장이지만 최대정하기
 }
 enum ImageServiceError: Error {
     case cantGetImage
@@ -161,16 +160,16 @@ enum ImageServiceError: Error {
 
 /// 이미지 관련된 기능을 제공하는 서비스 클래스 입니다.
 final class ImageService: NSObject { 
-        // 이미지의 결과 타입
-        typealias ImageResult = ( Result<[UIImage]?, ImageServiceError> ) -> Void
-        /// 이미지 피커를 띄울 ViewController
-    private weak var presntationViewController: UIViewController?
+    // 이미지의 결과 타입
+    typealias ImageResult = ( Result<[UIImage]?, ImageServiceError> ) -> Void
+    /// 이미지 피커를 띄울 ViewController
+    private weak var presentationViewController: UIViewController?
     /// 이미지 결과 핸들러
-    private var complitionHandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
+    private var completionhandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
        
-    func pickImage(complite: @escaping ImageResult){ ... } 
+    func pickImage(completion: @escaping ImageResult){ ... } 
     
-    func checkCameraPermission(compltion: @escaping (Bool) -> Void)
+    func checkCameraPermission(completion: @escaping (Bool) -> Void)
 ..........
  
 }
@@ -212,7 +211,7 @@ final class ImageService: NSObject {
 화면에서 사라지지 않는 Issue ( UI 비동기 Issue ) 가 있었습니다.
 > 
 
-> Panel이 완전히 내려갔음을 @escaping 으로 감지하여 
+> Panel이 완전히 내려갔음을 @escaping으로 감지하여 
 새로운 Panel을 UI에 그리게 함으로써 문제를 해결하였습니다.
 > 
 
@@ -246,21 +245,18 @@ final class ImageService: NSObject {
 이미지 크기가 너무 커서 영역을 벗어나는
 이슈가 있었습니다. 
 이미지 크기를 줄이기 위해 이미지 리사이징을
-적용하였는데,
-> 
-
-> 메모리 효율을 비교하기 위해 이미지 리사이징을 하지 않았을 때와
+적용하였는데, 메모리 효율을 비교하기 위해 이미지 리사이징을 하지 않았을 때와
 이미지 리사이징을 하고나서 저장하고 적용 하였을 때를 비교하여 최대한의 효율을 위해
 이미지 리사이징을 한후 저장한 이미지를 불러오는 방법을 채택하였습니다.
 > 
 
-### 이미지 리사이징 하기전
+### 이미지 리사이징 전
 
 ![ResigingBefore](https://github.com/Little-tale/MapbeDiary/assets/116441522/55b13036-d27a-49c1-a53f-209bc3d34961)
 
 
-### 이미지 리사이징후
-(이미지 저장할때 리사이징후 저장)
+### 이미지 리사이징 후
+(이미지 저장할 때 리사이징 후 저장)
 
 ![ResizingAfter](https://github.com/Little-tale/MapbeDiary/assets/116441522/12a9198c-14b4-4fee-a42a-af9e63297af6)
 

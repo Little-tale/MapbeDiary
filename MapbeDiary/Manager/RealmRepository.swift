@@ -77,7 +77,7 @@ final class RealmRepository {
         return memo
     }
     // MARK: 메모 수정 버전
-    func modifyMemo(structure: addViewOutStruct, locationMemo: LocationMemo, complite: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
+    func modifyMemo(structure: addViewOutStruct, locationMemo: LocationMemo, completion: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
         do {
             try realm.write {
                 let id = locationMemo.id
@@ -89,9 +89,9 @@ final class RealmRepository {
                 ], update: .modified)
             }
         } catch {
-            complite(.failure(.cantModifyMemo))
+            completion(.failure(.cantModifyMemo))
         }
-        complite(.success(()))
+        completion(.success(()))
     }
     
     // MARK: LocationMemo를 통해 DetailMemo를 가져오거나 만들어 옵니다
@@ -120,15 +120,15 @@ final class RealmRepository {
         
     }
     // 폴더를 찾아드립니다.
-    func findFolder(folderId: String, complite: @escaping ((Result<Folder, RealmManagerError>) -> Void)){
+    func findFolder(folderId: String, completion: @escaping ((Result<Folder, RealmManagerError>) -> Void)){
         do {
             let id = try ObjectId(string: folderId)
             let fodlers = realm.objects(folderModel).where { $0.id == id }
             if let folder = fodlers.first{
-                complite(.success(folder))
+                completion(.success(folder))
             }
         } catch {
-            complite(.failure(.cantFindObjectId))
+            completion(.failure(.cantFindObjectId))
         }
     }
     
@@ -234,7 +234,7 @@ final class RealmRepository {
 
  */
     
-    func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location,folder:Folder , complite: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
+    func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location,folder:Folder , completion: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
         let memo = try? makeMemoModel(addViewStruct: model, location: location)
         guard let memo else { return }
         
@@ -242,22 +242,22 @@ final class RealmRepository {
             if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, imageData: image) {
                 print("makeMemoMarkerAtFolders",image)
                 if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, imageData: image) {
-                    complite(.success(()))
+                    completion(.success(()))
                 } else {
-                    complite(.failure(.cantAddImage))
+                    completion(.failure(.cantAddImage))
                 }
             }else {
-                complite(.failure(.cantAddImage))
+                completion(.failure(.cantAddImage))
             }
         } else {
-            complite(.success(())) // 이미지 없을때
+            completion(.success(())) // 이미지 없을때
         }
         do {
             try realm.write {
                 folder.LocationMemo.append(memo)
             }
         } catch {
-            complite(.failure(.cantAddMemoInFolder))
+            completion(.failure(.cantAddMemoInFolder))
         }
     }
 
@@ -316,12 +316,12 @@ final class RealmRepository {
         }
     }
     
-    func findId(IdString: String, complite: @escaping (Result< ObjectId, RealmManagerError>) -> Void ){
+    func findId(IdString: String, completion: @escaping (Result< ObjectId, RealmManagerError>) -> Void ){
         do {
             let idObject = try ObjectId(string: IdString)
-            complite(.success(idObject))
+            completion(.success(idObject))
         } catch {
-            complite(.failure(.cantFindObjectId))
+            completion(.failure(.cantFindObjectId))
         }
     }
     
@@ -477,14 +477,14 @@ final class RealmRepository {
             throw RealmManagerError.cantDeleteMemo
         }
     }
-    func removewMemo2(memo:LocationMemo, complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+    func removewMemo2(memo:LocationMemo, completion: @escaping (Result<Void,RealmManagerError>) -> Void) {
         do{
             try realm.write {
                 realm.delete(memo)
             }
-            complite(.success(()))
+            completion(.success(()))
         } catch{
-            complite(.failure( .cantDeleteMemo ))
+            completion(.failure( .cantDeleteMemo ))
         }
     }
     
@@ -601,7 +601,7 @@ final class RealmRepository {
     }
     
     // MARK: DetailMemo를 제거할때
-    func deleteDetailMemo(_ detail: DetailMemo, complition: @escaping(Result<Void, RealmManagerError>) -> Void ){
+    func deleteDetailMemo(_ detail: DetailMemo, completion: @escaping(Result<Void, RealmManagerError>) -> Void ){
         
         // 0. 이미지 리스트 가져오기
         let detailImages = findDetailImagesList(detail: detail)
@@ -615,7 +615,7 @@ final class RealmRepository {
         case .success():
             break
         case .failure(_):
-            complition(.failure(.cantDeleteImage))
+            completion(.failure(.cantDeleteImage))
         }
         
         // 2. 이미지 테이블 지우기 시도
@@ -625,21 +625,21 @@ final class RealmRepository {
         case .success(_):
             break
         case .failure(let failure):
-            complition(.failure(failure))
+            completion(.failure(failure))
         }
         
         // 3. detail 삭제
         let detailRemove = removeDetail(detail)
         switch detailRemove {
         case .success(let success):
-            complition(.success(success))
+            completion(.success(success))
         case .failure(let failure):
-            complition(.failure(failure))
+            completion(.failure(failure))
         }
     }
     
     // MARK: ImageObject(이미지파일도) 만 제거할때
-    func deleteImageAndImgObject(_ imgOJ: ImageObject, complite: @escaping(Result<Void,RealmManagerError>) -> Void){
+    func deleteImageAndImgObject(_ imgOJ: ImageObject, completion: @escaping(Result<Void,RealmManagerError>) -> Void){
         
         let dtail = imgOJ.parents.first
         guard let dtail else { return }
@@ -650,16 +650,16 @@ final class RealmRepository {
             let imageResults = removeImageObject(imgOJ)
             switch imageResults {
             case .success(let success):
-                complite(.success(success))
+                completion(.success(success))
             case .failure(let failure):
-                complite(.failure(failure))
+                completion(.failure(failure))
             }
         case .failure(_):
-            complite(.failure(.cantDeleteImage))
+            completion(.failure(.cantDeleteImage))
         }
     }
     
-    func deleteLocationMemo(_ location: LocationMemo, complite: @escaping(Result<Void,RealmManagerError>) -> Void){
+    func deleteLocationMemo(_ location: LocationMemo, completion: @escaping(Result<Void,RealmManagerError>) -> Void){
         // 너무 많은 작업이 있을것 같음으로
         let group = DispatchGroup()
         var firstError: RealmManagerError?
@@ -668,7 +668,7 @@ final class RealmRepository {
         for detail in location.detailMemos {
             group.enter()
             deleteDetailMemo(detail) { [weak self] result in
-                guard self != nil else { complite(.failure(.cantDeleteLocationMemo))
+                guard self != nil else { completion(.failure(.cantDeleteLocationMemo))
                     return
                 }
                 
@@ -683,15 +683,15 @@ final class RealmRepository {
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
             if let firstError {
-                complite(.failure(firstError))
+                completion(.failure(firstError))
             }
 
             deleteAllImageFromLocationMemo(memoId: location.id) { result in
                 switch result {
                 case .success(let success):
-                    complite(.success(success))
+                    completion(.success(success))
                 case .failure(let failure):
-                    complite(.failure(failure))
+                    completion(.failure(failure))
                 }
             }
         }
@@ -700,7 +700,7 @@ final class RealmRepository {
     // 폴더 / 안에 로케이션들/ 메모들 / 이미지리스트
     //
     //MARK: 폴더내의 모든 데이터를 제거합니다.
-    func removeFolderInEveryThing(folder : Folder, complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+    func removeFolderInEveryThing(folder : Folder, completion: @escaping (Result<Void,RealmManagerError>) -> Void) {
         // 1. 내부 이미지 모두 제거 작업 시작 ->
         
         // 1.1 내부 로케이션 메모 모으기
@@ -713,42 +713,42 @@ final class RealmRepository {
             datas.forEach { details.append($0) }
         }
         if details.isEmpty {
-            complite(.success(()))
+            completion(.success(()))
         }
         removeDetailsMemos(details) { result in
             if case.failure(let failure) = result {
-                complite(.failure(failure))
+                completion(.failure(failure))
             }
         }
         // 4. 내부 마커 이미지 모두제거
         removeLocationMemos(locationMemos) { [weak self] results in
             guard self != nil else { return }
-            complite(results)
+            completion(results)
         }
     }
     
     
     /// 로케이션 메모배열의 모든 데이터를 지웁니다.
-    func removeLocationMemos(_ locations: [LocationMemo], complite: @escaping (Result<Void,RealmManagerError>) -> Void) {
+    func removeLocationMemos(_ locations: [LocationMemo], completion: @escaping (Result<Void,RealmManagerError>) -> Void) {
         locations.forEach { [weak self] location in
             guard let self else { return }
             if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: location.id.stringValue) {
-                complite(.failure(.cantDeleteImage))
+                completion(.failure(.cantDeleteImage))
             }
             // 5. 내부 로케이션 메모 제거
             removewMemo2(memo: location) { [weak self] result in
                 guard self != nil else { return }
                 switch result {
                 case .success(let success):
-                    complite(.success(success))
+                    completion(.success(success))
                 case .failure(let failure):
-                    complite(.failure(failure))
+                    completion(.failure(failure))
                 }
             }
         }
     }
     
-    func removeDetailsMemos(_ details: [DetailMemo], complite: @escaping (Result<Void,RealmManagerError>) -> Void){
+    func removeDetailsMemos(_ details: [DetailMemo], completion: @escaping (Result<Void,RealmManagerError>) -> Void){
         // 이미지 패스 가져오면서 바로 지우기 시도
         for detail in details {
             let datas = Array(detail.imagePaths)
@@ -758,18 +758,18 @@ final class RealmRepository {
                 let results = FileManagers.shard.removeDetailImage(detailId: detail.id.stringValue, imageId: object.id.stringValue)
                 
                 if case.failure = results {
-                    complite(.failure(.cantDeleteMemo))
+                    completion(.failure(.cantDeleteMemo))
                 }
                 
                 let resultss = removeImageObject(object)
                 
                 if case.failure = resultss {
-                    complite(.failure(.cantDeleteMemo))
+                    completion(.failure(.cantDeleteMemo))
                 }
             }
             let result = removeDetail(detail)
             if case.failure(let failure) = result {
-                complite(.failure(failure))
+                completion(.failure(failure))
             }
         }
     }

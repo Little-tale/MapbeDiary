@@ -74,7 +74,7 @@ final class URLSessionManager {
     
     // MARK: 각 데이터 모델, API 모델을 통해 에러와 결과를 동시에
     /// Decodable을 채택한 모델을 통해 통신합니다. api는 ApiTypeError 를 구현하고 있어야 합니다.
-    func fetch<T:Decodable>(type: T.Type, api: APIType, compliteHandler: @escaping(requestResults<T>) -> Void){
+    func fetch<T:Decodable>(type: T.Type, api: APIType, completionHandler: @escaping(requestResults<T>) -> Void){
         makeRequest(api: api) { componentsResults in
             switch componentsResults {
             case .success(let success):
@@ -87,17 +87,17 @@ final class URLSessionManager {
                         switch errorCase{
                         case .success(let sucsess):
                             DispatchQueue.main.async{
-                                compliteHandler(.success(sucsess))
+                                completionHandler(.success(sucsess))
                             }
                         case .failure(let failler):
                             DispatchQueue.main.async{
-                                compliteHandler(.failure(failler))
+                                completionHandler(.failure(failler))
                             }
                         }
                     }.resume()
                     
             case .failure(let failure):
-                compliteHandler(.failure(failure))
+                completionHandler(.failure(failure))
             }
         }
     }
@@ -146,7 +146,7 @@ final class URLSessionManager {
     
     //MARK: urlComponents 만드는 메서드
     /// urlCompocents를 생성합니다 실패시 에러를 URLSessinError 를 던집니다.
-    private func makeRequest(api: APIType, compliteHandler:  @escaping(componentsResults) -> Void){
+    private func makeRequest(api: APIType, completionHandler:  @escaping(componentsResults) -> Void){
         print(#function)
         
         var urlComponents = URLComponents()
@@ -161,9 +161,9 @@ final class URLSessionManager {
             var urlRequst = URLRequest(url: success)
             urlRequst.allHTTPHeaderFields = api.header
             urlRequst.httpMethod = api.method
-            compliteHandler(.success(urlRequst))
+            completionHandler(.success(urlRequst))
         case .failure(let failure):
-            compliteHandler(.failure(failure))
+            completionHandler(.failure(failure))
         }
     }
     

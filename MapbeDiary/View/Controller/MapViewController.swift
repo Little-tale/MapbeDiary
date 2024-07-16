@@ -202,7 +202,7 @@ extension MapViewController {
                 if !finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
                     
                     addLongAnnotation(cl2: locationInfo.coordinate)
-                    updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, complite: nil)
+                    updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, completion: nil)
                     
                 }
             }
@@ -390,15 +390,15 @@ extension MapViewController: FloatingPanelControllerDelegate {
             guard let self else {return}
             removeAll() // 일단 다 지우기
             addTestAnnotations() // 렘 정보 가져오기
-            updatePanel(coordi: result, viewType: .addLocation, layout: .custom, complite: nil ) // 판넬 업데이트
+            updatePanel(coordi: result, viewType: .addLocation, layout: .custom, completion: nil ) // 판넬 업데이트
             addLongAnnotation(cl2: result)// 롱프레스
         }
     }
     
-    func updatePanel(coordi:  CLLocationCoordinate2D?, viewType:PanelViewControllerType,layout: PanelLayoutType , complite: ((UIViewController) -> Void)?){
+    func updatePanel(coordi:  CLLocationCoordinate2D?, viewType:PanelViewControllerType,layout: PanelLayoutType , completion: ((UIViewController) -> Void)?){
         updateFloatingPanel(with:PanelConfiguration(coordinate: coordi, viewType: viewType, configureAddMemoViewController: { [weak self] vc in
             guard self != nil else { return }
-            complite?(vc)
+            completion?(vc)
         }, layoutType: layout))
         
     }

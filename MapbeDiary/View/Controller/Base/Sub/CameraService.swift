@@ -14,7 +14,7 @@ import Photos
 /// 이미지 선택 방식 정의
 enum ImagePickMode{
     case camera // 한장만 할 경우
-    case maximer(Int) // 갤러리, 여러장이지만 최대정하기
+    case maximum(Int) // 갤러리, 여러장이지만 최대정하기
 }
 enum ImageServiceError: Error {
     case cantGetImage
@@ -27,17 +27,17 @@ final class ImageService: NSObject {
     typealias ImageResult = ( Result<[UIImage]?, ImageServiceError> ) -> Void
     
     /// 이미지 피커를 띄울 뷰컨을 정의해주세요
-    private weak var presntationViewController: UIViewController?
+    private weak var presentationViewController: UIViewController?
     
     /// 해당 핸들러를 통해 이미지들을 반환해드립니다.
-    private var complitionHandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
+    private var completionHandler: ( ( Result<[UIImage]?, ImageServiceError> ) -> Void )?
     
     /// 이미지 모드를 정할수 있습니다. 비선택 일시 Single로 합니다.
     private var pickerMode: ImagePickMode = .camera
     
     /// 피커를 띄울 부컨과 픽 모드를 선택합니다.
-    init(presntationViewController: UIViewController? = nil, pickerMode: ImagePickMode) {
-        self.presntationViewController = presntationViewController
+    init(presentationViewController: UIViewController? = nil, pickerMode: ImagePickMode) {
+        self.presentationViewController = presentationViewController
         self.pickerMode = pickerMode
     }
    
@@ -50,7 +50,7 @@ final class ImageService: NSObject {
         imagePicker.allowsEditing = true // 편집을 허용합니다.
         DispatchQueue.main.async {
             [weak self] in
-            self?.presntationViewController?.present(imagePicker, animated: true)
+            self?.presentationViewController?.present(imagePicker, animated: true)
         }
     }
     // MARK: 갤러리 선택시
@@ -63,18 +63,18 @@ final class ImageService: NSObject {
         picker.delegate = self
         DispatchQueue.main.async {
             [weak self] in
-            self?.presntationViewController?.present(picker, animated: true)
+            self?.presentationViewController?.present(picker, animated: true)
         }
     }
     
     /// 이미지를 가져와 드립니다. 그과정에서 어떤 (imagePick or PHPicker ) 는 여기서 해결합니다.
-    func pickImage(complite: @escaping ImageResult){
+    func pickImage(complete: @escaping ImageResult){
         print("이미지 서비스의 사진 겟또가 시작되었습니다. ")
-        complitionHandler = complite
+        completionHandler = complete
         switch pickerMode {
         case .camera:
             presentUIImagePickerController()
-        case .maximer(let int):
+        case .maximum(let int):
             presentPHPickerViewController(max: int)
         }
     }
@@ -129,14 +129,14 @@ extension ImageService: PHPickerViewControllerDelegate {
                     defer { group.leave(); print("디퍼")}
                     // 만약 약한참조로 실패한다면 가져오지 못함을 클라이언트 에게 알립니다.
                     guard let self else {
-                        self?.complitionHandler?(.failure(.cantGetImage))
+                        self?.completionHandler?(.failure(.cantGetImage))
                         
                         return
                     }
                     // 만약 이미지가 UIImage가 아니라면
                     guard let image = image as? UIImage else {
                         // 이미지를 가져오지 함을 알립니다.
-                        complitionHandler?(.failure(.cantGetImage))
+                        completionHandler?(.failure(.cantGetImage))
                         
                         return
                     }
@@ -150,7 +150,7 @@ extension ImageService: PHPickerViewControllerDelegate {
             [weak self] in
             guard let self else { return }
             // 모두 작업이 완료 됬음을 즉 이미지를 넘깁니다.
-            complitionHandler?(.success(images))
+            completionHandler?(.success(images))
         }
     }
     
@@ -164,15 +164,15 @@ extension ImageService: UIImagePickerControllerDelegate, UINavigationControllerD
         // 만약 이미지가 아니라면
         guard let image = info[.editedImage] as? UIImage else {
             // 가져올수 없음을 클라이언트에게 알립니다.
-            complitionHandler?(.failure(.cantGetImage))
+            completionHandler?(.failure(.cantGetImage))
             return
         }
         // 성공시
-        complitionHandler?(.success([image]))
+        completionHandler?(.success([image]))
     }
     /// 이미지 피커 뒤로가기 시도시
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
-        complitionHandler?(.success(nil))
+        completionHandler?(.success(nil))
     }
 }

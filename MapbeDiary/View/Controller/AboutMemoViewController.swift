@@ -110,7 +110,7 @@ extension AboutMemoViewController {
     private func checkMax(max: Int) -> Bool{
         print("MAX : \(max)")
         if max == homeView.memoViewModel.maxImageCount {
-            showToastBody(title: "Alert_image_max_title".localized, message: "Alert_image_max_detail".localized, complite: nil)
+            showToastBody(title: "Alert_image_max_title".localized, message: "Alert_image_max_detail".localized, completion: nil)
             return false
         }
         return true
@@ -160,7 +160,7 @@ extension AboutMemoViewController {
 extension AboutMemoViewController {
     
     func checkCameraAuthorization() {
-        imageService = ImageService(presntationViewController: self, pickerMode: .camera)
+        imageService = ImageService(presentationViewController: self, pickerMode: .camera)
         imageService?.checkCameraPermission(compltion: { [weak self] bool in
             guard let self else { return }
             if bool {
@@ -172,7 +172,7 @@ extension AboutMemoViewController {
 
     }
     private func cameraImagePicker(){
-        imageService?.pickImage(complite: { [ weak self ] results in
+        imageService?.pickImage(complete: { [ weak self ] results in
             guard let self else { return }
             switch results{
             case .success(let images):
@@ -278,8 +278,8 @@ extension AboutMemoViewController: ToastPro {
     // MARK: 최대 선택할수 있는 개수를 통해 제한
     func checkUserPhotoAuthorization(max: Int) {
         print(max)
-        imageService = ImageService(presntationViewController: self, pickerMode: .maximer(max))
-        imageService?.pickImage(complite: { [weak self] results in
+        imageService = ImageService(presentationViewController: self, pickerMode: .maximum(max))
+        imageService?.pickImage(complete: { [weak self] results in
             guard let self else { return }
             switch results {
             case .success(let images):

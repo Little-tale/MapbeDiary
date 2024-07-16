@@ -138,7 +138,7 @@ final class FileManagers {
             return nil
         }
     }
-    func findMarkerImage(memoId: String, complite: ((Result<Data?,RealmManagerError>) -> Void)) {
+    func findMarkerImage(memoId: String, completion: ((Result<Data?,RealmManagerError>) -> Void)) {
         let memoPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         let imagePath = memoPath.appendingPathComponent("\(memoId)-40.jpeg")
@@ -146,12 +146,12 @@ final class FileManagers {
         if fileManager.fileExists(atPath: imagePath.path()) {
             do {
                 let imageData = try Data(contentsOf: imagePath)
-                complite(.success(imageData))
+                completion(.success(imageData))
             } catch {
-                complite(.failure(.canModifiMemo))
+                completion(.failure(.canModifiMemo))
             }
         } else {
-            complite(.success(nil))
+            completion(.success(nil))
         }
     }
     

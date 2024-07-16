@@ -231,7 +231,7 @@ extension AddLocationMemoViewController {
     // 카메라 권한 확인 로직입니다.
     func checkCameraAuthorization() {
         ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
-        imageService = ImageService(presntationViewController: self, pickerMode: .camera)
+        imageService = ImageService(presentationViewController: self, pickerMode: .camera)
         // 이미지 서비스를 통해 권한 확인을 합니다.
         imageService?.checkCameraPermission(compltion: { [weak self] bool in
             guard let self else { return }
@@ -245,13 +245,13 @@ extension AddLocationMemoViewController {
     
     // 갤러리를 선택했을때 권한 확인 로직입니다.
     private func checkGerreyAuthorization(){
-        imageService = ImageService(presntationViewController: self, pickerMode: .maximer(1))
+        imageService = ImageService(presentationViewController: self, pickerMode: .maximum(1))
         startImage()
     }
     
     // MARK: 이미지 로직입니다.
     private func startImage(){
-        imageService?.pickImage(complite: {[weak self] result in
+        imageService?.pickImage(complete: {[weak self] result in
             guard let self else { return }
             switch result {
             case .success(let images):
