@@ -6,8 +6,6 @@
 //
 
 import UIKit
-// import PhotosUI
-// import AVFoundation
 import Toast
 
 final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView> {

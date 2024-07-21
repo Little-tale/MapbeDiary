@@ -43,9 +43,6 @@ final class OnboardViewController: BaseHomeViewController<OnboardBaseView> {
             startMapView()
         }), for: .touchUpInside)
     }
-    private func settingAnalatics(){
-        
-    }
     
     private func showButton(){
         if !animated {
