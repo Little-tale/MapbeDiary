@@ -6,13 +6,13 @@
 //
 
 import UIKit
-// MARK: 사용할 모델
+
 
 protocol LocationDelegate: AnyObject {
     func getLocationInfo(memo: LocationMemo)
 }
 
-class AllMemoLocationListViewController: BaseHomeViewController<LacationMemosHomeBaseView> {
+final class AllMemoLocationListViewController: BaseHomeViewController<LacationMemosHomeBaseView> {
     
     weak var locationDelegate: LocationDelegate?
     

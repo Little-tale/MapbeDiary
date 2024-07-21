@@ -5,7 +5,6 @@
 //  Created by Jae hyung Kim on 3/7/24.
 //
 
-// import UIKit
 import MapKit
 import CoreLocation
 import Toast
