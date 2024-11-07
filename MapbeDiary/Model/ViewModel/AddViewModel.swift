@@ -60,25 +60,24 @@ class AddViewModel {
     //var modifyEnd : AddOrModifyModel?
     
     init(){
-        coordinateTrigger.bind {[weak self] coordi in
-            guard let self else {return}
-            guard let coordi else {return}
-            newProceccing(coordi)
-        }
-//        changeFolder.bind {[weak self] folder in
-//            guard let self else {return}
-//            guard let folder else {return}
-//            findFolderName(folder: folder)
-//        }
-        saveButtonTrigger.bind { [weak self] void in
-            guard let self else {return}
-            guard void != nil else {return}
-            saveButtonClicked()
-        }
-        modifyTrigger.bind { [weak self] memoId in
-            guard let memoId else { return }
-            guard let self else { return }
-            findMemo(memoId:memoId)
+        coordinateTrigger
+            .filter {
+                $0 != nil
+            }
+            .guardBind(object: self) { owner, coordi in
+                owner.newProceccing(coordi!)
+            }
+
+        saveButtonTrigger
+            .filter{ $0 != nil }
+            .guardBind(object: self) { owner, void in
+                owner.saveButtonClicked()
+            }
+        
+        modifyTrigger
+            .filter{ $0 != nil}
+            .guardBind(object: self) { owner, memoID in
+            owner.findMemo(memoId: memoID!)
         }
     }
     // folder
@@ -267,43 +266,3 @@ class AddViewModel {
         }
     }
 }
-
-
-//    private func findFolderName(folder: Folder) {
-//        guard coordinateTrigger.value == nil else { return }
-//        var model = proceccingSuccessOutPut.value
-//        model?.folder = folder
-//        proceccingSuccessOutPut.value = model
-//    }
-//            do {
-//                try repository.makeMemoMarkerAtFolders( model: result, location: location)
-//
-//            } catch (let error) {
-//                realmError.value = error as? RealmManagerError
-//            }
-            //        } else {
-            //            guard memoSuccessOutPut.value != nil else { return }
-            //            do {
-            //                guard let modifyEnd else {return}
-            //                print("###",modifyEnd)
-            //                try repository.modifyMemo(structure: modifyEnd)
-            //                if modifyEnd.modiFy{
-            //                    if modifyEnd.markerImage != nil {
-            //                        imagePag()
-            //                    }
-            //                }
-            //            } catch (let error) {
-            //                realmError.value = error as? RealmManagerError
-            //            }
-            //        }
-// location
-/*repository.makeMemoAtFolder(folder: result.folder, memo: memo)*/
-// memo
-//        let memo = repository.makeMemoModel(addViewStruct: result, location: location)
-// putInFolder
-// ---------------------
-
-//                    let model = AddOrModifyModel(memo: memo, folder: folder)
-//
-//                    memoSuccessOutPut.value = model
-//                    modifyEnd = model

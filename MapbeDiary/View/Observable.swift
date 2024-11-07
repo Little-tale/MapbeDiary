@@ -7,14 +7,15 @@
 
 import Foundation
 
-final class Observable<T>{
+class Observable<T>{
     
     var value: T {
         didSet{
            listener?(value)
         }
     }
-    private var listener: ((T) -> Void)?
+    
+    fileprivate var listener: ((T) -> Void)?
     
     init(_ type: T) {
         self.value = type
@@ -30,6 +31,20 @@ final class Observable<T>{
             guard let object else { return }
             listener(object, value)
         }
-        listener(object, value)
     }
+    
+     // 좀더 연구해봐야 하는 부분
+    
+    func filter(_ condition: @escaping (T) -> Bool) -> Observable<T> {
+        let filteredObservable = Observable(value)
+        
+        self.bind { [weak filteredObservable] newValue in
+            if condition(newValue) {
+                filteredObservable?.value = newValue
+            }
+        }
+        
+        return filteredObservable
+    }
+     
 }
