@@ -25,4 +25,11 @@ final class Observable<T>{
         self.listener = listener
     }
     
+    func guardBind<ob: AnyObject>(object: ob, _ listener: @escaping (ob, T) -> Void ) {
+        self.listener = { [weak object] value in
+            guard let object else { return }
+            listener(object, value)
+        }
+        listener(object, value)
+    }
 }

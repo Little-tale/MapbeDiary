@@ -56,8 +56,7 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     var floatPanel: FloatingPanelController?
     
     var ifURL: String?
-//    var isActive = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         subscribe()
@@ -70,22 +69,7 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         addTestAnnotations() // 시작할때 폴더 기준으로
         
         NotificationCenter.default.addObserver(self, selector: #selector(widgetNV), name: .getWidget, object: nil)
-        
     }
-    
-   
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-////        isActive = true
-//       
-//       
-//    }
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        isActive = false
-//    
-//    }
     
     func foreGroudWidget(){
         if let ifURL {
@@ -101,9 +85,6 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     
     @objc
     func widgetNV(_ noti: Notification) {
-//        guard isActive == true else { return }
-       
-        
         if let value = noti.object as? String {
             if value == "widget://Search" {
                 homeView.searchBar.becomeFirstResponder()
@@ -113,7 +94,6 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     
     // MARK: 맵뷰 세팅
     func settingMapView(){
-        
         homeView.locationManager.delegate = self
         homeView.mapView.delegate = self //
         homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
@@ -140,10 +120,8 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
 extension MapViewController {
     // 어노테이션 박아 -> 꺼내서 너가 수정해
     func addTestAnnotations() {
-        print("in Out")
         removeAll()
         if let locations = homeView.mapviewModel.locationsOutput.value {
-            print("in Out!!!")
             locations.forEach { [weak self] location in
                 guard let self else { return }
                 addCustomNoFocusforMemo(memo: location)
@@ -192,30 +170,28 @@ extension MapViewController {
     }
     
     private func userLocationAction(){
-        homeView.buttonStack.userLocationButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            
-            checkDeviewlocationAuthorization() // 권한 확인
-            if let locationInfo = homeView.locationManager.location {
+        homeView.buttonStack.userLocationButton.addAction(UIAction.guardSelf(self, handler: { owner, _ in
+            owner.checkDeviewlocationAuthorization() // 권한 확인
+            if let locationInfo = owner.homeView.locationManager.location {
                 
-                if !finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
+                if !owner.finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
                     
-                    addLongAnnotation(cl2: locationInfo.coordinate)
-                    updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, completion: nil)
-                    
+                    owner.addLongAnnotation(cl2: locationInfo.coordinate)
+                    owner.updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, completion: nil)
                 }
             }
         }), for: .touchUpInside)
     }
     
     private func locationMemosButtonAction(){
-        homeView.buttonStack.locationMemosButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            removeExistingPanelIfNeeded { [weak self] in
-                guard let self else { return }
-                movetoLocationListView()
-            }
-        }), for: .touchUpInside)
+        homeView.buttonStack.locationMemosButton.addAction(
+            UIAction.guardSelf(self, handler: { owner, _ in
+                owner.removeExistingPanelIfNeeded {
+                    owner.movetoLocationListView()
+                }
+            }),
+            for: .touchUpInside
+        )
     }
     
     // MARK: 로케이션 메모들 리스트 뷰 이동
@@ -230,35 +206,33 @@ extension MapViewController {
     
     // MARK: 세팅 뷰컨이동
     private func moveToSettingBttonAction(){
-        homeView.buttonStack.settingButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
+        let action = UIAction.guardSelf(self) { owner, _ in
             let vc = SettingViewController()
-            vc.homeView.settingViewModel.inputFolder.value = homeView.mapviewModel.folderInput.value
+            vc.homeView.settingViewModel.inputFolder.value = owner.homeView.mapviewModel.folderInput.value
             let nvc = UINavigationController(rootViewController: vc)
             nvc.modalPresentationStyle = .fullScreen
-            present(nvc, animated: true )
-        }), for: .touchUpInside)
+            owner.present(nvc, animated: true )
+        }
+        homeView.buttonStack.settingButton.addAction(action, for: .touchUpInside)
     }
     
     // MARK: 캘린더 뷰 이동
     func moveToCalendarButtonAction(){
-        homeView.buttonStack.calendarButton
-            .addAction(UIAction(handler: {[weak self] _ in
-                guard let self else { return }
-                let vc = CalenderMemoViewController()
-                vc.homeView.viewModel.folder.value = homeView
-                    .mapviewModel.folderInput.value
-                let nvc = UINavigationController(rootViewController: vc)
-                
-                vc.homeView.viewModel.selectedLocationMemo.bind { [weak self] memo in
-                    guard let self else { return }
-                    guard let memo else { return }
-                    getLocationInfo(memo: memo)
-                }
-                
-                nvc.modalPresentationStyle = .fullScreen
-                present(nvc, animated: true)
-            }), for: .touchUpInside)
+        
+        let action = UIAction.guardSelf(self) { owner, _ in
+            let vc = CalenderMemoViewController()
+            vc.homeView.viewModel.folder.value = owner.homeView.mapviewModel.folderInput.value
+            let nvc = UINavigationController(rootViewController: vc)
+            
+            vc.homeView.viewModel.selectedLocationMemo.bind { memo in
+                guard let memo else { return }
+                owner.getLocationInfo(memo: memo)
+            }
+            nvc.modalPresentationStyle = .fullScreen
+            owner.present(nvc, animated: true)
+        }
+        
+        homeView.buttonStack.calendarButton.addAction(action, for: .touchUpInside)
     }
     
 }
@@ -266,23 +240,20 @@ extension MapViewController {
 
 extension MapViewController {
     func subscribe(){
-        SingleToneDataViewModel.shared.mapViewFloderOut.bind { [weak self] folder in
-            guard let self else { return }
+        
+        SingleToneDataViewModel.shared.mapViewFloderOut.guardBind(object: self) { owner, folder in
             guard let folder else { return }
-            homeView.mapviewModel.folderInput.value = folder
-            removeAll()
-            addTestAnnotations()
-    
+            owner.homeView.mapviewModel.folderInput.value = folder
+            owner.removeAll()
+            owner.addTestAnnotations()
         }
         
-        homeView.mapviewModel.locationsOutput.bind { [weak self] locations in
-            guard let self else { return }
+        homeView.mapviewModel.locationsOutput.guardBind(object: self) { owner, locations in
             guard let locations else { return }
             locations.forEach { location in
                 self.addCustomNoFocusforMemo(memo: location)
             }
         }
-
     }
 }
 
@@ -591,28 +562,3 @@ extension MapViewController {
         homeView.locationManager.requestWhenInUseAuthorization()
     }
 }
-
-
-
-
-// MARK: 커스텀 마커
-//extension MapViewController {
-//    func customMarker() {
-//        let pin = MKPointAnnotation()
-//        pin.title = "테스트"
-//        pin.subtitle = "섭 타이틀 테스트"
-//        homeView.mapView.addAnnotation(pin)
-//    }
-//}
-/*
- /*
-  // 클로저를 통한 추가 설정
-  configuration.configureAddMemoViewController?(addMemoVc)
-  */
- */
-
-
-/*
- //        homeView.mapView.setCenter(location.coordinate, animated: true)
-         // MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
- */

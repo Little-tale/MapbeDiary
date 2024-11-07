@@ -80,6 +80,7 @@
 		7B6331822BA5307900C1C1DE /* LocationMemosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */; };
 		7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */; };
 		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
+		7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */; };
 		7B7BE6492BAD6E6B0072F40F /* NetWorkServiceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */; };
 		7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */; };
 		7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */; };
@@ -238,6 +239,7 @@
 		7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMemosViewModel.swift; sourceTree = "<group>"; };
 		7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMakeFolderBaseView.swift; sourceTree = "<group>"; };
 		7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MapbeDiary.entitlements; sourceTree = "<group>"; };
+		7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAction.swift; sourceTree = "<group>"; };
 		7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkServiceMonitor.swift; sourceTree = "<group>"; };
 		7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
 		7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardBaseView.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				7B2D775F2BF3798600D51F49 /* Notification.swift */,
+				7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -978,6 +981,7 @@
 				7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
+				7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */,
 				7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */,
 				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
@@ -1202,7 +1206,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.5;
+				CURRENT_PROJECT_VERSION = 1.1.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1221,7 +1225,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1243,7 +1247,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.5;
+				CURRENT_PROJECT_VERSION = 1.1.6;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MapbeDiary/Info.plist;
@@ -1261,7 +1265,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
