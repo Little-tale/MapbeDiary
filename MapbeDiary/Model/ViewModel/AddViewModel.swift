@@ -68,7 +68,7 @@ final class AddViewModel {
         
         saveButtonTrigger
             .guardBind(object: self) { owner, void in
-                guard let void else { return }
+                guard void != nil else { return }
                 owner.saveButtonClicked()
             }
         

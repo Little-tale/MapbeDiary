@@ -150,18 +150,18 @@ extension SearchViewController : UISearchBarDelegate {
 
 extension SearchViewController {
     func subscribe(){
-        searchViewModel.outPutModel.bind { [ weak self ] model in
-            guard let self else { return }
-            guard let model  else { return }
-            print("model.count",model.count)
-            checkResult(model.count)
-        }
-        
-        searchViewModel.outPutError.bind { [weak self] error in
-            guard let self else { return }
-            guard let error else { return}
-            showAPIErrorAlert(urlError: error)  
-        }
+        searchViewModel
+            .outPutModel
+            .guardBind(object: self) { owner, model in
+                guard let model else { return }
+                owner.checkResult(model.count)
+            }
+        searchViewModel
+            .outPutError
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                owner.showAPIErrorAlert(urlError: error)
+            }
     }
 }
 

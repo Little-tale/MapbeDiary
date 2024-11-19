@@ -124,24 +124,27 @@ extension AllMemoLocationListViewController {
         }
     }
     private func subscribe(){
-        SingleToneDataViewModel.shared.allListFolderOut.bind { [weak self] folder in
-            guard let self else { return }
-            guard let folder else { return }
-            homeView.allMemoViewModel.inputTrigger.value = folder
-        }
+        SingleToneDataViewModel.shared
+            .allListFolderOut
+            .guardBind(object: self) { owner, folder in
+                guard let folder else { return }
+                owner.homeView.allMemoViewModel.inputTrigger.value = folder
+            }
         
-        homeView.allMemoViewModel.outPutTrigger.bind { [weak self ] result in
-            guard let result else { return }
-            guard let self else { return }
-            snapShot()
-            navigationItem.title = result.folder.folderName
-        }
-        homeView.allMemoViewModel.realmError.bind {
-            [weak self] error in
-            guard let error else { return }
-            guard let self else { return }
-            showAPIErrorAlert(repo: error)
-        }
+        homeView.allMemoViewModel
+            .outPutTrigger
+            .guardBind(object: self) { owner, result in
+                guard let result else { return }
+                owner.snapShot()
+                owner.navigationItem.title = result.folder.folderName
+            }
+        
+        homeView.allMemoViewModel
+            .realmError
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                owner.showAPIErrorAlert(repo: error)
+            }
     }
     
 }

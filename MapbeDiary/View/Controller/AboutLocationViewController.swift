@@ -236,72 +236,48 @@ extension AboutLocationViewController: UICollectionViewDelegate, UICollectionVie
 
 extension AboutLocationViewController {
     private func subscribe(){
-        viewModel.locationInfoOutPut.bind { [weak self ] model in
-            guard let self else { return }
-            guard let model else { return }
-            homeView.memoAboutBaseView.memoAboutViewModel.infoInput.value = model
+        viewModel.locationInfoOutPut
+            .guardBind(object: self) { owner, model in
+                guard let model else { return }
+                owner.homeView.memoAboutBaseView.memoAboutViewModel.infoInput.value = model
         }
-        viewModel.emptyHiddenOutPut.bind { [weak self] bool in
-            guard let self else { return }
-            guard let bool else { return }
-            homeView.memoEmptyView.isHidden = bool
-            homeView.detailAddButton.isHidden = !bool
+        viewModel.emptyHiddenOutPut
+            .guardBind(object: self) { owner, bool in
+                guard let bool else { return }
+                owner.homeView.memoEmptyView.isHidden = bool
+                owner.homeView.detailAddButton.isHidden = !bool
         }
-        viewModel.detailTableViewData.bind { [weak self] memos in
-            guard let self else { return }
-            guard memos != nil else { return }
-            homeView.detailTableView.reloadData()
+        viewModel.detailTableViewData
+            .guardBind(object: self) { owner, memos in
+                guard memos != nil else { return }
+                owner.homeView.detailTableView.reloadData()
         }
-        viewModel.fileMangerErrorOutPut.bind { [weak self] error in
-            guard let self else { return }
-            guard let error else { return }
-            
-            disPatchQueItem?.cancel()
-            
-            disPatchQueItem = DispatchWorkItem {
-                self.showAPIErrorAlert(file: error)
-            }
-            if let disPatchQueItem {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: disPatchQueItem)
-            }
+        viewModel.fileMangerErrorOutPut
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                
+                owner.disPatchQueItem?.cancel()
+                
+                owner.disPatchQueItem = DispatchWorkItem {
+                    owner.showAPIErrorAlert(file: error)
+                }
+                if let disPatchQueItem = owner.disPatchQueItem {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: disPatchQueItem)
+                }
         }
         
-        viewModel.repositoryErrorOutPut.bind {[weak self] error in
-            guard self != nil else { return }
-            guard let error else { return }
-            DispatchQueue.main.async {[weak self] in
-                guard let self else { return }
-                showAPIErrorAlert(repo: error)
+        viewModel.repositoryErrorOutPut
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                DispatchQueue.main.async {
+                    owner.showAPIErrorAlert(repo: error)
+                }
             }
-        }
-        viewModel.dismissAction.bind { [weak self] void in
-            guard let self else { return }
-            guard void != nil else { return }
-            dismissAction()
-            SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
-        }
+        viewModel.dismissAction
+            .guardBind(object: self) { owner, void in
+                guard void != nil else { return }
+                owner.dismissAction()
+                SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
+            }
     }
 }
-
-/*
- /*
-  DispatchQueue.global(qos: .userInitiated).async {
-      
-      let imageRsult = FileManagers.shard.findDetailImageData(detailID: detailId, imageIds: [iamgeid])
-      
-      DispatchQueue.main.async {
-          switch imageRsult {
-          case .success(let success):
-              cell.backgoundImage.image = UIImage(data: success[0])?.resizeImage(newWidth: 200)
-          case .failure(let failure):
-              self.viewModel.fileMangerErrorOutPut.value = failure
-          }
-      }
-  }
-  */
- */
-/*
- // 로케이션메모가 들어왔다 가정
- let location = viewModel.repository.findFirstLocationMemo()
- viewModel.inputLocationMemo.value = location
- */
