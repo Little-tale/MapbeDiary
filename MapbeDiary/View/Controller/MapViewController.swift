@@ -239,8 +239,8 @@ extension MapViewController {
 
 
 extension MapViewController {
-    func subscribe(){
-        
+    
+    private func subscribe(){
         SingleToneDataViewModel.shared.mapViewFloderOut.guardBind(object: self) { owner, folder in
             guard let folder else { return }
             owner.homeView.mapviewModel.folderInput.value = folder
@@ -286,7 +286,7 @@ extension MapViewController : UISearchBarDelegate {
             /// 판넬 업데이트
             updatePanel(coordi: location, viewType: .addLocation, layout: .custom) { viewCon in
                 if let vc = viewCon as? AddLocationMemoViewController {
-                    vc.addViewModel.searchTitle = data.placeName
+                    vc.setTitle(text: data.placeName)
                 }
             }
             addLongAnnotation(cl2: location)
@@ -335,7 +335,7 @@ extension MapViewController: MKMapViewDelegate { // 수정해
             updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] viewController in
                 guard self != nil else { return }
                 if let vc = viewController as? AddLocationMemoViewController {
-                    vc.addViewModel.modifyTrigger.value = memoid
+                    vc.setModifier(text: memoid)
                 }
             }
         }
@@ -391,8 +391,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
             addMemoVcon.backDelegate = self
             if let coordinate = configuration.coordinate {
                 let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder.id.stringValue)
-                
-                addMemoVcon.addViewModel.coordinateTrigger.value = coordinateStruct
+                addMemoVcon.setAddModel(model: coordinateStruct)
             }
             vc = addMemoVcon
         }
@@ -445,7 +444,7 @@ extension MapViewController: AboutmodifyLocation {
             guard self != nil else { return }
             guard let viewController = vc as? AddLocationMemoViewController else { return }
             print("*****   updatePanel ")
-            viewController.addViewModel.modifyTrigger.value = lcation.id.stringValue
+            viewController.setModifier(text: lcation.id.stringValue)
         }
     }
 }

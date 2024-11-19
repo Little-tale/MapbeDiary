@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Observable<T>{
+final class Observable<T>{
     
     var value: T {
         didSet{
@@ -28,23 +28,28 @@ class Observable<T>{
     
     func guardBind<ob: AnyObject>(object: ob, _ listener: @escaping (ob, T) -> Void ) {
         self.listener = { [weak object] value in
-            guard let object else { return }
+            guard let object else { print("nil obj") ; return }
             listener(object, value)
         }
     }
     
      // 좀더 연구해봐야 하는 부분
     
-    func filter(_ condition: @escaping (T) -> Bool) -> Observable<T> {
-        let filteredObservable = Observable(value)
-        
-        self.bind { [weak filteredObservable] newValue in
-            if condition(newValue) {
-                filteredObservable?.value = newValue
-            }
-        }
-        
-        return filteredObservable
-    }
+//    func filter(_ condition: @escaping (T) -> Bool) -> Observable<T> {
+//        let filteredObservable = Observable(value)
+//        
+//        if condition(value) {
+//            filteredObservable.value = value
+//        }
+//
+//        self.bind { [weak filteredObservable] newValue in
+//            if condition(newValue) {
+//                filteredObservable?.value = newValue
+//            }
+//        }
+//        
+//        return filteredObservable
+//    }
+
      
 }

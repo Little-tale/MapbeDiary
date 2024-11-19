@@ -195,7 +195,7 @@ extension UIImage {
     // MARK: 최신 방법
     func resizeImage(newWidth: CGFloat) -> UIImage {
         // 지정할 넒이에 원래의 넓이 나누기
-        guard self.size.width != newWidth else { return self}
+        guard self.size.width != newWidth else { return self }
         let scale = newWidth / self.size.width
         
         // 새 높이를 현 높이의 나눈값을 곱함

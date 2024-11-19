@@ -30,10 +30,10 @@ struct addViewOutStruct {
 // plceholder없으면 로컬라이제이션 잊지마 마커 이미지도 여기서 해줘야햄
 final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     
-    var addViewModel = AddViewModel()
+    private var addViewModel = AddViewModel()
     
     // 이미지 서비스 클래스 선정
-    var imageService: ImageService?
+    private var imageService: ImageService?
     
     // delegate
     weak var backDelegate: BackButtonDelegate?
@@ -50,7 +50,7 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     }
     
     @objc
-    func changeImageButtonClicked(_ sender: UIButton){
+    private func changeImageButtonClicked(_ sender: UIButton){
         print(#function)
         showActionSheet()
     }
@@ -58,7 +58,7 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         homeView.backgroundColor = .skinSet
     }
     
-    func showActionSheet(){
+    private func showActionSheet(){
         let alert = UIAlertController(title: MapTextSection.bringPhoto.alertTitle, message: nil, preferredStyle: .actionSheet)
         let camera = ActionRouter().actions(.camera) {
             [weak self] in
@@ -76,20 +76,18 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         present(alert, animated: true)
     }
     
-    func buttonActionSetting() {
-        homeView.backButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            backButtonClicked()
+    private func buttonActionSetting() {
+        homeView.backButton.addAction(UIAction.guardSelf(self, handler: { owner, action in
+            owner.backButtonClicked()
         }), for: .touchUpInside)
         
-        homeView.saveButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            saveButtonClicked()
+        homeView.saveButton.addAction(UIAction.guardSelf(self, handler: { owner, action in
+            owner.saveButtonClicked()
         }), for: .touchUpInside)
     }
     
     // MARK: 폴더버튼 액션
-    func folderButtonSetting(){
+    private func folderButtonSetting(){
         homeView.folderButton.addTarget(self, action: #selector(sendFolderViewController), for: .touchUpInside)
     }
     
@@ -97,17 +95,15 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
     func sendFolderViewController(){
         print(#function)
     }
-    
 
-    func saveButtonClicked(){
-        print(#function)
-        homeView.textFieldList.forEach { [weak self] textfield in
-            guard let self else { return }
+    private func saveButtonClicked(){
+        homeView.textFieldList.forEach { textfield in
+
             var value = addViewModel.tempSaveModel
             // var modify = addViewModel.modifyEnd
             switch textfield.tag {
             case 0:
-                value.title = titleTestter(textField: textfield)
+                value.title = titleTester(textField: textfield)
                 //modify.title = titleTestter(textField: textfield)
             case 1:
                 value.content = textfield.text ?? ""
@@ -126,7 +122,7 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
         SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
     }
    
-    func titleTestter(textField : UITextField) -> String{
+    private func titleTester(textField : UITextField) -> String{
         // 1. 텍스트가 비어있는지 부터
         if let textFieldText = textField.text,
            textFieldText.isEmpty {
@@ -151,72 +147,90 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
 }
 
 extension AddLocationMemoViewController {
+    
     private func subscribe() {
-        
-        addViewModel.urlErrorOutPut.bind { [weak self] error in
-            guard let error else { return }
-            guard let self else { return }
-            showAPIErrorAlert(urlError: error)
+        addViewModel.urlErrorOutPut
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                owner.showAPIErrorAlert(urlError: error)
+                print("??")
         }
         
-        addViewModel.realmError.bind { [weak self] error in
-            guard let error else { return }
-            guard let self else { return }
-            showAPIErrorAlert(repo: error)
+        addViewModel.realmError
+            .guardBind(object: self) { owner, error in
+                guard let error else { return }
+                owner.showAPIErrorAlert(repo: error)
+                print("????")
         }
         
-        addViewModel.proceccingSuccessOutPut.bind { [weak self] model in
-            guard let self else { return }
-            guard let model else { return }
-            
-            homeView.folderButton.configuration?.title = folderTitle()//model.folderName
-            
-            homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
+        addViewModel.proceccingSuccessOutPut
+            .guardBind(object: self) { owner, model in
+                guard let model else { return }
+                owner.setUpProcessing(model)
+                print("????????")
+            }
         
-            homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
-            // 플레이스 홀더
-            
-            homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder ?? MapTextSection.emptyTitleTextFieldPlaceHolder
-            // print(model.titlePlacHolder)
-            
-            // 이미지
-            checkLocationMemoImage(data: model.memoImage)
-            // 타이틀
-            homeView.AddTitleDateView.titleTextField.text = model.title
-            // 간편메모
-            homeView.AddTitleDateView.simpleMemoTextField.text = model.content
-            // 전화번호
-            homeView.phoneTextField.text = model.phoneNumber
-            // print(homeView.AddTitleDateView.titleTextField.placeholder)
-            
-        }
-        
-        addViewModel.dismisstrigger.bind { [weak self] void in
-            guard void != nil else { return }
-            guard let self else { return }
-            backDelegate?.backButtonClicked()
-        }
-       
+        addViewModel.dismisstrigger
+            .guardBind(object: self) { owner, void in
+                guard let void else { return }
+                owner.backDelegate?.backButtonClicked()
+                print("?????????????")
+            }
+    }
+    
+    
+    func setTitle(text: String) {
+        addViewModel.searchTitle = text
+    }
+    
+    func setModifier(text: String) {
+        addViewModel.modifyTrigger.value = text
+    }
+    
+    func setAddModel(model: addModel) {
+        addViewModel.coordinateTrigger.value = model
     }
 }
 
 extension AddLocationMemoViewController {
+    
+    private func setUpProcessing(_ model: addViewOutStruct) {
+        homeView.folderButton.configuration?.title = folderTitle()//model.folderName
+        
+        homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
+    
+        homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
+        // 플레이스 홀더
+        
+        homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder ?? MapTextSection.emptyTitleTextFieldPlaceHolder
+        // print(model.titlePlacHolder)
+        
+        // 이미지
+        checkLocationMemoImage(data: model.memoImage)
+        // 타이틀
+        homeView.AddTitleDateView.titleTextField.text = model.title
+        // 간편메모
+        homeView.AddTitleDateView.simpleMemoTextField.text = model.content
+        // 전화번호
+        homeView.phoneTextField.text = model.phoneNumber
+        // print(homeView.AddTitleDateView.titleTextField.placeholder)
+    }
 
-    func backButtonClicked() {
+    private func backButtonClicked() {
         // ismiss(animated: true)
         backDelegate?.backButtonClicked()
     }
     
     // MARK: 업데이트 사항
-    func checkFolderIamge(string: String?) -> UIImage{
+    private func checkFolderIamge(string: String?) -> UIImage{
         return UIImage.defaultFolder
     }
     // MARK: 업데이트 사항
-    func folderTitle() -> String{
+    private func folderTitle() -> String{
         return MapTextSection.beginningSoon
     }
     
-    func checkLocationMemoImage(data: Data? ) {
+    private func checkLocationMemoImage(data: Data? ) {
         if let data {
             homeView.AddTitleDateView.imageView.image = UIImage(data: data)
         } else{
@@ -229,7 +243,7 @@ extension AddLocationMemoViewController {
 extension AddLocationMemoViewController {
     
     // 카메라 권한 확인 로직입니다.
-    func checkCameraAuthorization() {
+    private func checkCameraAuthorization() {
         ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
         imageService = ImageService(presentationViewController: self, pickerMode: .camera)
         // 이미지 서비스를 통해 권한 확인을 합니다.
@@ -273,7 +287,7 @@ extension AddLocationMemoViewController {
     }
     
     // MARK: goSetting
-    func cameraSettingAlert(){
+    private func cameraSettingAlert(){
         showAlert(title: MapTextSection.camera.alertMessage, message: MapTextSection.camera.actionTitle, actionTitle: MapTextSection.camera.actionTitle) {
             [weak self] action in
             guard let self else {return}

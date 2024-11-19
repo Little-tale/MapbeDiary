@@ -20,7 +20,7 @@ struct addModel {
 }
 
 
-class AddViewModel {
+final class AddViewModel {
     // ------- In Put ------
     // lat: String, lon: String, folder: Folder
    
@@ -61,24 +61,22 @@ class AddViewModel {
     
     init(){
         coordinateTrigger
-            .filter {
-                $0 != nil
-            }
             .guardBind(object: self) { owner, coordi in
-                owner.newProceccing(coordi!)
+                guard let coordi else { return }
+                owner.newProceccing(coordi)
             }
-
+        
         saveButtonTrigger
-            .filter{ $0 != nil }
             .guardBind(object: self) { owner, void in
+                guard let void else { return }
                 owner.saveButtonClicked()
             }
         
         modifyTrigger
-            .filter{ $0 != nil}
             .guardBind(object: self) { owner, memoID in
-            owner.findMemo(memoId: memoID!)
-        }
+                guard let memoID else { return }
+                owner.findMemo(memoId: memoID)
+            }
     }
     // folder
     private func newProceccing(_ model: addModel ){
