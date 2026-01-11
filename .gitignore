@@ -4,9 +4,10 @@
 ## My_ignore
 .DS_Store
 GoogleService-Info.plist
-APIKey.Swift
-/APIKey.Swift
-APIKey.Swift/
+APIKey.swift
+/APIKey.swift
+APIKey.swift/
+MapbeDiary/Network/APIKey.swift
 
 ### Swift ###
 # Xcode
