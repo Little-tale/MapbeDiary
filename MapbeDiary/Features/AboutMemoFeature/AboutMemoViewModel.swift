@@ -22,34 +22,34 @@ struct AboutMemoModel {
 final class AboutMemoViewModel {
 
     //MARK: Input -------------
-    let emptyModel: Observable<AboutMemoModel> =  Observable(AboutMemoModel(memoText: nil, viewImageData: []))
+    let emptyModel: _Observable<AboutMemoModel> =  _Observable(AboutMemoModel(memoText: nil, viewImageData: []))
     
-    let inputModel: Observable<AboutMemoModel?> = Observable(nil)
+    let inputModel: _Observable<AboutMemoModel?> = _Observable(nil)
     
-    let removeImage: Observable<IndexPath?> = Observable(nil)
+    let removeImage: _Observable<IndexPath?> = _Observable(nil)
     
-    let inputImage: Observable<Data?> = Observable(nil)
+    let inputImage: _Observable<Data?> = _Observable(nil)
     
     // Modify
-    //let inputMemoInfo: Observable<DetailMemo?> = Observable(nil)
+    //let inputMemoInfo: _Observable<DetailMemo?> = _Observable(nil)
 
-    let saveInput: Observable<Void?> = Observable(nil)
+    let saveInput: _Observable<Void?> = _Observable(nil)
     
-    let removiewInput: Observable<Void?> = Observable(nil)
+    let removiewInput: _Observable<Void?> = _Observable(nil)
     
     //MARK: Output =============
    
-    let repoErrorPut: Observable<RealmManagerError?> = Observable(nil)
+    let repoErrorPut: _Observable<RealmManagerError?> = _Observable(nil)
     
-    let fileErrorPut: Observable<fileManagerError?> = Observable(nil)
+    let fileErrorPut: _Observable<fileManagerError?> = _Observable(nil)
     
-    let deletButtonHidden: Observable<Bool?> = Observable(nil)
+    let deletButtonHidden: _Observable<Bool?> = _Observable(nil)
     
-    let dismissOutPut: Observable<Void?> = Observable(nil)
+    let dismissOutPut: _Observable<Void?> = _Observable(nil)
     
-    let successSave: Observable<Void?> = Observable(nil)
+    let successSave: _Observable<Void?> = _Observable(nil)
     
-    let warningTitle: Observable<MapTextSection?> = Observable(nil)
+    let warningTitle: _Observable<MapTextSection?> = _Observable(nil)
     
     // static
     let repository = RealmRepository()

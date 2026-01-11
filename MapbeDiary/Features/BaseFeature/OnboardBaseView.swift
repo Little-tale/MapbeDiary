@@ -8,16 +8,17 @@
 import UIKit
 import SnapKit
 
-class OnboardBaseView: BaseView {
+final class OnboardBaseView: VCBaseView {
+    
     let imageSliderView = ScrollImageView(frame: .zero)
     let startButton = UIButton()
     
-    override func configureHierarchy() {
+    override func setupHierarchy() {
         addSubview(imageSliderView)
         addSubview(startButton)
     }
-
-    override func configureLayout() {
+    
+    override func setupConstraints() {
         imageSliderView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -29,7 +30,7 @@ class OnboardBaseView: BaseView {
         }
     }
     
-    override func designView() {
+    override func setupUI() {
         var configu = UIButton.Configuration.bordered()
         configu.title = "시작하기"
         configu.baseBackgroundColor = .wheetOrange

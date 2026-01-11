@@ -11,12 +11,12 @@ class SettingViewModel {
     // repo
     let repository = RealmRepository()
     
-    let inputFolder: Observable<Folder?> = Observable(nil)
-    let removeTrigger: Observable<Void?> = Observable(nil)
+    let inputFolder: _Observable<Folder?> = _Observable(nil)
+    let removeTrigger: _Observable<Void?> = _Observable(nil)
     
     // output
-    let successOut: Observable<Void?> = Observable(nil)
-    let alertError: Observable<RealmManagerError?> = Observable(nil)
+    let successOut: _Observable<Void?> = _Observable(nil)
+    let alertError: _Observable<RealmManagerError?> = _Observable(nil)
     
     init(){
         removeTrigger.bind { [weak self] void in

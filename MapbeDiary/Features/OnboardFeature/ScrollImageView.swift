@@ -26,7 +26,7 @@ final class ScrollImageView: BaseView {
 
     let pageController = UIPageControl()
     
-    var curretnPageLitener: ((Int) -> Void)?
+    var currentPageListener: ((Int) -> Void)?
     
     override func register() {
         setUpUI()
@@ -34,7 +34,7 @@ final class ScrollImageView: BaseView {
         pageController.addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             changePage(current: pageController.currentPage)
-            curretnPageLitener?(pageController.currentPage)
+            currentPageListener?(pageController.currentPage)
         }), for: .valueChanged)
     }
     
@@ -95,6 +95,6 @@ extension ScrollImageView: UIScrollViewDelegate {
         let round = round(pageBefore)
         // print(round)
         pageController.currentPage = Int(round)
-        curretnPageLitener?(Int(round))
+        currentPageListener?(Int(round))
     }
 }

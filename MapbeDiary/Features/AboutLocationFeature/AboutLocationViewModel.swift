@@ -10,23 +10,23 @@ import Foundation
 
 class AboutLocationViewModel {
     // input
-    let inputLocationMemo: Observable<LocationMemo?> = Observable(nil)
+    let inputLocationMemo: _Observable<LocationMemo?> = _Observable(nil)
     
     // MARK: -> 해야해
-    let inputLocationId: Observable<String?> = Observable(nil)
+    let inputLocationId: _Observable<String?> = _Observable(nil)
     
-    let removeDetailMemo: Observable<IndexPath?> = Observable(nil)
+    let removeDetailMemo: _Observable<IndexPath?> = _Observable(nil)
     
-    let removeLocationMemo: Observable<Void?> = Observable(nil)
+    let removeLocationMemo: _Observable<Void?> = _Observable(nil)
     
     // output
-    let locationInfoOutPut: Observable<LocationMemo?> = Observable(nil)
-    let emptyHiddenOutPut: Observable<Bool?> = Observable(nil)
-    let detailTableViewData: Observable<[DetailMemo]?> = Observable(nil)
-    let fileMangerErrorOutPut: Observable<fileManagerError?> = Observable(nil)
-    let repositoryErrorOutPut: Observable<RealmManagerError?> = Observable(nil)
+    let locationInfoOutPut: _Observable<LocationMemo?> = _Observable(nil)
+    let emptyHiddenOutPut: _Observable<Bool?> = _Observable(nil)
+    let detailTableViewData: _Observable<[DetailMemo]?> = _Observable(nil)
+    let fileMangerErrorOutPut: _Observable<fileManagerError?> = _Observable(nil)
+    let repositoryErrorOutPut: _Observable<RealmManagerError?> = _Observable(nil)
     
-    let dismissAction: Observable<Void?> = Observable(nil)
+    let dismissAction: _Observable<Void?> = _Observable(nil)
     
     // static
     let repository = RealmRepository()

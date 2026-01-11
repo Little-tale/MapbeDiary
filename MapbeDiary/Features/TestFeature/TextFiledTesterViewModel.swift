@@ -17,12 +17,12 @@ struct TextViewModel {
 
 class TextFiledTesterViewModel {
     
-    let titleTester: Observable<TextViewModel?> = Observable(nil)
-    let simpleMemoTester: Observable<TextViewModel?> = Observable(nil)
-    let phoneTextTester: Observable<TextViewModel?> = Observable(nil)
+    let titleTester: _Observable<TextViewModel?> = _Observable(nil)
+    let simpleMemoTester: _Observable<TextViewModel?> = _Observable(nil)
+    let phoneTextTester: _Observable<TextViewModel?> = _Observable(nil)
     
     
-    var canAllowed: Observable<Bool> = Observable(true)
+    var canAllowed: _Observable<Bool> = _Observable(true)
     
     init(){
         titleTester.bind { [weak self] model in

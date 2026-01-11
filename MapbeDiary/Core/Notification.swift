@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     static let getWidget = Notification.Name(rawValue: "getWidget")
+    static let didSaveActionDetailMemo = Notification.Name("SaveDetailMemo")
 }

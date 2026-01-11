@@ -36,5 +36,9 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         view = mainView
     }
 
-    func bind(reactor: R) {}
+    func bind(reactor: R) {
+        sendActions(reactor: reactor)
+    }
+    
+    func sendActions(reactor: R) {}
 }

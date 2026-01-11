@@ -12,10 +12,10 @@ class SingleToneDataViewModel {
     
     static let shared = SingleToneDataViewModel()
     
-    var shardFolderOb: Observable<Folder?> = Observable(nil)
+    var shardFolderOb: _Observable<Folder?> = _Observable(nil)
     
-    var allListFolderOut: Observable<Folder?> = Observable(nil)
-    var mapViewFloderOut: Observable<Folder?> = Observable(nil)
+    var allListFolderOut: _Observable<Folder?> = _Observable(nil)
+    var mapViewFloderOut: _Observable<Folder?> = _Observable(nil)
     
     private init(){
         

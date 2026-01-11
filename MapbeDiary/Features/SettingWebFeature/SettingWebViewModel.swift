@@ -10,13 +10,13 @@ import Foundation
 
 class SettingWebViewModel {
 
-    var inputSettingActionType: Observable<SettingActionType?> = Observable(nil)
+    var inputSettingActionType: _Observable<SettingActionType?> = _Observable(nil)
     
-    var outputURL: Observable<URLRequest?> = Observable(nil)
+    var outputURL: _Observable<URLRequest?> = _Observable(nil)
     
-    var outputNaviTitle: Observable<String?> = Observable(nil)
+    var outputNaviTitle: _Observable<String?> = _Observable(nil)
     
-    var webLoadCompilte: Observable<Void?> = Observable(nil)
+    var webLoadCompilte: _Observable<Void?> = _Observable(nil)
     
     init(){
         inputSettingActionType.bind { [weak self] settingAction in

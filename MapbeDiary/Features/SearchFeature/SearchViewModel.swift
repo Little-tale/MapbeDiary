@@ -24,11 +24,11 @@ struct SearchModel {
 final class SearchViewModel {
     
     // MARK: Input
-    var searchTextOb: Observable<SearchModel?> = Observable(nil)
-    var currentPage: Observable<Int?> = Observable(nil)
+    var searchTextOb: _Observable<SearchModel?> = _Observable(nil)
+    var currentPage: _Observable<Int?> = _Observable(nil)
     // MARK: Output
-    var outPutModel: Observable<[Document]?> = Observable([])
-    var outPutError: Observable<URLSessionManagerError?> = Observable(nil)
+    var outPutModel: _Observable<[Document]?> = _Observable([])
+    var outPutError: _Observable<URLSessionManagerError?> = _Observable(nil)
     
     // Static
     var endPageBool: Bool?

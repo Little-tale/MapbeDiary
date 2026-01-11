@@ -10,21 +10,21 @@ import Foundation
 
 class MemoTextViewModel {
     
-    let textInput: Observable<TextViewModel?> = Observable(nil)
+    let textInput: _Observable<TextViewModel?> = _Observable(nil)
     
-    let activeOutPut: Observable<Bool> = Observable(true)
+    let activeOutPut: _Observable<Bool> = _Observable(true)
     
-    let textViewdidChangeInput: Observable<String?> = Observable(nil)
+    let textViewdidChangeInput: _Observable<String?> = _Observable(nil)
     
     
     
-    let placeHolderText: Observable<String?> = Observable(nil)
+    let placeHolderText: _Observable<String?> = _Observable(nil)
     
-    let currentTextCountOutPut: Observable<Int> = Observable(0)
+    let currentTextCountOutPut: _Observable<Int> = _Observable(0)
     
-    let processingText: Observable<String?> = Observable(nil)
+    let processingText: _Observable<String?> = _Observable(nil)
     
-    let placeHolderBoolOutput: Observable<Bool?> = Observable(nil)
+    let placeHolderBoolOutput: _Observable<Bool?> = _Observable(nil)
     
     
 

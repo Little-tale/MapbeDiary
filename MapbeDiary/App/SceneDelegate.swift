@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.makeKeyAndVisible()
             
         } else {
-            window?.rootViewController = OnboardViewController()
+            window?.rootViewController = OnboardViewController(reactor: OnboardReactor())
             window?.makeKeyAndVisible()
         }
     }

@@ -17,9 +17,9 @@ struct LocationInfo{
 
 final class LocationMemosViewModel {
     
-    let infoInput: Observable<LocationMemo?> = Observable(nil)
+    let infoInput: _Observable<LocationMemo?> = _Observable(nil)
     
-    let infoOuput: Observable<LocationInfo?> = Observable(nil)
+    let infoOuput: _Observable<LocationInfo?> = _Observable(nil)
     
     init(){
         infoInput.bind { [weak self] location in

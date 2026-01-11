@@ -12,18 +12,18 @@ class CalenderMemoViewModel {
     
     let repository = RealmRepository()
     // In
-    let folder: Observable<Folder?> = Observable(nil)
-    let date: Observable<Date?> = Observable(nil)
-    let selectIndexPath: Observable<IndexPath?> = Observable(nil)
-    let eventDate: Observable<Date?> = Observable(nil)
+    let folder: _Observable<Folder?> = _Observable(nil)
+    let date: _Observable<Date?> = _Observable(nil)
+    let selectIndexPath: _Observable<IndexPath?> = _Observable(nil)
+    let eventDate: _Observable<Date?> = _Observable(nil)
     
     // Out
-    let locationMemos: Observable<[LocationMemo]?> = Observable(nil)
-    let selectedLocationMemo: Observable<LocationMemo?> = Observable(nil)
-    let minDateLocationMemo: Observable<LocationMemo?> = Observable(nil)
-    let reloadTrigger: Observable<Void?> = Observable(nil)
-    let dismissTrigger: Observable<Void?> = Observable(nil)
-    let countDate: Observable<Int?> = Observable(nil)
+    let locationMemos: _Observable<[LocationMemo]?> = _Observable(nil)
+    let selectedLocationMemo: _Observable<LocationMemo?> = _Observable(nil)
+    let minDateLocationMemo: _Observable<LocationMemo?> = _Observable(nil)
+    let reloadTrigger: _Observable<Void?> = _Observable(nil)
+    let dismissTrigger: _Observable<Void?> = _Observable(nil)
+    let countDate: _Observable<Int?> = _Observable(nil)
     
     
     init() {

@@ -39,10 +39,8 @@
 		7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */; };
 		7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */; };
 		7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */; };
-		7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137832B99B5A700D6BBD1 /* TabbarController.swift */; };
 		7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137892B99C2F100D6BBD1 /* Toast */; };
 		7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */; };
-		7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */; };
 		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
 		7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */; };
 		7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */; };
@@ -59,7 +57,6 @@
 		7B2D774D2BF27DEC00D51F49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */; };
 		7B2D77512BF27DEC00D51F49 /* SearchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7B2D77412BF27DEA00D51F49 /* SearchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7B2D77602BF3798600D51F49 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D775F2BF3798600D51F49 /* Notification.swift */; };
-		7B30DD732BAC190800D789B5 /* SettingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */; };
 		7B30DD752BAC359E00D789B5 /* WebHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD742BAC359E00D789B5 /* WebHomeView.swift */; };
 		7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */; };
 		7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */; };
@@ -114,6 +111,8 @@
 		7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */; };
 		7BB8ECCA2B9F4D7300C88F17 /* AllMemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */; };
 		7BB8ECCC2B9F4E8700C88F17 /* SingleToneDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */; };
+		7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB65B52F13FD3A0026EB7A /* Ext+String.swift */; };
+		7BBB65B82F13FF6D0026EB7A /* Ext+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB65B72F13FF6D0026EB7A /* Ext+UILabel.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -121,6 +120,8 @@
 		7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F652F13D95600467F7F /* VCBaseView.swift */; };
 		7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */; };
 		7BDE5FA02F13DA3200467F7F /* ReactorBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */; };
+		7BDE5FA22F13DC6700467F7F /* OnboardReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5FA12F13DC6700467F7F /* OnboardReactor.swift */; };
+		7BDE61462F13F3DF00467F7F /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE61452F13F3DF00467F7F /* Ext+UIViewController.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
@@ -203,9 +204,7 @@
 		7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeView.swift; sourceTree = "<group>"; };
-		7B1137832B99B5A700D6BBD1 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
 		7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationMemoViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +222,6 @@
 		7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B2D774E2BF27DEC00D51F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B2D775F2BF3798600D51F49 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationView.swift; sourceTree = "<group>"; };
 		7B30DD742BAC359E00D789B5 /* WebHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebHomeView.swift; sourceTree = "<group>"; };
 		7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewModel.swift; sourceTree = "<group>"; };
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
@@ -278,10 +276,14 @@
 		7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocactionListViewController.swift; sourceTree = "<group>"; };
 		7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoListViewModel.swift; sourceTree = "<group>"; };
 		7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleToneDataViewModel.swift; sourceTree = "<group>"; };
+		7BBB65B52F13FD3A0026EB7A /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
+		7BBB65B72F13FF6D0026EB7A /* Ext+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UILabel.swift"; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
+		7BDE5FA12F13DC6700467F7F /* OnboardReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardReactor.swift; sourceTree = "<group>"; };
+		7BDE61452F13F3DF00467F7F /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
@@ -349,7 +351,6 @@
 		24FD8E6B1E49A23C18ED4E6E /* SettingFeature */ = {
 			isa = PBXGroup;
 			children = (
-				7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */,
 				7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */,
 				7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */,
 				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
@@ -390,11 +391,43 @@
 			path = CalendarFeature;
 			sourceTree = "<group>";
 		};
+		39C5C0EE3B09B6D6C800FF9B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4B648FF52FDD6A7F31EE948D /* Ext */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		484D8B771F18F48A10D2AD48 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
+				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
+				7B11371C2B99A17100D6BBD1 /* Info.plist */,
+				7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */,
+				7B1137172B99A17100D6BBD1 /* Assets.xcassets */,
+				7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4B648FF52FDD6A7F31EE948D /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				7BDE61452F13F3DF00467F7F /* Ext+UIViewController.swift */,
+				7BBB65B52F13FD3A0026EB7A /* Ext+String.swift */,
+				7BBB65B72F13FF6D0026EB7A /* Ext+UILabel.swift */,
+			);
+			path = Ext;
+			sourceTree = "<group>";
+		};
 		4B7A44BFF5109666C7B798C1 /* OnboardFeature */ = {
 			isa = PBXGroup;
 			children = (
 				7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */,
 				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
+				7BDE5FA12F13DC6700467F7F /* OnboardReactor.swift */,
 			);
 			path = OnboardFeature;
 			sourceTree = "<group>";
@@ -465,15 +498,12 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
-				7B2D775E2BF3797C00D51F49 /* Core */,
+				484D8B771F18F48A10D2AD48 /* App */,
+				7B2D775E2BF3797C00D6BBD1 /* Core */,
 				7B1137512B99A82F00D6BBD1 /* Data */,
 				7B1137602B99A8ED00D6BBD1 /* Domain */,
 				7B1137742B99AC5700D6BBD1 /* Features */,
 				78964AA9FF2A47EBAF1F2F0F /* Network */,
-				7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */,
-				7B1137172B99A17100D6BBD1 /* Assets.xcassets */,
-				7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */,
-				7B11371C2B99A17100D6BBD1 /* Info.plist */,
 			);
 			path = MapbeDiary;
 			sourceTree = "<group>";
@@ -525,8 +555,6 @@
 		7B1137742B99AC5700D6BBD1 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				7BDE5F9C2F13D99900467F7F /* Protocol */,
-				7BDE5F642F13D92C00467F7F /* Base */,
 				AC9A7E61C166BA46023808AF /* BaseFeature */,
 				88087A95B696C598319AACED /* MapFeature */,
 				64073A134BA3B1EE96D2367C /* AddFeature */,
@@ -538,7 +566,6 @@
 				86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */,
 				667BC9CE7CCD39384DF6FDB2 /* AllLocationListFeature */,
 				4B7A44BFF5109666C7B798C1 /* OnboardFeature */,
-				9F81A10BED1F87D2B8A74C46 /* TabFeature */,
 				35BA7B8126585C627C0FC8EB /* TestFeature */,
 			);
 			path = Features;
@@ -566,11 +593,10 @@
 			path = SearchWidget;
 			sourceTree = "<group>";
 		};
-		7B2D775E2BF3797C00D51F49 /* Core */ = {
+		7B2D775E2BF3797C00D6BBD1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
-				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
+				39C5C0EE3B09B6D6C800FF9B /* Utils */,
 				7B11376E2B99AA2100D6BBD1 /* Extention.swift */,
 				7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */,
 				7B2D775F2BF3798600D51F49 /* Notification.swift */,
@@ -589,23 +615,6 @@
 			path = TextView;
 			sourceTree = "<group>";
 		};
-		7BDE5F642F13D92C00467F7F /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
-				7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		7BDE5F9C2F13D99900467F7F /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -622,21 +631,12 @@
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
 				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
 				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
-				7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */,
 				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */,
 				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
 				7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */,
 			);
 			path = MapFeature;
-			sourceTree = "<group>";
-		};
-		9F81A10BED1F87D2B8A74C46 /* TabFeature */ = {
-			isa = PBXGroup;
-			children = (
-				7B1137832B99B5A700D6BBD1 /* TabbarController.swift */,
-			);
-			path = TabFeature;
 			sourceTree = "<group>";
 		};
 		A859B753ECA280359A4354A7 /* AboutMemoFeature */ = {
@@ -676,6 +676,9 @@
 				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
 				7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */,
 				7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */,
+				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
+				7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */,
+				7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
 				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
 				7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */,
@@ -926,6 +929,7 @@
 				7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */,
 				7BA827382BB1951700227F63 /* ImageChach.swift in Sources */,
 				7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */,
+				7BDE5FA22F13DC6700467F7F /* OnboardReactor.swift in Sources */,
 				7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
 				7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */,
@@ -950,8 +954,7 @@
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
 				7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */,
 				7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */,
-				7B30DD732BAC190800D789B5 /* SettingNavigationView.swift in Sources */,
-				7B1137902B99FDE900D6BBD1 /* CustomAnnotationView.swift in Sources */,
+				7BBB65B82F13FF6D0026EB7A /* Ext+UILabel.swift in Sources */,
 				7BB8ECC42B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift in Sources */,
 				7BB8ECCA2B9F4D7300C88F17 /* AllMemoListViewModel.swift in Sources */,
 				7BB250E32BA1C63300FDE898 /* MemosEmptyView.swift in Sources */,
@@ -979,12 +982,12 @@
 				7B54A7E12BAB58490039BC7F /* SettingReusableView.swift in Sources */,
 				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
+				7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */,
 				7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
-				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */,
 				7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
@@ -995,6 +998,7 @@
 				7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */,
 				7B30DD7D2BAC670000D789B5 /* CustomIndicator.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
+				7BDE61462F13F3DF00467F7F /* Ext+UIViewController.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
 				7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */,
 				7B30DD7B2BAC62DB00D789B5 /* SettingViewModel.swift in Sources */,
@@ -1219,13 +1223,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MapbeDiary/App/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MapbeDiary/Info.plist;
+				INFOPLIST_FILE = MapbeDiary/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MapBeMemo;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 메모를 제공하기 위해 위치 권한이 필요합니다";
@@ -1260,12 +1264,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MapbeDiary/MapbeDiary.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MapbeDiary/App/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.6;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MapbeDiary/Info.plist;
+				INFOPLIST_FILE = MapbeDiary/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MapBeMemo;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 사진을 기반으로 메모를 제공하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 메모를 제공하기 위해 위치 권한이 필요합니다";

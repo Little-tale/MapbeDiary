@@ -6,88 +6,97 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
- //MARK: 회고 isHidden Vs Alpha
-final class OnboardViewController: BaseHomeViewController<OnboardBaseView> {
-    
-    let repository = RealmRepository()
-    
-    var disPatchItem: DispatchWorkItem?
-    var animated = false
-    
-    let images: [UIImage] = [
-        UIImage.on1,
-        UIImage.on2,
-        UIImage.on3
-    ]
+
+final class OnboardViewController: ReactorBaseViewController<OnboardReactor,OnboardBaseView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         startImageSet()
         settingButton()
-        trackingScroll()
     }
     
-    private func startImageSet(){
-        let imageViews = images.map { image in
-            UIImageView(image: image)
-        }
-        homeView.imageSliderView.photoImageView = imageViews
-    }
-    
-    
-    private func settingButton(){
-        homeView.startButton.alpha = 0.0
-        homeView.startButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            startMapView()
-        }), for: .touchUpInside)
-    }
-    
-    private func showButton(){
-        if !animated {
-            animated = true
-            UIView.animate(withDuration: 1.5) {
-                [weak self] in
-                guard let self else { return }
-                homeView.startButton.alpha = 1
+    override func bind(reactor: OnboardReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .map { $0.buttonAlpha }
+            .skip(1) // Default State
+            .distinctUntilChanged()
+            .bind(with: self) { owner, alpha in
+                owner.showButton(alpha: alpha)
             }
-        }
-    }
-    
-    private func trackingScroll(){
-        homeView.imageSliderView.curretnPageLitener = { [weak self]
-            currentPage in
-            guard let self else { return }
-            if (currentPage + 1) == images.count {
-                showButton()
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.error }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
             }
-        }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.nextVC }
+            .distinctUntilChanged()
+            .filter{ $0 == true }
+            .bind(with: self) { owner, _ in
+                let vc = MapViewController()
+                owner.changeRootView(vc)
+            }
+            .disposed(by: disposeBag)
     }
-    
-    private func startMapView(){
-        do {
-            try repository.makeFolder(folderName: "추억의 공간")
-            let folder = repository.findAllFolderArray().first
-            SingleToneDataViewModel.shared.shardFolderOb.value = folder
-            let vc = MapViewController()
-            changeRootView(vc)
-        } catch {
-            showAPIErrorAlert(repo: .canMakeFolder)
+   
+    override func sendActions(reactor: OnboardReactor) {
+        // startButton Tapped
+        mainView.startButton.rx
+            .tap
+            .throttle(.seconds(1), latest: false ,scheduler: MainScheduler.instance)
+            .map { OnboardReactor.Action.startButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // currentPageListener -> currentPageIdxChanged
+        mainView.imageSliderView.currentPageListener = { [weak self] current in
+            guard let self else { return }
+            let imageViews =  mainView.imageSliderView.photoImageView
+            
+            reactor.action.onNext(.currentPageIdxChanged(
+                index: current, imageCount: imageViews.count)
+            )
         }
+
     }
 }
 
 extension OnboardViewController {
     
-    func changeRootView(_ vc: UIViewController){
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let windes = windowScene.windows.first {
-                UIView.transition(with: windes, duration: 0.6) {
-                    windes.rootViewController = vc
-                }
-                windes.makeKeyAndVisible()
-            }
+    private func startImageSet(){
+        let images: [UIImage] = [
+            UIImage.on1,
+            UIImage.on2,
+            UIImage.on3
+        ]
+        
+        let imageViews = images.map { image in
+            UIImageView(image: image)
+        }
+        
+        mainView.imageSliderView.photoImageView = imageViews
+    }
+    
+    private func settingButton(){
+        mainView.startButton.alpha = 0.0
+    }
+    
+    private func showButton(alpha: Double){
+        let alpha: CGFloat = alpha
+        
+        UIView.animate(withDuration: 1.5) { [weak self] in
+            guard let self else { return }
+            mainView.startButton.alpha = alpha
         }
     }
 }

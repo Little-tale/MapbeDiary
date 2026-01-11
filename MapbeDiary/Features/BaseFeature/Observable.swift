@@ -8,7 +8,7 @@
 import Foundation
 
 @available(*, deprecated, renamed: "Reactor")
-final class Observable<T>{
+final class _Observable<T>{
     
     var value: T {
         didSet{

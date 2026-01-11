@@ -7,130 +7,7 @@
 
 import MapKit
 
-// MARK: 알렛 확장
-extension UIViewController {
-    
-    func showAPIErrorAlert(urlError: URLSessionManagerError){
-        
-        let alert = UIAlertController(title: "Error_alert_title".localized, message: urlError.errorMessage, preferredStyle: .alert)
-        
-        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
-        alert.addAction(okButton)
-
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let self else { return }
-            present(alert,animated: true)
-        }
-    }
-    func showAPIErrorAlert(repo: RealmManagerError) {
-        let alert = UIAlertController(title: "Error_alert_title".localized, message: repo.alertMessage, preferredStyle: .alert)
-        
-        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
-        alert.addAction(okButton)
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let self else { return }
-            present(alert,animated: true)
-        }
-    }
-    
-    func showAPIErrorAlert(file: fileManagerError) {
-
-        let alert = UIAlertController(title: "Error_alert_title".localized, message: file.message, preferredStyle: .alert)
-        
-        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
-        alert.addAction(okButton)
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let self else { return }
-            present(alert,animated: true)
-        }
-    }
-    
-    func showAlertHandler(title: String, message: String,actionTitle: String, handler: @escaping (UIAlertAction) -> Void ) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okButton = UIAlertAction(title: actionTitle, style: .destructive, handler: handler)
-        
-        alert.addAction(okButton)
-        DispatchQueue.main.async {
-            [weak self] in guard let self else { return }
-            present(alert, animated: true)
-        }
-    }
-    
-    func showAlertHandlerCancel(title: String?, message: String?, actionTitle: String?, handler: @escaping (UIAlertAction) -> Void ) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okButton = UIAlertAction(title: actionTitle, style: .default, handler: handler)
-        let cancelButton = UIAlertAction(title: "Cancel_check_title" .localized, style: .destructive)
-        
-        alert.addAction(okButton)
-        alert.addAction(cancelButton)
-        
-        DispatchQueue.main.async {
-            [weak self] in guard let self else { return }
-            present(alert, animated: true)
-        }
-    }
-    
-    func showAlert(title: String?, message: String?,actionTitle: String?, handler: @escaping (UIAlertAction) -> Void) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let cancelButton = UIAlertAction(title: "Cancel_check_title" .localized, style: .destructive)
-        
-        let okButton = UIAlertAction(title: actionTitle, style: .default, handler: handler)
-        
-        alert.addAction(okButton)
-        alert.addAction(cancelButton)
-        
-        DispatchQueue.main.async {
-            [weak self] in guard let self else { return }
-            present(alert, animated: true)
-        }
-    }
-    
-    func showAlert(title: String?, message: String?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "Alert_check_title".localized, style: .destructive)
-        alert.addAction(okButton)
-        DispatchQueue.main.async {
-            [weak self] in guard let self else { return }
-            present(alert, animated: true)
-        }
-    }
-    
-    
-    // 세팅으로 유도합니다.
-    func goSetting(){
-        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(settingUrl)
-        } else {
-            showAlert(title: MapTextSection.requestFail.alertTitle, message: MapTextSection.requestFail.alertMessage)
-        }
-    }
-    
-    
-    
-}
-// MARK: 다국어 확장
-extension String {
-    /// 다국어 키를 현재
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-}
-// MARK: 표현식 설정 회고
-extension String {
-    static func testString(text: String) -> String{
-        let result = text.replacingOccurrences(of: "[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]", with: "", options: .regularExpression)
-        return result
-    }
-}
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 // MARK: 서치바 세팅
 extension UISearchBar {
     func setTextFieldBackground(color: UIColor, transparentBackground: Bool = true) {
@@ -146,6 +23,7 @@ extension UISearchBar {
     }
 }
 
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 // MARK: 재사용 아이덴티 파이어
 extension UIView {
     static var reusebleIdentifier: String {
@@ -153,6 +31,7 @@ extension UIView {
     }
 }
 
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 // MARK: 이미지 크기 리사이징
 extension UIImage {
     
@@ -216,7 +95,7 @@ extension UIImage {
     
 }
 
-
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 // MARK: 텍스트 필드
 extension UITextField {
     
@@ -231,6 +110,7 @@ extension UITextField {
     }
 }
 
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 extension UITextField {
     func addLeftPadding(width: CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: self.frame.height))
@@ -239,38 +119,10 @@ extension UITextField {
     }
 }
 
-
-extension UILabel {
-    func asFont(targetString: String) {
-        let fullText = text ?? ""
-        // MARK:
-        let attributeString = NSMutableAttributedString(string: fullText)
-        // MARK: 범위 + 대소문자 구분없이
-        let range = (fullText as NSString).range(of: targetString, options: .caseInsensitive)
-        
-        attributeString.addAttribute(.foregroundColor ,value: UIColor.wheetOrange , range: range)
-        
-        attributedText = attributeString
-    }
-}
-
-// CollecionViewCell ANIME
-extension UIViewController {
-    
-    func collectionViewCellAnimation(cell: UICollectionViewCell){
-        UIView.animate(withDuration: 0.08, animations: {
-            cell.backgroundColor = .green // 선택됐을 때의 색
-        }) { _ in
-            UIView.animate(withDuration: 0.08) {
-                cell.backgroundColor = .white // 원래 색으로 돌아감
-            }
-        }
-    }
-}
-
 // MARK: String -> CLLcocation
 extension UIViewController {
     
+    @available(*, deprecated, renamed: "willMove", message: "Not Ready This Function")
     func makeCLLcocation(lon: String, lat: String) -> CLLocationCoordinate2D? {
         let dbLat = Double(lat)
         let dbLon = Double(lon)
@@ -287,6 +139,7 @@ extension UIViewController {
 
 // MARK: Cell LayOut
 
+@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
 extension UICollectionView {
     static func configureMemoImagesLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -324,11 +177,6 @@ extension Date {
     }
 }
 
-
-//MARK: 노티피케이션
-extension Notification.Name {
-    static let didSaveActionDetailMemo = Notification.Name("SaveDetailMemo")
-}
 
 // MARK: Toast
 protocol ToastPro {}

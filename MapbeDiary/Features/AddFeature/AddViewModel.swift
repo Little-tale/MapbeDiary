@@ -25,29 +25,29 @@ final class AddViewModel {
     // lat: String, lon: String, folder: Folder
    
     // 폴더 아이디
-    let changeFolder: Observable<Folder?> = Observable(nil)
+    let changeFolder: _Observable<Folder?> = _Observable(nil)
     
-    let saveButtonTrigger: Observable<Void?> = Observable(nil)
+    let saveButtonTrigger: _Observable<Void?> = _Observable(nil)
     
     // 새로 올때의 모델
-    let coordinateTrigger: Observable<(addModel)?> = Observable(nil)
+    let coordinateTrigger: _Observable<(addModel)?> = _Observable(nil)
     // MARK: 수정시 Input ------ LocationMemoId
-    let modifyTrigger: Observable<String?> = Observable(nil)
+    let modifyTrigger: _Observable<String?> = _Observable(nil)
     
     // MARK: 공통 iNput -------
     
     
     // ------- Out Put -----
-    let proceccingSuccessOutPut: Observable<addViewOutStruct?> = Observable(nil)
+    let proceccingSuccessOutPut: _Observable<addViewOutStruct?> = _Observable(nil)
     
     //let memoSuccessOutPut: Observable<AddOrModifyModel?> = Observable(nil)
     
-    let saveButtonOutPutImage: Observable<String?> = Observable(nil)
+    let saveButtonOutPutImage: _Observable<String?> = _Observable(nil)
     
-    let urlErrorOutPut: Observable<URLSessionManagerError?> = Observable(nil)
+    let urlErrorOutPut: _Observable<URLSessionManagerError?> = _Observable(nil)
     
-    let realmError: Observable<RealmManagerError?> = Observable(nil)
-    let dismisstrigger: Observable<Void?> = Observable(nil)
+    let realmError: _Observable<RealmManagerError?> = _Observable(nil)
+    let dismisstrigger: _Observable<Void?> = _Observable(nil)
     
     // ------- Static -------
     let repository = RealmRepository()

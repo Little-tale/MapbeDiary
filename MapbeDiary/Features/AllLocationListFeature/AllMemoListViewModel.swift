@@ -15,17 +15,17 @@ struct AllMemoModel {
 }
 
 class AllMemoListViewModel {
-    var inputTrigger: Observable<Folder?> = Observable(nil)
+    var inputTrigger: _Observable<Folder?> = _Observable(nil)
     
-    var removeMemo: Observable<LocationMemo?> = Observable(nil)
+    var removeMemo: _Observable<LocationMemo?> = _Observable(nil)
     
-    var reloadTrigger: Observable<Void?> = Observable(nil)
+    var reloadTrigger: _Observable<Void?> = _Observable(nil)
     
-    var outPutTrigger: Observable<AllMemoModel?> = Observable(nil)
+    var outPutTrigger: _Observable<AllMemoModel?> = _Observable(nil)
     
-    var outPutCountBool: Observable<Bool?> = Observable(nil)
+    var outPutCountBool: _Observable<Bool?> = _Observable(nil)
     
-    var realmError: Observable<RealmManagerError?> = Observable(nil)
+    var realmError: _Observable<RealmManagerError?> = _Observable(nil)
     
     var repo = RealmRepository()
     
