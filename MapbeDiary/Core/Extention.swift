@@ -346,6 +346,7 @@ extension ToastPro where Self: UIViewController {
 }
 
 
+@available(*, deprecated, renamed: "Reactor")
 protocol ViewModelType {
     associatedtype Input
     associatedtype Output

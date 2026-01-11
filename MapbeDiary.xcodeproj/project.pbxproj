@@ -115,6 +115,12 @@
 		7BB8ECCA2B9F4D7300C88F17 /* AllMemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */; };
 		7BB8ECCC2B9F4E8700C88F17 /* SingleToneDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
+		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
+		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
+		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
+		7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F652F13D95600467F7F /* VCBaseView.swift */; };
+		7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */; };
+		7BDE5FA02F13DA3200467F7F /* ReactorBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */; };
 		7BDEA5122B9B450C008C6922 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA5112B9B450C008C6922 /* TestViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
@@ -203,7 +209,7 @@
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
 		7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationMemoViewController.swift; sourceTree = "<group>"; };
-		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTitleDateImageView.swift; path = ../AddTitleDateImageView.swift; sourceTree = "<group>"; };
+		7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTitleDateImageView.swift; sourceTree = "<group>"; };
 		7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingLocationLayout.swift; sourceTree = "<group>"; };
 		7B1C53382B9C345F00B712BC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7B1C533A2B9C376D00B712BC /* ImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSection.swift; sourceTree = "<group>"; };
@@ -264,7 +270,7 @@
 		7BB250ED2BA1EC5800FDE898 /* MemoTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTextViewModel.swift; sourceTree = "<group>"; };
 		7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoViewController.swift; sourceTree = "<group>"; };
 		7BB250FC2BA2F10F00FDE898 /* AboutMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoViewModel.swift; sourceTree = "<group>"; };
-		7BB251002BA31EBF00FDE898 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraService.swift; path = ../View/Controller/Base/Sub/CameraService.swift; sourceTree = "<group>"; };
+		7BB251002BA31EBF00FDE898 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseImageView.swift; sourceTree = "<group>"; };
 		7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LacationMemosHomeBaseView.swift; sourceTree = "<group>"; };
@@ -273,6 +279,9 @@
 		7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoListViewModel.swift; sourceTree = "<group>"; };
 		7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleToneDataViewModel.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
+		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
+		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
 		7BDEA5112B9B450C008C6922 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
@@ -294,6 +303,7 @@
 			files = (
 				7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */,
 				7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */,
+				7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */,
 				7B1137462B99A27700D6BBD1 /* RealmSwift in Frameworks */,
 				7B11375C2B99A8C000D6BBD1 /* IQKeyboardManagerSwift in Frameworks */,
 				7B11374B2B99A2E400D6BBD1 /* FirebaseCrashlytics in Frameworks */,
@@ -303,7 +313,9 @@
 				7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */,
 				7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */,
 				7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */,
+				7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */,
 				7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */,
+				7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */,
 				7B1137442B99A27700D6BBD1 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,13 +346,101 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24FD8E6B1E49A23C18ED4E6E /* SettingFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */,
+				7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */,
+				7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */,
+				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
+				7B54A7DE2BAB4C8C0039BC7F /* SeettingViewModel.swift */,
+				7B54A7E02BAB58490039BC7F /* SettingReusableView.swift */,
+			);
+			path = SettingFeature;
+			sourceTree = "<group>";
+		};
+		2E259A68EF8163506793FD1E /* SearchFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7BA373342B9D86CC0016E851 /* SearchViewController.swift */,
+				7BA3733A2B9D88540016E851 /* SearchCollectionViewCell.swift */,
+				7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */,
+			);
+			path = SearchFeature;
+			sourceTree = "<group>";
+		};
+		35BA7B8126585C627C0FC8EB /* TestFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */,
+				7BDEA5112B9B450C008C6922 /* TestViewController.swift */,
+			);
+			path = TestFeature;
+			sourceTree = "<group>";
+		};
+		384025ACDDFCFC0BB6BA592A /* CalendarFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */,
+				7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */,
+				7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */,
+				7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */,
+				7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */,
+			);
+			path = CalendarFeature;
+			sourceTree = "<group>";
+		};
+		4B7A44BFF5109666C7B798C1 /* OnboardFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */,
+				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
+			);
+			path = OnboardFeature;
+			sourceTree = "<group>";
+		};
+		64073A134BA3B1EE96D2367C /* AddFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */,
+				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
+				7B1C533A2B9C376D00B712BC /* ImageSection.swift */,
+				7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */,
+				7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */,
+				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
+			);
+			path = AddFeature;
+			sourceTree = "<group>";
+		};
+		667BC9CE7CCD39384DF6FDB2 /* AllLocationListFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */,
+				7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */,
+				7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */,
+				7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */,
+			);
+			path = AllLocationListFeature;
+			sourceTree = "<group>";
+		};
+		78964AA9FF2A47EBAF1F2F0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				7B11374F2B99A81300D6BBD1 /* APIKey.swift */,
+				7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */,
+				7B80DA252BEBA132004D025A /* URLSessionManagerForConcurrency.swift */,
+				7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */,
+				7B1137632B99A91D00D6BBD1 /* API */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		7B1137022B99A16F00D6BBD1 = {
 			isa = PBXGroup;
 			children = (
 				7BCF4A8E2BCAD61C00BCE635 /* README.md */,
-				7B11376C2B99A98000D6BBD1 /* Localizable.strings */,
-				7B11374F2B99A81300D6BBD1 /* APIKey.swift */,
 				7B1137402B99A23700D6BBD1 /* .gitignore */,
+				7B11376C2B99A98000D6BBD1 /* Localizable.strings */,
 				7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */,
 				7B11370D2B99A16F00D6BBD1 /* MapbeDiary */,
 				7B1137242B99A17100D6BBD1 /* MapbeDiaryTests */,
@@ -365,18 +465,15 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
-				7B2D775E2BF3797C00D51F49 /* Extention */,
+				7B2D775E2BF3797C00D51F49 /* Core */,
+				7B1137512B99A82F00D6BBD1 /* Data */,
+				7B1137602B99A8ED00D6BBD1 /* Domain */,
+				7B1137742B99AC5700D6BBD1 /* Features */,
+				78964AA9FF2A47EBAF1F2F0F /* Network */,
 				7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */,
-				7B1137852B99BF4F00D6BBD1 /* Section */,
-				7B1137742B99AC5700D6BBD1 /* View */,
-				7B1137602B99A8ED00D6BBD1 /* Model */,
-				7B1137512B99A82F00D6BBD1 /* Manager */,
-				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
-				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
 				7B1137172B99A17100D6BBD1 /* Assets.xcassets */,
 				7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */,
 				7B11371C2B99A17100D6BBD1 /* Info.plist */,
-				7B11376E2B99AA2100D6BBD1 /* Extention.swift */,
 			);
 			path = MapbeDiary;
 			sourceTree = "<group>";
@@ -398,30 +495,22 @@
 			path = MapbeDiaryUITests;
 			sourceTree = "<group>";
 		};
-		7B1137512B99A82F00D6BBD1 /* Manager */ = {
+		7B1137512B99A82F00D6BBD1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				7B1137522B99A83F00D6BBD1 /* URLSessionManager.swift */,
 				7B1137702B99AB1400D6BBD1 /* RealmRepository.swift */,
 				7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */,
-				7B1C533E2B9C716E00B712BC /* DateFormetter.swift */,
-				7BB251002BA31EBF00FDE898 /* CameraService.swift */,
-				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
-				7B7BE6482BAD6E6B0072F40F /* NetWorkServiceMonitor.swift */,
 				7BA827372BB1951700227F63 /* ImageChach.swift */,
-				7B80DA252BEBA132004D025A /* URLSessionManagerForConcurrency.swift */,
 			);
-			path = Manager;
+			path = Data;
 			sourceTree = "<group>";
 		};
-		7B1137602B99A8ED00D6BBD1 /* Model */ = {
+		7B1137602B99A8ED00D6BBD1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				7B11378B2B99E95900D6BBD1 /* ViewModel */,
-				7B1137632B99A91D00D6BBD1 /* API */,
 				7B1137722B99AB2C00D6BBD1 /* RealmModel.swift */,
 			);
-			path = Model;
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		7B1137632B99A91D00D6BBD1 /* API */ = {
@@ -433,129 +522,26 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		7B1137742B99AC5700D6BBD1 /* View */ = {
+		7B1137742B99AC5700D6BBD1 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				7B4F42862BB82ACD0081369D /* MordenCollectionViewLayout */,
-				7B1137772B99ACB100D6BBD1 /* Views */,
-				7B1137752B99AC6600D6BBD1 /* Controller */,
-				7B1137782B99AD4200D6BBD1 /* Observable.swift */,
+				7BDE5F9C2F13D99900467F7F /* Protocol */,
+				7BDE5F642F13D92C00467F7F /* Base */,
+				AC9A7E61C166BA46023808AF /* BaseFeature */,
+				88087A95B696C598319AACED /* MapFeature */,
+				64073A134BA3B1EE96D2367C /* AddFeature */,
+				384025ACDDFCFC0BB6BA592A /* CalendarFeature */,
+				2E259A68EF8163506793FD1E /* SearchFeature */,
+				24FD8E6B1E49A23C18ED4E6E /* SettingFeature */,
+				DF23E9C877B3BC61FD514204 /* SettingWebFeature */,
+				A859B753ECA280359A4354A7 /* AboutMemoFeature */,
+				86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */,
+				667BC9CE7CCD39384DF6FDB2 /* AllLocationListFeature */,
+				4B7A44BFF5109666C7B798C1 /* OnboardFeature */,
+				9F81A10BED1F87D2B8A74C46 /* TabFeature */,
+				35BA7B8126585C627C0FC8EB /* TestFeature */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		7B1137752B99AC6600D6BBD1 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				7BDEA5222B9B7365008C6922 /* TestViewCon */,
-				7B1137822B99B59D00D6BBD1 /* Tab */,
-				7B1137762B99AC9B00D6BBD1 /* Base */,
-				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
-				7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */,
-				7BA373342B9D86CC0016E851 /* SearchViewController.swift */,
-				7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */,
-				7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */,
-				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
-				7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */,
-				7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */,
-				7B7BE6522BAD9A830072F40F /* OnboardViewController.swift */,
-				7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		7B1137762B99AC9B00D6BBD1 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				7BB250EA2BA1EBE100FDE898 /* TextView */,
-				7BB250E12BA1C5C900FDE898 /* Sub */,
-				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
-				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
-				7BA373362B9D86FB0016E851 /* SearchBaseView.swift */,
-				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
-				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
-				7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */,
-				7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */,
-				7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */,
-				7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */,
-				7B54A7DA2BAB3C620039BC7F /* SettingHomeView.swift */,
-				7B30DD742BAC359E00D789B5 /* WebHomeView.swift */,
-				7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */,
-				7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		7B1137772B99ACB100D6BBD1 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				7BA373392B9D88430016E851 /* Cell */,
-				7BDEA51D2B9B63C4008C6922 /* Sub */,
-				7B11378E2B99FDD800D6BBD1 /* Marker */,
-				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
-				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		7B1137822B99B59D00D6BBD1 /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				7B1137832B99B5A700D6BBD1 /* TabbarController.swift */,
-			);
-			path = Tab;
-			sourceTree = "<group>";
-		};
-		7B1137852B99BF4F00D6BBD1 /* Section */ = {
-			isa = PBXGroup;
-			children = (
-				7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */,
-				7B1C533A2B9C376D00B712BC /* ImageSection.swift */,
-				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
-				7BB250DD2BA1C0D500FDE898 /* FontSection.swift */,
-				7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */,
-			);
-			path = Section;
-			sourceTree = "<group>";
-		};
-		7B11378B2B99E95900D6BBD1 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				7B4F428B2BB850720081369D /* Cell */,
-				7B7BE6542BAD9C060072F40F /* Onboard */,
-				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
-				7BDEA5252B9BEE21008C6922 /* AddViewModel.swift */,
-				7BA3733E2B9D9F2B0016E851 /* SearchViewModel.swift */,
-				7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */,
-				7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */,
-				7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */,
-				7BB250FC2BA2F10F00FDE898 /* AboutMemoViewModel.swift */,
-				7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */,
-				7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */,
-				7B54A7DE2BAB4C8C0039BC7F /* SeettingViewModel.swift */,
-				7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */,
-				7B30DD7A2BAC62DB00D789B5 /* SettingViewModel.swift */,
-				7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		7B11378E2B99FDD800D6BBD1 /* Marker */ = {
-			isa = PBXGroup;
-			children = (
-				7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */,
-				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
-			);
-			path = Marker;
-			sourceTree = "<group>";
-		};
-		7B1C53372B9C344D00B712BC /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				7B1C53382B9C345F00B712BC /* CustomButton.swift */,
-				7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */,
-			);
-			path = Button;
+			path = Features;
 			sourceTree = "<group>";
 		};
 		7B2D77422BF27DEA00D51F49 /* Frameworks */ = {
@@ -572,70 +558,26 @@
 			children = (
 				7B2D77482BF27DEA00D51F49 /* SearchWidgetBundle.swift */,
 				7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */,
+				7B3874572C059BF200C24827 /* LocalLizeTexts.swift */,
 				7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */,
 				7B2D774E2BF27DEC00D51F49 /* Info.plist */,
 				7B3874542C059B1D00C24827 /* Localizable.strings */,
-				7B3874572C059BF200C24827 /* LocalLizeTexts.swift */,
 			);
 			path = SearchWidget;
 			sourceTree = "<group>";
 		};
-		7B2D775E2BF3797C00D51F49 /* Extention */ = {
+		7B2D775E2BF3797C00D51F49 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				7B2D775F2BF3798600D51F49 /* Notification.swift */,
+				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
+				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
+				7B11376E2B99AA2100D6BBD1 /* Extention.swift */,
 				7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */,
+				7B2D775F2BF3798600D51F49 /* Notification.swift */,
+				7B1C533E2B9C716E00B712BC /* DateFormetter.swift */,
+				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
 			);
-			path = Extention;
-			sourceTree = "<group>";
-		};
-		7B4F42862BB82ACD0081369D /* MordenCollectionViewLayout */ = {
-			isa = PBXGroup;
-			children = (
-				7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */,
-			);
-			path = MordenCollectionViewLayout;
-			sourceTree = "<group>";
-		};
-		7B4F428B2BB850720081369D /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		7B7BE6542BAD9C060072F40F /* Onboard */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Onboard;
-			sourceTree = "<group>";
-		};
-		7BA373392B9D88430016E851 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				7BA3733A2B9D88540016E851 /* SearchCollectionViewCell.swift */,
-				7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */,
-				7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */,
-				7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */,
-				7B54A7E02BAB58490039BC7F /* SettingReusableView.swift */,
-				7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		7BB250E12BA1C5C900FDE898 /* Sub */ = {
-			isa = PBXGroup;
-			children = (
-				7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */,
-				7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */,
-				7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */,
-				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
-				7B30DD722BAC190800D789B5 /* SettingNavigationView.swift */,
-				7B7BE64E2BAD96870072F40F /* ScrollImageView.swift */,
-			);
-			path = Sub;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		7BB250EA2BA1EBE100FDE898 /* TextView */ = {
@@ -647,43 +589,108 @@
 			path = TextView;
 			sourceTree = "<group>";
 		};
-		7BB8ECBA2B9DF72F00C88F17 /* View */ = {
+		7BDE5F642F13D92C00467F7F /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
-				7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */,
+				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
+				7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */,
 			);
-			path = View;
+			path = Base;
 			sourceTree = "<group>";
 		};
-		7BDEA51D2B9B63C4008C6922 /* Sub */ = {
+		7BDE5F9C2F13D99900467F7F /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				7BB8ECBA2B9DF72F00C88F17 /* View */,
-				7BECDA292B9C97F800033B18 /* Action */,
-				7B1C53372B9C344D00B712BC /* Button */,
-				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
-				7B1137992B9B3CB700D6BBD1 /* AddTitleDateImageView.swift */,
+				7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */,
+				7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */,
+				7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */,
+			);
+			path = AboutLocationFeature;
+			sourceTree = "<group>";
+		};
+		88087A95B696C598319AACED /* MapFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
+				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
+				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
+				7B11378F2B99FDE900D6BBD1 /* CustomAnnotationView.swift */,
+				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */,
+				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
+				7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */,
+			);
+			path = MapFeature;
+			sourceTree = "<group>";
+		};
+		9F81A10BED1F87D2B8A74C46 /* TabFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B1137832B99B5A700D6BBD1 /* TabbarController.swift */,
+			);
+			path = TabFeature;
+			sourceTree = "<group>";
+		};
+		A859B753ECA280359A4354A7 /* AboutMemoFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
+				7BB250FC2BA2F10F00FDE898 /* AboutMemoViewModel.swift */,
+				7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */,
+			);
+			path = AboutMemoFeature;
+			sourceTree = "<group>";
+		};
+		AC9A7E61C166BA46023808AF /* BaseFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7BB250EA2BA1EBE100FDE898 /* TextView */,
+				7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */,
+				7B1137782B99AD4200D6BBD1 /* Observable.swift */,
+				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
+				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
+				7B1C53382B9C345F00B712BC /* CustomButton.swift */,
+				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
+				7B30DD7C2BAC670000D789B5 /* CustomIndicator.swift */,
+				7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */,
+				7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */,
+				7B6C20112BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift */,
+				7B7BE6502BAD99160072F40F /* OnboardBaseView.swift */,
 				7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */,
-			);
-			path = Sub;
-			sourceTree = "<group>";
-		};
-		7BDEA5222B9B7365008C6922 /* TestViewCon */ = {
-			isa = PBXGroup;
-			children = (
-				7BDEA5112B9B450C008C6922 /* TestViewController.swift */,
-			);
-			path = TestViewCon;
-			sourceTree = "<group>";
-		};
-		7BECDA292B9C97F800033B18 /* Action */ = {
-			isa = PBXGroup;
-			children = (
+				7BA373362B9D86FB0016E851 /* SearchBaseView.swift */,
+				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
+				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
+				7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */,
+				7BB250DD2BA1C0D500FDE898 /* FontSection.swift */,
+				7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */,
+				7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */,
+				7BB251002BA31EBF00FDE898 /* CameraService.swift */,
+				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
+				7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */,
+				7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */,
+				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
+				7BDEA5232B9B73BF008C6922 /* AddBaseView.swift */,
 				7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */,
 			);
-			path = Action;
+			path = BaseFeature;
+			sourceTree = "<group>";
+		};
+		DF23E9C877B3BC61FD514204 /* SettingWebFeature */ = {
+			isa = PBXGroup;
+			children = (
+				7B30DD742BAC359E00D789B5 /* WebHomeView.swift */,
+				7B30DD762BAC363700D789B5 /* SettingWebViewModel.swift */,
+				7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */,
+			);
+			path = SettingWebFeature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -719,6 +726,9 @@
 				7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */,
 				7BA827352BB18E6E00227F63 /* Kingfisher */,
 				7BF2E7FB2BB8070700E83EC1 /* FSCalendar */,
+				7BDE5F5D2F13D82E00467F7F /* ReactorKit */,
+				7BDE5F602F13D84300467F7F /* RxCocoa */,
+				7BDE5F622F13D84300467F7F /* RxRelay */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -824,6 +834,8 @@
 				7B6C201E2BA17A1C00EB7166 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7BF2E7FA2BB8070700E83EC1 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				7BDE5F5C2F13D82E00467F7F /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				7BDE5F5F2F13D84300467F7F /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -934,6 +946,7 @@
 				7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */,
 				7BB8ECCC2B9F4E8700C88F17 /* SingleToneDataViewModel.swift in Sources */,
 				7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */,
+				7BDE5FA02F13DA3200467F7F /* ReactorBaseViewController.swift in Sources */,
 				7B1137502B99A81300D6BBD1 /* APIKey.swift in Sources */,
 				7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */,
 				7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */,
@@ -968,10 +981,12 @@
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
+				7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */,
 				7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
 				7B1137842B99B5A700D6BBD1 /* TabbarController.swift in Sources */,
 				7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */,
+				7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
 				7B30DD772BAC363700D789B5 /* SettingWebViewModel.swift in Sources */,
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
@@ -1542,6 +1557,22 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		7BDE5F5C2F13D82E00467F7F /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+		7BDE5F5F2F13D84300467F7F /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
 		7BF2E7FA2BB8070700E83EC1 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -1612,6 +1643,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BA827342BB18E6E00227F63 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7BDE5F5D2F13D82E00467F7F /* ReactorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BDE5F5C2F13D82E00467F7F /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			productName = ReactorKit;
+		};
+		7BDE5F602F13D84300467F7F /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BDE5F5F2F13D84300467F7F /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		7BDE5F622F13D84300467F7F /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BDE5F5F2F13D84300467F7F /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
 		};
 		7BF2E7FB2BB8070700E83EC1 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;

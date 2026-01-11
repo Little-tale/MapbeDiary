@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, renamed: "Reactor")
 final class Observable<T>{
     
     var value: T {
