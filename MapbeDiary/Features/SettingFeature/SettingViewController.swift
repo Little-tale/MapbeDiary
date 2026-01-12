@@ -6,40 +6,128 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Toast
 
-final class SettingViewController: BaseHomeViewController<SettingHomeView>, ToastPro {
+final class SettingViewController: ReactorBaseViewController<SettingViewReactor,SettingVCView>, ToastPro {
+    
+    // MARK: property
     
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection,SettingModel>
     
     private typealias CellRegistry = UICollectionView.CellRegistration<UICollectionViewCell,SettingModel>
     
     private var dataSource: DataSource?
-    private var activity: CustomIndicator?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        colorSetting()
+        mainView.backgroundColor = .wheetSideBrown
         navigationLeftButtonSetting() // 네비게이션 좌측 버튼세팅
         settingMainNaviTitleView() // 네비게이션 중앙 설정
         settingDataSource() // 컴포지셔널 데이터 소스 세팅
         settingSnapShot() // 스냅샷 세팅
-        delegateSetting() // 딜리게이트 셋팅
-        subscribe() // 뷰모델 구독
     }
     
-    private func delegateSetting(){
-        homeView.collectionView.delegate = self
-    }
-    private func colorSetting(){
-        homeView.backgroundColor = .wheetSideBrown
+    override func bind(reactor: SettingViewReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .compactMap { $0.realmError }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, error in
+                // FIXME: LoadingView Need
+//                owner.activity?.stopActivity()
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.successTrigger }
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, bool in
+                // FIXME: LoadingView Need
+//                owner.activity?.stopActivity()
+                owner.mainView.makeToast("Deleting_completion_title".localized)
+            }
+            .disposed(by: disposeBag)
     }
     
-    deinit {
-        print("deinit: SettingViewController")
+    override func sendActions(reactor: SettingViewReactor) {
+        
+        mainView.collectionView.rx
+            .itemSelected
+            .withUnretained(self)
+            .compactMap { owner, indexPath in
+                owner.dataSource?.itemIdentifier(for: indexPath)
+            }
+            .bind(with: self) { owner, item in
+                
+                switch item.actionType {
+                case .appVersion:
+                    print("버전")
+
+                case .termsAndConditions: // 웹뷰로 노션 페이지 보내주기
+                    print("약관 / ")
+                    if !NetWorkServiceMonitor.shared.isConnected {
+                        owner.networkCheckToast()
+                        return
+                    }
+                    let vc = SettingWebViewController()
+                    
+                    vc.homeView.viewModel.inputSettingActionType.value = item.actionType
+                    
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .customerSupport: // 웹뷰로 노션 페이지 보내주기
+                    print("고객센터")
+                    if !NetWorkServiceMonitor.shared.isConnected {
+                        owner.networkCheckToast()
+                        return
+                    }
+                    let vc = SettingWebViewController()
+                    
+                    vc.homeView.viewModel.inputSettingActionType.value = item.actionType
+                    
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .initialize: // 완전 초기화
+                    print("초기화")
+                    owner.CanICheckDelete()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
-    
 }
+
+// MARK: Helpers
+extension SettingViewController {
+    
+    private func CanICheckDelete(){
+        showAlertHandlerCancel(
+            title: MapTextSection.delete.alertTitle,
+            message: MapTextSection.delete.alertMessage,
+            actionTitle: MapTextSection.delete.actionTitle
+        ) { [weak self] _ in
+            guard let self else { return }
+            // FIXME: - Need Loading View
+            reactor?.action.onNext(.callDeleteInfo)
+        }
+    }
+    
+    private func networkCheckToast(){
+        showToastBody(
+            title: "API_Check_Title".localized,
+            message: "API_error_Request".localized
+        )
+    }
+}
+
 // MARK: 네비게이션 LeftBarButtonSetting
 extension SettingViewController {
     /// 좌측 버튼 설정
@@ -47,22 +135,20 @@ extension SettingViewController {
         
         let button = CustomLocationButton(frame: .zero, imageType: .naviBackButton)
         
-        button.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            leftBackButton()
-        }), for: .touchUpInside)
-        
         let leftUIBarButton = UIBarButtonItem(customView: button)
         
-       navigationItem.leftBarButtonItem = leftUIBarButton
-    }
-    /// 좌측 버튼 액션
-    private func leftBackButton(){
-        print(#function)
-        SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
-        dismiss(animated: true)
+        navigationItem.leftBarButtonItem = leftUIBarButton
+        
+        button.rx.tap
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                //        SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
         
     }
+
     /// 네비게이션 타이틀 세팅
     private func settingMainNaviTitleView(){
         navigationItem.title = "Setting_title".localized
@@ -77,28 +163,33 @@ extension SettingViewController {
 }
 
 
-// MARK: 컴포지션 데이타 소스
+// MARK: CollectionView Settings
 extension SettingViewController {
+    
     private func settingDataSource(){
-        let collectionViewCellRegist:CellRegistry = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
-            var configu = UIListContentConfiguration.valueCell()
-            
-            configu.text = itemIdentifier.title
-            configu.secondaryText = itemIdentifier.detail
-            cell.contentConfiguration = configu
-            cell.backgroundColor  = .blue
-            
-            var background = UIBackgroundConfiguration.listPlainCell()
-            background.backgroundColor = .darkKarky
-        }
+        let reg = settingCellRegister()
         
-        dataSource = UICollectionViewDiffableDataSource(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        
+            let cell = collectionView.dequeueConfiguredReusableCell(using: reg, for: indexPath, item: itemIdentifier)
             
-            let cell = collectionView.dequeueConfiguredReusableCell(using: collectionViewCellRegist, for: indexPath, item: itemIdentifier)
             cell.backgroundColor = .wheetPink
             
             return cell
         })
+    }
+    
+    private func settingCellRegister() -> CellRegistry {
+        let cellRegister: CellRegistry = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
+            var config = UIListContentConfiguration.valueCell()
+            
+            config.text = itemIdentifier.title
+            config.secondaryText = itemIdentifier.detail
+            
+            cell.contentConfiguration = config
+            cell.backgroundColor  = .blue
+        }
+        return cellRegister
     }
 }
 
@@ -117,77 +208,5 @@ extension SettingViewController {
         snapShot.appendItems(SettingSection.delete.data, toSection: .delete)
         
         dataSource?.apply(snapShot, animatingDifferences: true)
-    }
-}
-// MARK: 컬렉션뷰 딜리게이트 -> 선택관련
-extension SettingViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = dataSource?.itemIdentifier(for: indexPath) else { return }
-        switch item.actionType {
-        case .appVersion:
-            print("버전")
-            break
-        case .termsAndConditions:
-            print("약관 / ") // 웹뷰로 노션페이지 보내주기
-            if !NetWorkServiceMonitor.shared.isConnected {
-                networkCheckToast() ; return
-            }
-            let vc = SettingWebViewController()
-            vc.homeView.viewModel.inputSettingActionType.value = item.actionType
-            navigationController?.pushViewController(vc, animated: true)
-            break
-        case .customerSupport:
-            print("고객센터") // 노션페이지
-            if !NetWorkServiceMonitor.shared.isConnected {
-                networkCheckToast() ; return
-            }
-            let vc = SettingWebViewController()
-            vc.homeView.viewModel.inputSettingActionType.value = item.actionType
-            navigationController?.pushViewController(vc, animated: true)
-        case .initialize:
-            print("초기화") // 완전 초기화
-            CanICheckDelete()
-        }
-    }
-    
-    private func CanICheckDelete(){
-        /// removeFolderInEveryThing
-        showAlertHandlerCancel(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, actionTitle: MapTextSection.delete.actionTitle) { [weak self] _ in
-            guard let self else { return }
-            activity = CustomIndicator(view: homeView, navigationController: navigationController, tabBarController: nil)
-            activity?.showActivityIndicator(title: "Deleting_title".localized)
-            homeView.settingViewModel.removeTrigger.value = ()
-        }
-    }
-    
-    private func networkCheckToast(){
-        showToastBody(title: "API_Check_Title".localized, message: "API_error_Request".localized)
-    }
-}
-
-
-
-// MARK: 회고 -> 강함 참조
-extension SettingViewController {
-    func subscribe(){
-        homeView.settingViewModel.alertError.bind {[ weak self ] error in
-            guard self != nil else { return }
-            guard let error else { return }
-            DispatchQueue.main.async {
-                [weak self] in
-                    guard let self else { return }
-                activity?.stopActivity()
-                showAPIErrorAlert(repo: error)
-            }
-        }
-        homeView.settingViewModel.successOut.bind {[weak self] void in
-            guard void != nil else { return }
-            guard self != nil else { return }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                guard let self else { return }
-                activity?.stopActivity()
-                homeView.makeToast("Deleting_completion_title".localized)
-            }
-        }
     }
 }

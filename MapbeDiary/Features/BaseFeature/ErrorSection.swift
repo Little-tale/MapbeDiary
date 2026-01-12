@@ -8,6 +8,8 @@
 import Foundation
 
 enum RealmManagerError: Error {
+    case cantInit
+    case cantFindFolder
     case canMakeFolder
     case canMakeMemo
     case cantDeleteOfFolder
@@ -28,6 +30,12 @@ enum RealmManagerError: Error {
     
     var alertMessage: String {
         switch self {
+        case .cantInit:
+            "Error_DB"
+            
+        case .cantFindFolder:
+            "Error_cant_find_folder".localized // FIXME
+            
         case .canMakeFolder:
             "Error_cant_make_folder".localized
             

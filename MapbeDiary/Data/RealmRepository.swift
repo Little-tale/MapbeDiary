@@ -30,20 +30,20 @@ final class RealmRepository {
     // MARK:  --------
     
     // MARK: folder를 생성하는 메서드 V -> 2차 테이블구조 V
-    func makeFolder(folderName: String) throws {
-        var index = 0
-        if !realm.objects(folderModel).isEmpty {
-            let last = realm.objects(folderModel).sorted(byKeyPath: "index", ascending: false)[0]
-            index = last.index + 1
-        }
-        do{
-            try realm.write {
-                realm.add(Folder(folderName: folderName, index: index))
-            }
-        }catch{
-            throw RealmManagerError.canMakeFolder
-        }
-    }
+//    func makeFolder(folderName: String) throws {
+//        var index = 0
+//        if !realm.objects(folderModel).isEmpty {
+//            let last = realm.objects(folderModel).sorted(byKeyPath: "index", ascending: false)[0]
+//            index = last.index + 1
+//        }
+//        do{
+//            try realm.write {
+//                realm.add(Folder(folderName: folderName, index: index))
+//            }
+//        }catch{
+//            throw RealmManagerError.canMakeFolder
+//        }
+//    }
     
     func makeLocation(title: String,lat: String, long: String) {
         
@@ -285,6 +285,7 @@ final class RealmRepository {
         let data = findAllMemo()
         return Array(data)
     }
+    
     func findAllMemoAtFolder(folder: Folder) -> [LocationMemo] {
         let folderList = folder.LocationMemo
         let memos = Array(folderList)
@@ -700,32 +701,6 @@ final class RealmRepository {
     // 폴더 / 안에 로케이션들/ 메모들 / 이미지리스트
     //
     //MARK: 폴더내의 모든 데이터를 제거합니다.
-    func removeFolderInEveryThing(folder : Folder, completion: @escaping (Result<Void,RealmManagerError>) -> Void) {
-        // 1. 내부 이미지 모두 제거 작업 시작 ->
-        
-        // 1.1 내부 로케이션 메모 모으기
-        let locationMemos = findAllMemoAtFolder(folder: folder)
-        // 1.2 내부 디테일 메모 모으기
-        var details: [DetailMemo] = []
-        
-        for locationMemo in locationMemos {
-            let datas = Array(locationMemo.detailMemos)
-            datas.forEach { details.append($0) }
-        }
-        if details.isEmpty {
-            completion(.success(()))
-        }
-        removeDetailsMemos(details) { result in
-            if case.failure(let failure) = result {
-                completion(.failure(failure))
-            }
-        }
-        // 4. 내부 마커 이미지 모두제거
-        removeLocationMemos(locationMemos) { [weak self] results in
-            guard self != nil else { return }
-            completion(results)
-        }
-    }
     
     
     /// 로케이션 메모배열의 모든 데이터를 지웁니다.

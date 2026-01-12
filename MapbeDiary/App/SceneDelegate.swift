@@ -25,6 +25,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         IQKeyboardManager.shared.resignOnTouchOutside = true
         // let navigationController = UINavigationController(rootViewController: MapViewController())
         NetWorkServiceMonitor.shared.startMonitor() // 네트워크 상태 감시
+        
+        let _ = RealmActor.shared
+        // MARK: Realm Setting
+        Task {
+            let _ = await FolderRealmRepository.shared.setUp()
+        }
+        // FIXME: - Repository 제거할예정
         let repository = RealmRepository()
         if let folder = repository.findAllFolderArray().first {
             print("Widget : 제발1 ")

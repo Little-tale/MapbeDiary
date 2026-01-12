@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class Folder: Object { // Primary키로 바로 메모 이미지 생성
+class Folder: Object, @unchecked Sendable { // Primary키로 바로 메모 이미지 생성
     @Persisted(primaryKey: true) var id: ObjectId // 프라이 머리키
     @Persisted var folderName: String // 사용자 메모 관리 폴더.
     @Persisted var regDate: Date // 생성날짜

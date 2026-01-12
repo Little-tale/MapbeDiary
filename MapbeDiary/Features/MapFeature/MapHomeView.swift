@@ -46,7 +46,7 @@ final class MapHomeView: BaseView {
         }
     }
     override func register() {
-        mapView.register(ArtWorkMarkerView.self, forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusebleIdentifier)
+        mapView.register(ArtWorkMarkerView.self, forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusableIdentifier)
     
         
         settingMapView() // MapView Setting

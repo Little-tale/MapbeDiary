@@ -212,8 +212,13 @@ extension MapViewController {
     // MARK: 세팅 뷰컨이동
     private func moveToSettingBttonAction(){
         let action = UIAction.guardSelf(self) { owner, _ in
-            let vc = SettingViewController()
-            vc.homeView.settingViewModel.inputFolder.value = owner.homeView.mapviewModel.folderInput.value
+            
+            let vc = SettingViewController(
+                reactor: SettingViewReactor()
+            )
+            
+            // MARK: FIXME - 이거 도대체 왜 보내는 거지?
+//            vc.homeView.settingViewModel.inputFolder.value = owner.homeView.mapviewModel.folderInput.value
             let nvc = UINavigationController(rootViewController: vc)
             nvc.modalPresentationStyle = .fullScreen
             owner.present(nvc, animated: true )

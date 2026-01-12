@@ -10,14 +10,14 @@ import ReactorKit
 import RxSwift
 
 class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, ReactorKit.View {
-
+    
     typealias Reactor = R
     
     // MARK: property
     
     let mainView: V
     var disposeBag = DisposeBag()
-
+    
     
     // MARK: initial
     
@@ -26,7 +26,7 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -35,7 +35,7 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
     override func loadView() {
         view = mainView
     }
-
+    
     /// required Call "super.bind(reactor: reactor)"
     func bind(reactor: R) {
         sendActions(reactor: reactor)
@@ -44,6 +44,6 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
     func sendActions(reactor: R) {}
     
     deinit {
-        print("deinit from \(#file))")
+        print("deinit:", String(describing: type(of: self)))
     }
 }

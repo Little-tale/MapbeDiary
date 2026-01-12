@@ -1,14 +1,13 @@
 //
-//  SeettingViewModel.swift
+//  SettingSection.swift
 //  MapbeDiary
 //
-//  Created by Jae hyung Kim on 3/21/24.
+//  Created by Jae hyung Kim on 1/13/26.
 //
 
 import Foundation
 
-// Setting Model
-struct SettingModel:Hashable {
+struct SettingModel: Hashable {
     let title : String
     let detail: String?
     let uuid = UUID()

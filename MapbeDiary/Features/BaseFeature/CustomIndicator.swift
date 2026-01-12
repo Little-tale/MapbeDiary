@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+@available(*, deprecated, renamed: "Empty", message: "Will Deprecated")
 struct CustomIndicator {
     let backGroundView = UIView() // 뒷배경
     let activityIndicator = UIView()

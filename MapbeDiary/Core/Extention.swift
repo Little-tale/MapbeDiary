@@ -7,7 +7,7 @@
 
 import MapKit
 
-@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
+@available(*, deprecated, renamed: "reusableIdentifier", message: "Use reusableIdentifier")
 // MARK: 재사용 아이덴티 파이어
 extension UIView {
     static var reusebleIdentifier: String {

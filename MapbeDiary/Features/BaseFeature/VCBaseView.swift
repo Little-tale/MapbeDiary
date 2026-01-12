@@ -32,4 +32,8 @@ class VCBaseView: UIView, BaseUIProtocol {
     func setupUI() {}
     
     func register() {}
+    
+    deinit {
+        print("deinit:", String(describing: type(of: self)))
+    }
 }

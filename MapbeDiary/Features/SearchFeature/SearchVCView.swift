@@ -16,7 +16,7 @@ final class SearchVCView: VCBaseView {
     let searchBar = UISearchBar()
     let collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CollectionViewLayouts.makePlainListLayout()
+        collectionViewLayout: CollectionViewLayouts.makeListLayout()
     )
     let emptyImage = SearchBaseImageView()
     

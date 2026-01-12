@@ -32,9 +32,6 @@ final class OnboardReactor: Reactor {
     }
     
     var initialState: State = State()
-    
-    private let repository = RealmRepository()
-    
 }
 
 // MARK: Flow Logic
@@ -43,15 +40,17 @@ extension OnboardReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .startButtonTapped:
-            do {
-                try repository.makeFolder(folderName: "추억의 공간")
-                let folder = repository.findAllFolderArray().first
+            
+            return .run { send in
+                let folder = try await FolderRealmRepository.shared.makeFolder(folderName: "추억의 공간")
                 
-                // MARK: FIXME
                 SingleToneDataViewModel.shared.shardFolderOb.value = folder
                 
-                return .just(.nextVC(true))
-            } catch {
+                UserDefaultsManager.currentFolderID = folder.id.stringValue
+                
+                await send(.nextVC(true))
+            }
+            .catch { error in
                 return .just(.showErrorAlert(error: .canMakeFolder))
             }
             
