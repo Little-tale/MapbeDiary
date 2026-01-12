@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+@available(*, deprecated, renamed: "URLSessionManager", message: "use URLSessionManager")
 final class URLSessionManagerForConcurrency {
     
     private
@@ -26,13 +26,13 @@ final class URLSessionManagerForConcurrency {
     func fetch<T:Decodable>(type: T.Type, apiType: APIType) async throws -> T {
         
         var urlComponents = URLComponents()
-        urlComponents.scheme = apiType.schem ?? "https" // 에러 V
+        urlComponents.scheme = apiType.scheme ?? "https" // 에러 V
         urlComponents.host = apiType.host
         urlComponents.path = apiType.path
         urlComponents.queryItems = apiType.query
         
         guard let url = urlComponents.url else {
-            throw URLSessionManagerError.componatsError
+            throw NetworkManagerError.componentsError
         }
         
         var urlRequest = URLRequest(url: url)
@@ -43,11 +43,11 @@ final class URLSessionManagerForConcurrency {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)
             
             guard let response = response as? HTTPURLResponse else {
-                throw URLSessionManagerError.noResponse
+                throw NetworkManagerError.noResponse
             }
             
             if !(200..<300).contains(response.statusCode) {
-                throw URLSessionManagerError.cantStatusCoding
+                throw NetworkManagerError.cantStatusCoding
             }
             
             let decodeData = try jsDecoding.decode(type, from: data)
@@ -55,7 +55,7 @@ final class URLSessionManagerForConcurrency {
             return decodeData
             
         } catch {
-            throw URLSessionManagerError.failRequest
+            throw NetworkManagerError.failRequest
         }
        
         

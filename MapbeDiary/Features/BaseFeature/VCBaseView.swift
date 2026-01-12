@@ -18,6 +18,7 @@ class VCBaseView: UIView, BaseUIProtocol {
         setupHierarchy()
         setupConstraints()
         setupUI()
+        register()
     }
     
     required init?(coder: NSCoder) {
@@ -29,4 +30,6 @@ class VCBaseView: UIView, BaseUIProtocol {
     func setupConstraints() {}
     
     func setupUI() {}
+    
+    func register() {}
 }

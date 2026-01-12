@@ -26,7 +26,7 @@ extension UIViewController {
 // MARK: UIViewController + Alert
 extension UIViewController {
     
-    func showAPIErrorAlert(urlError: URLSessionManagerError){
+    func showAPIErrorAlert(urlError: NetworkManagerError){
         
         let alert = UIAlertController(title: "Error_alert_title".localized, message: urlError.errorMessage, preferredStyle: .alert)
         

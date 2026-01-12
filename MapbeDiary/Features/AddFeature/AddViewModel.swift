@@ -44,7 +44,7 @@ final class AddViewModel {
     
     let saveButtonOutPutImage: _Observable<String?> = _Observable(nil)
     
-    let urlErrorOutPut: _Observable<URLSessionManagerError?> = _Observable(nil)
+    let urlErrorOutPut: _Observable<NetworkManagerError?> = _Observable(nil)
     
     let realmError: _Observable<RealmManagerError?> = _Observable(nil)
     let dismisstrigger: _Observable<Void?> = _Observable(nil)
@@ -115,7 +115,7 @@ final class AddViewModel {
                 DispatchQueue.main.async { [ unowned self ] in
                     urlProccing(model: result, folder: folder)
                 }
-            } catch let error as URLSessionManagerError {
+            } catch let error as NetworkManagerError {
                 urlErrorOutPut.value = error
             } catch {
                 urlErrorOutPut.value = .unknownError

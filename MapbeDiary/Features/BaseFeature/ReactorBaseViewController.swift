@@ -36,9 +36,14 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         view = mainView
     }
 
+    /// required Call "super.bind(reactor: reactor)"
     func bind(reactor: R) {
         sendActions(reactor: reactor)
     }
     
     func sendActions(reactor: R) {}
+    
+    deinit {
+        print("deinit from \(#file))")
+    }
 }

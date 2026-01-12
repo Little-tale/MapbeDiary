@@ -77,7 +77,7 @@ final class MapHomeView: BaseView {
     private func searchBarSetting(){
         
         searchBar.setTextFieldBackground(color: .wheetSideBrown, transparentBackground: true)
-        searchBar.placeholder = MapTextSection.emptySearcBarText
+        searchBar.placeholder = MapTextSection.emptySearchBarText
         
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.attributedPlaceholder = NSAttributedString(

@@ -7,28 +7,6 @@
 
 import Foundation
 
-// MARK: 카카오 로컬 검색
-struct KakaoLocalModel: Decodable {
-    let documents: [Document]
-    let meta: Meta
-}
-
-
-// MARK: - 도로명 주소 장소이름 전화번호 x,y lon lat
-/// 도로명 , 장소이름, 전화번호,
-struct Document: Hashable, Decodable {
-    let phone, placeName: String // 전화번호, 장소이름
-    let roadAddressName, x, y: String // 도로명 주소 , lat lon
-    let id = UUID()
-    
-    enum CodingKeys: String, CodingKey {
-        case phone
-        case placeName = "place_name"
-        case roadAddressName = "road_address_name"
-        case x, y
-    }
-}
-
 // MARK: 토탈, 끝인지, 페이지수
 /// 끝인가?, 페이지 토탈, 토탈
 struct Meta: Decodable {

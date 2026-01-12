@@ -10,6 +10,9 @@ import CoreLocation
 import Toast
 import FloatingPanel
 
+import RxSwift
+import RxCocoa
+
 enum PanelViewControllerType {
     case addLocation
     case modiFiLocation
@@ -56,6 +59,8 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
     var floatPanel: FloatingPanelController?
     
     var ifURL: String?
+    
+    private var disposeBag: DisposeBag = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,25 +268,32 @@ extension MapViewController : UISearchBarDelegate {
         // 현재 맵 보는 기준으로 맵 중심 Location을 전달할 준비
         let location = homeView.mapView.region.center
         
+        
+        
+        let coordinate = CoordinateEntity(
+            longitude: location.longitude,
+            latitude: location.latitude
+        )
+        
         // 다음 뷰 컨트롤러로 이동하는 로직을 구현
-        let searchViewController = SearchViewController() // 검색 뷰 컨트롤러 인스턴스 생성
+        let searchViewController = SearchViewController(reactor: SearchReactor(coordinate: coordinate))
         
-        let data = SearchModel(searchText: "", long: location.longitude.magnitude, lat: location.latitude.magnitude)
-        
-        searchViewController.searchViewModel.searchTextOb.value = data
         
         searchViewController.modalPresentationStyle = .fullScreen
         
         present(searchViewController, animated: false)
         // false를 반환하여 서치바가 포커스를 받지 않도록 함
         
-        searchViewController.kakaoDataClosure = {
-            [weak self] data in
-            guard let self else {return}
+        searchViewController.kakaoDataClosure = { [weak self] data in
+            guard let self else { return }
             
-            guard let location = makeCLLcocation(lon:data.x ,lat:data.y) else {
+            guard let location = makeCLLcocation(
+                lon:data.x,
+                lat:data.y
+            ) else {
                 return
             }
+            
             removeAll()
             /// 판넬 업데이트
             updatePanel(coordi: location, viewType: .addLocation, layout: .custom) { viewCon in
@@ -290,8 +302,9 @@ extension MapViewController : UISearchBarDelegate {
                 }
             }
             addLongAnnotation(cl2: location)
+
         }
-        
+       
         return false
     }
     
