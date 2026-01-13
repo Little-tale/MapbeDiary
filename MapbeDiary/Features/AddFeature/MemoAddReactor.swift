@@ -42,6 +42,9 @@ final class MemoAddReactor: Reactor {
         var realmError: RealmManagerError? = nil
         var networkError: NetworkManagerError? = nil
         var dismissTrigger: Bool = false
+        
+        var lat: String = ""
+        var lon: String = ""
     }
     
     enum Action {
@@ -68,6 +71,8 @@ final class MemoAddReactor: Reactor {
         case setRealmError(RealmManagerError)
         case setNetworkError(NetworkManagerError)
         case setMemoID(String)
+        case setLocation(lat: String, lon: String)
+        case setDismissTrigger(Bool)
     }
     
     var initialState: State
@@ -85,7 +90,61 @@ extension MemoAddReactor {
             return .just(.setImage(data))
             
         case .saveButtonTapped:
-            return .empty()
+            let state = currentState
+            
+            let title: String
+            let kakao = state.kakaoPlaceHolder ?? ""
+            let getTitle = state.title ?? ""
+            if ( !kakao.isEmpty && getTitle.isEmpty ) {
+                title = kakao
+            } else {
+                title = state.title ?? "Empty Title"
+            }
+            
+            if let memoID = state.memoId {
+                return .run { send in
+                    try await MemoRealmRepository.shared.updateLocationMemo(
+                        input: LocationMemoUpdateInput(
+                            memoId: memoID,
+                            title: title,
+                            contents: state.content,
+                            phoneNumber: state.phoneNumber,
+                            markerImageData: state.memoImage
+                        )
+                    )
+                    await send(.setDismissTrigger(true))
+                }.catch { error in
+                    guard let error = error as? RealmManagerError else { return .empty() }
+                    return .just(.setRealmError(error))
+                }
+            }
+            // Location(lat: start.lat, lon: start.lon)
+            return .run { [state] send in
+               
+                
+                try await MemoRealmRepository.shared.createLocationMemo(
+                    input: LocationMemoCreateInput(
+                        title: title,
+                        contents: state.content,
+                        phoneNumber: state.phoneNumber,
+                        location: Location(
+                            lat: state.lat,
+                            lon: state.lon
+                        ),
+                        folderId: state.folderId ?? "",
+                        markerImageData: state.memoImage
+                    )
+                )
+                
+                // FIXME: 정상적으로 저장되나 맵 업데이트 문제
+                await send(.setDismissTrigger(true))
+                
+            }.catch { error in
+                guard let error = error as? RealmManagerError else {
+                    return .empty()
+                }
+                return .just(.setRealmError(error))
+            }
             
         case .folderButtonTapped:
             return .empty()
@@ -108,6 +167,7 @@ extension MemoAddReactor {
             return .run { send in
                 
                 await send(.setFolderID(model.folder))
+                await send(.setLocation(lat: model.lat, lon: model.lon))
                 
                 if !NetWorkServiceMonitor.shared.isConnected { return }
                 
@@ -135,7 +195,30 @@ extension MemoAddReactor {
         case let .setMemoID(id):
             return .concat([
                 .just(.setMemoID(id)),
-                // TODO: Realm
+                .run { send in
+                    let result = try await MemoRealmRepository.shared.findLocationMemoSnapshot(id: id)
+                    
+                    await send(.setTitle(result.title))
+                    await send(.setContent(result.contents ?? ""))
+                    await send(.setPhoneNumber(result.phoneNumber ?? ""))
+                    
+                    await send(.setTitle(result.title))
+                    let imageResult = await FileManagers.shard.findMarkerImage(memoId: id)
+                    
+                    switch imageResult {
+                        
+                    case let .success(data):
+                        guard let data else { return }
+                        await send(.setImage(data))
+                        
+                    case .failure:
+                        return
+                    }
+                    
+                }.catch { error in
+                    guard let error = error as? RealmManagerError else { return .empty() }
+                    return .just(.setRealmError(error))
+                }
             ])
         }
     }
@@ -171,6 +254,13 @@ extension MemoAddReactor {
             
         case let .setMemoID(id):
             state.memoId = id
+            
+        case let .setLocation(lat, lon):
+            state.lat = lat
+            state.lon = lon
+            
+        case let .setDismissTrigger(bool):
+            state.dismissTrigger = bool
         }
         
         return state

@@ -29,21 +29,7 @@ final class RealmRepository {
     
     // MARK:  --------
     
-    // MARK: folder를 생성하는 메서드 V -> 2차 테이블구조 V
-//    func makeFolder(folderName: String) throws {
-//        var index = 0
-//        if !realm.objects(folderModel).isEmpty {
-//            let last = realm.objects(folderModel).sorted(byKeyPath: "index", ascending: false)[0]
-//            index = last.index + 1
-//        }
-//        do{
-//            try realm.write {
-//                realm.add(Folder(folderName: folderName, index: index))
-//            }
-//        }catch{
-//            throw RealmManagerError.canMakeFolder
-//        }
-//    }
+
     
     func makeLocation(title: String,lat: String, long: String) {
         
@@ -60,7 +46,10 @@ final class RealmRepository {
     }
     
     // MARK: 메모를 진짜 만들어드립니다...>!
-    func makeMemoModel(addViewStruct: addViewOutStruct, location: Location) throws -> LocationMemo?  {
+    func makeMemoModel(
+        addViewStruct: addViewOutStruct,
+        location: Location
+    ) throws -> LocationMemo?  {
         var memo: LocationMemo?
         do {
             try realm.write {

@@ -154,6 +154,14 @@ final class FileManagers {
             completion(.success(nil))
         }
     }
+
+    func findMarkerImage(memoId: String) async -> Result<Data?, RealmManagerError> {
+        await withCheckedContinuation { continuation in
+            findMarkerImage(memoId: memoId) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
     
     // MARK: 마커 오리지널 이미지를 가져옵니다.
     /// 마커 오리지널 이미지를 가져옵니다.

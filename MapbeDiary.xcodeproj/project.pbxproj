@@ -142,6 +142,7 @@
 		7BBB67AF2F165E2E0026EB7A /* AddImageWithButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67AE2F165E2E0026EB7A /* AddImageWithButtonView.swift */; };
 		7BBB67B12F1666D50026EB7A /* Ext+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67B02F1666D50026EB7A /* Ext+UITextField.swift */; };
 		7BBB67B32F1669920026EB7A /* MemoAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67B22F1669920026EB7A /* MemoAddReactor.swift */; };
+		7BBB67B52F1697E50026EB7A /* MemoRealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67B42F1697E50026EB7A /* MemoRealmRepository.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -334,6 +335,7 @@
 		7BBB67AE2F165E2E0026EB7A /* AddImageWithButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageWithButtonView.swift; sourceTree = "<group>"; };
 		7BBB67B02F1666D50026EB7A /* Ext+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UITextField.swift"; sourceTree = "<group>"; };
 		7BBB67B22F1669920026EB7A /* MemoAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAddReactor.swift; sourceTree = "<group>"; };
+		7BBB67B42F1697E50026EB7A /* MemoRealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRealmRepository.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -790,6 +792,7 @@
 			isa = PBXGroup;
 			children = (
 				7BBB678F2F1539760026EB7A /* FolderRealmRepository.swift */,
+				7BBB67B42F1697E50026EB7A /* MemoRealmRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1145,6 +1148,7 @@
 				7B6331822BA5307900C1C1DE /* LocationMemosViewModel.swift in Sources */,
 				7BBB676D2F14E9D70026EB7A /* PlaceDocumentEntity.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
+				7BBB67B52F1697E50026EB7A /* MemoRealmRepository.swift in Sources */,
 				7BDEA5262B9BEE21008C6922 /* AddViewModel.swift in Sources */,
 				7BB250EE2BA1EC5800FDE898 /* MemoTextViewModel.swift in Sources */,
 				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,

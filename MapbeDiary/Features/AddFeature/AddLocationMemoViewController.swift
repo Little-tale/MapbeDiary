@@ -35,9 +35,6 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         }
     }
     
-    // 이미지 서비스 클래스 선정
-//    private var imageService: ImageService?
-    
     private let photoManager = PhotosManager()
     
     // delegate
