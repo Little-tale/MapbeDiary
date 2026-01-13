@@ -38,8 +38,7 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, error in
-                // FIXME: LoadingView Need
-//                owner.activity?.stopActivity()
+                LoadingWindow.shared.hide()
                 owner.showAPIErrorAlert(repo: error)
             }
             .disposed(by: disposeBag)
@@ -49,8 +48,7 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
             .filter { $0 == true }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, bool in
-                // FIXME: LoadingView Need
-//                owner.activity?.stopActivity()
+                LoadingWindow.shared.hide()
                 owner.mainView.makeToast("Deleting_completion_title".localized)
             }
             .disposed(by: disposeBag)
@@ -115,7 +113,7 @@ extension SettingViewController {
             actionTitle: MapTextSection.delete.actionTitle
         ) { [weak self] _ in
             guard let self else { return }
-            // FIXME: - Need Loading View
+            LoadingWindow.shared.show(title: "삭제중")
             reactor?.action.onNext(.callDeleteInfo)
         }
     }

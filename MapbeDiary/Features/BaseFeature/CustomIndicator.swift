@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SnapKit
+//import SnapKit
 
 @available(*, deprecated, renamed: "Empty", message: "Will Deprecated")
 struct CustomIndicator {

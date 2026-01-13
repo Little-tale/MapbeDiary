@@ -133,6 +133,9 @@
 		7BBB67942F155A420026EB7A /* CodableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67932F155A420026EB7A /* CodableManager.swift */; };
 		7BBB67962F1562320026EB7A /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67952F1562320026EB7A /* Ext+UIView.swift */; };
 		7BBB67992F1574890026EB7A /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67982F1574890026EB7A /* SettingSection.swift */; };
+		7BBB679C2F161F6D0026EB7A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB679B2F161F6D0026EB7A /* LoadingView.swift */; };
+		7BBB679E2F1622CB0026EB7A /* LoadingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB679D2F1622CB0026EB7A /* LoadingWindow.swift */; };
+		7BBB67A02F1622E70026EB7A /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB679F2F1622E70026EB7A /* LoadingViewController.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -317,6 +320,9 @@
 		7BBB67932F155A420026EB7A /* CodableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableManager.swift; sourceTree = "<group>"; };
 		7BBB67952F1562320026EB7A /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		7BBB67982F1574890026EB7A /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
+		7BBB679B2F161F6D0026EB7A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7BBB679D2F1622CB0026EB7A /* LoadingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWindow.swift; sourceTree = "<group>"; };
+		7BBB679F2F1622E70026EB7A /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -742,6 +748,7 @@
 		7BBB67842F15208D0026EB7A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB679A2F161F5D0026EB7A /* Loading */,
 				7BBB67852F1520930026EB7A /* CollectionViewLayout */,
 			);
 			path = Common;
@@ -769,6 +776,16 @@
 				7BBB678F2F1539760026EB7A /* FolderRealmRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		7BBB679A2F161F5D0026EB7A /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB679B2F161F6D0026EB7A /* LoadingView.swift */,
+				7BBB679D2F1622CB0026EB7A /* LoadingWindow.swift */,
+				7BBB679F2F1622E70026EB7A /* LoadingViewController.swift */,
+			);
+			path = Loading;
 			sourceTree = "<group>";
 		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
@@ -1128,6 +1145,7 @@
 				7BBB65BB2F14DB670026EB7A /* KakaoLocalDTO.swift in Sources */,
 				7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */,
 				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
+				7BBB67A02F1622E70026EB7A /* LoadingViewController.swift in Sources */,
 				7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */,
 				7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */,
 				7BBB67732F14FFF90026EB7A /* APIType.swift in Sources */,
@@ -1142,10 +1160,12 @@
 				7BBB676A2F14E8100026EB7A /* Ext+Observable.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
 				7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */,
+				7BBB679E2F1622CB0026EB7A /* LoadingWindow.swift in Sources */,
 				7BF2E7FE2BB807FF00E83EC1 /* CalenderMemoViewController.swift in Sources */,
 				7BDEA5242B9B73BF008C6922 /* AddBaseView.swift in Sources */,
 				7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */,
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
+				7BBB679C2F161F6D0026EB7A /* LoadingView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7BBB67942F155A420026EB7A /* CodableManager.swift in Sources */,
 				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,

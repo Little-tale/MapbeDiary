@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseHomeViewController<T:BaseView>: UIViewController {
+class BaseHomeViewController<T:UIView>: UIViewController {
     
     let homeView = T()
     
