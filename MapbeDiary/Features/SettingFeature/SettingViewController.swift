@@ -74,11 +74,8 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
                         owner.networkCheckToast()
                         return
                     }
-                    let vc = SettingWebViewController()
                     
-                    vc.homeView.viewModel.inputSettingActionType.value = item.actionType
-                    
-                    owner.navigationController?.pushViewController(vc, animated: true)
+                    owner.sendSettingWebViewController(type: item.actionType)
                     
                 case .customerSupport: // 웹뷰로 노션 페이지 보내주기
                     print("고객센터")
@@ -86,11 +83,7 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
                         owner.networkCheckToast()
                         return
                     }
-                    let vc = SettingWebViewController()
-                    
-                    vc.homeView.viewModel.inputSettingActionType.value = item.actionType
-                    
-                    owner.navigationController?.pushViewController(vc, animated: true)
+                    owner.sendSettingWebViewController(type: item.actionType)
                     
                 case .initialize: // 완전 초기화
                     print("초기화")
@@ -123,6 +116,15 @@ extension SettingViewController {
             title: "API_Check_Title".localized,
             message: "API_error_Request".localized
         )
+    }
+    
+    private func sendSettingWebViewController(type: SettingActionType) {
+        
+        let vc = SettingWebViewController(reactor: SettingWebReactor())
+        
+        vc.sendAction(type: type)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -6,37 +6,63 @@
 //
 
 import UIKit
+import WebKit
+import RxSwift
+import RxCocoa
 
-class SettingWebViewController: BaseHomeViewController<WebHomeView> {
-    
-    var indicator: CustomIndicator?
+class SettingWebViewController: ReactorBaseViewController<SettingWebReactor, SettingWebVCView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        subscribe()
         startSetting()
     }
     
-    private func startSetting(){
-        indicator = CustomIndicator(view: homeView, navigationController: navigationController, tabBarController: nil)
-        DispatchQueue.main.async {
-            [weak self] in
-            self?.indicator?.showActivityIndicator(title: "Web_Staring".localized)
-        }
+    override func register() {
+        mainView.webView.navigationDelegate = self
+    }
+    
+    override func bind(reactor: SettingWebReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .map { $0.navigationTitle }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                owner.navigationItem.title = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.webUrlRequest }
+            .bind(with: self) { owner, request in
+                owner.mainView.webView.load(request)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    override func sendActions(reactor: SettingWebReactor) {
+        rx.viewDidLoad
+            .map { _ in SettingWebReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
 extension SettingWebViewController {
-    private func subscribe(){
-        homeView.viewModel.outputNaviTitle.bind { [weak self] title in
-            guard let title else { return }
-            self?.navigationItem.title = title
-        }
-        homeView.viewModel.webLoadCompilte.bind { [weak self] void in
-            guard let self else { return }
-            guard void != nil else { return }
-            indicator?.stopActivity()
-        }
+    
+    func sendAction(type: SettingActionType) {
+        reactor?.action.onNext(.setAction(type))
     }
     
+    private func startSetting() {
+        LoadingWindow.shared.show(title: "Web_Staring".localized)
+    }
+}
+
+// MARK: WKNavigationDelegate
+extension SettingWebViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        LoadingWindow.shared.hide()
+    }
 }

@@ -32,8 +32,14 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func loadView() {
         view = mainView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        register()
     }
     
     /// required Call "super.bind(reactor: reactor)"
@@ -42,6 +48,8 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
     }
     
     func sendActions(reactor: R) {}
+    
+    func register() {}
     
     deinit {
         print("deinit:", String(describing: type(of: self)))
