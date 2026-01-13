@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Toast
 
 
@@ -13,114 +15,202 @@ protocol BackButtonDelegate: AnyObject {
     func backButtonClicked()
 }
 
-// MARK: 수정 혹은 새로운 모델을 통합시킵니다.
-struct addViewOutStruct {
-    var title: String?
-    var titlePlacHolder: String?
-    var content: String?
-    var phoneNumber: String?
-    var folderimage: String?
-    var regDate = Date() // 일단 대기
-    var memoImage: Data?
-    var memoId: String?
-    var folderName: String?
-    var modifyTrigger: Bool = false
-}
-
 // plceholder없으면 로컬라이제이션 잊지마 마커 이미지도 여기서 해줘야햄
-final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
+final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReactor,MemoAddVCView>{
     
-    private var addViewModel = AddViewModel()
+    enum PhotoActionType {
+        case camera
+        case gallery
+        case cancel
+        
+        var title: String {
+            switch self {
+            case .camera:
+                return "Authority_Camera".localized
+            case .gallery:
+                return "Authority_Gallery".localized
+            case .cancel:
+                return "Cancel_check_title".localized
+            }
+        }
+    }
     
     // 이미지 서비스 클래스 선정
-    private var imageService: ImageService?
+//    private var imageService: ImageService?
+    
+    private let photoManager = PhotosManager()
     
     // delegate
     weak var backDelegate: BackButtonDelegate?
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(RealmRepository().printURL())
-        subscribe()
-        folderButtonSetting()
-        buttonActionSetting()
-        backViewSettin()
-        homeView.AddTitleDateView.imageChangeButton.addTarget(self, action: #selector(changeImageButtonClicked), for: .touchUpInside)
+//        print(RealmRepository().printURL())
+        mainView.backgroundColor = .skinSet
     }
     
-    @objc
-    private func changeImageButtonClicked(_ sender: UIButton){
-        print(#function)
-        showActionSheet()
-    }
-    private func backViewSettin(){
-        homeView.backgroundColor = .skinSet
+    override func bind(reactor: MemoAddReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .compactMap { $0.realmError }
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.networkError }
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(urlError: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.regDate }
+            .map { DateFormetters.shared.localDate($0) }
+            .bind(with: self) { owner, date in
+                owner.mainView.AddTitleDateView.dateLabel.text = date
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.titlePlacHolder }
+            .bind(with: self) { owner, text in
+                owner.mainView.AddTitleDateView.titleTextField.placeholder = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.memoImage }
+            .bind(with: self) { owner, data in
+                owner.checkLocationMemoImage(data: data)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.title }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                owner.mainView.AddTitleDateView.titleTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.content }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                owner.mainView.AddTitleDateView.simpleMemoTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.phoneNumber }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                owner.mainView.phoneTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.dismissTrigger }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.backDelegate?.backButtonClicked()
+            }
+            .disposed(by: disposeBag)
     }
     
-    private func showActionSheet(){
-        let alert = UIAlertController(title: MapTextSection.bringPhoto.alertTitle, message: nil, preferredStyle: .actionSheet)
-        let camera = ActionRouter().actions(.camera) {
-            [weak self] in
-            self?.checkCameraAuthorization()
-        }
-        let gellery = ActionRouter().actions(.gallery) {
-            [weak self] in
-            self?.checkGerreyAuthorization()
-        }
-        let cancel = ActionRouter().cancel
+    override func sendActions(reactor: MemoAddReactor) {
+        mainView
+            .AddTitleDateView
+            .addImageWithButtonView
+            .imageChangeButton
+            .rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.showImageAskActionSheet()
+            }
+            .disposed(by: disposeBag)
         
-        alert.addAction(camera)
-        alert.addAction(gellery)
+        mainView.backButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.backDelegate?.backButtonClicked()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.saveButton.rx
+            .tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .map { _ in MemoAddReactor.Action.saveButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.folderButton.rx
+            .tap
+            .map { _ in MemoAddReactor.Action.folderButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.AddTitleDateView.titleTextField.rx
+            .text
+            .compactMap { $0 }
+            .map { MemoAddReactor.Action.currentTitleTextChanged($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.AddTitleDateView.simpleMemoTextField.rx
+            .text
+            .compactMap { $0 }
+            .map { MemoAddReactor.Action.currentContentTextChanged($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.phoneTextField.rx
+            .text
+            .compactMap { $0 }
+            .map { MemoAddReactor.Action.currentPhoneNumberTextChanged($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showImageAskActionSheet(){
+        let alert = UIAlertController(
+            title: MapTextSection.bringPhoto.alertTitle,
+            message: nil, preferredStyle: .actionSheet
+        )
+        
+        let cameraAction = UIAlertAction(
+            title: PhotoActionType.camera.title,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            checkCameraAccessWithLogic()
+        }
+        
+        let galleryAction = UIAlertAction(
+            title: PhotoActionType.gallery.title,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            startGallery()
+        }
+        
+        let cancel = UIAlertAction(
+            title: PhotoActionType.cancel.title,
+            style: .cancel
+        )
+        
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-    
-    private func buttonActionSetting() {
-        homeView.backButton.addAction(UIAction.guardSelf(self, handler: { owner, action in
-            owner.backButtonClicked()
-        }), for: .touchUpInside)
-        
-        homeView.saveButton.addAction(UIAction.guardSelf(self, handler: { owner, action in
-            owner.saveButtonClicked()
-        }), for: .touchUpInside)
-    }
-    
-    // MARK: 폴더버튼 액션
-    private func folderButtonSetting(){
-        homeView.folderButton.addTarget(self, action: #selector(sendFolderViewController), for: .touchUpInside)
-    }
-    
-    @objc
-    func sendFolderViewController(){
-        print(#function)
-    }
 
-    private func saveButtonClicked(){
-        homeView.textFieldList.forEach { textfield in
 
-            var value = addViewModel.tempSaveModel
-            // var modify = addViewModel.modifyEnd
-            switch textfield.tag {
-            case 0:
-                value.title = titleTester(textField: textfield)
-                //modify.title = titleTestter(textField: textfield)
-            case 1:
-                value.content = textfield.text ?? ""
-                //modify.content = textfield.text
-            case 2:
-                value.phoneNumber = textfield.text ?? ""
-                //modify.phoneNumber = textfield.text
-            default:
-                break
-            }
-
-            addViewModel.tempSaveModel = value
-        }
-        addViewModel.saveButtonTrigger.value = ()
-        
-        SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
-    }
    
     private func titleTester(textField : UITextField) -> String{
         // 1. 텍스트가 비어있는지 부터
@@ -148,146 +238,101 @@ final class AddLocationMemoViewController: BaseHomeViewController<AddBaseView>{
 
 extension AddLocationMemoViewController {
     
-    private func subscribe() {
-        addViewModel.urlErrorOutPut
-            .guardBind(object: self) { owner, error in
-                guard let error else { return }
-                owner.showAPIErrorAlert(urlError: error)
-                print("??")
-        }
-        
-        addViewModel.realmError
-            .guardBind(object: self) { owner, error in
-                guard let error else { return }
-                owner.showAPIErrorAlert(repo: error)
-                print("????")
-        }
-        
-        addViewModel.proceccingSuccessOutPut
-            .guardBind(object: self) { owner, model in
-                guard let model else { return }
-                owner.setUpProcessing(model)
-                print("????????")
-            }
-        
-        addViewModel.dismisstrigger
-            .guardBind(object: self) { owner, void in
-                guard let void else { return }
-                owner.backDelegate?.backButtonClicked()
-                print("?????????????")
-            }
+    func setModifier(memoID: String) {
+        reactor?.action.onNext(.setMemoID(memoID))
     }
     
-    
-    func setTitle(text: String) {
-        addViewModel.searchTitle = text
+    func setKakaoData(data: PlaceDocumentEntity) {
+        reactor?.action.onNext(.setKakaoData(data))
     }
     
-    func setModifier(text: String) {
-        addViewModel.modifyTrigger.value = text
-    }
-    
-    func setAddModel(model: addModel) {
-        addViewModel.coordinateTrigger.value = model
+    func setAddModel(model: AddModel) {
+//        addViewModel.coordinateTrigger.value = model
+        reactor?.action.onNext(.setAddModel(model))
     }
 }
 
 extension AddLocationMemoViewController {
-    
-    private func setUpProcessing(_ model: addViewOutStruct) {
-        homeView.folderButton.configuration?.title = folderTitle()//model.folderName
-        
-        homeView.folderButton.configuration?.image = UIImage(named: ImageSection.defaultFolderImage.rawValue)?.resizeImage(newWidth: 20)
-    
-        homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(model.regDate)
-        // 플레이스 홀더
-        
-        homeView.AddTitleDateView.titleTextField.placeholder = model.titlePlacHolder ?? MapTextSection.emptyTitleTextFieldPlaceHolder
-        // print(model.titlePlacHolder)
-        
-        // 이미지
-        checkLocationMemoImage(data: model.memoImage)
-        // 타이틀
-        homeView.AddTitleDateView.titleTextField.text = model.title
-        // 간편메모
-        homeView.AddTitleDateView.simpleMemoTextField.text = model.content
-        // 전화번호
-        homeView.phoneTextField.text = model.phoneNumber
-        // print(homeView.AddTitleDateView.titleTextField.placeholder)
-    }
-
-    private func backButtonClicked() {
-        // ismiss(animated: true)
-        backDelegate?.backButtonClicked()
-    }
-    
-    // MARK: 업데이트 사항
-    private func checkFolderIamge(string: String?) -> UIImage{
-        return UIImage.defaultFolder
-    }
-    // MARK: 업데이트 사항
-    private func folderTitle() -> String{
-        return MapTextSection.beginningSoon
-    }
     
     private func checkLocationMemoImage(data: Data? ) {
         if let data {
-            homeView.AddTitleDateView.imageView.image = UIImage(data: data)
+            mainView.AddTitleDateView.addImageWithButtonView.imageView.image = UIImage(data: data)
         } else{
-            homeView.AddTitleDateView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
+            mainView.AddTitleDateView.addImageWithButtonView.imageView.image = UIImage(named: ImageSection.defaultMarkerImage.rawValue)
         }
     }
 }
 
-// MARK: imagePicker
+// MARK: Helpers
 extension AddLocationMemoViewController {
     
-    // 카메라 권한 확인 로직입니다.
-    private func checkCameraAuthorization() {
-        ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
-        imageService = ImageService(presentationViewController: self, pickerMode: .camera)
-        // 이미지 서비스를 통해 권한 확인을 합니다.
-        imageService?.checkCameraPermission(compltion: { [weak self] bool in
-            guard let self else { return }
-            if !bool {
-                cameraSettingAlert() // 권한이 거부 되었거든 설정으로 안내할 알렛
+    
+    private func checkCameraAccessWithLogic() {
+        Task { @MainActor in
+            let result = await photoManager.checkCameraPermission()
+            
+            if result {
+                do {
+                    let images = try await photoManager.pickFromCamera(
+                        presenter: self
+                    )
+                    
+                    guard let image = images?.first else {
+                        return
+                    }
+                    
+                    await sendImage(image)
+                } catch {
+                    await MainActor.run {
+                        showAlert(
+                            title: "Error",
+                            message: "카메라 여는중 오류가 발생하였습니다."
+                        )
+                    }
+                }
+                
             } else {
-                startImage() // 이미지 시작!
+                goCameraSettingAlert()
             }
-        } )
+        }
     }
     
-    // 갤러리를 선택했을때 권한 확인 로직입니다.
-    private func checkGerreyAuthorization(){
-        imageService = ImageService(presentationViewController: self, pickerMode: .maximum(1))
-        startImage()
-    }
-    
-    // MARK: 이미지 로직입니다.
-    private func startImage(){
-        imageService?.pickImage(complete: {[weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let images):
-                let image = images?.first
-                changeImage(image)
-            case .failure(let fail):
-                print(fail)
+    private func startGallery() {
+        Task { @MainActor in
+            do {
+                let result = try await photoManager.pickFromLibrary(
+                    presenter: self,
+                    maxSelection: 1
+                )
+                guard let image = result?.first else {
+                    return
+                }
+                
+                await sendImage(image)
+            } catch {
+                print(error)
             }
-        })
+        }
     }
     
-    // MARK: 상황별 이미지 저장 로직
-    private func changeImage(_ image: UIImage?){
-        guard let image else { return }
-
-        addViewModel.tempSaveModel.memoImage = image.jpegData(compressionQuality: 1)
-        addViewModel.imageChangeTrigger = true
-        homeView.AddTitleDateView.imageView.image = image
+    private func sendImage(_ image: UIImage) async {
+        
+        mainView.AddTitleDateView.addImageWithButtonView.imageView.image = image
+        
+        guard let data = await image.onlyCompressImage(
+            type: .jpeg,
+            targetMB: 5
+        ) else {
+            print("압축 실패")
+            return
+        }
+        
+        reactor?.action.onNext(.sendImage(data))
     }
+    
     
     // MARK: goSetting
-    private func cameraSettingAlert(){
+    private func goCameraSettingAlert(){
         showAlert(title: MapTextSection.camera.alertMessage, message: MapTextSection.camera.actionTitle, actionTitle: MapTextSection.camera.actionTitle) {
             [weak self] action in
             guard let self else {return}
@@ -296,88 +341,80 @@ extension AddLocationMemoViewController {
     }
 }
 
-
-/*
- //struct AddOrModifyModel {
- // var value = addViewModel.proceccingSuccessOutPut.value
- //value?.memoImage = image.jpegData(compressionQuality: 1)
- // addViewModel.proceccingSuccessOutPut.value = value
- //    var title: String?
- //    var content: String?
- //    var phoneNumber: String?
- //    var folderimage: String?
- //    var regDate: Date?
- //    var markerImage: UIImage?
- //    var folder: Folder?
- //    var location: LocationMemo?
- //    var locationMemoId: String?
- //    var modiFy = false
- //
- //    init(memo: LocationMemo? = nil, folder:Folder? = nil) {
- //        self.title = memo.title
- //        self.content = memo.contents
- //        self.phoneNumber = memo.phoneNumber
- //        self.regDate = memo.regdate
- //        self.folder = folder
- //        self.locationMemoId = memo.id.stringValue
- //
- //        if let iamgePath = FileManagers.shard.loadImageMarkerImage(memoId: memo.id.stringValue) {
- //            markerImage = UIImage(contentsOfFile: iamgePath)
- //        }
- //
- //    }
- //}
-
- */
-
-// MARK: 업데이트 사항
-// sussesModel.folder.folderName
-
-//            homeView.folderButton.configuration?.image = UIImage(named: sussesModel.folderimage)?.resizeImage(newWidth: 20)
-
+//    private func saveButtonClicked(){
+//        homeView.textFieldList.forEach { textfield in
 //
-
-/* // MARK:  폴더이미지도 업데이트 사헝
- if let folderImagePath = FileManagers.shard.findFolderImage(folderId: model.folder.id.stringValue) {
-     
-     homeView.folderButton.configuration?.image = UIImage(contentsOfFile: folderImagePath)?.resizeImage(newWidth: 20)
- } else {
- */
+//            var value = addViewModel.tempSaveModel
+//            // var modify = addViewModel.modifyEnd
+//            switch textfield.tag {
+//            case 0:
+//                value.title = titleTester(textField: textfield)
+//                //modify.title = titleTestter(textField: textfield)
+//            case 1:
+//                value.content = textfield.text ?? ""
+//                //modify.content = textfield.text
+//            case 2:
+//                value.phoneNumber = textfield.text ?? ""
+//                //modify.phoneNumber = textfield.text
+//            default:
+//                break
+//            }
+//
+//            addViewModel.tempSaveModel = value
+//        }
+//        addViewModel.saveButtonTrigger.value = ()
+//
+//        SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
+//    }
 
 /*
- addViewModel.proceccingSuccessOutPut.bind { [weak self] sussesModel in
-     guard let self else {return}
-     guard let sussesModel else {return}
-     homeView.AddTitleDateView.titleTextField.placeholder = sussesModel.titlePlacHolder
+ // MARK: imagePicker
+ extension AddLocationMemoViewController {
      
-     homeView.folderButton.configuration?.title = MapTextSection.beginningSoon
-
-     
-     homeView.folderButton.configuration?.image = checkFolderIamge(string: sussesModel.folderimage).resizeImage(newWidth: 20)
-     
-     homeView.AddTitleDateView.dateLabel.text = DateFormetters.shared.localDate(sussesModel.regDate)
-     
-     if let image = sussesModel.memoImage {
-         homeView.AddTitleDateView.imageView.image = UIImage(data: image)
+     // 카메라 권한 확인 로직입니다.
+     private func checkCameraAuthorization() {
+         ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
+         imageService = ImageService(presentationViewController: self, pickerMode: .camera)
+         // 이미지 서비스를 통해 권한 확인을 합니다.
+         imageService?.checkCameraPermission(compltion: { [weak self] bool in
+             guard let self else { return }
+             if !bool {
+                 cameraSettingAlert() // 권한이 거부 되었거든 설정으로 안내할 알렛
+             } else {
+                 startImage() // 이미지 시작!
+             }
+         } )
      }
+     
+     // 갤러리를 선택했을때 권한 확인 로직입니다.
+     private func checkGerreyAuthorization(){
+         imageService = ImageService(presentationViewController: self, pickerMode: .maximum(1))
+         startImage()
+     }
+     
+     // MARK: 이미지 로직입니다.
+     private func startImage(){
+         imageService?.pickImage(complete: {[weak self] result in
+             guard let self else { return }
+             switch result {
+             case .success(let images):
+                 let image = images?.first
+                 changeImage(image)
+             case .failure(let fail):
+                 print(fail)
+             }
+         })
+     }
+     
+     // MARK: 상황별 이미지 저장 로직
+     private func changeImage(_ image: UIImage?){
+         guard let image else { return }
+
+         addViewModel.tempSaveModel.memoImage = image.jpegData(compressionQuality: 1)
+         addViewModel.imageChangeTrigger = true
+ //        homeView.AddTitleDateView.imageView.image = image
+     }
+     
+    
  }
- */
-/*
- //        if addViewModel.coordinateTrigger.value != nil {
- //            var value = addViewModel.proceccingSuccessOutPut.value
- //            value?.memoImage = image.jpegData(compressionQuality: 1)
- //            addViewModel.proceccingSuccessOutPut.value = value
- //        } else {
- //            addViewModel.modifyEnd?.markerImage = image //.resizeImage(newWidth: 100)
- //            homeView.AddTitleDateView.imageView.image = image
- //            addViewModel.modifyEnd?.modiFy = true
- //        }
-         
- */
-/*
- //            if addViewModel.urlSuccessOutPut.value != nil {
- //                addViewModel.urlSuccessOutPut.value = value
- //            } else {
- //                addViewModel.modifyEnd = modify
- //            }
  */

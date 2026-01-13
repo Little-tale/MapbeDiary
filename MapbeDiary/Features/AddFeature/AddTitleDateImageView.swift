@@ -10,86 +10,80 @@ import SnapKit
 
 
 final class AddTitleDateImageView: BaseView {
-    private let emptyView = UIView()
+
+    let addImageWithButtonView = AddImageWithButtonView()
     let titleTextField = UITextField(frame: .zero)
-    let imageView = circleImageView(frame: .zero)
-    let imageChangeButton = CustomButton.imageChangeButton()
     let simpleMemoTextField = UITextField(frame: .zero)
     let dateLabel = UILabel()
     
 
     override func configureHierarchy() {
-        self.addSubview(emptyView)
-        emptyView.addSubview(titleTextField)
-        emptyView.addSubview(imageView)
-        emptyView.addSubview(imageChangeButton)
-        emptyView.addSubview(simpleMemoTextField)
-        emptyView.addSubview(dateLabel)
+        addSubview(titleTextField)
+        addSubview(addImageWithButtonView)
+        addSubview(simpleMemoTextField)
+        addSubview(dateLabel)
     }
     override func configureLayout() {
-        emptyView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
+        
+        addImageWithButtonView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().offset(16)
         }
-        imageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(10)
-            make.size.equalTo(60)
-        }
-        imageChangeButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(4)
-            make.centerX.equalTo(imageView)
-            make.height.equalTo(22)
-        }
+        
         titleTextField.snp.makeConstraints{ make in
-            make.leading.equalTo(imageView.snp.trailing).offset(10)
+            make.leading.equalTo(addImageWithButtonView.snp.trailing).offset(10)
             make.trailing.equalToSuperview().inset( 10 )
             make.top.equalToSuperview().offset(12)
             make.height.equalTo(38)
         }
+        
         simpleMemoTextField.snp.makeConstraints{ make in
             make.leading.trailing.equalTo(titleTextField)
             make.top.equalTo(titleTextField.snp.bottom).offset(8)
-            make.height.equalTo(30)
+            make.height.equalTo(38)
         }
+        
         dateLabel.snp.makeConstraints { make in
             make.trailing.equalTo(simpleMemoTextField)
             make.top.equalTo(simpleMemoTextField.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
         }
     }
     
     override func designView() {
-        // emptyView.backgroundColor = .brown
-        placeHolderSetting()
-        imageChangeButtonSetting()
-        imageView.backgroundColor = .wheetLightYellow
-        
-        titleTextField.textAlignment = .center
-        simpleMemoTextField.textAlignment = .center
+        setTitleTextFieldUI()
+        setSimpleMemoTextFieldUI()
         layerSetting()
+        setDefaultImage()
     }
     
-    private func imageChangeButtonSetting(){
-        imageChangeButton.tintColor = .wheetBlack
-    }
-    
-    private func placeHolderSetting(){
-        
+    private func setTitleTextFieldUI() {
+        titleTextField.textAlignment = .center
         titleTextField.placeholder = AddViewSection.titleTextFieldText.placeHolder
-        
+        // MapTextSection.emptyTitleTextFieldPlaceHolder
         titleTextField.setPlaceholderColor(.black)
-        
+    }
+    
+    private func setSimpleMemoTextFieldUI() {
+        simpleMemoTextField.textAlignment = .center
         simpleMemoTextField.placeholder = AddViewSection.simpleMemoTextFiled.placeHolder
         
         simpleMemoTextField.setPlaceholderColor(.black)
         
-        
+        [simpleMemoTextField, titleTextField].forEach { textField in
+            textField.backgroundColor = .wheetSideBrown
+        }
     }
+
     private func layerSetting() {
         titleTextField.layer.cornerRadius = 12
         simpleMemoTextField.layer.cornerRadius = 8
         dateLabel.font = .systemFont(ofSize: 12, weight: .light)
     }
     
-    
+    private func setDefaultImage() {
+        let value = ImageSection.defaultMarkerImage.rawValue
+        addImageWithButtonView.imageView.image = UIImage(named: value)
+    }
 
 }

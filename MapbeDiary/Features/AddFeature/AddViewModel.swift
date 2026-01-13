@@ -7,12 +7,16 @@
 
 import Foundation
 
-struct addModel {
+struct AddModel {
     let lat: String
     let lon: String
     var folder: String
     
-    init(lat: String, lon: String, folder: String) {
+    init(
+        lat: String,
+        lon: String,
+        folder: String
+    ) {
         self.lat = lat
         self.lon = lon
         self.folder = folder
@@ -30,7 +34,7 @@ final class AddViewModel {
     let saveButtonTrigger: _Observable<Void?> = _Observable(nil)
     
     // 새로 올때의 모델
-    let coordinateTrigger: _Observable<(addModel)?> = _Observable(nil)
+    let coordinateTrigger: _Observable<(AddModel)?> = _Observable(nil)
     // MARK: 수정시 Input ------ LocationMemoId
     let modifyTrigger: _Observable<String?> = _Observable(nil)
     
@@ -79,7 +83,7 @@ final class AddViewModel {
             }
     }
     // folder
-    private func newProceccing(_ model: addModel ){
+    private func newProceccing(_ model: AddModel ){
         repository.findFolder(folderId: model.folder) {[weak self] result in
             guard let self else { return }
             switch result {
@@ -106,7 +110,7 @@ final class AddViewModel {
         Task {
             do {
                 let result = try await URLSessionManagerForConcurrency.shared.fetch(
-                    type: KaKakaoCordinateModel.self,
+                    type: KakaoCoordinateModel.self,
                     apiType: KakaoApiModel.cordinate(
                         x: lon,
                         y: lat
@@ -125,12 +129,12 @@ final class AddViewModel {
     
     
     // MARK: 네트워크 없을때 작동합니다.
-    private func noNetworkProcecing(_ model: addModel){
+    private func noNetworkProcecing(_ model: AddModel){
         proceccingSuccessOutPut.value = addViewOutStruct()
     }
     
     // MARK: API 모델을 알맞은 모델로 수정합니다.
-    private func urlProccing(model : KaKakaoCordinateModel, folder: Folder) {
+    private func urlProccing(model : KakaoCoordinateModel, folder: Folder) {
         print(model.documents.first?.roadAddress.addressName)
         var data = addViewOutStruct(
             titlePlacHolder: model.documents.first?.roadAddress.addressName

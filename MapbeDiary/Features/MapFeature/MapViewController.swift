@@ -20,7 +20,7 @@ enum PanelViewControllerType {
     func createViewController() -> UIViewController {
         switch self {
         case .addLocation:
-            return AddLocationMemoViewController()
+            return AddLocationMemoViewController(reactor: MemoAddReactor(initialState: MemoAddReactor.State()))
         case .modiFiLocation:
             return AboutLocationViewController()
         }
@@ -303,7 +303,7 @@ extension MapViewController : UISearchBarDelegate {
             /// 판넬 업데이트
             updatePanel(coordi: location, viewType: .addLocation, layout: .custom) { viewCon in
                 if let vc = viewCon as? AddLocationMemoViewController {
-                    vc.setTitle(text: data.placeName)
+                    vc.setKakaoData(data: data)
                 }
             }
             addLongAnnotation(cl2: location)
@@ -349,11 +349,12 @@ extension MapViewController: MKMapViewDelegate { // 수정해
     }
 
     private func locationModify(_ anno: CustomAnnotation){
-        if let memoid = anno.locationId {
+        if let memoId = anno.locationId {
             updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] viewController in
                 guard self != nil else { return }
                 if let vc = viewController as? AddLocationMemoViewController {
-                    vc.setModifier(text: memoid)
+                    
+                    vc.setModifier(memoID: memoId)
                 }
             }
         }
@@ -408,7 +409,11 @@ extension MapViewController: FloatingPanelControllerDelegate {
         if let addMemoVcon = vc as? AddLocationMemoViewController {
             addMemoVcon.backDelegate = self
             if let coordinate = configuration.coordinate {
-                let coordinateStruct = addModel(lat: String(coordinate.latitude), lon: String(coordinate.longitude), folder: folder.id.stringValue)
+                let coordinateStruct = AddModel(
+                    lat: String(coordinate.latitude),
+                    lon: String(coordinate.longitude),
+                    folder: folder.id.stringValue
+                )
                 addMemoVcon.setAddModel(model: coordinateStruct)
             }
             vc = addMemoVcon
@@ -457,12 +462,13 @@ extension MapViewController: BackButtonDelegate {
 // MARK: 로케이션 수정
 extension MapViewController: AboutmodifyLocation {
     
-    func getModifyInfo(with lcation: LocationMemo) {
+    func getModifyInfo(with memo: LocationMemo) {
         updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] vc in
             guard self != nil else { return }
             guard let viewController = vc as? AddLocationMemoViewController else { return }
             print("*****   updatePanel ")
-            viewController.setModifier(text: lcation.id.stringValue)
+            
+            viewController.setModifier(memoID: memo.id.stringValue)
         }
     }
 }

@@ -26,7 +26,7 @@ struct Meta: Decodable {
 
 // MARK: KAKAO LongLat Model
 // x,y 를 통해 도로명 주소를 가져옵니다.
-struct KaKakaoCordinateModel: Decodable {
+struct KakaoCoordinateModel: Decodable {
     let documents:[LongLat]
 }
 /// documents -> 도로병 주소 구조체 roadAddress

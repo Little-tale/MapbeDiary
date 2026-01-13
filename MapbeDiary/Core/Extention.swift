@@ -79,29 +79,6 @@ extension UIImage {
     
 }
 
-@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
-// MARK: 텍스트 필드
-extension UITextField {
-    
-    func setPlaceholderColor(_ placeholderColor: UIColor) {
-        attributedPlaceholder = NSAttributedString(
-            string: placeholder ?? "",
-            attributes: [
-                .foregroundColor: placeholderColor,
-                .font: font
-            ].compactMapValues { $0 }
-        )
-    }
-}
-
-@available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")
-extension UITextField {
-    func addLeftPadding(width: CGFloat) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = ViewMode.always
-    }
-}
 
 // MARK: String -> CLLcocation
 extension UIViewController {

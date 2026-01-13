@@ -21,6 +21,7 @@ enum ImageServiceError: Error {
 }
 
 /// 이미지 관련된 기능을 제공하는 서비스 클래스 입니다.
+@available(*, deprecated, renamed: "PhotosManager", message: "Use PhotosManager")
 final class ImageService: NSObject {
     
     // 반환할 Result 를 정의
