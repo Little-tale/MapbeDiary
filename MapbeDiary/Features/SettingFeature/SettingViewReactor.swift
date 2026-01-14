@@ -49,11 +49,9 @@ extension SettingViewReactor {
                     print("ERROR - Can't Find folderID ")
                     return
                 }
-                
-                let folder = try await repository.findFolder(id: currentID)
-                
+                                
                 try await repository.removeFolderInEveryThing(
-                    folder: folder
+                    folderId: currentID
                 )
                 
                 await send(.successRemove)

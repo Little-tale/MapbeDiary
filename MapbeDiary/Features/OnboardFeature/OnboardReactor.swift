@@ -43,10 +43,7 @@ extension OnboardReactor {
             
             return .run { send in
                 let folder = try await FolderRealmRepository.shared.makeFolder(folderName: "추억의 공간")
-                
-                SingleToneDataViewModel.shared.shardFolderOb.value = folder
-                
-                UserDefaultsManager.currentFolderID = folder.id.stringValue
+                UserDefaultsManager.currentFolderID = folder.id
                 
                 await send(.nextVC(true))
             }

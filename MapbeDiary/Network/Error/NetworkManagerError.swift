@@ -8,7 +8,8 @@
 import Foundation
 
 /// URLSessinManger 에서 나올수 있는 대략적인 에러
-enum NetworkManagerError: Error{
+enum NetworkManagerError: Error, Equatable {
+    
     case noData // 데이터가 없습니다.
     case noResponse // 응답이 없습니다.
     case errorResponseCode // 응답코드가 200이 아니며, 문서에도 없습니다.
@@ -43,4 +44,7 @@ enum NetworkManagerError: Error{
         }
     }
     
+    static func == (lhs: NetworkManagerError, rhs: NetworkManagerError) -> Bool {
+        return lhs == rhs
+    }
 }

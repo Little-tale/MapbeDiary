@@ -60,6 +60,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .compactMap { $0.networkError }
+            .distinctUntilChanged()
             .bind(with: self) { owner, error in
                 owner.showAPIErrorAlert(urlError: error)
             }
@@ -68,6 +69,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         reactor.state
             .map { $0.regDate }
             .map { DateFormetters.shared.localDate($0) }
+            .distinctUntilChanged()
             .bind(with: self) { owner, date in
                 owner.mainView.AddTitleDateView.dateLabel.text = date
             }
@@ -75,6 +77,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .compactMap { $0.titlePlacHolder }
+            .distinctUntilChanged()
             .bind(with: self) { owner, text in
                 owner.mainView.AddTitleDateView.titleTextField.placeholder = text
             }
@@ -82,6 +85,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .map { $0.memoImage }
+            .distinctUntilChanged()
             .bind(with: self) { owner, data in
                 owner.checkLocationMemoImage(data: data)
             }
@@ -89,6 +93,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .compactMap { $0.title }
+            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, text in
                 owner.mainView.AddTitleDateView.titleTextField.text = text
@@ -97,6 +102,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .compactMap { $0.content }
+            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, text in
                 owner.mainView.AddTitleDateView.simpleMemoTextField.text = text
@@ -105,6 +111,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .compactMap { $0.phoneNumber }
+            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, text in
                 owner.mainView.phoneTextField.text = text
@@ -113,6 +120,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .map { $0.dismissTrigger }
+            .distinctUntilChanged()
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.backDelegate?.backButtonClicked()
@@ -243,7 +251,7 @@ extension AddLocationMemoViewController {
         reactor?.action.onNext(.setKakaoData(data))
     }
     
-    func setAddModel(model: AddModel) {
+    func setAddModel(model: AddModelEntity) {
 //        addViewModel.coordinateTrigger.value = model
         reactor?.action.onNext(.setAddModel(model))
     }
@@ -337,81 +345,3 @@ extension AddLocationMemoViewController {
         }
     }
 }
-
-//    private func saveButtonClicked(){
-//        homeView.textFieldList.forEach { textfield in
-//
-//            var value = addViewModel.tempSaveModel
-//            // var modify = addViewModel.modifyEnd
-//            switch textfield.tag {
-//            case 0:
-//                value.title = titleTester(textField: textfield)
-//                //modify.title = titleTestter(textField: textfield)
-//            case 1:
-//                value.content = textfield.text ?? ""
-//                //modify.content = textfield.text
-//            case 2:
-//                value.phoneNumber = textfield.text ?? ""
-//                //modify.phoneNumber = textfield.text
-//            default:
-//                break
-//            }
-//
-//            addViewModel.tempSaveModel = value
-//        }
-//        addViewModel.saveButtonTrigger.value = ()
-//
-//        SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
-//    }
-
-/*
- // MARK: imagePicker
- extension AddLocationMemoViewController {
-     
-     // 카메라 권한 확인 로직입니다.
-     private func checkCameraAuthorization() {
-         ///  이미지 서비스의 모드를 정합니다.  case camera || case maximer(Int)
-         imageService = ImageService(presentationViewController: self, pickerMode: .camera)
-         // 이미지 서비스를 통해 권한 확인을 합니다.
-         imageService?.checkCameraPermission(compltion: { [weak self] bool in
-             guard let self else { return }
-             if !bool {
-                 cameraSettingAlert() // 권한이 거부 되었거든 설정으로 안내할 알렛
-             } else {
-                 startImage() // 이미지 시작!
-             }
-         } )
-     }
-     
-     // 갤러리를 선택했을때 권한 확인 로직입니다.
-     private func checkGerreyAuthorization(){
-         imageService = ImageService(presentationViewController: self, pickerMode: .maximum(1))
-         startImage()
-     }
-     
-     // MARK: 이미지 로직입니다.
-     private func startImage(){
-         imageService?.pickImage(complete: {[weak self] result in
-             guard let self else { return }
-             switch result {
-             case .success(let images):
-                 let image = images?.first
-                 changeImage(image)
-             case .failure(let fail):
-                 print(fail)
-             }
-         })
-     }
-     
-     // MARK: 상황별 이미지 저장 로직
-     private func changeImage(_ image: UIImage?){
-         guard let image else { return }
-
-         addViewModel.tempSaveModel.memoImage = image.jpegData(compressionQuality: 1)
-         addViewModel.imageChangeTrigger = true
- //        homeView.AddTitleDateView.imageView.image = image
-     }
-     
-    
- }
- */

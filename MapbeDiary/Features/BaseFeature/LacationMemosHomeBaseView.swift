@@ -56,16 +56,16 @@ class LacationMemosHomeBaseView: BaseView {
         }
     }
     
-    func emptyLauout(screen: CGFloat) {
-        emptyImage.snp.makeConstraints { make in
-            make.size.equalTo(screen / 2)
-            make.center.equalTo(safeAreaLayoutGuide)
-        }
-        emptyMent.snp.makeConstraints { make in
-            make.centerX.equalTo(emptyImage)
-            make.bottom.equalTo(emptyImage.snp.top).inset( -18 )
-        }
-    }
+//    func emptyLauout(screen: CGFloat) {
+//        emptyImage.snp.makeConstraints { make in
+//            make.size.equalTo(screen / 2)
+//            make.center.equalTo(safeAreaLayoutGuide)
+//        }
+//        emptyMent.snp.makeConstraints { make in
+//            make.centerX.equalTo(emptyImage)
+//            make.bottom.equalTo(emptyImage.snp.top).inset( -18 )
+//        }
+//    }
     
     override func subscribe() {
         regisSubscribe()
@@ -79,7 +79,7 @@ extension LacationMemosHomeBaseView {
         
         configu.trailingSwipeActionsConfigurationProvider = {
           [weak self] indexPath in
-            self?.swifeAction?(indexPath)
+            return self?.swifeAction?(indexPath)
         }
 
         let layout = UICollectionViewCompositionalLayout.list(using: configu)

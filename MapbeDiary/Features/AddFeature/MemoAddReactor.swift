@@ -25,7 +25,7 @@ struct addViewOutStruct: Equatable, Sendable {
 
 final class MemoAddReactor: Reactor {
     
-    struct State {
+    struct State: Equatable {
         var title: String?
         var titlePlacHolder: String?
         var content: String?
@@ -56,7 +56,7 @@ final class MemoAddReactor: Reactor {
         case currentPhoneNumberTextChanged(String)
         
         case setFolderID(String)
-        case setAddModel(AddModel)
+        case setAddModel(AddModelEntity)
         case setKakaoData(PlaceDocumentEntity)
         case setMemoID(String)
     }
@@ -196,7 +196,7 @@ extension MemoAddReactor {
             return .concat([
                 .just(.setMemoID(id)),
                 .run { send in
-                    let result = try await MemoRealmRepository.shared.findLocationMemoSnapshot(id: id)
+                    let result = try await MemoRealmRepository.shared.findLocationMemo(id: id)
                     
                     await send(.setTitle(result.title))
                     await send(.setContent(result.contents ?? ""))

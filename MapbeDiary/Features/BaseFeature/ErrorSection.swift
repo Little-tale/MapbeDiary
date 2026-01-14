@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RealmManagerError: Error {
+enum RealmManagerError: Error, Equatable {
     case cantInit
     case cantFindFolder
     case canMakeFolder

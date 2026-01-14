@@ -35,7 +35,7 @@ final class FolderRealmRepository {
 extension FolderRealmRepository {
     
     @discardableResult
-    func makeFolder(folderName: String) async throws(RealmManagerError) -> Folder {
+    func makeFolder(folderName: String) async throws(RealmManagerError) -> FolderEntity {
         let realm = try await RealmActor.shared.getRealm()
         
         let folders = realm.objects(Folder.self)
@@ -48,7 +48,7 @@ extension FolderRealmRepository {
             try await realm.asyncWrite {
                 realm.add(folder)
             }
-            return folder
+            return FolderMapper.toEntity(folder)
         } catch {
             throw .canMakeFolder
         }
@@ -59,7 +59,7 @@ extension FolderRealmRepository {
 @RealmActor
 extension FolderRealmRepository {
     
-    func findFolder(id: String) async throws(RealmManagerError) -> Folder {
+    func findFolder(id: String) async throws(RealmManagerError) -> FolderEntity {
         let realm = try await RealmActor.shared.getRealm()
         
         do {
@@ -73,7 +73,7 @@ extension FolderRealmRepository {
                 throw RealmManagerError.cantFindFolder
             }
             
-            return folder
+            return FolderMapper.toEntity(folder)
         } catch {
             throw .cantFindObjectId
         }
@@ -85,8 +85,20 @@ extension FolderRealmRepository {
 extension FolderRealmRepository {
     
      func removeFolderInEveryThing(
-         folder: Folder
+         folderId: String
      ) async throws(RealmManagerError) {
+         let realm = try await RealmActor.shared.getRealm()
+         let idObj: ObjectId
+         do {
+             idObj = try ObjectId(string: folderId)
+         } catch {
+             throw .cantFindObjectId
+         }
+         
+         guard let folder = realm.object(ofType: Folder.self, forPrimaryKey: idObj) else {
+             throw .cantFindFolder
+         }
+         
          let locationMemos = findAllMemoAtFolder(folder: folder)
          var details: [DetailMemo] = []
          
@@ -135,11 +147,11 @@ extension FolderRealmRepository {
          }
      }
      
-     func findAllMemoAtFolder(folder: Folder) -> [LocationMemo] {
+     private func findAllMemoAtFolder(folder: Folder) -> [LocationMemo] {
          Array(folder.LocationMemo)
      }
      
-     func removeLocationMemos(_ locations: [LocationMemo]) async throws(RealmManagerError) {
+     private func removeLocationMemos(_ locations: [LocationMemo]) async throws(RealmManagerError) {
          let realm = try await RealmActor.shared.getRealm()
          
          for location in locations {
@@ -161,7 +173,7 @@ extension FolderRealmRepository {
          }
      }
      
-     func removeDetailsMemos(_ details: [DetailMemo]) async throws(RealmManagerError) {
+     private func removeDetailsMemos(_ details: [DetailMemo]) async throws(RealmManagerError) {
          let realm = try await RealmActor.shared.getRealm()
          
          for detail in details {

@@ -6,41 +6,91 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
+protocol AllMemoLocationListViewControllerDelegate: AnyObject {
 
-protocol LocationDelegate: AnyObject {
-    func getLocationInfo(memo: LocationMemo)
+    func modifyRequest(memoLocation: LocationEntity)
 }
 
-final class AllMemoLocationListViewController: BaseHomeViewController<LacationMemosHomeBaseView> {
+final class AllMemoLocationListViewController: ReactorBaseViewController<AllLocationListViewReactor, AllLocationVCView> {
     
-    weak var locationDelegate: LocationDelegate?
+    weak var delegate: AllMemoLocationListViewControllerDelegate?
     
-    var dataSource: UICollectionViewDiffableDataSource<Folder,LocationMemo>?
+    var dataSource: UICollectionViewDiffableDataSource<FolderEntity,LocationMemoEntity>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewDataSource()
         snapShot()
-        navigationSetting()
-        subscribe()
-        test()
-    }
-    deinit {
-        print("AllMemoListViewController",self)
-    }
-    func navigationSetting(){
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .medium)]
     }
     
-    func emptyImageSetting(){
-        let width = view.bounds.width
-        homeView.emptyLauout(screen: width)
+    
+    override func bind(reactor: AllLocationListViewReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .map { $0.dismissTrigger }
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.showDeleteAlert }
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.deleteAlert()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.item }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, model in
+                owner.snapShot()
+                owner.mainView.topTitleLabel.text = model.name
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.realmError }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.modifyTrigger }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, location in
+                owner.delegate?.modifyRequest(memoLocation: location)
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        emptyImageSetting()
+    override func sendActions(reactor: AllLocationListViewReactor) {
+        rx.viewWillAppear
+            .map { _ in AllLocationListViewReactor.Action.reload }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rx.viewDidLoad
+            .map{ _ in AllLocationListViewReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.swipeAction = { [weak self] action, indexPath in
+            self?.reactor?.action.onNext(.swipeAction(action: action, index: indexPath.item))
+        }
     }
 }
 
@@ -48,63 +98,35 @@ final class AllMemoLocationListViewController: BaseHomeViewController<LacationMe
 // MARK: 데이터 소스
 extension AllMemoLocationListViewController {
     private func collectionViewDataSource(){
-        let cellRegister = UICollectionView.CellRegistration<MemoSimpleCollectionViewCell,LocationMemo>{
+        let cellRegister = UICollectionView.CellRegistration<MemoSimpleCollectionViewCell,LocationMemoEntity>{
             [weak self] cell, indexPath, item in
             guard self != nil else { return }
             cell.titleLabel.text = item.title
             
-            cell.dateLabel.text = DateFormetters.shared.localDate(item.regdate)
+            cell.dateLabel.text = DateFormetters.shared.localDate(item.regDate)
             
             cell.subTitleLabel.text = item.contents
-            let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id.stringValue)
+            let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id)
             if let image {
                 cell.imageView.image = UIImage(contentsOfFile: image)
             }else {
                 cell.imageView.image = .emptyAnnotation
             }
-            
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Folder,LocationMemo>(collectionView: homeView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<FolderEntity,LocationMemoEntity>(
+            collectionView: mainView.collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
             
             return collectionView.dequeueConfiguredReusableCell(using: cellRegister, for: indexPath, item: itemIdentifier)
         })
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeView.allMemoViewModel.reloadTrigger.value = ()
-    }
     
-    private func test(){
-        homeView.swifeAction = {[weak self] indexPath in
-            
-            let action = UIContextualAction(style: .destructive, title: "Alert_delete".localized) { action, view, whatif in
-                guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
-                self?.deleteAlert(memo: data)
-                whatif(true)
-            }
-            let modifyAction = UIContextualAction(style: .normal, title: "detail_modify_title".localized) { action, view, whatIf in
-                guard let data = self?.dataSource?.itemIdentifier(for: indexPath) else { return }
-                self?.modifyAction(memo: data)
-                whatIf(true)
-            }
-            
-            modifyAction.backgroundColor = .systemGreen
-            
-            return UISwipeActionsConfiguration(actions: [action, modifyAction])
-        }
-    }
-    
-    private func deleteAlert(memo: LocationMemo){
+    private func deleteAlert(){
         showAlert(title: "Alert_delete".localized, message: "Alert_cantRecover".localized, actionTitle: "Did_delete".localized) { [weak self] action in
             guard let self else {return}
-            homeView.allMemoViewModel.removeMemo.value = memo
+            reactor?.action.onNext(.checkedDelete)
         }
-    }
-    private func modifyAction(memo: LocationMemo) {
-        print(#function)
-        locationDelegate?.getLocationInfo(memo: memo)
-        dismiss(animated: true)
     }
     
 }
@@ -112,41 +134,25 @@ extension AllMemoLocationListViewController {
 extension AllMemoLocationListViewController {
     //MARK: SnapShot
     private func snapShot(){
-        if let data = homeView.allMemoViewModel.outPutTrigger.value {
-            var snaphot = NSDiffableDataSourceSnapshot<Folder   ,LocationMemo>()
-            
-            snaphot.appendSections([data.folder])
-            snaphot.appendItems(data.Memo,toSection: data.folder)
-            
-            // MARK: diff를 계산하지 않고 Reload한다.
-            // dataSource?.apply(snaphot) // 변화를 감지 못해 서울시
-            dataSource?.applySnapshotUsingReloadData(snaphot)
+        guard let data = reactor?.currentState.item else {
+            return
         }
-    }
-    private func subscribe(){
-        SingleToneDataViewModel.shared
-            .allListFolderOut
-            .guardBind(object: self) { owner, folder in
-                guard let folder else { return }
-                owner.homeView.allMemoViewModel.inputTrigger.value = folder
-            }
         
-        homeView.allMemoViewModel
-            .outPutTrigger
-            .guardBind(object: self) { owner, result in
-                guard let result else { return }
-                owner.snapShot()
-                owner.navigationItem.title = result.folder.folderName
-            }
+        var snapShot = NSDiffableDataSourceSnapshot<FolderEntity, LocationMemoEntity>()
         
-        homeView.allMemoViewModel
-            .realmError
-            .guardBind(object: self) { owner, error in
-                guard let error else { return }
-                owner.showAPIErrorAlert(repo: error)
-            }
+        snapShot.appendSections([data])
+        snapShot.appendItems(data.locationMemos, toSection: data)
+        
+        dataSource?.apply(snapShot)
+        // applySnapshotUsingReloadData
     }
-    
 }
 
 
+// FIXME: 해당 뷰모델 휴에 제거해야함.
+//        SingleToneDataViewModel.shared
+//            .allListFolderOut
+//            .guardBind(object: self) { owner, folder in
+//                guard let folder else { return }
+//                owner.homeView.allMemoViewModel.inputTrigger.value = folder
+//            }

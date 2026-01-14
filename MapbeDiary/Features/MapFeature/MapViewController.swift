@@ -201,10 +201,15 @@ extension MapViewController {
     
     // MARK: 로케이션 메모들 리스트 뷰 이동
     private func movetoLocationListView(){
-        let vc = AllMemoLocationListViewController()
+        
         let folder = SingleToneDataViewModel.shared.shardFolderOb.value
-        vc.homeView.allMemoViewModel.inputTrigger.value = folder
-        vc.locationDelegate = self
+        guard let id = folder?.id.stringValue else { return }
+        
+        let vc = AllMemoLocationListViewController(
+            reactor: AllLocationListViewReactor(folderID: id)
+        )
+        vc.delegate = self
+        
         vc.modalPresentationStyle = .popover
         present(vc, animated: true)
     }
@@ -236,7 +241,8 @@ extension MapViewController {
             
             vc.homeView.viewModel.selectedLocationMemo.bind { memo in
                 guard let memo else { return }
-                owner.getLocationInfo(memo: memo)
+                // MARK: FIXME:
+//                owner.getLocationInfo(memo: memo)
             }
             nvc.modalPresentationStyle = .fullScreen
             owner.present(nvc, animated: true)
@@ -405,11 +411,11 @@ extension MapViewController: FloatingPanelControllerDelegate {
         
         var vc = configuration.setUpViewController()
         
-        // ADDVIewCon 일때
+        // ADD VC 일때
         if let addMemoVcon = vc as? AddLocationMemoViewController {
             addMemoVcon.backDelegate = self
             if let coordinate = configuration.coordinate {
-                let coordinateStruct = AddModel(
+                let coordinateStruct = AddModelEntity(
                     lat: String(coordinate.latitude),
                     lon: String(coordinate.longitude),
                     folder: folder.id.stringValue
@@ -473,14 +479,24 @@ extension MapViewController: AboutmodifyLocation {
     }
 }
 
-extension MapViewController: LocationDelegate {
-    
-    func getLocationInfo(memo: LocationMemo) {
-        guard let locations = memo.location else { return }
-        guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
-        if !finduserAnnotationOrNew(CL2D: location){
-            return
+// MARK: FIXME:
+//extension MapViewController: LocationDelegate {
+//    
+//    func getLocationInfo(memo: LocationMemo) {
+//        guard let locations = memo.location else { return }
+//        guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
+//        if !finduserAnnotationOrNew(CL2D: location){
+//            return
+//        }
+//    }
+//}
+
+extension MapViewController: AllMemoLocationListViewControllerDelegate {
+    func modifyRequest(memoLocation: LocationEntity) {
+        guard let location = makeCLLcocation(lon: memoLocation.lon, lat: memoLocation.lat) else { return
         }
+        
+        let _ = finduserAnnotationOrNew(CL2D: location)
     }
 }
 
