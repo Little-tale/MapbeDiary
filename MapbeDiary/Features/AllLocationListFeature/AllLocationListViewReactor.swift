@@ -8,12 +8,7 @@
 import Foundation
 import ReactorKit
 
-//struct AllMemoListModel: Equatable {
-//    let folder: FolderEntity
-//    let memos: [LocationMemoEntity]
-//}
 
-// MARK: TODO - 수정요청시 이동 구현해야함 -> 수정 이동 로직 수정해야함
 final class AllLocationListViewReactor: Reactor {
     
     struct State: Equatable {
@@ -25,7 +20,7 @@ final class AllLocationListViewReactor: Reactor {
         var dismissTrigger: Bool = false
         
         var deleteMemoID: String? = nil
-        var modifyTrigger: LocationEntity? = nil
+        var modifyTrigger: LocationMemoEntity? = nil
     }
     
     enum Action: Equatable {
@@ -43,13 +38,18 @@ final class AllLocationListViewReactor: Reactor {
         case setItem(FolderEntity)
         case setRealmError(RealmManagerError)
         case removedItem(index: Int)
-        case setModifiedTrigger(location: LocationEntity)
+        case setModifiedTrigger(location: LocationMemoEntity)
     }
     
     var initialState: State
+    let sharedService: SharedEventProtocol
     
-    init(folderID: String) {
+    init(
+        folderID: String,
+        sharedService: SharedEventProtocol
+    ) {
         self.initialState = State(folderID: folderID)
+        self.sharedService = sharedService
     }
 }
 
@@ -79,10 +79,7 @@ extension AllLocationListViewReactor {
             case .delete:
                 return removeItem(item: memoItem, index: index)
             case .modify:
-                guard let location = memoItem.location else {
-                    return .just(.setRealmError(.cantFindLocationMemo))
-                }
-                return .just(.setModifiedTrigger(location: location))
+                return .just(.setModifiedTrigger(location: memoItem))
             }
         case .checkedDelete:
             return .empty()
@@ -114,7 +111,16 @@ extension AllLocationListViewReactor {
         case let .removedItem(index):
             var copy = state.item?.locationMemos ?? []
             copy.remove(at: index)
-            state.item?.locationMemos = copy
+            if let item = state.item {
+                state.item = FolderEntity(
+                    id: item.id,
+                    name: item.name,
+                    regDate: item.regDate,
+                    modifyDate: item.modifyDate,
+                    index: item.index,
+                    locationMemos: copy
+                )
+            }
         }
         
         return state
@@ -139,11 +145,12 @@ extension AllLocationListViewReactor {
     }
     
     private func removeItem(item: LocationMemoEntity, index: Int) -> Observable<Mutation> {
-        return .run { send in
+        return .run { [weak sharedService] send in
             try await MemoRealmRepository.shared.deleteLocationMemo(id: item.id)
             
             await send(.removedItem(index: index))
             
+            sharedService?.send(.removedMemo(item))
         }.catch { error in
             guard let error = error as? RealmManagerError else {
                 return .empty()
@@ -153,4 +160,3 @@ extension AllLocationListViewReactor {
         }
     }
 }
-

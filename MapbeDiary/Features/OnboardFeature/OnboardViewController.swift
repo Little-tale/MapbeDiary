@@ -39,11 +39,14 @@ final class OnboardViewController: ReactorBaseViewController<OnboardReactor,Onbo
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { $0.nextVC }
-            .distinctUntilChanged()
-            .filter{ $0 == true }
-            .bind(with: self) { owner, _ in
-                let vc = MapViewController()
+            .compactMap{ $0.nextVC }
+            .bind(with: self) { owner, service in
+                let vc = MapViewController(
+                    reactor: MapViewReactor(
+                        sharedEvent: service,
+                        locationManager: LocationManager()
+                    )
+                )
                 owner.changeRootView(vc)
             }
             .disposed(by: disposeBag)

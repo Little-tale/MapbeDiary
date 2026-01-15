@@ -30,7 +30,7 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
     }
 
     
-    func subscribe(_ location: LocationMemo){
+    func subscribe(_ location: LocationMemoEntity){
         let input = CalendarCellViewModel.Input(locationMemo: location)
         let output = viewModel.trasform(input)
         
@@ -91,4 +91,3 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
 //            make.trailing.verticalEdges.equalTo(contentView.safeAreaLayoutGuide)
 //            make.width.equalTo(40)
 //        }
-

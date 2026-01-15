@@ -12,11 +12,12 @@ class MapViewModel {
     
     let folderInput: _Observable<Folder?> = _Observable(nil)
 
-    let locationsOutput: _Observable<[LocationMemo]?> = _Observable(nil)
+//    let locationsOutput: _Observable<[LocationMemo]?> = _Observable(nil)
     
     let reloadInput: _Observable<Void?> = _Observable(nil)
     
     var repository = RealmRepository()
+    
     init(){
         // 처음 시작시 첫번째 폴더로
         let folder = repository.findAllFolder().first
@@ -36,8 +37,8 @@ class MapViewModel {
     }
     
     private func findFolderAtLoactionMemo(folder: Folder){
-        let locations = repository.findLocationMemoForFolder(folder: folder)
-        locationsOutput.value = locations
+//        let locations = repository.findLocationMemoForFolder(folder: folder)
+//        locationsOutput.value = locations
     }
     
     

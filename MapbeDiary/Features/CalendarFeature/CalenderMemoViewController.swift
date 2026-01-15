@@ -85,7 +85,7 @@ extension CalenderMemoViewController: FSCalendarDelegate, FSCalendarDataSource, 
         guard let result else {
             return .init()
         }
-        return result.regdate
+        return result.regDate
     }
     
     // MARK: 최대 날짜 정하기

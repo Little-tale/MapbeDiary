@@ -57,7 +57,7 @@ final class MapHomeView: BaseView {
     }
     
     private func settingMapView(){
-        //
+        // Defatult Location
         let location = CLLocationCoordinate2D(latitude:37.5664056, longitude: 126.9778222)
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: false)
@@ -76,24 +76,13 @@ final class MapHomeView: BaseView {
     // MARK: 회고 해야해
     private func searchBarSetting(){
         
-        searchBar.setTextFieldBackground(color: .wheetSideBrown, transparentBackground: true)
+        searchBar.setTextFieldBackground(
+            color: .wheetSideBrown,
+            transparentBackground: true
+        )
         searchBar.placeholder = MapTextSection.emptySearchBarText
         
-        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-            textField.attributedPlaceholder = NSAttributedString(
-                string: textField.placeholder ?? "",
-                attributes: [
-                    NSAttributedString
-                        .Key
-                        .foregroundColor : UIColor.wheetDarkBrown
-                ]
-            )
-            
-            textField.textColor = .wheetDarkBrown
-            if let leftView = textField.leftView as? UIImageView {
-                leftView.tintColor = .wheetDarkBrown
-            }
-        }
+
         settingSearchBarShadow()
     }
     

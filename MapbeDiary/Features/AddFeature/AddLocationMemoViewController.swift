@@ -15,7 +15,7 @@ protocol BackButtonDelegate: AnyObject {
     func backButtonClicked()
 }
 
-// plceholder없으면 로컬라이제이션 잊지마 마커 이미지도 여기서 해줘야햄
+
 final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReactor,MemoAddVCView>{
     
     enum PhotoActionType {
@@ -44,7 +44,6 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(RealmRepository().printURL())
         mainView.backgroundColor = .skinSet
     }
     

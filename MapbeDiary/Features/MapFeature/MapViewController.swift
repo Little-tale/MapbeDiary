@@ -13,19 +13,12 @@ import FloatingPanel
 import RxSwift
 import RxCocoa
 
-enum PanelViewControllerType {
+enum PanelViewControllerType: Equatable {
     case addLocation
-    case modiFiLocation
-    
-    func createViewController() -> UIViewController {
-        switch self {
-        case .addLocation:
-            return AddLocationMemoViewController(reactor: MemoAddReactor(initialState: MemoAddReactor.State()))
-        case .modiFiLocation:
-            return AboutLocationViewController()
-        }
-    }
+    case about
+    case modify(memoId: String)
 }
+
 enum PanelLayoutType {
     case detail
     case custom
@@ -40,70 +33,183 @@ enum PanelLayoutType {
     }
 }
 
-
 struct PanelConfiguration {
     var coordinate: CLLocationCoordinate2D?
     var viewType: PanelViewControllerType
-    var configureAddMemoViewController: ((UIViewController) -> Void)?
     var layoutType: PanelLayoutType
-    
-    func setUpViewController() -> UIViewController {
-        let vc = viewType.createViewController()
-        configureAddMemoViewController?(vc)
-        return vc
-    }
 }
 
-final class MapViewController: BaseHomeViewController<MapHomeView> {
+// FIXME: 서치바 계속 나오는 문제
+final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCView> {
     
     var floatPanel: FloatingPanelController?
+    private var pendingPanelConfiguration: PanelConfiguration?
+    private var currentMemos: [LocationMemoEntity] = []
+    private var lastLocation: CLLocationCoordinate2D?
+    private let searchBarTapGesture = UITapGestureRecognizer()
     
-    var ifURL: String?
-    
-    private var disposeBag: DisposeBag = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        subscribe()
-        settingMapView() /// 맵뷰 세팅
-        checkDeviewlocationAuthorization() // 디바이스 권한
-        settinglongPressClosure() // 롱프레스
-        settingMapButtonAction() // 버튼 액션들
-        homeView.searchBar.delegate = self
-        foreGroudWidget()
-        addTestAnnotations() // 시작할때 폴더 기준으로
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(widgetNV), name: .getWidget, object: nil)
-    }
-    
-    func foreGroudWidget(){
-        if let ifURL {
-            if ifURL == "widget://Search"{
-                homeView.searchBar.becomeFirstResponder()
-            }
-            else {
-                homeView.searchBar.text = ifURL
-            }
-            self.ifURL = nil
-        }
-    }
-    
-    @objc
-    func widgetNV(_ noti: Notification) {
-        if let value = noti.object as? String {
-            if value == "widget://Search" {
-                homeView.searchBar.becomeFirstResponder()
-            }
-        }
-    }
-    
-    // MARK: 맵뷰 세팅
-    func settingMapView(){
-        homeView.locationManager.delegate = self
-        homeView.mapView.delegate = self //
-        homeView.locationManager.requestWhenInUseAuthorization() // 위치정보를 가져옵니다.
         view.backgroundColor = .wheetLightBrown
+        setupLongPressGesture()
+        setupSearchBarTap()
     }
+    
+    override func bind(reactor: MapViewReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state
+            .map { $0.moveToSearch }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.moveToSearchView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.location }
+            .distinctUntilChanged { lhs, rhs in
+                let first = (lhs.latitude == rhs.latitude)
+                let second = (lhs.longitude == rhs.longitude)
+                return first && second
+            }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, location in
+                owner.lastLocation = location
+                owner.setRegion(
+                    location: location,
+                    latM: 800,
+                    longM: 800
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.moveToSetting }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.goSetting()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.showSettingAlert }
+            .distinctUntilChanged()
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.showGoSettingAlert()
+            }
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { $0.currentMemos }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, memos in
+                owner.currentMemos = memos
+                owner.addTestAnnotations()
+            }
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { $0.showsUserLocation }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, shows in
+                owner.mainView.mapView.showsUserLocation = shows
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.realmError }
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.sendCalendarView }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, model in
+                let vc = CalenderMemoViewController()
+                vc.homeView.viewModel.folder.value = model
+                let nvc = UINavigationController(rootViewController: vc)
+                
+                vc.homeView.viewModel.selectedLocationMemo.bind { memo in
+                    guard let memo else { return }
+                    // MARK: FIXME:
+//                            owner.getLocationInfo(memo: memo)
+                }
+                nvc.modalPresentationStyle = .fullScreen
+                owner.present(nvc, animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    override func sendActions(reactor: MapViewReactor) {
+        
+        rx.viewDidLoad
+            .map { _ in MapViewReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        searchBarTapGesture.rx.event
+            .map { _ in MapViewReactor.Action.setDeepLink(WidgetAction.search.path) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+
+        mainView.buttonStack.userLocationButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.reactor?.action.onNext(.checkLocationWhenInUseAuthorization)
+                guard let locationInfo = owner.lastLocation else { return }
+                
+                if !owner.finduserAnnotationOrNew(CL2D: locationInfo) {
+                    owner.addLongAnnotation(cl2: locationInfo)
+                    owner.showPanel(
+                        coordinate: locationInfo,
+                        viewType: .addLocation,
+                        layout: .custom
+                    )
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.buttonStack.locationMemosButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.removeExistingPanelIfNeeded {
+                    owner.movetoLocationListView()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.buttonStack.settingButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                let vc = SettingViewController(
+                    reactor: SettingViewReactor()
+                )
+                
+                let nvc = UINavigationController(rootViewController: vc)
+                nvc.modalPresentationStyle = .fullScreen
+                owner.present(nvc, animated: true )
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.buttonStack.calendarButton
+            .rx
+            .tap
+            .map { _ in MapViewReactor.Action.calendarButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    override func register() {
+        mainView.mapView.delegate = self
+    }
+    
     
     // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행
     func settingPanel(view: UIViewController, layout: PanelLayoutType) -> FloatingPanelController{
@@ -119,210 +225,36 @@ final class MapViewController: BaseHomeViewController<MapHomeView> {
         fvc.surfaceView.clipsToBounds = true
         return fvc
     }
-
-}
-// MARK: 어노테이션
-extension MapViewController {
-    // 어노테이션 박아 -> 꺼내서 너가 수정해
-    func addTestAnnotations() {
-        removeAll()
-        if let locations = homeView.mapviewModel.locationsOutput.value {
-            locations.forEach { [weak self] location in
-                guard let self else { return }
-                addCustomNoFocusforMemo(memo: location)
-            }
-        }
-    }
-    
-    // MARK: 메모를 통해 커스텀 어노테이션 설정
-    func addCustomNoFocusforMemo(memo: LocationMemo){
-        let location = memo.location
-        guard let location else { return }
-        let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
-        print("????",memo.id.stringValue)
-        if let cl2 {
-            let customLocation = CustomAnnotation(memoRegDate: memo.regdate, memoId: memo.id.stringValue, title: memo.title, coordinate: cl2)
-            homeView.mapView.addAnnotation(customLocation)
-        }
-    }
-    
-    // MARK: 롱프레스 하면 커스텀 어노테이션과 포커스
-    func addLongAnnotation(cl2: CLLocationCoordinate2D){
-        let anno = MKPointAnnotation()
-        anno.coordinate = cl2
-        let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapTextSection.noneName , coordinate: cl2, bool: true)
-        homeView.mapView.addAnnotation(location)
-        setRegion(location: location.coordinate,latM: 500,longM: 500)
-        homeView.mapView.selectAnnotation(location, animated: true)
-    }
-    
-    // MARK: 어노테이션 전부 지우기
-    func removeAll(){
-        let anotaions = homeView.mapView.annotations
-        homeView.mapView.removeAnnotations(anotaions)
-    }
 }
 
-// MARK: 버튼 액션
+// MARK: Helpers
 extension MapViewController {
     
-    private func settingMapButtonAction(){
-        userLocationAction()
-        locationMemosButtonAction()
-        // movetoLocationListView()
-        moveToSettingBttonAction()
-        moveToCalendarButtonAction()
-    }
-    
-    private func userLocationAction(){
-        homeView.buttonStack.userLocationButton.addAction(UIAction.guardSelf(self, handler: { owner, _ in
-            owner.checkDeviewlocationAuthorization() // 권한 확인
-            if let locationInfo = owner.homeView.locationManager.location {
-                
-                if !owner.finduserAnnotationOrNew(CL2D: locationInfo.coordinate) {
-                    
-                    owner.addLongAnnotation(cl2: locationInfo.coordinate)
-                    owner.updatePanel(coordi: locationInfo.coordinate, viewType: .addLocation, layout: .custom, completion: nil)
-                }
-            }
-        }), for: .touchUpInside)
-    }
-    
-    private func locationMemosButtonAction(){
-        homeView.buttonStack.locationMemosButton.addAction(
-            UIAction.guardSelf(self, handler: { owner, _ in
-                owner.removeExistingPanelIfNeeded {
-                    owner.movetoLocationListView()
-                }
-            }),
-            for: .touchUpInside
+    // MARK: 셋 리전
+    func setRegion(
+        location: CLLocationCoordinate2D,
+        latM: Double,
+        longM: Double
+    ){
+        let region = MKCoordinateRegion(
+            center: location,
+            latitudinalMeters: latM,
+            longitudinalMeters: longM
         )
+        
+        mainView.mapView.setRegion(region, animated: true)
     }
     
-    // MARK: 로케이션 메모들 리스트 뷰 이동
-    private func movetoLocationListView(){
-        
-        let folder = SingleToneDataViewModel.shared.shardFolderOb.value
-        guard let id = folder?.id.stringValue else { return }
-        
-        let vc = AllMemoLocationListViewController(
-            reactor: AllLocationListViewReactor(folderID: id)
-        )
-        vc.delegate = self
-        
-        vc.modalPresentationStyle = .popover
-        present(vc, animated: true)
-    }
-    
-    // MARK: 세팅 뷰컨이동
-    private func moveToSettingBttonAction(){
-        let action = UIAction.guardSelf(self) { owner, _ in
-            
-            let vc = SettingViewController(
-                reactor: SettingViewReactor()
-            )
-            
-            // MARK: FIXME - 이거 도대체 왜 보내는 거지?
-//            vc.homeView.settingViewModel.inputFolder.value = owner.homeView.mapviewModel.folderInput.value
-            let nvc = UINavigationController(rootViewController: vc)
-            nvc.modalPresentationStyle = .fullScreen
-            owner.present(nvc, animated: true )
-        }
-        homeView.buttonStack.settingButton.addAction(action, for: .touchUpInside)
-    }
-    
-    // MARK: 캘린더 뷰 이동
-    func moveToCalendarButtonAction(){
-        
-        let action = UIAction.guardSelf(self) { owner, _ in
-            let vc = CalenderMemoViewController()
-            vc.homeView.viewModel.folder.value = owner.homeView.mapviewModel.folderInput.value
-            let nvc = UINavigationController(rootViewController: vc)
-            
-            vc.homeView.viewModel.selectedLocationMemo.bind { memo in
-                guard let memo else { return }
-                // MARK: FIXME:
-//                owner.getLocationInfo(memo: memo)
-            }
-            nvc.modalPresentationStyle = .fullScreen
-            owner.present(nvc, animated: true)
-        }
-        
-        homeView.buttonStack.calendarButton.addAction(action, for: .touchUpInside)
-    }
-    
-}
-
-
-extension MapViewController {
-    
-    private func subscribe(){
-        SingleToneDataViewModel.shared.mapViewFloderOut.guardBind(object: self) { owner, folder in
-            guard let folder else { return }
-            owner.homeView.mapviewModel.folderInput.value = folder
-            owner.removeAll()
-            owner.addTestAnnotations()
-        }
-        
-        homeView.mapviewModel.locationsOutput.guardBind(object: self) { owner, locations in
-            guard let locations else { return }
-            locations.forEach { location in
-                self.addCustomNoFocusforMemo(memo: location)
-            }
+    private func showGoSettingAlert() {
+        showAlert(title: MapTextSection.checkUserAut.alertTitle, message: MapTextSection.checkUserAut.alertMessage, actionTitle: MapTextSection.checkUserAut.actionTitle) {
+            [weak self] action in
+            guard let self else {return}
+            goSetting()
         }
     }
 }
 
-// MARK: 서치바 딜리게이트 -> 실제론 그저 다음뷰에서 처리하게 넘김
-extension MapViewController : UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // 현재 맵 보는 기준으로 맵 중심 Location을 전달할 준비
-        let location = homeView.mapView.region.center
-        
-        
-        
-        let coordinate = CoordinateEntity(
-            longitude: location.longitude,
-            latitude: location.latitude
-        )
-        
-        // 다음 뷰 컨트롤러로 이동하는 로직을 구현
-        let searchViewController = SearchViewController(reactor: SearchReactor(coordinate: coordinate))
-        
-        
-        searchViewController.modalPresentationStyle = .fullScreen
-        
-        present(searchViewController, animated: false)
-        // false를 반환하여 서치바가 포커스를 받지 않도록 함
-        
-        searchViewController.kakaoDataClosure = { [weak self] data in
-            guard let self else { return }
-            
-            guard let location = makeCLLcocation(
-                lon:data.x,
-                lat:data.y
-            ) else {
-                return
-            }
-            
-            removeAll()
-            /// 판넬 업데이트
-            updatePanel(coordi: location, viewType: .addLocation, layout: .custom) { viewCon in
-                if let vc = viewCon as? AddLocationMemoViewController {
-                    vc.setKakaoData(data: data)
-                }
-            }
-            addLongAnnotation(cl2: location)
-
-        }
-       
-        return false
-    }
-    
-}
-
-
-extension MapViewController: MKMapViewDelegate { // 수정해
+extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -343,8 +275,16 @@ extension MapViewController: MKMapViewDelegate { // 수정해
         if let annotaion = view.annotation as? CustomAnnotation,
            !annotaion.long{
             
-            homeView.mapView.setCenter(annotaion.coordinate, animated: true)
-            //locationModify(annotaion) // 일단 이렇게
+            mainView.mapView.setCenter(annotaion.coordinate, animated: true)
+            if let pending = pendingPanelConfiguration {
+                pendingPanelConfiguration = nil
+                showPanel(
+                    coordinate: pending.coordinate,
+                    viewType: pending.viewType,
+                    layout: pending.layoutType
+                )
+                return
+            }
             locationDetailModify(annotaion)
         } else {
             let clust = view.annotation
@@ -356,83 +296,259 @@ extension MapViewController: MKMapViewDelegate { // 수정해
 
     private func locationModify(_ anno: CustomAnnotation){
         if let memoId = anno.locationId {
-            updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] viewController in
-                guard self != nil else { return }
-                if let vc = viewController as? AddLocationMemoViewController {
-                    
-                    vc.setModifier(memoID: memoId)
-                }
-            }
+            showPanel(
+                coordinate: nil,
+                viewType: .modify(memoId: memoId),
+                layout: .custom
+            )
         }
     }
     
     private func locationDetailModify(_ anno: CustomAnnotation){
         print("롱? :locationDetailModify" )
-        updatePanel(coordi: nil, viewType: .modiFiLocation, layout: .detail) { [weak self] vc in
-            guard let viewController = vc as? AboutLocationViewController else { return }
-            guard self != nil else { return }
-            viewController.viewModel.inputLocationId.value = anno.locationId
-        }
+        showPanel(
+            coordinate: nil,
+            viewType: .about,
+            layout: .detail,
+            configure: { viewController in
+                guard let viewController = viewController as? AboutLocationViewController else { return }
+                viewController.viewModel.inputLocationId.value = anno.locationId
+            }
+        )
     }
 }
+
+
+// MARK: SearchBar Logic
+extension MapViewController {
+    
+    private func moveToSearchView() {
+        let location = mainView.mapView.region.center
+        
+        let coordinate = CoordinateEntity(
+            longitude: location.longitude,
+            latitude: location.latitude
+        )
+        
+        // 다음 뷰 컨트롤러로 이동하는 로직을 구현
+        let searchViewController = SearchViewController(
+            reactor: SearchReactor(coordinate: coordinate)
+        )
+        
+        searchViewController.kakaoDataClosure = { [weak self] data in
+            guard let self else { return }
+            
+            guard let location = makeCLLcocation(
+                lon:data.x,
+                lat:data.y
+            ) else {
+                return
+            }
+            
+            removeAll()
+            showPanel(
+                coordinate: location,
+                viewType: .addLocation,
+                layout: .custom,
+                configure: { viewController in
+                    if let vc = viewController as? AddLocationMemoViewController {
+                        vc.setKakaoData(data: data)
+                    }
+                }
+            )
+            addLongAnnotation(cl2: location)
+        }
+        
+        searchViewController.modalPresentationStyle = .fullScreen
+        
+        present(searchViewController, animated: false)
+    }
+}
+
+// MARK: 어노테이션
+extension MapViewController {
+    // 어노테이션 박아 -> 꺼내서 너가 수정해
+    func addTestAnnotations() {
+        removeAll()
+        
+        currentMemos.forEach { location in
+            addCustomNoFocusForMemo(memo: location)
+        }
+    }
+    
+    // MARK: 메모를 통해 커스텀 어노테이션 설정
+    func addCustomNoFocusForMemo(memo: LocationMemoEntity){
+        let location = memo.location
+        guard let location else { return }
+        let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
+        print("????",memo.id)
+        if let cl2 {
+            let customLocation = CustomAnnotation(
+                memoRegDate: memo.regDate,
+                memoId: memo.id,
+                title: memo.title,
+                coordinate: cl2
+            )
+            mainView.mapView.addAnnotation(customLocation)
+        }
+    }
+    
+    // MARK: 롱프레스 하면 커스텀 어노테이션과 포커스
+    func addLongAnnotation(cl2: CLLocationCoordinate2D){
+        let anno = MKPointAnnotation()
+        anno.coordinate = cl2
+        let location = CustomAnnotation(memoRegDate: nil, memoId: nil, title: MapTextSection.noneName , coordinate: cl2, bool: true)
+        mainView.mapView.addAnnotation(location)
+        setRegion(location: location.coordinate,latM: 500,longM: 500)
+        mainView.mapView.selectAnnotation(location, animated: true)
+    }
+    
+    // MARK: 어노테이션 전부 지우기
+    func removeAll(){
+        let anotaions = mainView.mapView.annotations
+        mainView.mapView.removeAnnotations(anotaions)
+    }
+}
+
+extension MapViewController {
+
+    // MARK: 로케이션 메모들 리스트 뷰 이동
+    private func movetoLocationListView(){
+
+        guard let folderId = UserDefaultsManager.currentFolderID else {
+            return
+        }
+        guard let sharedEvent = reactor?.sharedEvent else { return }
+        
+        let vc = AllMemoLocationListViewController(
+            reactor: AllLocationListViewReactor(
+                folderID: folderId,
+                sharedService: sharedEvent
+            )
+        )
+        vc.delegate = self
+        
+        vc.modalPresentationStyle = .popover
+        present(vc, animated: true)
+    }
+}
+
 // MARK: 판넬 뷰
 extension MapViewController: FloatingPanelControllerDelegate {
     
-    // MARK: 롱프레스 업데이트 플로팅 패널
-    func settinglongPressClosure(){
-        homeView.locationClosure = {[weak self] result in
-            print("롱프레스 감지")
-            guard let self else {return}
-            removeAll() // 일단 다 지우기
-            addTestAnnotations() // 렘 정보 가져오기
-            updatePanel(coordi: result, viewType: .addLocation, layout: .custom, completion: nil ) // 판넬 업데이트
-            addLongAnnotation(cl2: result)// 롱프레스
-        }
+    @objc private func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began else { return }
+        let locationInView = sender.location(in: mainView.mapView)
+        let locationOnMap = mainView.mapView.convert(locationInView, toCoordinateFrom: mainView.mapView)
+        
+        removeAll()
+        addTestAnnotations()
+        showPanel(
+            coordinate: locationOnMap,
+            viewType: .addLocation,
+            layout: .custom
+        )
+        addLongAnnotation(cl2: locationOnMap)
     }
     
-    func updatePanel(coordi:  CLLocationCoordinate2D?, viewType:PanelViewControllerType,layout: PanelLayoutType , completion: ((UIViewController) -> Void)?){
-        updateFloatingPanel(with:PanelConfiguration(coordinate: coordi, viewType: viewType, configureAddMemoViewController: { [weak self] vc in
-            guard self != nil else { return }
-            completion?(vc)
-        }, layoutType: layout))
-        
+    private func setupLongPressGesture() {
+        let longTap = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress)
+        )
+        mainView.mapView.addGestureRecognizer(longTap)
+    }
+    
+    private func setupSearchBarTap() {
+        mainView.searchBar.addGestureRecognizer(searchBarTapGesture)
+        if #available(iOS 13.0, *) {
+            mainView.searchBar.searchTextField.isUserInteractionEnabled = false
+        }
     }
 
-    private func updateFloatingPanel(with configuration: PanelConfiguration) {
+    private func updateFloatingPanel(
+        with configuration: PanelConfiguration,
+        configure: ((UIViewController) -> Void)?
+    ) {
         removeExistingPanelIfNeeded { [weak self] in
-            self?.setupPanel(with: configuration)
+            self?.setupPanel(with: configuration, configure: configure)
         }
     }
     
     //MARK: 판넬 가기 설정
-    private func setupPanel(with configuration: PanelConfiguration) {
-
-        guard let folder = homeView.mapviewModel.folderInput.value else { return }
+    private func setupPanel(
+        with configuration: PanelConfiguration,
+        configure: ((UIViewController) -> Void)?
+    ) {
+        guard let currentFolderID = UserDefaultsManager.currentFolderID else { return }
         
-        var vc = configuration.setUpViewController()
+        let viewController: UIViewController
         
-        // ADD VC 일때
-        if let addMemoVcon = vc as? AddLocationMemoViewController {
-            addMemoVcon.backDelegate = self
+        switch configuration.viewType {
+        case .addLocation:
+            guard let sharedEvent = reactor?.sharedEvent else { return }
+            let vc = AddLocationMemoViewController(
+                reactor: MemoAddReactor(sharedService: sharedEvent)
+            )
+            
             if let coordinate = configuration.coordinate {
                 let coordinateStruct = AddModelEntity(
                     lat: String(coordinate.latitude),
                     lon: String(coordinate.longitude),
-                    folder: folder.id.stringValue
+                    folder: currentFolderID
                 )
-                addMemoVcon.setAddModel(model: coordinateStruct)
+                vc.setAddModel(model: coordinateStruct)
             }
-            vc = addMemoVcon
-        }
-        // LocationMemo일때
-        if let locationMemo = vc as? AboutLocationViewController {
-            locationMemo.backdelegate = self
-            locationMemo.locationDelegate = self 
+            vc.backDelegate = self
+            viewController = vc
+        case .about:
+            let vc = AboutLocationViewController()
+            vc.backdelegate = self
+            vc.locationDelegate = self
+            viewController = vc
+            
+        case let .modify(memoID):
+            guard let sharedEvent = reactor?.sharedEvent else { return }
+            let vc = AddLocationMemoViewController(
+                reactor: MemoAddReactor(sharedService: sharedEvent)
+            )
+            
+            if let coordinate = configuration.coordinate {
+                let coordinateStruct = AddModelEntity(
+                    lat: String(coordinate.latitude),
+                    lon: String(coordinate.longitude),
+                    folder: currentFolderID
+                )
+                vc.setAddModel(model: coordinateStruct)
+            }
+            vc.backDelegate = self
+            vc.setModifier(memoID: memoID)
+            
+            viewController = vc
         }
         
-        let newPanel = settingPanel(view: vc, layout: configuration.layoutType)
+        configure?(viewController)
+        let newPanel = settingPanel(
+            view: viewController,
+            layout: configuration.layoutType
+        )
+        
         newPanel.move(to: .half, animated: true)
         floatPanel = newPanel
+    }
+    
+    private func showPanel(
+        coordinate: CLLocationCoordinate2D?,
+        viewType: PanelViewControllerType,
+        layout: PanelLayoutType,
+        configure: ((UIViewController) -> Void)? = nil
+    ) {
+        let config = PanelConfiguration(
+            coordinate: coordinate,
+            viewType: viewType,
+            layoutType: layout
+        )
+        updateFloatingPanel(with: config, configure: configure)
     }
     
     
@@ -454,11 +570,9 @@ extension MapViewController: FloatingPanelControllerDelegate {
 // MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
     func backButtonClicked() {
-        print("$$$$1")
-        floatPanel?.removePanelFromParent(animated: true) {
-            [weak self] in
-            print("$$$$$2")
+        floatPanel?.removePanelFromParent(animated: true) { [weak self] in
             guard let self else {return}
+            
             floatPanel = nil
             addTestAnnotations()
         }
@@ -469,34 +583,28 @@ extension MapViewController: BackButtonDelegate {
 extension MapViewController: AboutmodifyLocation {
     
     func getModifyInfo(with memo: LocationMemo) {
-        updatePanel(coordi: nil, viewType: .addLocation, layout: .custom) { [weak self] vc in
-            guard self != nil else { return }
-            guard let viewController = vc as? AddLocationMemoViewController else { return }
-            print("*****   updatePanel ")
-            
-            viewController.setModifier(memoID: memo.id.stringValue)
+        let memoId = memo.id.stringValue
+        let coordinate: CLLocationCoordinate2D?
+        if let location = memo.location {
+            coordinate = makeCLLcocation(lon: location.lon, lat: location.lat)
+        } else {
+            coordinate = nil
         }
+        requestModifyPanel(memoId: memoId, coordinate: coordinate)
     }
 }
 
-// MARK: FIXME:
-//extension MapViewController: LocationDelegate {
-//    
-//    func getLocationInfo(memo: LocationMemo) {
-//        guard let locations = memo.location else { return }
-//        guard let location = makeCLLcocation(lon: locations.lon, lat: locations.lat) else { return }
-//        if !finduserAnnotationOrNew(CL2D: location){
-//            return
-//        }
-//    }
-//}
 
 extension MapViewController: AllMemoLocationListViewControllerDelegate {
-    func modifyRequest(memoLocation: LocationEntity) {
-        guard let location = makeCLLcocation(lon: memoLocation.lon, lat: memoLocation.lat) else { return
+    
+    func modifyRequest(memoLocation: LocationMemoEntity) {
+        let coordinate: CLLocationCoordinate2D?
+        if let location = memoLocation.location {
+            coordinate = makeCLLcocation(lon: location.lon, lat: location.lat)
+        } else {
+            coordinate = nil
         }
-        
-        let _ = finduserAnnotationOrNew(CL2D: location)
+        requestModifyPanel(memoId: memoLocation.id, coordinate: coordinate)
     }
 }
 
@@ -504,7 +612,7 @@ extension MapViewController {
     
     func finduserAnnotationOrNew(CL2D: CLLocationCoordinate2D) -> Bool {
         // where First 순회 조건 참조
-        let userAnnotation = homeView.mapView.annotations.first { [weak self ] annotation in
+        let userAnnotation = mainView.mapView.annotations.first { [weak self ] annotation in
             guard self != nil else { return false }
             
             guard let annotation = annotation as? CustomAnnotation else { return false }
@@ -513,91 +621,59 @@ extension MapViewController {
             
         }
         guard let custom  = userAnnotation as? CustomAnnotation else { return false }
-        homeView.mapView.selectAnnotation(custom, animated: true)
+        mainView.mapView.selectAnnotation(custom, animated: true)
         return true
+    }
+    
+    private func requestModifyPanel(
+        memoId: String,
+        coordinate: CLLocationCoordinate2D?
+    ) {
+        let config = PanelConfiguration(
+            coordinate: coordinate,
+            viewType: .modify(memoId: memoId),
+            layoutType: .custom
+        )
+        pendingPanelConfiguration = config
+        
+        if let coordinate {
+            setRegion(location: coordinate, latM: 300, longM: 300)
+            
+            if let existing = findAnnotation(memoId: memoId, coordinate: coordinate) {
+                if mainView.mapView.selectedAnnotations.contains(where: { $0 === existing }) {
+                    showPanel(
+                        coordinate: coordinate,
+                        viewType: .modify(memoId: memoId),
+                        layout: .custom
+                    )
+                    pendingPanelConfiguration = nil
+                } else {
+                    mainView.mapView.selectAnnotation(existing, animated: true)
+                }
+                return
+            }
+        }
+        
+        showPanel(
+            coordinate: coordinate,
+            viewType: .modify(memoId: memoId),
+            layout: .custom
+        )
+        pendingPanelConfiguration = nil
+    }
+    
+    private func findAnnotation(
+        memoId: String,
+        coordinate: CLLocationCoordinate2D
+    ) -> CustomAnnotation? {
+        mainView.mapView.annotations
+            .compactMap { $0 as? CustomAnnotation }
+            .first { annotation in
+                annotation.locationId == memoId
+                || (annotation.coordinate.latitude == coordinate.latitude
+                    && annotation.coordinate.longitude == coordinate.longitude)
+            }
     }
 }
 
 // ----------------------------------------------------------
-
-// MARK: MAPView Loaction 권한 과 위치세팅
-extension MapViewController: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      
-        if let location = locations.last?.coordinate{
-            setRegion(location: location,latM: 800,longM: 800)
-            homeView.locationManager.distanceFilter = 150 // m단위 변화 할때만 호출
-            // homeView.locationManager.stopUpdatingLocation()
-        }else {
-            homeView.locationManager.stopUpdatingLocation()
-        }
-    }
-    // MARK: 셋 리전
-    func setRegion(location: CLLocationCoordinate2D, latM: Double, longM: Double){
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: latM, longitudinalMeters: longM)
-        homeView.mapView.setRegion(region, animated: true)
-    }
-    
-    // MARK: @@@@컴팩트 알아보기
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkDeviewlocationAuthorization()
-    }
-}
-
-
-
-extension MapViewController {
-    
-    /// 사용자의 디바이스의 권한을 확인합니다.
-    func checkDeviewlocationAuthorization(){
-        DispatchQueue.global().async { [weak self] in
-            guard let weakSelf = self else { return }
-            /// 만약 디바이스 자체 권한이 활성화 라면 (열겨헝)
-            if CLLocationManager.locationServicesEnabled() {
-                let authorization: CLAuthorizationStatus
-                
-                authorization = weakSelf.homeView.locationManager.authorizationStatus
-                
-                DispatchQueue.main.async {
-                    // 유저 위치 권한 상태 확인
-                    weakSelf.checkUserLocationAuthorization(authoriztionState: authorization)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    weakSelf.goSetting()
-                }
-            }
-        }
-    }
-    /// 유저가 앱에 대해서 위치 정보를 주었는지 확인합니다.
-    func checkUserLocationAuthorization(authoriztionState: CLAuthorizationStatus){
-        print(authoriztionState.rawValue)
-
-        switch authoriztionState {
-        case .notDetermined: // 설정한 적이 없거나 한번만 허용후 다시 올때
-            allowLocation()
-            
-        case .denied:
-            showAlert(title: MapTextSection.checkUserAut.alertTitle, message: MapTextSection.checkUserAut.alertMessage, actionTitle: MapTextSection.checkUserAut.actionTitle) {
-                [weak self] action in
-                guard let self else {return}
-                goSetting()
-            }
-            // MARK: 이시점에서 현위치 가져올수 있음
-        case .authorizedAlways, .authorizedWhenInUse:
-            homeView.mapView.showsUserLocation = true
-            homeView.locationManager.startUpdatingLocation()
-            
-        default:
-            homeView.makeToast(MapTextSection.noneAct.alertMessage,duration: 1.0, position: .bottom)
-        }
-    }
-    
-
-    // 추적 허락 요청
-    private func allowLocation(){
-        homeView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        homeView.locationManager.requestWhenInUseAuthorization()
-    }
-}

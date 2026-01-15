@@ -11,7 +11,7 @@ import RxCocoa
 
 protocol AllMemoLocationListViewControllerDelegate: AnyObject {
 
-    func modifyRequest(memoLocation: LocationEntity)
+    func modifyRequest(memoLocation: LocationMemoEntity)
 }
 
 final class AllMemoLocationListViewController: ReactorBaseViewController<AllLocationListViewReactor, AllLocationVCView> {
@@ -94,6 +94,21 @@ final class AllMemoLocationListViewController: ReactorBaseViewController<AllLoca
     }
 }
 
+// MARK: Alert
+extension AllMemoLocationListViewController {
+    
+    private func deleteAlert(){
+        showAlert(
+            title: "Alert_delete".localized,
+            message: "Alert_cantRecover".localized,
+            actionTitle: "Did_delete".localized
+        ) { [weak self] action in
+            guard let self else {return}
+            reactor?.action.onNext(.checkedDelete)
+        }
+    }
+}
+
 
 // MARK: 데이터 소스
 extension AllMemoLocationListViewController {
@@ -121,14 +136,6 @@ extension AllMemoLocationListViewController {
             return collectionView.dequeueConfiguredReusableCell(using: cellRegister, for: indexPath, item: itemIdentifier)
         })
     }
-    
-    private func deleteAlert(){
-        showAlert(title: "Alert_delete".localized, message: "Alert_cantRecover".localized, actionTitle: "Did_delete".localized) { [weak self] action in
-            guard let self else {return}
-            reactor?.action.onNext(.checkedDelete)
-        }
-    }
-    
 }
 
 extension AllMemoLocationListViewController {

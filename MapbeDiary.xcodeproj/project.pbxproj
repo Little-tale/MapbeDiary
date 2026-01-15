@@ -56,6 +56,7 @@
 		7B2D774B2BF27DEA00D51F49 /* SearchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */; };
 		7B2D774D2BF27DEC00D51F49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */; };
 		7B2D77512BF27DEC00D51F49 /* SearchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7B2D77412BF27DEA00D51F49 /* SearchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7B2D77562C0A1A1A00D51F49 /* SearchAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */; };
 		7B2D77602BF3798600D51F49 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D775F2BF3798600D51F49 /* Notification.swift */; };
 		7B30DD792BAC3C8A00D789B5 /* SettingWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */; };
 		7B38745A2C059DBB00C24827 /* LocalLizeTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3874572C059BF200C24827 /* LocalLizeTexts.swift */; };
@@ -97,10 +98,8 @@
 		7BB251012BA31EBF00FDE898 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB251002BA31EBF00FDE898 /* CameraService.swift */; };
 		7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */; };
 		7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */; };
-		7BB8ECC42B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */; };
 		7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */; };
 		7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */; };
-		7BB8ECCA2B9F4D7300C88F17 /* AllMemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */; };
 		7BB8ECCC2B9F4E8700C88F17 /* SingleToneDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */; };
 		7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB65B52F13FD3A0026EB7A /* Ext+String.swift */; };
 		7BBB65B82F13FF6D0026EB7A /* Ext+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB65B72F13FF6D0026EB7A /* Ext+UILabel.swift */; };
@@ -152,6 +151,14 @@
 		7BBB67C42F17E46B0026EB7A /* MemoMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67C32F17E46B0026EB7A /* MemoMapper.swift */; };
 		7BBB67C62F17E5960026EB7A /* FolderMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67C52F17E5960026EB7A /* FolderMapper.swift */; };
 		7BBB67C82F17E9F30026EB7A /* FolderEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67C72F17E9F30026EB7A /* FolderEntity.swift */; };
+		7BBB67CA2F1807030026EB7A /* SharedEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67C92F1807030026EB7A /* SharedEventProtocol.swift */; };
+		7BBB67CD2F1807690026EB7A /* SharedEventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67CC2F1807690026EB7A /* SharedEventService.swift */; };
+		7BBB67CF2F19115A0026EB7A /* MapVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67CE2F19115A0026EB7A /* MapVCView.swift */; };
+		7BBB67D12F1913820026EB7A /* MapViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D02F1913820026EB7A /* MapViewReactor.swift */; };
+		7BBB67D32F1920320026EB7A /* WidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D22F1920320026EB7A /* WidgetAction.swift */; };
+		7BBB67D42F1921410026EB7A /* WidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D22F1920320026EB7A /* WidgetAction.swift */; };
+		7BBB67D72F19289B0026EB7A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D62F19289B0026EB7A /* LocationManager.swift */; };
+		7BBB67D92F192D0A0026EB7A /* LocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -257,6 +264,7 @@
 		7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWidget.swift; sourceTree = "<group>"; };
 		7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B2D774E2BF27DEC00D51F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppIntent.swift; sourceTree = "<group>"; };
 		7B2D775F2BF3798600D51F49 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
 		7B3874552C059B1D00C24827 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -298,10 +306,8 @@
 		7BB251002BA31EBF00FDE898 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseImageView.swift; sourceTree = "<group>"; };
-		7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LacationMemosHomeBaseView.swift; sourceTree = "<group>"; };
 		7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoSimpleCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocactionListViewController.swift; sourceTree = "<group>"; };
-		7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoListViewModel.swift; sourceTree = "<group>"; };
 		7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleToneDataViewModel.swift; sourceTree = "<group>"; };
 		7BBB65B52F13FD3A0026EB7A /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		7BBB65B72F13FF6D0026EB7A /* Ext+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UILabel.swift"; sourceTree = "<group>"; };
@@ -352,6 +358,13 @@
 		7BBB67C32F17E46B0026EB7A /* MemoMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoMapper.swift; sourceTree = "<group>"; };
 		7BBB67C52F17E5960026EB7A /* FolderMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderMapper.swift; sourceTree = "<group>"; };
 		7BBB67C72F17E9F30026EB7A /* FolderEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderEntity.swift; sourceTree = "<group>"; };
+		7BBB67C92F1807030026EB7A /* SharedEventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventProtocol.swift; sourceTree = "<group>"; };
+		7BBB67CC2F1807690026EB7A /* SharedEventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventService.swift; sourceTree = "<group>"; };
+		7BBB67CE2F19115A0026EB7A /* MapVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVCView.swift; sourceTree = "<group>"; };
+		7BBB67D02F1913820026EB7A /* MapViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewReactor.swift; sourceTree = "<group>"; };
+		7BBB67D22F1920320026EB7A /* WidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetAction.swift; sourceTree = "<group>"; };
+		7BBB67D62F19289B0026EB7A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationManager+Rx.swift"; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -531,7 +544,6 @@
 				7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */,
 				7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */,
 				7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */,
-				7BB8ECC92B9F4D7300C88F17 /* AllMemoListViewModel.swift */,
 				7BBB67B92F17CC270026EB7A /* AllLocationVCView.swift */,
 				7BBB67BB2F17DCCE0026EB7A /* AllLocationListViewReactor.swift */,
 			);
@@ -629,6 +641,7 @@
 		7B1137602B99A8ED00D6BBD1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB67CB2F1807420026EB7A /* Service */,
 				7BBB677F2F1507530026EB7A /* Mapper */,
 				7BBB676E2F14EAE40026EB7A /* Protocols */,
 				7BBB676B2F14E9CA0026EB7A /* Entity */,
@@ -680,6 +693,7 @@
 			children = (
 				7B2D77482BF27DEA00D51F49 /* SearchWidgetBundle.swift */,
 				7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */,
+				7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */,
 				7B3874572C059BF200C24827 /* LocalLizeTexts.swift */,
 				7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */,
 				7B2D774E2BF27DEC00D51F49 /* Info.plist */,
@@ -697,6 +711,7 @@
 				7B2D775F2BF3798600D51F49 /* Notification.swift */,
 				7B1C533E2B9C716E00B712BC /* DateFormetter.swift */,
 				7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */,
+				7BBB67D22F1920320026EB7A /* WidgetAction.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -737,6 +752,7 @@
 			isa = PBXGroup;
 			children = (
 				7BBB676F2F14EAF30026EB7A /* Entity.swift */,
+				7BBB67C92F1807030026EB7A /* SharedEventProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -787,6 +803,7 @@
 		7BBB67842F15208D0026EB7A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB67D52F1928920026EB7A /* Location */,
 				7BBB67A72F163A330026EB7A /* Photo */,
 				7BBB679A2F161F5D0026EB7A /* Loading */,
 				7BBB67852F1520930026EB7A /* CollectionViewLayout */,
@@ -837,6 +854,23 @@
 			path = Photo;
 			sourceTree = "<group>";
 		};
+		7BBB67CB2F1807420026EB7A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB67CC2F1807690026EB7A /* SharedEventService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		7BBB67D52F1928920026EB7A /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB67D62F19289B0026EB7A /* LocationManager.swift */,
+				7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -857,6 +891,8 @@
 				7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */,
 				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
 				7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */,
+				7BBB67CE2F19115A0026EB7A /* MapVCView.swift */,
+				7BBB67D02F1913820026EB7A /* MapViewReactor.swift */,
 			);
 			path = MapFeature;
 			sourceTree = "<group>";
@@ -894,7 +930,6 @@
 				7BB250E82BA1EB7E00FDE898 /* MemoSettingBaseView.swift */,
 				7BB251002BA31EBF00FDE898 /* CameraService.swift */,
 				7BB8ECBB2B9DF73D00C88F17 /* SearchBaseImageView.swift */,
-				7BB8ECC32B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift */,
 				7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */,
 				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
 				7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */,
@@ -1143,8 +1178,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BF2E7F92BB8067400E83EC1 /* CalenderMemoView.swift in Sources */,
+				7BBB67CD2F1807690026EB7A /* SharedEventService.swift in Sources */,
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
+				7BBB67D12F1913820026EB7A /* MapViewReactor.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7BBB67C82F17E9F30026EB7A /* FolderEntity.swift in Sources */,
 				7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */,
@@ -1154,6 +1191,7 @@
 				7BBB67752F1500490026EB7A /* APITypeError.swift in Sources */,
 				7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
+				7BBB67D92F192D0A0026EB7A /* LocationManager+Rx.swift in Sources */,
 				7BBB67BA2F17CC270026EB7A /* AllLocationVCView.swift in Sources */,
 				7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */,
 				7BB251012BA31EBF00FDE898 /* CameraService.swift in Sources */,
@@ -1177,6 +1215,7 @@
 				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
 				7BBB67872F1520A70026EB7A /* CollectionViewLayouts.swift in Sources */,
 				7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */,
+				7BBB67D32F1920320026EB7A /* WidgetAction.swift in Sources */,
 				7BBB678B2F1531C30026EB7A /* SettingVCView.swift in Sources */,
 				7BBB67902F1539760026EB7A /* FolderRealmRepository.swift in Sources */,
 				7BB8ECCC2B9F4E8700C88F17 /* SingleToneDataViewModel.swift in Sources */,
@@ -1187,8 +1226,6 @@
 				7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */,
 				7BBB67702F14EAF30026EB7A /* Entity.swift in Sources */,
 				7BBB65B82F13FF6D0026EB7A /* Ext+UILabel.swift in Sources */,
-				7BB8ECC42B9F3AAC00C88F17 /* LacationMemosHomeBaseView.swift in Sources */,
-				7BB8ECCA2B9F4D7300C88F17 /* AllMemoListViewModel.swift in Sources */,
 				7BB250E32BA1C63300FDE898 /* MemosEmptyView.swift in Sources */,
 				7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */,
 				7BBB67892F1530AC0026EB7A /* SettingViewReactor.swift in Sources */,
@@ -1242,6 +1279,7 @@
 				7BBB67A42F162E480026EB7A /* SettingWebVCView.swift in Sources */,
 				7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
+				7BBB67CA2F1807030026EB7A /* SharedEventProtocol.swift in Sources */,
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */,
 				7B2D77602BF3798600D51F49 /* Notification.swift in Sources */,
@@ -1249,8 +1287,10 @@
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7BDE61462F13F3DF00467F7F /* Ext+UIViewController.swift in Sources */,
 				7BBB677E2F1502CB0026EB7A /* KakaoApiRouter.swift in Sources */,
+				7BBB67CF2F19115A0026EB7A /* MapVCView.swift in Sources */,
 				7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */,
 				7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */,
+				7BBB67D72F19289B0026EB7A /* LocationManager.swift in Sources */,
 				7BBB67962F1562320026EB7A /* Ext+UIView.swift in Sources */,
 				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
@@ -1299,6 +1339,8 @@
 				7B38745A2C059DBB00C24827 /* LocalLizeTexts.swift in Sources */,
 				7B2D77492BF27DEA00D51F49 /* SearchWidgetBundle.swift in Sources */,
 				7B2D774B2BF27DEA00D51F49 /* SearchWidget.swift in Sources */,
+				7B2D77562C0A1A1A00D51F49 /* SearchAppIntent.swift in Sources */,
+				7BBB67D42F1921410026EB7A /* WidgetAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1635,6 +1677,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SearchWidget/SearchWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
@@ -1667,6 +1710,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SearchWidget/SearchWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H25F4B7J4U;

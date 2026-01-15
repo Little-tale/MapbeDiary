@@ -8,12 +8,14 @@
 import UIKit
 import RealmSwift
 import IQKeyboardManagerSwift
+import AppIntents
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-   
+    private let sharedService = SharedEventService()
+    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -31,30 +33,45 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Task {
             let _ = await FolderRealmRepository.shared.setUp()
         }
-        // FIXME: - Repository 제거할예정
-        let repository = RealmRepository()
-        if let folder = repository.findAllFolderArray().first {
-            print("Widget : 제발1 ")
-            SingleToneDataViewModel.shared.shardFolderOb.value = folder
-            let vc = MapViewController()
-            if let url =  connectionOptions.urlContexts.first?.url {
-                vc.ifURL = url.absoluteString
-            }
-            window?.rootViewController = MapViewController()
-            //CalenderMemoViewController()
-            window?.makeKeyAndVisible()
+        
+        // FIXME: - 불러오는 동안의 뷰가 필요함.
+        Task { @MainActor in
+            do {
+                guard let _ = try await FolderRealmRepository.shared.fineAllFolder().first else {
+                    throw NSError()
+                }
+                
+                let vc = MapViewController(
+                    reactor: MapViewReactor(
+                        sharedEvent: sharedService,
+                        locationManager: LocationManager()
+                    )
+                )
             
-        } else {
-            window?.rootViewController = OnboardViewController(reactor: OnboardReactor())
-            window?.makeKeyAndVisible()
+                window?.rootViewController = vc
+                
+            } catch {
+                goOnboard()
+            }
         }
+        if let url = connectionOptions.urlContexts.first?.url {
+            handleDeepLink(url)
+        }
+        window?.makeKeyAndVisible()
     }
+    
+    
+    private func goOnboard() {
+        window?.rootViewController = OnboardViewController(
+            reactor: OnboardReactor(sharedEvent: sharedService)
+        )
+    }
+    
+    
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-                return
-        }
-        print("openURLContexts",url)
-        NotificationCenter.default.post(name: .getWidget, object: url.description)
+        guard let url = URLContexts.first?.url else { return }
+        handleDeepLink(url)
+        
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -67,6 +84,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        handleWidgetActionIfNeeded()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -77,6 +95,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        handleWidgetActionIfNeeded()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -85,5 +104,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    private func handleWidgetActionIfNeeded() {
+        guard let defaults = UserDefaults(suiteName: WidgetAction.widgetAppGroup) else { return }
+        
+        guard let action = defaults.string(
+            forKey: WidgetAction.search.actionKey
+        ) else { return }
+        
+        defaults.removeObject(forKey: WidgetAction.search.actionKey)
+        
+        if action == WidgetAction.search.action {
+            sharedService.send(.widgetAction(.search))
+        }
+    }
+    
+    private func handleDeepLink(_ url: URL) {
+        if url.absoluteString == WidgetAction.search.path {
+            sharedService.send(.widgetAction(.search))
+            return
+        }
+        
+        guard url.scheme == "widget" else { return }
+        if url.host?.lowercased() == "search" {
+            sharedService.send(.widgetAction(.search))
+        }
+    }
 }

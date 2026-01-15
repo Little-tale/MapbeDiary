@@ -17,7 +17,7 @@ final class OnboardReactor: Reactor {
         var buttonAlpha: Double = 0.0
         var animated = false
         var error: RealmManagerError? = nil
-        var nextVC: Bool = false
+        var nextVC: SharedEventService? = nil
     }
     
     enum Action {
@@ -28,10 +28,16 @@ final class OnboardReactor: Reactor {
     enum Mutation {
         case changeButtonAlpha(Double)
         case showErrorAlert(error: RealmManagerError)
-        case nextVC(Bool)
+        case nextVC(SharedEventService)
     }
     
+    private let sharedEvent: SharedEventService
+    
     var initialState: State = State()
+    
+    init(sharedEvent: SharedEventService) {
+        self.sharedEvent = sharedEvent
+    }
 }
 
 // MARK: Flow Logic
@@ -41,11 +47,12 @@ extension OnboardReactor {
         switch action {
         case .startButtonTapped:
             
-            return .run { send in
+            return .run { [weak sharedEvent] send in
+                guard let sharedEvent else { return }
                 let folder = try await FolderRealmRepository.shared.makeFolder(folderName: "추억의 공간")
                 UserDefaultsManager.currentFolderID = folder.id
                 
-                await send(.nextVC(true))
+                await send(.nextVC(sharedEvent))
             }
             .catch { error in
                 return .just(.showErrorAlert(error: .canMakeFolder))

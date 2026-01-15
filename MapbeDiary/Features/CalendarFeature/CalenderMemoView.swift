@@ -11,7 +11,7 @@ import FSCalendar
 
 final class CalenderMemoView: BaseView {
    
-    typealias DataSource = UICollectionViewDiffableDataSource<Folder,LocationMemo>
+    typealias DataSource = UICollectionViewDiffableDataSource<FolderEntity, LocationMemoEntity>
     
     private var dataSource: DataSource?
     
@@ -28,7 +28,7 @@ final class CalenderMemoView: BaseView {
     
     private var isAnimating = false
     
-    private var calendarCellRegist: UICollectionView.CellRegistration<CalendarCollectionViewCell,LocationMemo>?
+    private var calendarCellRegist: UICollectionView.CellRegistration<CalendarCollectionViewCell, LocationMemoEntity>?
 
     override func configureHierarchy() {
         addSubview(calenderView)
@@ -82,7 +82,7 @@ final class CalenderMemoView: BaseView {
     }
     
     private func cellRegistration(){
-        calendarCellRegist = UICollectionView.CellRegistration<CalendarCollectionViewCell,LocationMemo> { cell, indexPath, item in
+        calendarCellRegist = UICollectionView.CellRegistration<CalendarCollectionViewCell, LocationMemoEntity> { cell, indexPath, item in
             cell.backgroundColor = .wheetBior
             cell.layer.cornerRadius = 12
             cell.clipsToBounds = true
@@ -91,7 +91,7 @@ final class CalenderMemoView: BaseView {
     }
     
     private func setSnapShot(){
-        var snapShot = NSDiffableDataSourceSnapshot<Folder,LocationMemo> ()
+        var snapShot = NSDiffableDataSourceSnapshot<FolderEntity, LocationMemoEntity>()
         
         let section = viewModel.folder.value
         let items = viewModel.locationMemos.value

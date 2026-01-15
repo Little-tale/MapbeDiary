@@ -76,9 +76,14 @@ final class MemoAddReactor: Reactor {
     }
     
     var initialState: State
+    let sharedService: SharedEventProtocol
     
-    init(initialState: State = State()) {
+    init(
+        initialState: State = State(),
+        sharedService: SharedEventProtocol
+    ) {
         self.initialState = initialState
+        self.sharedService = sharedService
     }
 }
 
@@ -102,7 +107,7 @@ extension MemoAddReactor {
             }
             
             if let memoID = state.memoId {
-                return .run { send in
+                return .run { [weak sharedService] send in
                     try await MemoRealmRepository.shared.updateLocationMemo(
                         input: LocationMemoUpdateInput(
                             memoId: memoID,
@@ -112,6 +117,7 @@ extension MemoAddReactor {
                             markerImageData: state.memoImage
                         )
                     )
+                    sharedService?.event.onNext(.needReloadMemos)
                     await send(.setDismissTrigger(true))
                 }.catch { error in
                     guard let error = error as? RealmManagerError else { return .empty() }
@@ -119,9 +125,8 @@ extension MemoAddReactor {
                 }
             }
             // Location(lat: start.lat, lon: start.lon)
-            return .run { [state] send in
+            return .run { [state, weak sharedService] send in
                
-                
                 try await MemoRealmRepository.shared.createLocationMemo(
                     input: LocationMemoCreateInput(
                         title: title,
@@ -137,6 +142,7 @@ extension MemoAddReactor {
                 )
                 
                 // FIXME: 정상적으로 저장되나 맵 업데이트 문제
+                sharedService?.event.onNext(.needReloadMemos)
                 await send(.setDismissTrigger(true))
                 
             }.catch { error in
@@ -265,9 +271,4 @@ extension MemoAddReactor {
         
         return state
     }
-}
-
-// MARK: Helpers
-extension MemoAddReactor {
-  
 }

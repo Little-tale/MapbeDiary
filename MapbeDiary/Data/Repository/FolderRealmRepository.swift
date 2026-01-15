@@ -78,6 +78,15 @@ extension FolderRealmRepository {
             throw .cantFindObjectId
         }
     }
+    
+    func fineAllFolder() async throws(RealmManagerError) -> [FolderEntity] {
+        let realm = try await RealmActor.shared.getRealm()
+        
+        let folders = realm.objects(Folder.self)
+            .sorted(byKeyPath: "index", ascending: true)
+        
+        return FolderMapper.toEntities(Array(folders))
+    }
 }
 
 // MARK: DELETE

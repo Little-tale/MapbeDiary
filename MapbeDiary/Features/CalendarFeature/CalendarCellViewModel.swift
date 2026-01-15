@@ -10,7 +10,7 @@ import Foundation
 final class CalendarCellViewModel: ViewModelType {
     
     struct Input{
-        let locationMemo: LocationMemo
+        let locationMemo: LocationMemoEntity
     }
     
     struct Output {
@@ -22,10 +22,10 @@ final class CalendarCellViewModel: ViewModelType {
     func trasform(_ input: Input) -> Output {
         let title = input.locationMemo.title
         
-        let dateOf = input.locationMemo.regdate
+        let dateOf = input.locationMemo.regDate
         let dateString = DateFormetters.shared.localDate(dateOf, style:.short, timeStyle: .short)
         
-        let url = findLocationImageData(input.locationMemo.id.stringValue)
+        let url = findLocationImageData(input.locationMemo.id)
         
         return Output(imageData: url, titleLabel: title, dateLabel: dateString)
     }

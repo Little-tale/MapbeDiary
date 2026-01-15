@@ -10,17 +10,17 @@ import Foundation
 
 class CalenderMemoViewModel {
     
-    let repository = RealmRepository()
+    let repository = MemoRealmRepository.shared
     // In
-    let folder: _Observable<Folder?> = _Observable(nil)
+    let folder: _Observable<FolderEntity?> = _Observable(nil)
     let date: _Observable<Date?> = _Observable(nil)
     let selectIndexPath: _Observable<IndexPath?> = _Observable(nil)
     let eventDate: _Observable<Date?> = _Observable(nil)
     
     // Out
-    let locationMemos: _Observable<[LocationMemo]?> = _Observable(nil)
-    let selectedLocationMemo: _Observable<LocationMemo?> = _Observable(nil)
-    let minDateLocationMemo: _Observable<LocationMemo?> = _Observable(nil)
+    let locationMemos: _Observable<[LocationMemoEntity]?> = _Observable(nil)
+    let selectedLocationMemo: _Observable<LocationMemoEntity?> = _Observable(nil)
+    let minDateLocationMemo: _Observable<LocationMemoEntity?> = _Observable(nil)
     let reloadTrigger: _Observable<Void?> = _Observable(nil)
     let dismissTrigger: _Observable<Void?> = _Observable(nil)
     let countDate: _Observable<Int?> = _Observable(nil)
@@ -53,19 +53,45 @@ class CalenderMemoViewModel {
         }
     }
     
-    private func findLocation(_ date: Date, folder: Folder) {
-        let results = repository.findLocationMemos(folder: folder, date: date)
-        print("해당날짜 갯수 : ",results.count)
-        locationMemos.value = results
+    private func findLocation(_ date: Date, folder: FolderEntity) {
+        Task { @MainActor in
+            do {
+                let results = try await repository.findLocationMemos(
+                    folderId: folder.id,
+                    date: date
+                )
+                locationMemos.value = results
+            } catch {
+                locationMemos.value = []
+            }
+        }
     }
-    private func countOfDateLocation(_ date: Date, folder: Folder) {
-        countDate.value = repository.findLocationMemosCount(folder, date: date)
+    private func countOfDateLocation(_ date: Date, folder: FolderEntity) {
+        Task { @MainActor in
+            do {
+                countDate.value = try await repository.findLocationMemosCount(
+                    folderId: folder.id,
+                    date: date
+                )
+            } catch {
+                countDate.value = 0
+            }
+        }
     }
     
-    private func minimemDate(_ folder : Folder){
-        let result = repository.findMinDateLocationMemo(folder: folder)
-        minDateLocationMemo.value = result
-        reloadTrigger.value = ()
+    private func minimemDate(_ folder: FolderEntity){
+        Task { @MainActor in
+            do {
+                let result = try await repository.findMinDateLocationMemo(
+                    folderId: folder.id
+                )
+                minDateLocationMemo.value = result
+                reloadTrigger.value = ()
+            } catch {
+                minDateLocationMemo.value = nil
+                reloadTrigger.value = ()
+            }
+        }
     }
     
     private func returnLocationMemo(_ indexPath: IndexPath) {

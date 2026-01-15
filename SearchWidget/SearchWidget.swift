@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import AppIntents
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -60,7 +61,6 @@ struct SearchBarView: View {
             logoView
             Spacer()
             FakeSearchView()
-                .widgetURL(URL(string: "widget://Search"))
             Spacer()
         }
     }
@@ -92,43 +92,52 @@ struct SearchBarView: View {
 
 struct FakeSearchView: View {
     var body: some View {
-        Link(destination: URL(string: "widget://Search")!,
-             label: {
-            HStack {
-                Image(systemName: "map")
-                    .resizable()
-                    .foregroundStyle(.orange)
-                    .frame(width: 25,height: 25)
-                    .padding(.leading)
-                Text(LocalLizeTexts.placholder)
-                    .font(.callout)
-                    .foregroundStyle(.gray)
-                    .padding(.leading, 4)
-                
-                Spacer()
-                
-                Image(systemName: "location.magnifyingglass")
-                    .resizable()
-                    .foregroundStyle(.orange)
-                    .frame(width: 25,height: 25)
-                    .padding(.trailing)
+        if #available(iOS 17.0, *) {
+            Link(destination: URL(string: WidgetAction.search.path)!) {
+                contentView
             }
-            .frame(maxWidth: .infinity, maxHeight: 40)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(.white)
-                    .shadow(
-                        color: Color.red.opacity(0.3),
-                        radius: 10,
-                        x: 0,
-                        y: 0
-                    )
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.orange, lineWidth: 1.4)
-            )
-        })
+        } else {
+            Link(destination: URL(string: WidgetAction.search.path)!) {
+                contentView
+            }
+        }
+    }
+    
+    private var contentView: some View {
+        HStack {
+            Image(systemName: "map")
+                .resizable()
+                .foregroundStyle(.orange)
+                .frame(width: 25,height: 25)
+                .padding(.leading)
+            Text(LocalLizeTexts.placholder)
+                .font(.callout)
+                .foregroundStyle(.gray)
+                .padding(.leading, 4)
+            
+            Spacer()
+            
+            Image(systemName: "location.magnifyingglass")
+                .resizable()
+                .foregroundStyle(.orange)
+                .frame(width: 25,height: 25)
+                .padding(.trailing)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 40)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.white)
+                .shadow(
+                    color: Color.red.opacity(0.3),
+                    radius: 10,
+                    x: 0,
+                    y: 0
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.orange, lineWidth: 1.4)
+        )
     }
 }
 

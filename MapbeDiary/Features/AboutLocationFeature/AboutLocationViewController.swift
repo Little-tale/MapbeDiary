@@ -277,7 +277,9 @@ extension AboutLocationViewController {
             .guardBind(object: self) { owner, void in
                 guard void != nil else { return }
                 owner.dismissAction()
-                SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
+                // FIXME: @@
+                
+//                SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
             }
     }
 }
