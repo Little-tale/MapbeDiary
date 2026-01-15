@@ -25,8 +25,7 @@ final class MapViewReactor: Reactor {
         @Pulse var showSettingAlert: Bool = false
         @Pulse var showsUserLocation: Bool = false
         @Pulse var realmError: RealmManagerError? = nil
-        
-        var sendCalendarView: FolderEntity? = nil
+        @Pulse var sendCalendarView: FolderEntity? = nil
     }
     
     enum Action: Equatable {

@@ -38,9 +38,7 @@
 		7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */; };
 		7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */; };
 		7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */; };
-		7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */; };
 		7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1137892B99C2F100D6BBD1 /* Toast */; };
-		7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */; };
 		7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */; };
 		7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */; };
 		7B1137982B9B394500D6BBD1 /* AddLocationMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */; };
@@ -246,8 +244,6 @@
 		7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHomeViewController.swift; sourceTree = "<group>"; };
 		7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeView.swift; sourceTree = "<group>"; };
-		7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		7B1137952B9B0AB800D6BBD1 /* FileManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagers.swift; sourceTree = "<group>"; };
 		7B1137972B9B394500D6BBD1 /* AddLocationMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationMemoViewController.swift; sourceTree = "<group>"; };
@@ -265,8 +261,8 @@
 		7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B2D774E2BF27DEC00D51F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppIntent.swift; sourceTree = "<group>"; };
-		7B2D77602C0A1A1A00D51F49 /* SearchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SearchWidget.entitlements; sourceTree = "<group>"; };
 		7B2D775F2BF3798600D51F49 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		7B2D77602C0A1A1A00D51F49 /* SearchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SearchWidget.entitlements; sourceTree = "<group>"; };
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
 		7B3874552C059B1D00C24827 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B3874572C059BF200C24827 /* LocalLizeTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLizeTexts.swift; sourceTree = "<group>"; };
@@ -887,8 +883,6 @@
 			isa = PBXGroup;
 			children = (
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
-				7B1137802B99AE0F00D6BBD1 /* MapHomeView.swift */,
-				7B11378C2B99E96900D6BBD1 /* MapViewModel.swift */,
 				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */,
 				7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */,
@@ -1236,7 +1230,6 @@
 				7BBB65BB2F14DB670026EB7A /* KakaoLocalDTO.swift in Sources */,
 				7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */,
 				7BBB67AD2F16588F0026EB7A /* After.swift in Sources */,
-				7B11378D2B99E96900D6BBD1 /* MapViewModel.swift in Sources */,
 				7BBB67A02F1622E70026EB7A /* LoadingViewController.swift in Sources */,
 				7B7BE6512BAD99160072F40F /* OnboardBaseView.swift in Sources */,
 				7BB8ECC62B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift in Sources */,
@@ -1265,7 +1258,6 @@
 				7BBB67C02F17E3980026EB7A /* LocationEntity.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */,
-				7B1137812B99AE0F00D6BBD1 /* MapHomeView.swift in Sources */,
 				7BBB67922F1559BC0026EB7A /* UserDefaultsManager.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */,

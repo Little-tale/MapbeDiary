@@ -42,7 +42,7 @@ struct PanelConfiguration {
 // FIXME: 서치바 계속 나오는 문제
 final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCView> {
     
-    var floatPanel: FloatingPanelController?
+    private var floatPanel: FloatingPanelController?
     private var pendingPanelConfiguration: PanelConfiguration?
     private var currentMemos: [LocationMemoEntity] = []
     private var lastLocation: CLLocationCoordinate2D?
@@ -124,8 +124,8 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .compactMap { $0.sendCalendarView }
+        reactor.pulse(\.$sendCalendarView)
+            .compactMap{ $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, model in
                 owner.moveToCalendarView(model: model)
@@ -196,22 +196,6 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
     override func register() {
         mainView.mapView.delegate = self
     }
-    
-    
-    // MARK: 판넬 세팅 수정해 -> 네비 없애고 리팩토링 진행
-    func settingPanel(view: UIViewController, layout: PanelLayoutType) -> FloatingPanelController{
-        let fvc = FloatingPanelController(delegate: self)
-        let vc = view
-        fvc.set(contentViewController: vc) // 다음뷰
-        fvc.layout = layout.layout
-        // FloatingLocationLayout() // 커스텀
-        fvc.invalidateLayout() // 레이아웃 if need
-        fvc.isRemovalInteractionEnabled = false // 내려가기 방지
-        fvc.addPanel(toParent: self,animated: true) // 관리뷰
-        fvc.surfaceView.layer.cornerRadius = 20
-        fvc.surfaceView.clipsToBounds = true
-        return fvc
-    }
 }
 
 // MARK: Helpers
@@ -254,6 +238,20 @@ extension MapViewController {
         nvc.modalPresentationStyle = .fullScreen
         
         present(nvc, animated: true)
+    }
+    
+    private func settingPanel(view: UIViewController, layout: PanelLayoutType) -> FloatingPanelController{
+        let fvc = FloatingPanelController(delegate: self)
+        let vc = view
+        fvc.set(contentViewController: vc) // 다음뷰
+        fvc.layout = layout.layout
+        // FloatingLocationLayout() // 커스텀
+        fvc.invalidateLayout() // 레이아웃 if need
+        fvc.isRemovalInteractionEnabled = false // 내려가기 방지
+        fvc.addPanel(toParent: self,animated: true) // 관리뷰
+        fvc.surfaceView.layer.cornerRadius = 20
+        fvc.surfaceView.clipsToBounds = true
+        return fvc
     }
 }
 
@@ -678,5 +676,3 @@ extension MapViewController {
             }
     }
 }
-
-// ----------------------------------------------------------
