@@ -265,6 +265,7 @@
 		7B2D774C2BF27DEC00D51F49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B2D774E2BF27DEC00D51F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppIntent.swift; sourceTree = "<group>"; };
+		7B2D77602C0A1A1A00D51F49 /* SearchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SearchWidget.entitlements; sourceTree = "<group>"; };
 		7B2D775F2BF3798600D51F49 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		7B30DD782BAC3C8A00D789B5 /* SettingWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWebViewController.swift; sourceTree = "<group>"; };
 		7B3874552C059B1D00C24827 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -691,6 +692,7 @@
 		7B2D77472BF27DEA00D51F49 /* SearchWidget */ = {
 			isa = PBXGroup;
 			children = (
+				7B2D77602C0A1A1A00D51F49 /* SearchWidget.entitlements */,
 				7B2D77482BF27DEA00D51F49 /* SearchWidgetBundle.swift */,
 				7B2D774A2BF27DEA00D51F49 /* SearchWidget.swift */,
 				7B2D77552C0A1A1A00D51F49 /* SearchAppIntent.swift */,

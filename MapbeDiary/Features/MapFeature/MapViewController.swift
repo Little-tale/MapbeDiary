@@ -59,10 +59,9 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
     override func bind(reactor: MapViewReactor) {
         super.bind(reactor: reactor)
         
-        reactor.state
-            .map { $0.moveToSearch }
-            .filter { $0 == true }
-            .bind(with: self) { owner, _ in
+        reactor.pulse(\.$moveToSearch)
+            .filter{ $0 == true }
+            .bind(with: self) { owner, bool in
                 owner.moveToSearchView()
             }
             .disposed(by: disposeBag)
@@ -85,18 +84,16 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.moveToSetting }
+        reactor.pulse(\.$moveToSetting)
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.goSetting()
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.showSettingAlert }
-            .distinctUntilChanged()
-            .filter { $0 == true }
+        reactor.pulse(\.$showSettingAlert)
+            .filter{ $0 == true }
+            .skip(1)
             .bind(with: self) { owner, _ in
                 owner.showGoSettingAlert()
             }
@@ -112,17 +109,16 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             }
             .disposed(by: disposeBag)
 
-        reactor.state
-            .map { $0.showsUserLocation }
-            .distinctUntilChanged()
+        reactor.pulse(\.$showsUserLocation)
+            .filter{ $0 == true }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, shows in
                 owner.mainView.mapView.showsUserLocation = shows
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .compactMap { $0.realmError }
+        reactor.pulse(\.$realmError)
+            .compactMap{ $0 }
             .bind(with: self) { owner, error in
                 owner.showAPIErrorAlert(repo: error)
             }
@@ -132,17 +128,7 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             .compactMap { $0.sendCalendarView }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, model in
-                let vc = CalenderMemoViewController()
-                vc.homeView.viewModel.folder.value = model
-                let nvc = UINavigationController(rootViewController: vc)
-                
-                vc.homeView.viewModel.selectedLocationMemo.bind { memo in
-                    guard let memo else { return }
-                    // MARK: FIXME:
-//                            owner.getLocationInfo(memo: memo)
-                }
-                nvc.modalPresentationStyle = .fullScreen
-                owner.present(nvc, animated: true)
+                owner.moveToCalendarView(model: model)
             }
             .disposed(by: disposeBag)
     }
@@ -154,7 +140,8 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        searchBarTapGesture.rx.event
+        searchBarTapGesture.rx
+            .event
             .map { _ in MapViewReactor.Action.setDeepLink(WidgetAction.search.path) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -251,6 +238,22 @@ extension MapViewController {
             guard let self else {return}
             goSetting()
         }
+    }
+    
+    private func moveToCalendarView(model: FolderEntity) {
+        let vc = CalenderMemoViewController()
+        vc.homeView.viewModel.folder.value = model
+        let nvc = UINavigationController(rootViewController: vc)
+        
+        vc.homeView.viewModel.selectedLocationMemo.bind { memo in
+            guard let memo else { return }
+            // MARK: FIXME:
+//                            owner.getLocationInfo(memo: memo)
+        }
+        
+        nvc.modalPresentationStyle = .fullScreen
+        
+        present(nvc, animated: true)
     }
 }
 

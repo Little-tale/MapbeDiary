@@ -15,14 +15,16 @@ final class MapViewReactor: Reactor {
     struct State {
         var currentMemos: [LocationMemoEntity] = []
         var location: CLLocationCoordinate2D? = nil
-        var realmError: RealmManagerError? = nil
-        var moveToSearch: Bool = false
+        
         var currentLocationState: CLAuthorizationStatus? = nil
         
         var moveToSetRegion: CLLocationCoordinate2D? = nil
-        var moveToSetting: Bool = false
-        var showSettingAlert: Bool = false
-        var showsUserLocation: Bool = false
+        
+        @Pulse var moveToSearch: Bool = false
+        @Pulse var moveToSetting: Bool = false
+        @Pulse var showSettingAlert: Bool = false
+        @Pulse var showsUserLocation: Bool = false
+        @Pulse var realmError: RealmManagerError? = nil
         
         var sendCalendarView: FolderEntity? = nil
     }
@@ -39,11 +41,11 @@ final class MapViewReactor: Reactor {
     enum Mutation {
         case setRealmError(RealmManagerError)
         case setMemos([LocationMemoEntity])
-        case setMoveToSearch(Bool)
+        case setMoveToSearch
         case setCurrentLocation(CLAuthorizationStatus)
         case setLocation(CLLocationCoordinate2D)
-        case setShowSettingAlert(Bool)
-        case setShowsUserLocation(Bool)
+        case setShowSettingAlert
+        case setShowsUserLocation
         case sendCalendarView(FolderEntity?)
         case setDefaultLocation
     }
@@ -92,7 +94,7 @@ extension MapViewReactor {
             guard case let .widgetAction(action) = event else { return .empty() }
             switch action {
             case .search:
-                return .just(.setMoveToSearch(true))
+                return .just(.setMoveToSearch)
             }
         }
         
@@ -136,7 +138,7 @@ extension MapViewReactor {
             guard let linkString else { return .empty() }
             
             if linkString == "widget://Search" {
-                return .just(.setMoveToSearch(true))
+                return .just(.setMoveToSearch)
             }
         case .checkLocationWhenInUseAuthorization:
             locationManager.requestAuthorization()
@@ -176,8 +178,8 @@ extension MapViewReactor {
         case let .setMemos(memo):
             state.currentMemos = memo
             
-        case let .setMoveToSearch(trigger):
-            state.moveToSearch = trigger
+        case .setMoveToSearch:
+            state.moveToSearch = true
             
         case let .setCurrentLocation(locationState):
             switch locationState {
@@ -197,13 +199,11 @@ extension MapViewReactor {
         case let .setLocation(location):
             state.location = location
             
-        case .setShowSettingAlert(let alert):
-            state.showSettingAlert = alert
+        case .setShowSettingAlert:
             state.showSettingAlert.toggle()
             
-        case let .setShowsUserLocation(tigger):
-            state.showsUserLocation = tigger
-            state.showSettingAlert.toggle()
+        case .setShowsUserLocation:
+            state.showsUserLocation.toggle()
             
         case let .sendCalendarView(model):
             state.sendCalendarView = model
