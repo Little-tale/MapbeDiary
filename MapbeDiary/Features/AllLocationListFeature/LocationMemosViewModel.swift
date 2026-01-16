@@ -29,7 +29,7 @@ final class LocationMemosViewModel {
         }
     }
     private func processing(_ model: LocationMemo){
-        let date = DateFormetters.shared.localDate(model.regdate)
+        let date = DateFormatterManager.shared.localDate(model.regdate)
         
         let completion = LocationInfo(locationName: model.title, locationMemo: model.contents, phoneNumber: model.phoneNumber, regDate: date)
         

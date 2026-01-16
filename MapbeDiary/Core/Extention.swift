@@ -79,25 +79,6 @@ extension UIImage {
     
 }
 
-
-// MARK: String -> CLLcocation
-extension UIViewController {
-    
-    @available(*, deprecated, renamed: "willMove", message: "Not Ready This Function")
-    func makeCLLcocation(lon: String, lat: String) -> CLLocationCoordinate2D? {
-        let dbLat = Double(lat)
-        let dbLon = Double(lon)
-        
-        if let dbLat,
-           let dbLon {
-            return CLLocationCoordinate2D(latitude: dbLat, longitude: dbLon)
-        } else {
-            return nil
-        }
-    }
-    
-}
-
 // MARK: Cell LayOut
 
 @available(*, deprecated, renamed: "Will_Deprecate", message: "Will Deprecate")

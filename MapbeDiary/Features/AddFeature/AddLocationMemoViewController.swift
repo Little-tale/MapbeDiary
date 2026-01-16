@@ -67,7 +67,7 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
         
         reactor.state
             .map { $0.regDate }
-            .map { DateFormetters.shared.localDate($0) }
+            .map { DateFormatterManager.shared.localDate($0) }
             .distinctUntilChanged()
             .bind(with: self) { owner, date in
                 owner.mainView.AddTitleDateView.dateLabel.text = date

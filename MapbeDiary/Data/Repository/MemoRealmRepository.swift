@@ -246,7 +246,7 @@ extension MemoRealmRepository {
             throw .cantFindFolder
         }
         
-        let result = DateFormetters.shared.calendarStartEnd(date: date)
+        let result = DateFormatterManager.shared.calendarStartEnd(date: date)
         let locationMemos = folder.LocationMemo
             .where { $0.regdate >= result.start && $0.regdate < result.end }
         return MemoMapper.toEntities(Array(locationMemos))
@@ -255,6 +255,83 @@ extension MemoRealmRepository {
     func findLocationMemosCount(folderId: String, date: Date) async throws(RealmManagerError) -> Int {
         let memos = try await findLocationMemos(folderId: folderId, date: date)
         return memos.count
+    }
+    
+    func findLocationMemosByDate(
+        folderId: String
+    ) async throws(RealmManagerError) -> [Date: [LocationMemoEntity]] {
+        let realm = try await RealmActor.shared.getRealm()
+        let folderKey: ObjectId
+        do {
+            folderKey = try ObjectId(string: folderId)
+        } catch {
+            throw .cantFindObjectId
+        }
+
+        guard let folder = realm.object(ofType: Folder.self, forPrimaryKey: folderKey) else {
+            throw .cantFindFolder
+        }
+        
+        let memos = folder.LocationMemo.sorted(byKeyPath: "regdate", ascending: true)
+        var grouped: [Date: [LocationMemoEntity]] = [:]
+        
+        for memo in memos {
+            let day = Calendar.current.startOfDay(for: memo.regdate)
+            grouped[day, default: []].append(MemoMapper.toEntity(memo))
+        }
+        
+        return grouped
+    }
+    
+    func findLocationMemosByMonth(
+        folderId: String,
+        month: Date
+    ) async throws(RealmManagerError) -> [LocationMemoEntity] {
+        let realm = try await RealmActor.shared.getRealm()
+        let folderKey: ObjectId
+        do {
+            folderKey = try ObjectId(string: folderId)
+        } catch {
+            throw .cantFindObjectId
+        }
+
+        guard let folder = realm.object(ofType: Folder.self, forPrimaryKey: folderKey) else {
+            throw .cantFindFolder
+        }
+        
+        let range = DateFormatterManager.shared.monthStartEnd(date: month)
+        let locationMemos = folder.LocationMemo
+            .where { $0.regdate >= range.start && $0.regdate < range.end }
+        return MemoMapper.toEntities(Array(locationMemos))
+    }
+    
+    func findLocationMemosByMonthGroupedByDate(
+        folderId: String,
+        month: Date
+    ) async throws(RealmManagerError) -> [Date: [LocationMemoEntity]] {
+        let realm = try await RealmActor.shared.getRealm()
+        let folderKey: ObjectId
+        do {
+            folderKey = try ObjectId(string: folderId)
+        } catch {
+            throw .cantFindObjectId
+        }
+
+        guard let folder = realm.object(ofType: Folder.self, forPrimaryKey: folderKey) else {
+            throw .cantFindFolder
+        }
+        
+        let range = DateFormatterManager.shared.monthStartEnd(date: month)
+        let locationMemos = folder.LocationMemo
+            .where { $0.regdate >= range.start && $0.regdate < range.end }
+        
+        var grouped: [Date: [LocationMemoEntity]] = [:]
+        for memo in locationMemos {
+            let day = Calendar.current.startOfDay(for: memo.regdate)
+            grouped[day, default: []].append(MemoMapper.toEntity(memo))
+        }
+        
+        return grouped
     }
     
     func findFirstLocationMemo() async throws(RealmManagerError) -> LocationMemoEntity? {

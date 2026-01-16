@@ -225,18 +225,20 @@ extension MapViewController {
     }
     
     private func moveToCalendarView(model: FolderEntity) {
-        let vc = CalenderMemoViewController()
-        vc.homeView.viewModel.folder.value = model
-        let nvc = UINavigationController(rootViewController: vc)
         
-        vc.homeView.viewModel.selectedLocationMemo.bind { memo in
-            guard let memo else { return }
-            // MARK: FIXME:
-//                            owner.getLocationInfo(memo: memo)
+        let vc = CalendarMemoViewController(
+            reactor: CalendarMemoViewReactor(folder: model)
+        )
+        
+        vc.selectedLocationMemo = { [weak self] memo in
+            guard let location = memo.location else { return }
+            guard let location2D = self?.makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat) else { return }
+            
+            self?.finduserAnnotationOrNew(CL2D: location2D)
         }
         
+        let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
-        
         present(nvc, animated: true)
     }
     
@@ -339,7 +341,7 @@ extension MapViewController {
         searchViewController.kakaoDataClosure = { [weak self] data in
             guard let self else { return }
             
-            guard let location = makeCLLcocation(
+            guard let location = makeCLLocationCoordinate2D(
                 lon:data.x,
                 lat:data.y
             ) else {
@@ -381,7 +383,7 @@ extension MapViewController {
     func addCustomNoFocusForMemo(memo: LocationMemoEntity){
         let location = memo.location
         guard let location else { return }
-        let cl2 = makeCLLcocation(lon: location.lon, lat: location.lat)
+        let cl2 = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
         print("????",memo.id)
         if let cl2 {
             let customLocation = CustomAnnotation(
@@ -587,7 +589,7 @@ extension MapViewController: AboutmodifyLocation {
         let memoId = memo.id.stringValue
         let coordinate: CLLocationCoordinate2D?
         if let location = memo.location {
-            coordinate = makeCLLcocation(lon: location.lon, lat: location.lat)
+            coordinate = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
         } else {
             coordinate = nil
         }
@@ -601,7 +603,7 @@ extension MapViewController: AllMemoLocationListViewControllerDelegate {
     func modifyRequest(memoLocation: LocationMemoEntity) {
         let coordinate: CLLocationCoordinate2D?
         if let location = memoLocation.location {
-            coordinate = makeCLLcocation(lon: location.lon, lat: location.lat)
+            coordinate = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
         } else {
             coordinate = nil
         }
@@ -611,6 +613,7 @@ extension MapViewController: AllMemoLocationListViewControllerDelegate {
 
 extension MapViewController {
     
+    @discardableResult
     func finduserAnnotationOrNew(CL2D: CLLocationCoordinate2D) -> Bool {
         // where First 순회 조건 참조
         let userAnnotation = mainView.mapView.annotations.first { [weak self ] annotation in
@@ -674,5 +677,21 @@ extension MapViewController {
                 || (annotation.coordinate.latitude == coordinate.latitude
                     && annotation.coordinate.longitude == coordinate.longitude)
             }
+    }
+    
+    func makeCLLocationCoordinate2D(
+        lon: String,
+        lat: String
+    ) -> CLLocationCoordinate2D? {
+        
+        let dbLat = Double(lat)
+        let dbLon = Double(lon)
+        
+        if let dbLat,
+           let dbLon {
+            return CLLocationCoordinate2D(latitude: dbLat, longitude: dbLon)
+        } else {
+            return nil
+        }
     }
 }

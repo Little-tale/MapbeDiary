@@ -118,7 +118,7 @@ extension AllMemoLocationListViewController {
             guard self != nil else { return }
             cell.titleLabel.text = item.title
             
-            cell.dateLabel.text = DateFormetters.shared.localDate(item.regDate)
+            cell.dateLabel.text = DateFormatterManager.shared.localDate(item.regDate)
             
             cell.subTitleLabel.text = item.contents
             let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id)

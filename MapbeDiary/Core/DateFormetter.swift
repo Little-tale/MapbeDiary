@@ -8,13 +8,13 @@
 import Foundation
 
 
-final class DateFormetters {
+final class DateFormatterManager {
     private init() {}
     
-    static let shared = DateFormetters()
+    static let shared = DateFormatterManager()
     
-    private let dateformetter = ISO8601DateFormatter()
-    private let timeformetter = DateFormatter()
+    private let isoDateFormatter = ISO8601DateFormatter()
+    private let timeFormatter = DateFormatter()
     private let calendar = Calendar.current
     
     enum DayType {
@@ -26,11 +26,11 @@ final class DateFormetters {
     // 2024-03-09T07:27:03.815Z
     func localDate(_ dateString: String) -> String{
         // ISO8601DateFormatter의 옵션을 설정합니다.
-        dateformetter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         // 타임존을 영국으로 잡습니다.(그리니치 천문대)
-        dateformetter.timeZone = TimeZone(secondsFromGMT: 0)
+        isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         // 클라이언트에게 받는 문자열을 Date로 변환하려합니다.
-        guard let date = dateformetter.date(from: dateString) else {
+        guard let date = isoDateFormatter.date(from: dateString) else {
             return ""
         }
         // 로케일에 따른 지역화
@@ -51,25 +51,25 @@ final class DateFormetters {
     func localDate(_ date: Date) -> String {
         // timeformetter(사실 Date)
         // 현재 로케일과 현재 타임존으로 설정
-        timeformetter.locale = .current
-        timeformetter.timeZone = .current
+        timeFormatter.locale = .current
+        timeFormatter.timeZone = .current
         
         // 날짜 스타일을 long으로 하여 형식을 지정
-        timeformetter.dateStyle = .long
+        timeFormatter.dateStyle = .long
         // 문자열로 변환하여 반환
-        let someString = timeformetter.string(from: date)
+        let someString = timeFormatter.string(from: date)
         return someString
     }
 
 
     func localDate(_ date: Date, style: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String{
-        timeformetter.locale = .current
-        timeformetter.timeZone = .current
+        timeFormatter.locale = .current
+        timeFormatter.timeZone = .current
         
-        timeformetter.dateStyle = style
-        timeformetter.timeStyle = timeStyle
+        timeFormatter.dateStyle = style
+        timeFormatter.timeStyle = timeStyle
         
-        let someString = timeformetter.string(from: date)
+        let someString = timeFormatter.string(from: date)
         return someString
     }
     
@@ -98,5 +98,12 @@ final class DateFormetters {
         print(start,"시작")
         let end = calendar.date(byAdding: .day, value: 1, to: start)
         return (start, end ?? Date())
+    }
+    
+    func monthStartEnd(date: Date) -> (start: Date, end: Date) {
+        let components = calendar.dateComponents([.year, .month], from: date)
+        let start = calendar.date(from: components) ?? date
+        let end = calendar.date(byAdding: .month, value: 1, to: start) ?? date
+        return (start, end)
     }
 }

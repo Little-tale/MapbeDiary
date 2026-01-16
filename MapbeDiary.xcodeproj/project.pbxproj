@@ -61,8 +61,6 @@
 		7B38745B2C059E0E00C24827 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B3874542C059B1D00C24827 /* Localizable.strings */; };
 		7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */; };
 		7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */; };
-		7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */; };
-		7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */; };
 		7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */; };
 		7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */; };
 		7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */; };
@@ -157,6 +155,8 @@
 		7BBB67D42F1921410026EB7A /* WidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D22F1920320026EB7A /* WidgetAction.swift */; };
 		7BBB67D72F19289B0026EB7A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D62F19289B0026EB7A /* LocationManager.swift */; };
 		7BBB67D92F192D0A0026EB7A /* LocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */; };
+		7BBB67DC2F1A47FF0026EB7A /* CalendarMemoVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67DB2F1A47FF0026EB7A /* CalendarMemoVCView.swift */; };
+		7BBB67DE2F1A60F90026EB7A /* CalendarMemoViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67DD2F1A60F90026EB7A /* CalendarMemoViewReactor.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -172,9 +172,8 @@
 		7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */; };
 		7BF0A7F02BA6B8A800D40942 /* CenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */; };
 		7BF1A44E2BA359460086D5D8 /* MapTextSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */; };
-		7BF2E7F92BB8067400E83EC1 /* CalenderMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */; };
 		7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF2E7FB2BB8070700E83EC1 /* FSCalendar */; };
-		7BF2E7FE2BB807FF00E83EC1 /* CalenderMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */; };
+		7BF2E7FE2BB807FF00E83EC1 /* CalendarMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */; };
 		7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -269,8 +268,6 @@
 		7B3874592C059C9500C24827 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationButton.swift; sourceTree = "<group>"; };
 		7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MordernCollectionViewLayout.swift; sourceTree = "<group>"; };
-		7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoViewModel.swift; sourceTree = "<group>"; };
-		7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellViewModel.swift; sourceTree = "<group>"; };
 		7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewStackButtonView.swift; sourceTree = "<group>"; };
 		7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationViewModel.swift; sourceTree = "<group>"; };
@@ -362,6 +359,8 @@
 		7BBB67D22F1920320026EB7A /* WidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetAction.swift; sourceTree = "<group>"; };
 		7BBB67D62F19289B0026EB7A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationManager+Rx.swift"; sourceTree = "<group>"; };
+		7BBB67DB2F1A47FF0026EB7A /* CalendarMemoVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoVCView.swift; sourceTree = "<group>"; };
+		7BBB67DD2F1A60F90026EB7A /* CalendarMemoViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoViewReactor.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -374,8 +373,7 @@
 		7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailTableViewCell.swift; sourceTree = "<group>"; };
 		7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterFlowLayout.swift; sourceTree = "<group>"; };
 		7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextSection.swift; sourceTree = "<group>"; };
-		7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoView.swift; sourceTree = "<group>"; };
-		7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderMemoViewController.swift; sourceTree = "<group>"; };
+		7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoViewController.swift; sourceTree = "<group>"; };
 		7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -463,11 +461,10 @@
 		384025ACDDFCFC0BB6BA592A /* CalendarFeature */ = {
 			isa = PBXGroup;
 			children = (
-				7B4F42892BB849350081369D /* CalenderMemoViewModel.swift */,
-				7B4F428C2BB850800081369D /* CalendarCellViewModel.swift */,
-				7BF2E7F82BB8067400E83EC1 /* CalenderMemoView.swift */,
-				7BF2E7FD2BB807FF00E83EC1 /* CalenderMemoViewController.swift */,
+				7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */,
 				7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */,
+				7BBB67DB2F1A47FF0026EB7A /* CalendarMemoVCView.swift */,
+				7BBB67DD2F1A60F90026EB7A /* CalendarMemoViewReactor.swift */,
 			);
 			path = CalendarFeature;
 			sourceTree = "<group>";
@@ -1173,7 +1170,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BF2E7F92BB8067400E83EC1 /* CalenderMemoView.swift in Sources */,
 				7BBB67CD2F1807690026EB7A /* SharedEventService.swift in Sources */,
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
@@ -1206,6 +1202,7 @@
 				7BBB676D2F14E9D70026EB7A /* PlaceDocumentEntity.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
 				7BBB67B52F1697E50026EB7A /* MemoRealmRepository.swift in Sources */,
+				7BBB67DC2F1A47FF0026EB7A /* CalendarMemoVCView.swift in Sources */,
 				7BB250EE2BA1EC5800FDE898 /* MemoTextViewModel.swift in Sources */,
 				7B1137732B99AB2C00D6BBD1 /* RealmModel.swift in Sources */,
 				7B11377D2B99AD6E00D6BBD1 /* BaseView.swift in Sources */,
@@ -1248,7 +1245,7 @@
 				7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */,
 				7BBB679E2F1622CB0026EB7A /* LoadingWindow.swift in Sources */,
 				7BBB67C62F17E5960026EB7A /* FolderMapper.swift in Sources */,
-				7BF2E7FE2BB807FF00E83EC1 /* CalenderMemoViewController.swift in Sources */,
+				7BF2E7FE2BB807FF00E83EC1 /* CalendarMemoViewController.swift in Sources */,
 				7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */,
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7BBB679C2F161F6D0026EB7A /* LoadingView.swift in Sources */,
@@ -1268,7 +1265,6 @@
 				7BBB678E2F1537FE0026EB7A /* RealmActor.swift in Sources */,
 				7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
-				7B4F428D2BB850800081369D /* CalendarCellViewModel.swift in Sources */,
 				7BBB67C42F17E46B0026EB7A /* MemoMapper.swift in Sources */,
 				7BBB67A42F162E480026EB7A /* SettingWebVCView.swift in Sources */,
 				7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */,
@@ -1277,7 +1273,6 @@
 				7BB250E92BA1EB7E00FDE898 /* MemoSettingBaseView.swift in Sources */,
 				7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */,
 				7B2D77602BF3798600D51F49 /* Notification.swift in Sources */,
-				7B4F428A2BB849350081369D /* CalenderMemoViewModel.swift in Sources */,
 				7BB8ECBC2B9DF73D00C88F17 /* SearchBaseImageView.swift in Sources */,
 				7BDE61462F13F3DF00467F7F /* Ext+UIViewController.swift in Sources */,
 				7BBB677E2F1502CB0026EB7A /* KakaoApiRouter.swift in Sources */,
@@ -1299,6 +1294,7 @@
 				7B6C20122BA15CFC00EB7166 /* FirstMakeFolderBaseView.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 				7BBB67812F1507970026EB7A /* KakaoMapper.swift in Sources */,
+				7BBB67DE2F1A60F90026EB7A /* CalendarMemoViewReactor.swift in Sources */,
 				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
 				7BB250EC2BA1EBF200FDE898 /* MemoTextview.swift in Sources */,
 				7BBB67992F1574890026EB7A /* SettingSection.swift in Sources */,
