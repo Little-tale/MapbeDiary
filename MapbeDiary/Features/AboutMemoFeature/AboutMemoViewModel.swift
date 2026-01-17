@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, renamed: "remove", message: "")
 struct AboutMemoModel {
     var memoText: String?
     var viewImageData: [Data] = []
@@ -41,7 +42,7 @@ final class AboutMemoViewModel {
    
     let repoErrorPut: _Observable<RealmManagerError?> = _Observable(nil)
     
-    let fileErrorPut: _Observable<fileManagerError?> = _Observable(nil)
+    let fileErrorPut: _Observable<FileManagerError?> = _Observable(nil)
     
     let deletButtonHidden: _Observable<Bool?> = _Observable(nil)
     

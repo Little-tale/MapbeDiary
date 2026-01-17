@@ -25,14 +25,14 @@ final class CalendarMemoViewReactor: Reactor {
         @Pulse var selectedLocationMemo: LocationMemoEntity? = nil
     }
     
-    enum Action {
+    enum Action { // 뷰 액션
         case viewDidLoad
         case selectedDate(Date)
         case selectedIndex(Int)
         case calendarDidChange(Date)
     }
     
-    enum Mutation {
+    enum Mutation { // 사이드 이펙트
         case setMemos([LocationMemoEntity])
         case setRealmError(RealmManagerError)
         case setCurrentDate(Date)
@@ -62,8 +62,10 @@ extension CalendarMemoViewReactor {
             return .concat([
                 .just(.setCurrentDate(date)),
                 findMinDate(folderID: folderID),
-                findMonthEntities(folderID: folderID, date: date),
-                findDateLocationMemos(date: date, folderID: folderID)
+                .merge([
+                    findMonthEntities(folderID: folderID, date: date),
+                    findDateLocationMemos(date: date, folderID: folderID)
+                ])
             ])
             
         case let .selectedDate(date):

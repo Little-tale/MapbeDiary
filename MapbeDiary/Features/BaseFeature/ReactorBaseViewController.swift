@@ -25,6 +25,7 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         self.mainView = V()
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
+        setUI()
     }
     
     @available(*, unavailable)
@@ -50,6 +51,10 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
     func sendActions(reactor: R) {}
     
     func register() {}
+    
+    func setUI() {
+        
+    }
     
     deinit {
         print("deinit:", String(describing: type(of: self)))

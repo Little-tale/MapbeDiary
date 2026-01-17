@@ -7,7 +7,7 @@
 
 import UIKit.UIImage
 
-enum fileManagerError: Error{
+enum FileManagerError: Error, Equatable {
     case cantFindDocuments
     case cantFindImages
     case cantRemoveImages
@@ -263,7 +263,7 @@ final class FileManagers {
     }
     
     // MARK: DetailId 를 통해 이미지 데이터들을 반환해드립니다.
-    func findDetailImageData(detailID: String, imageIds: [String]) -> Result<[Data],fileManagerError>{
+    func findDetailImageData(detailID: String, imageIds: [String]) -> Result<[Data],FileManagerError>{
         guard let diretory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return .failure(.cantFindDocuments)
         }
@@ -284,7 +284,7 @@ final class FileManagers {
         return .success(imageDatas)
     }
     
-    func findDetailImageDataUrl(detailID: String, imageIds: [String]) -> Result<[URL],fileManagerError>{
+    func findDetailImageDataUrl(detailID: String, imageIds: [String]) -> Result<[URL],FileManagerError>{
         
         guard let diretory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return .failure(.cantFindDocuments)
@@ -308,7 +308,7 @@ final class FileManagers {
     }
     
     /// 디테일 이미지 리스트를 제거합니다.
-    func removeDetailImageList(detailId: String, imageIds: [String] ) -> Result<Void,fileManagerError> {
+    func removeDetailImageList(detailId: String, imageIds: [String] ) -> Result<Void,FileManagerError> {
         // 1. 도큐먼트
         guard let document = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return .failure(.cantFindDocuments)
@@ -341,7 +341,7 @@ final class FileManagers {
     
     // MARK: 이미지 하나만 지웁니다.
     /// 디테일 이미지 단일만 지웁니다.
-    func removeDetailImage(detailId: String, imageId: String) -> Result<Void, fileManagerError> {
+    func removeDetailImage(detailId: String, imageId: String) -> Result<Void, FileManagerError> {
         guard let document = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return .failure(.cantFindDocuments)
         }

@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+//
 final class MemoSettingBaseView: BaseView {
     
     let memoViewModel = AboutMemoViewModel()

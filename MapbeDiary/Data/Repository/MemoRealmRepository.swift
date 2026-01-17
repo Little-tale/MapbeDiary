@@ -25,25 +25,6 @@ struct LocationMemoUpdateInput {
     let markerImageData: Data?
 }
 
-struct DetailMemoCreateInput {
-    let locationMemoId: String
-    let text: String
-}
-
-struct DetailMemoUpdateInput {
-    let detailMemoId: String
-    let text: String
-}
-
-struct DetailMemoImageCreateInput {
-    let detailMemoId: String
-    let imageData: Data
-}
-
-struct DetailMemoImageDeleteInput {
-    let imageObjectId: String
-}
-
 @RealmActor
 final class MemoRealmRepository {
     
@@ -108,93 +89,6 @@ extension MemoRealmRepository {
         return MemoMapper.toEntity(memo)
     }
     
-    @discardableResult
-    func createDetailMemo(
-        input: DetailMemoCreateInput
-    ) async throws(RealmManagerError) -> DetailMemoEntity {
-        let realm = try await RealmActor.shared.getRealm()
-        let memoId: ObjectId
-        do {
-            memoId = try ObjectId(string: input.locationMemoId)
-        } catch {
-            throw .cantFindObjectId
-        }
-        
-        guard let location = realm.object(
-            ofType: LocationMemo.self,
-            forPrimaryKey: memoId
-        ) else {
-            throw .cantFindLocationMemo
-        }
-        
-        let detail = DetailMemo(detailContents: input.text, modifyDate: nil)
-        
-        do {
-            try await realm.asyncWrite {
-                realm.add(detail)
-                if !location.detailMemos.contains(detail) {
-                    location.detailMemos.append(detail)
-                }
-            }
-        } catch {
-            throw .cantMakeDetailMemo
-        }
-        
-        return MemoMapper.toEntity(detail)
-    }
-    
-    @discardableResult
-    func addDetailMemoImage(
-        input: DetailMemoImageCreateInput
-    ) async throws(RealmManagerError) -> URL {
-        let realm = try await RealmActor.shared.getRealm()
-        let detailId: ObjectId
-        do {
-            detailId = try ObjectId(string: input.detailMemoId)
-        } catch {
-            throw .cantFindObjectId
-        }
-        
-        guard let detail = realm.object(
-            ofType: DetailMemo.self,
-            forPrimaryKey: detailId
-        ) else {
-            throw .cantDeleteDetailMemo
-        }
-        
-        var index = 0
-        if let lastImage = detail.imagePaths.sorted(byKeyPath: "orderIndex", ascending: false).first {
-            index = lastImage.orderIndex + 1
-        }
-        
-        if index >= 3 {
-            throw .cantAddImage
-        }
-        
-        let imageObject = ImageObject(index: index)
-        
-        do {
-            try await realm.asyncWrite {
-                realm.add(imageObject)
-                detail.imagePaths.append(imageObject)
-            }
-        } catch {
-            throw .cantAddImage
-        }
-        
-        if !FileManagers.shard.createMemoImage(
-            detailMemoId: detail.id.stringValue,
-            imgOJId: imageObject.id.stringValue,
-            data: input.imageData
-        ) {
-            throw .cantAddImage
-        }
-        
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return documentDirectory
-            .appendingPathComponent(detail.id.stringValue)
-            .appendingPathComponent("\(imageObject.id.stringValue).jpeg")
-    }
 }
 
 // MARK: Read
@@ -358,53 +252,6 @@ extension MemoRealmRepository {
         return MemoMapper.toEntity(memo)
     }
     
-    func findDetailMemos(locationMemoId: String) async throws(RealmManagerError) -> [DetailMemoEntity] {
-        let realm = try await RealmActor.shared.getRealm()
-        let memoId: ObjectId
-        do {
-            memoId = try ObjectId(string: locationMemoId)
-        } catch {
-            throw .cantFindObjectId
-        }
-
-        guard let location = realm.object(
-            ofType: LocationMemo.self,
-            forPrimaryKey: memoId
-        ) else {
-            throw .cantFindLocationMemo
-        }
-        
-        return MemoMapper.toEntities(Array(location.detailMemos))
-    }
-    
-    func findDetailImages(detailMemoId: String) async throws(RealmManagerError) -> [URL] {
-        let realm = try await RealmActor.shared.getRealm()
-        let detailId: ObjectId
-        do {
-            detailId = try ObjectId(string: detailMemoId)
-        } catch {
-            throw .cantFindObjectId
-        }
-
-        guard let detail = realm.object(
-            ofType: DetailMemo.self,
-            forPrimaryKey: detailId
-        ) else {
-            throw .cantDeleteDetailMemo
-        }
-        
-        let imageIds = Array(detail.imagePaths.map { $0.id.stringValue })
-        let result = FileManagers.shard.findDetailImageDataUrl(
-            detailID: detail.id.stringValue,
-            imageIds: imageIds
-        )
-        switch result {
-        case let .success(urls):
-            return urls
-        case .failure:
-            return []
-        }
-    }
 }
 
 // MARK: Update
@@ -451,30 +298,6 @@ extension MemoRealmRepository {
             throw .cantModifyMemo
         }
     }
-    
-    func updateDetailMemo(
-        input: DetailMemoUpdateInput
-    ) async throws(RealmManagerError) {
-        let realm = try await RealmActor.shared.getRealm()
-        let detailId: ObjectId
-        do {
-            detailId = try ObjectId(string: input.detailMemoId)
-        } catch {
-            throw .cantFindObjectId
-        }
-        
-        do {
-            try await realm.asyncWrite {
-                let value: [String: Any] = [
-                    "id": detailId,
-                    "detailContents": input.text
-                ]
-                realm.create(DetailMemo.self, value: value, update: .modified)
-            }
-        } catch {
-            throw .canModifiMemo
-        }
-    }
 }
 
 // MARK: Delete
@@ -496,7 +319,9 @@ extension MemoRealmRepository {
         
         let details = Array(location.detailMemos)
         for detail in details {
-            try await deleteDetailMemo(detailId: detail.id.stringValue)
+            try await DetailMemoRealmRepository.shared.deleteDetailMemo(
+                detailId: detail.id.stringValue
+            )
         }
         
         if !FileManagers.shard.removeMarkerImageAtMemo(memoIdString: memoId.stringValue) {
@@ -509,85 +334,6 @@ extension MemoRealmRepository {
             }
         } catch {
             throw .cantDeleteLocationMemo
-        }
-    }
-    
-    func deleteDetailMemo(detailId: String) async throws(RealmManagerError) {
-        let realm = try await RealmActor.shared.getRealm()
-        let detailObjId: ObjectId
-        do {
-            detailObjId = try ObjectId(string: detailId)
-        } catch {
-            throw .cantFindObjectId
-        }
-
-        guard let detail = realm.object(ofType: DetailMemo.self, forPrimaryKey: detailObjId) else {
-            throw .cantDeleteDetailMemo
-        }
-        
-        let images = Array(detail.imagePaths)
-        let imageIdStrings = images.map { $0.id.stringValue }
-        
-        let results = FileManagers.shard.removeDetailImageList(
-            detailId: detail.id.stringValue,
-            imageIds: imageIdStrings
-        )
-        
-        if case .failure = results {
-            throw .cantDeleteImage
-        }
-        
-        do {
-            try await realm.asyncWrite {
-                realm.delete(images)
-                realm.delete(detail)
-            }
-        } catch {
-            throw .cantDeleteDetailMemo
-        }
-    }
-    
-    func deleteDetailImage(
-        input: DetailMemoImageDeleteInput
-    ) async throws(RealmManagerError) {
-        let realm = try await RealmActor.shared.getRealm()
-        let imageId: ObjectId
-        do {
-            imageId = try ObjectId(string: input.imageObjectId)
-        } catch {
-            throw .cantFindObjectId
-        }
-        
-        guard let image = realm.object(
-            ofType: ImageObject.self,
-            forPrimaryKey: imageId
-        ) else {
-            throw .cantDeleteImage
-        }
-        
-        guard let detail = image.parents.first else {
-            throw .cantDeleteDetailMemo
-        }
-        
-        let result = FileManagers.shard.removeDetailImage(
-            detailId: detail.id.stringValue,
-            imageId: image.id.stringValue
-        )
-        
-        if case .failure = result {
-            throw .cantDeleteImage
-        }
-        
-        let index = image.orderIndex
-        do {
-            try await realm.asyncWrite {
-                realm.delete(image)
-                for data in detail.imagePaths where data.orderIndex > index {
-                    data.orderIndex -= 1
-                }
-            }
-        } catch {
-            throw .cantDeleteImage
         }
     }
 }

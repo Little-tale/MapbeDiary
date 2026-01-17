@@ -157,6 +157,13 @@
 		7BBB67D92F192D0A0026EB7A /* LocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */; };
 		7BBB67DC2F1A47FF0026EB7A /* CalendarMemoVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67DB2F1A47FF0026EB7A /* CalendarMemoVCView.swift */; };
 		7BBB67DE2F1A60F90026EB7A /* CalendarMemoViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67DD2F1A60F90026EB7A /* CalendarMemoViewReactor.swift */; };
+		7BBB67E02F1B7ACD0026EB7A /* AboutMemoVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67DF2F1B7ACD0026EB7A /* AboutMemoVCView.swift */; };
+		7BBB67E22F1B7BFF0026EB7A /* AboutMemoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67E12F1B7BFF0026EB7A /* AboutMemoTextView.swift */; };
+		7BBB67E52F1B7D7B0026EB7A /* BaseUITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67E42F1B7D7B0026EB7A /* BaseUITextView.swift */; };
+		7BBB67E72F1BBC6C0026EB7A /* AboutMemoReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67E62F1BBC6C0026EB7A /* AboutMemoReactor.swift */; };
+		7BBB67E92F1BD25A0026EB7A /* DetailMemoRealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67E82F1BD25A0026EB7A /* DetailMemoRealmRepository.swift */; };
+		7BBB67EC2F1BF64F0026EB7A /* MDColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67EB2F1BF64F0026EB7A /* MDColors.swift */; };
+		7BBB67EE2F1BF6A90026EB7A /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67ED2F1BF6A90026EB7A /* Ext+UIColor.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -361,6 +368,13 @@
 		7BBB67D82F192D0A0026EB7A /* LocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationManager+Rx.swift"; sourceTree = "<group>"; };
 		7BBB67DB2F1A47FF0026EB7A /* CalendarMemoVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoVCView.swift; sourceTree = "<group>"; };
 		7BBB67DD2F1A60F90026EB7A /* CalendarMemoViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoViewReactor.swift; sourceTree = "<group>"; };
+		7BBB67DF2F1B7ACD0026EB7A /* AboutMemoVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoVCView.swift; sourceTree = "<group>"; };
+		7BBB67E12F1B7BFF0026EB7A /* AboutMemoTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoTextView.swift; sourceTree = "<group>"; };
+		7BBB67E42F1B7D7B0026EB7A /* BaseUITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUITextView.swift; sourceTree = "<group>"; };
+		7BBB67E62F1BBC6C0026EB7A /* AboutMemoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoReactor.swift; sourceTree = "<group>"; };
+		7BBB67E82F1BD25A0026EB7A /* DetailMemoRealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoRealmRepository.swift; sourceTree = "<group>"; };
+		7BBB67EB2F1BF64F0026EB7A /* MDColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDColors.swift; sourceTree = "<group>"; };
+		7BBB67ED2F1BF6A90026EB7A /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -503,6 +517,7 @@
 				7BBB67692F14E8100026EB7A /* Ext+Observable.swift */,
 				7BBB67952F1562320026EB7A /* Ext+UIView.swift */,
 				7BBB67B02F1666D50026EB7A /* Ext+UITextField.swift */,
+				7BBB67ED2F1BF6A90026EB7A /* Ext+UIColor.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -700,6 +715,7 @@
 		7B2D775E2BF3797C00D6BBD1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB67EA2F1BF62E0026EB7A /* DesignSystem */,
 				39C5C0EE3B09B6D6C800FF9B /* Utils */,
 				7B11376E2B99AA2100D6BBD1 /* Extention.swift */,
 				7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */,
@@ -798,6 +814,7 @@
 		7BBB67842F15208D0026EB7A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB67E32F1B7D710026EB7A /* Base */,
 				7BBB67D52F1928920026EB7A /* Location */,
 				7BBB67A72F163A330026EB7A /* Photo */,
 				7BBB679A2F161F5D0026EB7A /* Loading */,
@@ -827,6 +844,7 @@
 			children = (
 				7BBB678F2F1539760026EB7A /* FolderRealmRepository.swift */,
 				7BBB67B42F1697E50026EB7A /* MemoRealmRepository.swift */,
+				7BBB67E82F1BD25A0026EB7A /* DetailMemoRealmRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -866,6 +884,22 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
+		7BBB67E32F1B7D710026EB7A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB67E42F1B7D7B0026EB7A /* BaseUITextView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		7BBB67EA2F1BF62E0026EB7A /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB67EB2F1BF64F0026EB7A /* MDColors.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,6 +930,9 @@
 				7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */,
 				7BB250FC2BA2F10F00FDE898 /* AboutMemoViewModel.swift */,
 				7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */,
+				7BBB67DF2F1B7ACD0026EB7A /* AboutMemoVCView.swift */,
+				7BBB67E12F1B7BFF0026EB7A /* AboutMemoTextView.swift */,
+				7BBB67E62F1BBC6C0026EB7A /* AboutMemoReactor.swift */,
 			);
 			path = AboutMemoFeature;
 			sourceTree = "<group>";
@@ -1194,6 +1231,7 @@
 				7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */,
 				7BBB67682F14E2A30026EB7A /* Ext+Reactive.swift in Sources */,
 				7BBB67A92F163A400026EB7A /* PhotosManager.swift in Sources */,
+				7BBB67E52F1B7D7B0026EB7A /* BaseUITextView.swift in Sources */,
 				7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */,
 				7B1C533F2B9C716E00B712BC /* DateFormetter.swift in Sources */,
 				7BBB67AF2F165E2E0026EB7A /* AddImageWithButtonView.swift in Sources */,
@@ -1220,7 +1258,9 @@
 				7BBB67702F14EAF30026EB7A /* Entity.swift in Sources */,
 				7BBB65B82F13FF6D0026EB7A /* Ext+UILabel.swift in Sources */,
 				7BB250E32BA1C63300FDE898 /* MemosEmptyView.swift in Sources */,
+				7BBB67EE2F1BF6A90026EB7A /* Ext+UIColor.swift in Sources */,
 				7B1C533B2B9C376E00B712BC /* ImageSection.swift in Sources */,
+				7BBB67E02F1B7ACD0026EB7A /* AboutMemoVCView.swift in Sources */,
 				7BBB67892F1530AC0026EB7A /* SettingViewReactor.swift in Sources */,
 				7BBB67B82F17CAA50026EB7A /* AddModelEntity.swift in Sources */,
 				7BB250FD2BA2F10F00FDE898 /* AboutMemoViewModel.swift in Sources */,
@@ -1234,6 +1274,7 @@
 				7BF1A44E2BA359460086D5D8 /* MapTextSection.swift in Sources */,
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmRepository.swift in Sources */,
+				7BBB67E92F1BD25A0026EB7A /* DetailMemoRealmRepository.swift in Sources */,
 				7BBB677B2F1501CB0026EB7A /* NetworkManagerError.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7BBB67782F1500BC0026EB7A /* NetworkManager.swift in Sources */,
@@ -1256,7 +1297,9 @@
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */,
 				7BBB67922F1559BC0026EB7A /* UserDefaultsManager.swift in Sources */,
+				7BBB67E22F1B7BFF0026EB7A /* AboutMemoTextView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
+				7BBB67E72F1BBC6C0026EB7A /* AboutMemoReactor.swift in Sources */,
 				7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */,
 				7BBB67832F1510C70026EB7A /* CoordinateEntity.swift in Sources */,
 				7BBB65BF2F14DCA90026EB7A /* SearchVCView.swift in Sources */,
@@ -1283,6 +1326,7 @@
 				7BBB67962F1562320026EB7A /* Ext+UIView.swift in Sources */,
 				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
+				7BBB67EC2F1BF64F0026EB7A /* MDColors.swift in Sources */,
 				7BBB67B12F1666D50026EB7A /* Ext+UITextField.swift in Sources */,
 				7B80DA262BEBA132004D025A /* URLSessionManagerForConcurrency.swift in Sources */,
 				7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */,

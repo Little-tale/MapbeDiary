@@ -9,8 +9,7 @@ import RealmSwift
 import UIKit
 
 
-
-//MARK: RalmRepository
+@available(*, deprecated, renamed: "NamedRealmRepository", message: "use ~ReamlRepository instead")
 final class RealmRepository {
     // 레포지터리 패턴
     
@@ -26,14 +25,7 @@ final class RealmRepository {
     func printURL(){
         print(realm.configuration.fileURL ?? "Error")
     }
-    
-    // MARK:  --------
-    
 
-    
-    func makeLocation(title: String,lat: String, long: String) {
-        
-    }
     // MARK: 어떤 타입이든 보내기
     func fetchItems<T: Object>(type: T.Type) -> Results<T> {
         let items = realm.objects(type.self)
@@ -44,49 +36,6 @@ final class RealmRepository {
     func makeMemoModel(title: String, contents: String?, location: Location, phoneNum: String?) -> LocationMemo {
         return LocationMemo(title: title, location: location, contents: contents, phoneNumber: phoneNum)
     }
-    
-    // MARK: 메모를 진짜 만들어드립니다...>!
-    func makeMemoModel(
-        addViewStruct: addViewOutStruct,
-        location: Location
-    ) throws -> LocationMemo?  {
-        var memo: LocationMemo?
-        do {
-            try realm.write {
-                memo = realm.create(LocationMemo.self, value: [
-                    "title": addViewStruct.title ?? "",
-                    "location": location,
-                    "contents": addViewStruct.content ?? "",
-                    "phoneNumber": addViewStruct.phoneNumber ?? ""
-                ])
-            }
-        } catch {
-            throw RealmManagerError.canMakeMemo
-        }
-        return memo
-    }
-    // MARK: 메모 수정 버전
-    func modifyMemo(structure: addViewOutStruct, locationMemo: LocationMemo, completion: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
-        do {
-            try realm.write {
-                let id = locationMemo.id
-                realm.create(LocationMemo.self, value: [
-                    "id": id,
-                    "title": structure.title ?? "",
-                    "contents": structure.content ?? "",
-                    "phoneNumber": structure.phoneNumber ?? ""
-                ], update: .modified)
-            }
-        } catch {
-            completion(.failure(.cantModifyMemo))
-        }
-        completion(.success(()))
-    }
-    
-    // MARK: LocationMemo를 통해 DetailMemo를 가져오거나 만들어 옵니다
-//    func findLocationMemoForDetailMemo(location: LocationMemo){
-//        
-//    }
   
     private func reSortedOfFolder(handler: @escaping(Result<Void,RealmManagerError>) -> Void) throws {
         let allFolder = realm.objects(folderModel).sorted(byKeyPath: "index", ascending: true)
@@ -212,45 +161,6 @@ final class RealmRepository {
             throw RealmManagerError.cantAddMemoInFolder
         }
     }
-/*
- if !FileManagers.shard.createMemoImage(
-     detailMemoId: dtMemo.id.stringValue,
-     imgOJId: imageObject.id.stringValue,
-     data: imageData
- ) {
-     return .failure(.cantAddImage)
- }
-
- */
-    
-    func makeMemoMarkerAtFolders( model: addViewOutStruct, location: Location,folder:Folder , completion: @escaping ((Result<Void,RealmManagerError>) -> Void )) {
-        let memo = try? makeMemoModel(addViewStruct: model, location: location)
-        guard let memo else { return }
-        
-        if let image = model.memoImage {
-            if FileManagers.shard.saveMarkerImageForMemo(memoId: memo.id.stringValue, imageData: image) {
-                print("makeMemoMarkerAtFolders",image)
-                if FileManagers.shard.saveMarkerZipImageForMemo(memoId: memo.id.stringValue, imageData: image) {
-                    completion(.success(()))
-                } else {
-                    completion(.failure(.cantAddImage))
-                }
-            }else {
-                completion(.failure(.cantAddImage))
-            }
-        } else {
-            completion(.success(())) // 이미지 없을때
-        }
-        do {
-            try realm.write {
-                folder.LocationMemo.append(memo)
-            }
-        } catch {
-            completion(.failure(.cantAddMemoInFolder))
-        }
-    }
-
-
     
     
     // MARK: ------------- Create -------------

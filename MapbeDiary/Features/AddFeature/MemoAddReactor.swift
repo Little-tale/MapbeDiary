@@ -9,20 +9,6 @@ import Foundation
 import ReactorKit
 import RxSwift
 
-@available(*, deprecated, renamed: "MemoAddReactor.State", message: "Use MemoAddReactor.State instead")
-struct addViewOutStruct: Equatable, Sendable {
-    var title: String?
-    var titlePlacHolder: String?
-    var content: String?
-    var phoneNumber: String?
-    var folderimage: String?
-    var regDate = Date() // 일단 대기
-    var memoImage: Data?
-    var memoId: String?
-    var folderName: String?
-    var modifyTrigger: Bool = false
-}
-
 final class MemoAddReactor: Reactor {
     
     struct State: Equatable {

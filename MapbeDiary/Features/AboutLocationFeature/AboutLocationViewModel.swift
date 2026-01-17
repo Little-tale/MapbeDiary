@@ -23,7 +23,7 @@ class AboutLocationViewModel {
     let locationInfoOutPut: _Observable<LocationMemo?> = _Observable(nil)
     let emptyHiddenOutPut: _Observable<Bool?> = _Observable(nil)
     let detailTableViewData: _Observable<[DetailMemo]?> = _Observable(nil)
-    let fileMangerErrorOutPut: _Observable<fileManagerError?> = _Observable(nil)
+    let fileMangerErrorOutPut: _Observable<FileManagerError?> = _Observable(nil)
     let repositoryErrorOutPut: _Observable<RealmManagerError?> = _Observable(nil)
     
     let dismissAction: _Observable<Void?> = _Observable(nil)

@@ -10,13 +10,13 @@ import SnapKit
 
 final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     
-    let backgoundImage = UIImageView()
+    let backgroundImage = UIImageView()
     
     override func configureHierarchy() {
-        contentView.addSubview(backgoundImage)
+        contentView.addSubview(backgroundImage)
     }
     override func configureLayout() {
-        backgoundImage.snp.makeConstraints { make in
+        backgroundImage.snp.makeConstraints { make in
             make.edges.equalTo(contentView.safeAreaLayoutGuide)
         }
     }
@@ -29,11 +29,15 @@ final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func prepareForReuse() {
-        backgoundImage.image = nil
+        backgroundImage.image = nil
+    }
+    
+    func setData(data: Data) {
+        self.backgroundImage.image = UIImage(data: data)
     }
     
     func settingImageMode(_ mode: ContentMode){
-        self.backgoundImage.contentMode = mode
+        self.backgroundImage.contentMode = mode
     }
     
     func loadImage(fromPath path: String,_ folder: String? = nil) {
@@ -42,7 +46,7 @@ final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
             let imageData = FileManagers.shard.findDetailImageData(detailID: folder, imageIds: [path])
             switch imageData {
             case .success(let success):
-                backgoundImage.image = UIImage(data: success[0])
+                backgroundImage.image = UIImage(data: success[0])
             case .failure:
                 break
             }

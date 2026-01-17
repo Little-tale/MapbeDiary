@@ -6,139 +6,352 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Toast
 
-final class AboutMemoViewController: BaseHomeViewController<MemoSettingBaseView> {
-    var imageService: ImageService?
+final class AboutMemoViewController: ReactorBaseViewController<AboutMemoReactor,AboutMemoVCView>, ToastPro {
+    
+    enum PhotoActionType {
+        case camera
+        case gallery
+        case cancel
         
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        settingBackground()
-        settingSaveButton() // Save
-        collectionViewDelegatDatasource()
-        imageSettingButtonAction() // imageAddButton
-        deleteButtonAction() // deleteButton
-        dismisButtonClicked()
-        subscribe()
-    
-        homeView.memoTextView.text = homeView.memoViewModel.inputModel.value?.inputMemoMeodel?.detailContents ?? ""
+        var title: String {
+            switch self {
+            case .camera:
+                return "Authority_Camera".localized
+            case .gallery:
+                return "Authority_Gallery".localized
+            case .cancel:
+                return "Cancel_check_title".localized
+            }
+        }
     }
     
-    private func collectionViewDelegatDatasource(){
-        homeView.colletionView.delegate = self
-        homeView.colletionView.dataSource = self
+    private let photoManager = PhotosManager()
+    
+    var didSuccessMemo: (() -> Void)?
+    
+    override func bind(reactor: AboutMemoReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.pulse(\.$showPhotoActionSheet)
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showImageAskActionSheet()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$showAlreadyMaxImages)
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlreadyMaxToast()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$showImageViewer)
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, data in
+                owner.showImageViewer(data: data)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$realmError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$fileManagerError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(file: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.imageDatas }
+            .distinctUntilChanged()
+            .bind(
+                to: mainView.collectionView.rx.items(
+                    cellIdentifier: OnlyImageCollectionViewCell.reusableIdentifier,
+                    cellType: OnlyImageCollectionViewCell.self
+                )
+            ) { _, item, cell in
+                cell.setData(data: item)
+            }
+            .disposed(by: disposeBag)
+            
+        reactor.state.map { $0.currentTextViewText }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, text in
+                owner.mainView.memoTextView.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$didSaveSuccess)
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.didSuccessMemo?()
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$didRemoveSuccess)
+            .filter { $0 == true }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.didSuccessMemo?()
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.deleteButtonHidden }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, trigger in
+                owner.mainView.deleteButton.isHidden = trigger
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.maxTextCount }
+            .take(1)
+            .bind(with: self) { owner, count in
+                owner.mainView.memoTextView.maxCount = count
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$showWarningToast)
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, event in
+                owner.showToastBody(
+                    title: event.title,
+                    message: event.message,
+                    completion: nil
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
-    private func settingBackground(){
-        homeView.backgroundColor = .wheetSideBrown
-
+    override func sendActions(reactor: AboutMemoReactor) {
+        rx.viewDidLoad
+            .map { _ in AboutMemoReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.saveButton.rx
+            .tap
+            .map{ _ in AboutMemoReactor.Action.saveButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.addImageButton.rx
+            .tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .map{ _ in AboutMemoReactor.Action.addImageButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.deleteButton.rx
+            .tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showDeleteAlert()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.backButton.rx
+            .tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showBackButtonTappedAfterAlert()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.collectionView.rx
+            .itemSelected
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, indexPath in
+                owner.tappedImageCell(index: indexPath)
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.memoTextView.textView.rx.text
+            .orEmpty
+            .map{ text in AboutMemoReactor.Action.setCurrentText(text: text)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
+    override func register() {
+        mainView.collectionView.register(
+            OnlyImageCollectionViewCell.self,
+            forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusableIdentifier
+        )
+    }
 }
 
-// MARK: Button Actions
+// MARK: Helpers
 extension AboutMemoViewController {
     
-    private func settingSaveButton(){
-        homeView.saveButton.addAction(UIAction(handler: {
-            [weak self] _ in
-            guard let self else { return }
-            print("버튼클릭")
-            homeView.memoViewModel.emptyModel.value.memoText = homeView.memoTextView.text
-            homeView.memoViewModel.saveInput.value = ()
-        }), for: .touchUpInside)
+    private func showBackButtonTappedAfterAlert() {
+        showAlert(
+            title: MapTextSection.dismiss.alertTitle,
+            message: MapTextSection.dismiss.alertMessage,
+            actionTitle: MapTextSection.dismiss.actionTitle
+        ) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
     }
     
-    private func imageSettingButtonAction(){
-        homeView.addImageButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            // 1. 액션시트를 띄우기
-            showPhotoActionSheet()
-        }), for: .touchUpInside)
-    }
-    
-    private func deleteButtonAction(){
-        homeView.deleteButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            showdeletAlert()
-        }), for: .touchUpInside)
-    }
-    
-    private func dismisButtonClicked(){
-        homeView.backButton.addAction(UIAction(handler: {[weak self] _ in
-            guard let self else { return }
-            showAlert(title: MapTextSection.dismiss.alertTitle, message: MapTextSection.dismiss.alertMessage, actionTitle: MapTextSection.dismiss.actionTitle) { _ in
-                self.dismiss(animated: true)
-            }
-        }), for: .touchUpInside)
+    private func showImageViewer(data: Data) {
+        let vc = CustomImageViewer()
+        vc.loadImage(data: data)
+        present(vc, animated: true, completion: nil)
     }
 }
 
 
 // ActionSheet
 extension AboutMemoViewController {
-    func showPhotoActionSheet() {
-        let max = homeView.memoViewModel.emptyModel.value.viewImageData.count
-        
-        let alert = UIAlertController(title: "Alert_get_photo".localized, message: nil, preferredStyle: .actionSheet)
     
-        let camera = ActionRouter().actions(.camera, actionHandler: {
-            [weak self] in
-            guard let self else { return }
-            if checkMax(max: max){
-                checkCameraAuthorization()
-            }
-        })
-        let gellery = ActionRouter().actions(.gallery, actionHandler: {
-            [weak self] in
-            guard let self else { return }
-            if checkMax(max: max){
-                checkUserPhotoAuthorization(max: homeView.memoViewModel.maxImageCount - max )
-            }
-        })
+    private func showImageAskActionSheet(){
+        guard let reactor else { return }
         
-        let cancel = UIAlertAction(title: "Cancel_check_title".localized, style: .cancel)
-        alert.addAction(camera)
-        alert.addAction(gellery)
+        let alert = UIAlertController(
+            title: MapTextSection.bringPhoto.alertTitle,
+            message: nil, preferredStyle: .actionSheet
+        )
+        
+        let cameraAction = UIAlertAction(
+            title: PhotoActionType.camera.title,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            checkCameraAccessWithLogic()
+        }
+        
+        let count = reactor.currentState.imageMaxCount - reactor.currentState.imageDatas.count
+        
+        let galleryAction = UIAlertAction(
+            title: PhotoActionType.gallery.title,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            startGallery(count: count)
+        }
+        
+        let cancel = UIAlertAction(
+            title: PhotoActionType.cancel.title,
+            style: .cancel
+        )
+        
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
         alert.addAction(cancel)
-
         present(alert, animated: true)
     }
     
-    private func checkMax(max: Int) -> Bool{
-        print("MAX : \(max)")
-        if max == homeView.memoViewModel.maxImageCount {
-            showToastBody(title: "Alert_image_max_title".localized, message: "Alert_image_max_detail".localized, completion: nil)
-            return false
+    private func checkCameraAccessWithLogic() {
+        Task { @MainActor in
+            let result = await photoManager.checkCameraPermission()
+            
+            if result {
+                do {
+                    let images = try await photoManager.pickFromCamera(
+                        presenter: self
+                    )
+                    
+                    guard let image = images?.first else {
+                        return
+                    }
+                    
+                    await sendImage([image])
+                } catch {
+                    await MainActor.run {
+                        showAlert(
+                            title: "Error",
+                            message: "카메라 여는중 오류가 발생하였습니다."
+                        )
+                    }
+                }
+                
+            } else {
+                goCameraSettingAlert()
+            }
         }
-        return true
     }
     
-    func showPhotoViewActionSheet(index: IndexPath){
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Alert_delete".localized, style: .destructive) { [weak self] _ in
-            guard let self else { return }
-            if (homeView.memoViewModel.inputModel.value?.inputMemoMeodel) != nil {
-                // MARK: 여기서 부터 로직을 수정
-                homeView.memoViewModel.removeImage.value = index
-                homeView.memoViewModel.emptyModel.value.imageModify = true
-            } else {
-                homeView.memoViewModel.emptyModel.value.viewImageData.remove(at: index.item)
+    private func sendImage(_ images: [UIImage]) async {
+        var datas: [Data] = []
+
+        for image in images {
+            guard let data = await image.onlyCompressImage(
+                type: .jpeg,
+                targetMB: 5
+            ) else {
+                print("압축 실패")
+                return
+            }
+            datas.append(data)
+        }
+
+        reactor?.action.onNext(.sendImages(datas))
+    }
+    
+    private func startGallery(count: Int) {
+        Task { @MainActor in
+            do {
+                let result = try await photoManager.pickFromLibrary(
+                    presenter: self,
+                    maxSelection: count
+                )
+                guard let images = result else {
+                    return
+                }
+                
+                await sendImage(images)
+            } catch {
+                print(error)
             }
         }
-        
-        let photoViewAction = UIAlertAction(title: "Alert_go_viewer".localized, style: .default) { [weak self] _ in
+    }
+
+    private func showAlreadyMaxToast(){
+        showToastBody(
+            title: "Alert_image_max_title".localized,
+            message: "Alert_image_max_detail".localized,
+            completion: nil
+        )
+    }
+    
+    func tappedImageCell(index: IndexPath){
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let deleteAction = UIAlertAction(
+            title: "Alert_delete".localized,
+            style: .destructive
+        ) { [weak self] _ in
             guard let self else { return }
-            let imageDatas = homeView.memoViewModel.emptyModel.value.viewImageData
-            
-            let imageData = imageDatas[index.item]
-            let vc = CustomImageViewer()
-            vc.loadImage(data: imageData)
-            DispatchQueue.main.async {
-                [ weak self ] in
-                guard let self else { return }
-                present(vc, animated: true, completion: nil)
-            }
+            reactor?.action.onNext(.sendRemoveImageIndex(index: index.item))
+        }
+        
+        let photoViewAction = UIAlertAction(
+            title: "Alert_go_viewer".localized,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            reactor?.action.onNext(.requestShowImage(index: index.item))
         }
         
         let cancel = UIAlertAction(title: "Cancel_check_title".localized, style: .cancel)
@@ -146,47 +359,24 @@ extension AboutMemoViewController {
         alert.addAction(deleteAction)
         alert.addAction(photoViewAction)
         alert.addAction(cancel)
+        
         DispatchQueue.main.async {
             [ weak self ] in
             guard let self else { return }
             present(alert, animated: true)
         }
     }
-}
-
-// MARK: Camera Authorization
-extension AboutMemoViewController {
     
-    func checkCameraAuthorization() {
-        imageService = ImageService(presentationViewController: self, pickerMode: .camera)
-        imageService?.checkCameraPermission(compltion: { [weak self] bool in
-            guard let self else { return }
-            if bool {
-                cameraImagePicker()
-            } else {
-                cameraSettingAlert()
-            }
-        })
-
+    private func goCameraSettingAlert(){
+        showAlert(title: MapTextSection.camera.alertMessage, message: MapTextSection.camera.actionTitle, actionTitle: MapTextSection.camera.actionTitle) {
+            [weak self] action in
+            guard let self else {return}
+            goSetting()
+        }
     }
-    private func cameraImagePicker(){
-        imageService?.pickImage(complete: { [ weak self ] results in
-            guard let self else { return }
-            switch results{
-            case .success(let images):
-                if let image = images?.first {
-                    guard let image = image.jpegData(compressionQuality: 1.0) else {
-                        return
-                    }
-                    handleImageAction(data: image)
-                }
-            case .failure(_):
-                showAlert(title: cameraError.titleString, message: cameraError.messageString)
-            }
-        })
-    }
-
 }
+
+
 
 
 // MARK: PHPickerViewControllerDelegate
@@ -202,147 +392,29 @@ extension AboutMemoViewController {
         }
     }
     /// 지우기 시도시
-    func showdeletAlert(){
-        let alert = UIAlertController(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, preferredStyle: .alert)
+    func showDeleteAlert(){
+        let alert = UIAlertController(
+            title: MapTextSection.delete.alertTitle,
+            message: MapTextSection.delete.alertMessage,
+            preferredStyle: .alert
+        )
         
-        let action = UIAlertAction(title: MapTextSection.delete.actionTitle, style: .destructive) { [weak self] _ in
+        let action = UIAlertAction(
+            title: MapTextSection.delete.actionTitle,
+            style: .destructive
+        ) { [weak self] _ in
             guard let self else { return }
-            homeView.memoViewModel.removiewInput.value = ()
-            homeView.memoViewModel.emptyModel.value.imageModify = true
+            reactor?.action.onNext(.removeTapped)
         }
         
-        let cancel = UIAlertAction(title: MapTextSection.delete.cancelTitle, style: .default)
+        let cancel = UIAlertAction(
+            title: MapTextSection.delete.cancelTitle,
+            style: .default
+        )
         
         alert.addAction(action)
         alert.addAction(cancel)
         
         present(alert, animated: true)
     }
-    // 뒤로가기 시도시
-    
-    
-    
 }
-
-// MARK: 이미지 삭제 추가 Action -> Z인덱스
-extension AboutMemoViewController {
-    // MARK: 이때도 수정해야해
-    private func handleImageAction(data: Data){
-        if homeView.memoViewModel.emptyModel.value.inputMemoMeodel != nil {
-   
-            homeView.memoViewModel.emptyModel.value.viewImageData.append(data)
-            
-            homeView.memoViewModel.emptyModel.value.imageModify = true
-            
-        } else {
-            // print(data)
-            homeView.memoViewModel.emptyModel.value.viewImageData.append(data)
-            print("####",homeView.memoViewModel.emptyModel.value.viewImageData)
-        }
-        
-        
-    }
-}
-
-extension AboutMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("SSS",homeView.memoViewModel.emptyModel.value.viewImageData.count)
-        
-        return homeView.memoViewModel.emptyModel.value.viewImageData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnlyImageCollectionViewCell.reusebleIdentifier, for: indexPath) as? OnlyImageCollectionViewCell else {
-            print("테이블뷰 에러")
-            return UICollectionViewCell()
-        }
-    
-        let data = homeView.memoViewModel.emptyModel.value.viewImageData[indexPath.item]
-        
-        DispatchQueue.main.async {
-            cell.backgoundImage.image = UIImage(data: data)
-        
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showPhotoViewActionSheet(index: indexPath)
-    }
-}
-
-extension AboutMemoViewController: ToastPro {
-    
-    // MARK: 최대 선택할수 있는 개수를 통해 제한
-    func checkUserPhotoAuthorization(max: Int) {
-        print(max)
-        imageService = ImageService(presentationViewController: self, pickerMode: .maximum(max))
-        imageService?.pickImage(complete: { [weak self] results in
-            guard let self else { return }
-            switch results {
-            case .success(let images):
-                guard let images else {
-                    imageErrorAlert()
-                    return
-                }
-                for image in images {
-                    guard let imageData =  image.jpegData(compressionQuality: 1.0) else {
-                        imageErrorAlert()
-                        return
-                    }
-                    handleImageAction(data: imageData)
-                }
-            case .failure:
-                imageErrorAlert()
-            }
-        })
-    }
-    private func imageErrorAlert(){
-        showAlert(title: "Alert_cant_load_image".localized, message: "Error_cant_add_image".localized)
-    }
-}
-
-
-extension AboutMemoViewController {
-    func subscribe(){
-        homeView.memoViewModel.dismissOutPut.bind { [weak self] void  in
-            guard let self else { return }
-            guard void != nil else { return }
-            dismiss(animated: true)
-        }
-        
-        homeView.memoViewModel.repoErrorPut.bind { [ weak self ] error in
-            guard let self else { return }
-            guard let error else { return }
-            showAPIErrorAlert(repo: error)
-        }
-        
-        homeView.memoViewModel.emptyModel.bind { [weak self] model in
-            guard let self else { return }
-            homeView.imageCounterSetting()
-            homeView.colletionView.reloadData()
-        }
-        homeView.memoViewModel.fileErrorPut.bind {[weak self] error in
-            guard let self else { return }
-            guard let error else { return }
-            showAPIErrorAlert(file: error)
-        }
-        homeView.memoViewModel.successSave.bind { [weak self] void in
-            guard let self else { return }
-            guard void != nil else { return }
-            dismiss(animated: true)
-            NotificationCenter.default.post(name: .didSaveActionDetailMemo, object: nil)
-        }
-        homeView.memoViewModel.deletButtonHidden.bind { [weak self] bool in
-            guard let self else { return }
-            guard let bool else { return }
-            homeView.deleteButton.isHidden = !bool
-        }
-        homeView.memoViewModel.warningTitle.bind { [weak self] textSection in
-            guard let self else { return }
-            guard let textSection else { return }
-            showToastBody(title: textSection.alertTitle, message: textSection.alertMessage)
-        }
-    }
-}
-

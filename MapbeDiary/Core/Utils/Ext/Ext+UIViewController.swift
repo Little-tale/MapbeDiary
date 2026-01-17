@@ -52,7 +52,7 @@ extension UIViewController {
         }
     }
     
-    func showAPIErrorAlert(file: fileManagerError) {
+    func showAPIErrorAlert(file: FileManagerError) {
 
         let alert = UIAlertController(title: "Error_alert_title".localized, message: file.message, preferredStyle: .alert)
         

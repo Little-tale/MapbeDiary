@@ -125,12 +125,20 @@ extension AboutLocationViewController {
             return
         }
         let detail = data[indexPath.row]
-        guard let loaction = viewModel.inputLocationMemo.value else { return }
+        guard let location = viewModel.inputLocationMemo.value else { return }
         
-        let vc = AboutMemoViewController()
+        let vc = AboutMemoViewController(
+            reactor: AboutMemoReactor(
+                memoID: location.id.stringValue,
+                detailMemoID: detail.id.stringValue
+            )
+        )
         
-        vc.homeView.memoViewModel.inputModel.value = AboutMemoModel(inputLoactionInfo: loaction, inputMemoMeodel: detail)
+        vc.didSuccessMemo = { [weak self] in
+            self?.reloadDataLocation()
+        }
         
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     // 메모삭제시
@@ -187,11 +195,17 @@ extension AboutLocationViewController {
             print("이때도 에러 처리해야해")
             return
         }
-        let vc = AboutMemoViewController()
-        vc.homeView.memoViewModel.inputModel.value = AboutMemoModel(inputLoactionInfo: location)
+        let vc = AboutMemoViewController(
+            reactor: AboutMemoReactor(
+                memoID: location.id.stringValue,
+                detailMemoID: nil
+            )
+        )
+        vc.didSuccessMemo = { [weak self] in
+            self?.reloadDataLocation()
+        }
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-        
     }
     
     

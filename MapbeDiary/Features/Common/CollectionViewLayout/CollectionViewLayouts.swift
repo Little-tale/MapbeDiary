@@ -51,5 +51,30 @@ struct CollectionViewLayouts {
         
         return layout
     }
+    
+    static func makeMemoImagesLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let spacing : CGFloat = 10
+        let cellWidth = UIScreen.main.bounds.width - (spacing * 3)
+        
+        // 아이템 크기
+        layout.itemSize = CGSize(
+            width: cellWidth / 3.5,
+            height: (cellWidth) / 3.5
+        )
+        
+        layout.sectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 0,
+            right: 20
+        )
+        
+        layout.minimumLineSpacing = 20
+        
+        layout.scrollDirection = .horizontal
+        return layout
+    }
 }
 

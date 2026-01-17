@@ -217,10 +217,9 @@ final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReac
 
    
     private func titleTester(textField : UITextField) -> String{
-        // 1. 텍스트가 비어있는지 부터
         if let textFieldText = textField.text,
            textFieldText.isEmpty {
-            // 2. 기본 플레이스 홀더와 비교
+            
             if let placeHolder = textField.placeholder,
                placeHolder != "Add_title_text_fileld_text".localized {
                 return placeHolder
