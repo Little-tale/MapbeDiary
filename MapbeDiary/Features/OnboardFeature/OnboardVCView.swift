@@ -1,5 +1,5 @@
 //
-//  OnboardBaseView.swift
+//  OnboardVCView.swift
 //  MapbeDiary
 //
 //  Created by Jae hyung Kim on 3/22/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class OnboardBaseView: VCBaseView {
+final class OnboardVCView: VCBaseView {
     
     let imageSliderView = ScrollImageView(frame: .zero)
     let startButton = UIButton()

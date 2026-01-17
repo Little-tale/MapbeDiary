@@ -40,9 +40,12 @@ class BaseView: UIView {
     func register(){
         
     }
+    
+    @available(*, deprecated)
     func subscribe(){
         
     }
+    
     func tester(){
         
     }

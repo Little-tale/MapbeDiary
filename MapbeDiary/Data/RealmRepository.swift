@@ -237,27 +237,7 @@ final class RealmRepository {
         return folderPath
     }
     
-    // MARK: 디테일 메모를 생성하면서 로케이션 메모에 등록합니다.
-    func makeDetailMemo(_ model: AboutMemoModel,_ location: LocationMemo) -> Result<DetailMemo,RealmManagerError> {
-        guard let text = model.memoText else { return .failure(.cantMakeDetailMemo) }
-        
-        let memoModel = DetailMemo(detailContents: text, modifyDate: nil)
-        do { 
-            try realm.write {
-                realm.add(memoModel)
-            }
-            
-            try realm.write {
-                if location.detailMemos.contains(memoModel){
-                    return
-                }
-                location.detailMemos.append(memoModel)
-            }
-        } catch {
-            return .failure(.cantMakeDetailMemo)
-        }
-        return .success( memoModel )
-    }
+
     
     // MARK: 디테일 메모 이미지를 저장합니다.
     /// 디테일 메모 이미지를 저장합니다. 반복문이 필요합니다.
@@ -299,29 +279,7 @@ final class RealmRepository {
         return Array(detail.imagePaths)
     }
     
-    /// 디테일 메모를 업데이트
-    func updateDetailMemo(memoModel: AboutMemoModel) -> Result<Void,RealmManagerError> {
-        guard let memo = memoModel.inputMemoMeodel,
-              let text = memoModel.memoText else {
-//            print("error\(memoModel.inputMemoMeodel), \(memoModel.memoText)")
-            return .failure(.cantModifyMemo)
-        }
-        // 이미지는 알아서 업데이트 되게 해버림 즉 텍스트만 업데이트하면 된다.!
-        do {
-            try realm.write {
-                let value: [String: Any] = [
-                    "id": memo.id,
-                    "detailContents": text
-                ]
-                realm.create(detailMemoModel, value: value, update: .modified)
-            }
-        } catch {
-            print("여기임?")
-            return .failure(.canModifiMemo)
-        }
-        return .success(())
-    }
-    
+
     // MARK: -------------- Remove ---------------------
     
     // MARK: 정렬된 데이터 기준으로 삭제후 정렬되게 구성하기

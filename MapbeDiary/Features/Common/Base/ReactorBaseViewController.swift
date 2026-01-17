@@ -48,13 +48,14 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
         sendActions(reactor: reactor)
     }
     
+    /// View -> Reactor OR View Actions
     func sendActions(reactor: R) {}
     
+    /// Delegate Register
     func register() {}
     
-    func setUI() {
-        
-    }
+    /// another UI Setting If you Need Use
+    func setUI() {}
     
     deinit {
         print("deinit:", String(describing: type(of: self)))

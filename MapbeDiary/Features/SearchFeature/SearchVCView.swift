@@ -18,7 +18,7 @@ final class SearchVCView: VCBaseView {
         frame: .zero,
         collectionViewLayout: CollectionViewLayouts.makeListLayout()
     )
-    let emptyImage = SearchBaseImageView()
+    let emptyImage = SearchEmptyView()
     
     
     override func setupHierarchy() {

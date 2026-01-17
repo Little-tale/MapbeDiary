@@ -17,7 +17,7 @@ final class DatailTableViewCell: BaseTableViewCell {
     var menuModifyAction: (() -> Void)?
     var menuDeleteAction: (() -> Void)?
     
-    override func configureHierarchy() {
+    override func setupHierarchy() {
         contentView.addSubview(detailContents)
         contentView.addSubview(infoButton)
         contentView.addSubview(regDateLabel)
@@ -28,7 +28,7 @@ final class DatailTableViewCell: BaseTableViewCell {
      make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(8)
      */
     
-    override func configureLayout() {
+    override func setupConstraints() {
         regDateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(10)
@@ -69,7 +69,7 @@ final class DatailTableViewCell: BaseTableViewCell {
         }
     }
     
-    override func designView() {
+    override func setupUI() {
         settingButton()
         detailContents.numberOfLines = 4
         detailContents.font = JHFont.UIKit.bo20
@@ -80,7 +80,7 @@ final class DatailTableViewCell: BaseTableViewCell {
         detailcollectionView.backgroundColor = .wheetSide
     }
     
-    override func registers() {
+    override func register() {
         detailcollectionView.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusebleIdentifier)
     }
     

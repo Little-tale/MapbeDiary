@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 
-final class OnboardViewController: ReactorBaseViewController<OnboardReactor,OnboardBaseView> {
+final class OnboardViewController: ReactorBaseViewController<OnboardReactor,OnboardVCView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
