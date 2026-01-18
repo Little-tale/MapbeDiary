@@ -116,6 +116,8 @@
 
 "Alert_modify_title" = "수정";
 
+"Modify_title" = "수정하기";
+
 "Alert_success_title" = "성공";
 
 "Alert_fail_title" = "실패";

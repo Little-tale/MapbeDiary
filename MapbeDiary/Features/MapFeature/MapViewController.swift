@@ -15,7 +15,7 @@ import RxCocoa
 
 enum PanelViewControllerType: Equatable {
     case addLocation
-    case about
+    case about(memoId: String)
     case modify(memoId: String)
 }
 
@@ -37,6 +37,7 @@ struct PanelConfiguration {
     var coordinate: CLLocationCoordinate2D?
     var viewType: PanelViewControllerType
     var layoutType: PanelLayoutType
+    var folderID: String
 }
 
 // FIXME: 서치바 계속 나오는 문제
@@ -262,7 +263,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if let annotation = annotation as? CustomAnnotation {
-            var view: ArtWorkMarkerView? = mapView.dequeueReusableAnnotationView(withIdentifier: ArtWorkMarkerView.reusebleIdentifier, for: annotation) as? ArtWorkMarkerView
+            var view: ArtWorkMarkerView? = mapView.dequeueReusableAnnotationView(withIdentifier: ArtWorkMarkerView.reusableIdentifier, for: annotation) as? ArtWorkMarkerView
     
             view = ArtWorkMarkerView(annotation: annotation, reuseIdentifier: CustomAnnotation.reusableIdentifier)
         
@@ -308,15 +309,12 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     private func locationDetailModify(_ anno: CustomAnnotation){
-        print("롱? :locationDetailModify" )
+        guard let id = anno.locationId else { return }
+        print("Show Location Detail")
         showPanel(
             coordinate: nil,
-            viewType: .about,
-            layout: .detail,
-            configure: { viewController in
-                guard let viewController = viewController as? AboutLocationViewController else { return }
-                viewController.viewModel.inputLocationId.value = anno.locationId
-            }
+            viewType: .about(memoId: id),
+            layout: .detail
         )
     }
 }
@@ -504,9 +502,17 @@ extension MapViewController: FloatingPanelControllerDelegate {
             }
             vc.backDelegate = self
             viewController = vc
-        case .about:
-            let vc = AboutLocationViewController()
-            vc.backdelegate = self
+            
+        case let .about(memoID):
+            guard let sharedEvent = reactor?.sharedEvent else { return }
+            
+            let vc = AboutLocationViewController(
+                reactor: AboutLocationReactor(
+                    memoID: memoID,
+                    shared: sharedEvent
+                )
+            )
+            vc.backDelegate = self
             vc.locationDelegate = self
             viewController = vc
             
@@ -535,6 +541,10 @@ extension MapViewController: FloatingPanelControllerDelegate {
             view: viewController,
             layout: configuration.layoutType
         )
+        if let vc = viewController as? AboutLocationViewController {
+            vc.mainView.collectionView.alwaysBounceVertical = true
+            newPanel.track(scrollView: vc.mainView.collectionView)
+        }
         
         newPanel.move(to: .half, animated: true)
         floatPanel = newPanel
@@ -546,10 +556,12 @@ extension MapViewController: FloatingPanelControllerDelegate {
         layout: PanelLayoutType,
         configure: ((UIViewController) -> Void)? = nil
     ) {
+        guard let folderID = UserDefaultsManager.currentFolderID else { return }
         let config = PanelConfiguration(
             coordinate: coordinate,
             viewType: viewType,
-            layoutType: layout
+            layoutType: layout,
+            folderID: folderID,
         )
         updateFloatingPanel(with: config, configure: configure)
     }
@@ -583,17 +595,16 @@ extension MapViewController: BackButtonDelegate {
     }
 }
 // MARK: 로케이션 수정
-extension MapViewController: AboutmodifyLocation {
+extension MapViewController: AboutModifyLocationDelegate {
     
-    func getModifyInfo(with memo: LocationMemo) {
-        let memoId = memo.id.stringValue
+    func getModifyInfo(with locationMemo: LocationMemoEntity) {
         let coordinate: CLLocationCoordinate2D?
-        if let location = memo.location {
+        if let location = locationMemo.location {
             coordinate = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
         } else {
             coordinate = nil
         }
-        requestModifyPanel(memoId: memoId, coordinate: coordinate)
+        requestModifyPanel(memoId: locationMemo.id, coordinate: coordinate)
     }
 }
 
@@ -633,10 +644,12 @@ extension MapViewController {
         memoId: String,
         coordinate: CLLocationCoordinate2D?
     ) {
+        guard let folderID = UserDefaultsManager.currentFolderID else { return }
         let config = PanelConfiguration(
             coordinate: coordinate,
             viewType: .modify(memoId: memoId),
-            layoutType: .custom
+            layoutType: .custom,
+            folderID: folderID
         )
         pendingPanelConfiguration = config
         

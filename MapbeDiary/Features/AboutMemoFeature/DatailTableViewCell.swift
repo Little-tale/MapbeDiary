@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class DatailTableViewCell: BaseTableViewCell {
+final class DetailTableViewCell: BaseTableViewCell {
     let detailContents = UILabel()
     let infoButton = UIButton(type: .system)
     let regDateLabel = UILabel()
@@ -104,7 +104,7 @@ final class DatailTableViewCell: BaseTableViewCell {
 }
 
 // MARK: UIScreen 대채해서 하기
-extension DatailTableViewCell {
+extension DetailTableViewCell {
     static func configureCellLayout() -> UICollectionViewFlowLayout {
         let layout = CenterFlowLayout()
         if let size = UIScreen.current?.bounds.size {

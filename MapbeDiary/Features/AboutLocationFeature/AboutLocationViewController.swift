@@ -7,293 +7,323 @@
 // -> 레이아웃 -> 데이타 소스(타입정하기) 
 // -> 레지스트레이션(데이터 반영)(cellFor)  -> 데이타소스에 등록 -> 스냅샷
 import UIKit
+import RxSwift
+import RxCocoa
 
-protocol AboutmodifyLocation: AnyObject {
-    func getModifyInfo(with lcation: LocationMemo)
+protocol AboutModifyLocationDelegate: AnyObject {
+    func getModifyInfo(with locationMemo: LocationMemoEntity)
 }
 
-final class AboutLocationViewController: BaseHomeViewController<LocationAboutMemosView> {
+final class AboutLocationViewController: ReactorBaseViewController<AboutLocationReactor, AboutLocationVCView> {
     
-    let viewModel = AboutLocationViewModel()
-    var disPatchQueItem: DispatchWorkItem?
-    weak var backdelegate: BackButtonDelegate?
-    weak var locationDelegate: AboutmodifyLocation?
+    typealias DataSource = UICollectionViewDiffableDataSource<DetailMemoEntity, URL>
+    
+    typealias CellRegister = UICollectionView.CellRegistration<OnlyImageCollectionViewCell, URL>
+    
+    typealias HeaderRegister = UICollectionView.SupplementaryRegistration<DetailMemoHeaderView>
+    
+    typealias FooterRegister = UICollectionView.SupplementaryRegistration<DetailMemoSeparatorFooterView>
+    
+    typealias SnapShot = NSDiffableDataSourceSnapshot<DetailMemoEntity, URL>
+    
+    
+
+    private var dataSource: DataSource?
+    private let imageCache = NSCache<NSString, UIImage>()
+    weak var backDelegate: BackButtonDelegate?
+    weak var locationDelegate: AboutModifyLocationDelegate?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegateDataSource()
-        settingNotification()
-        subscribe()
-        locationDelete()
-        emmtyButtonAction()
-        detailAddButtonAction()
-        backButtonAction()
-        annotationModifyAction()
-        backgroundSetting()
+        setDataSource()
     }
     
-    private func delegateDataSource() {
-        homeView.detailTableView.dataSource = self
-        homeView.detailTableView.delegate = self
-        homeView.detailTableView.rowHeight = UITableView.automaticDimension
-        homeView.detailTableView.estimatedRowHeight = 200
-       
-    }
-
-    private func settingNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataLocation), name: .didSaveActionDetailMemo, object: nil)
+    override func bind(reactor: AboutLocationReactor) {
+        super.bind(reactor: reactor)
+        
+        reactor.state.map { $0.locationMemo }
+            .compactMap { $0 }
+            .bind(with: self) { owner, model in
+                owner.mainView.memoDetailView.setData(data: model)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.detailMemos }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, models in
+                owner.applySnapShot(data: models)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$realmError)
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, error in
+                owner.showAPIErrorAlert(repo: error)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$modifyRequest)
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, event in
+                owner.modifyMoveMemoVC(
+                    memoID: event.memoID,
+                    detailID: event.item.id
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isEmptyDetails)
+            .bind(with: self) { owner, trigger in
+                owner.mainView.isEmptyView(isHidden: !trigger)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$successRemoveMemo)
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.dismissAction()
+            }
+            .disposed(by: disposeBag)
     }
     
-    private func backgroundSetting(){
-        homeView.backgroundColor = .wheetLightBrown
-    }
-}
-
-// MARK: ButtonAction
-extension AboutLocationViewController {
-    
-    func emmtyButtonAction(){
-        homeView.memoEmptyView.emptyButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            newDetailMemoAction()
-        }), for: .touchUpInside)
+    override func sendActions(reactor: AboutLocationReactor) {
+        
+        rx.viewDidLoad
+            .map { _ in AboutLocationReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mainView.backButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.dismissAction()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.memoEmptyView.emptyButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.newDetailMemoAction()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.detailAddButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.newDetailMemoAction()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.allDeleteButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.showLocationDeleteAlert()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.memoDetailView.modifyLocationButton.rx
+            .tap
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.modifyCheckAction()
+            }
+            .disposed(by: disposeBag)
         
     }
-    func detailAddButtonAction(){
-        homeView.detailAddButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            newDetailMemoAction()
-        }), for: .touchUpInside)
+    
+    override func register() {
+        mainView.collectionView.setCollectionViewLayout(makeLayout(), animated: true)
     }
     
-    func locationDelete(){
-        homeView.allDeleteButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            showLocationDeleteAlert()
-        }), for: .touchUpInside)
-    }
-    func backButtonAction(){
-        homeView.backButton.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            dismissAction()
-        }), for: .touchUpInside)
-    }
-    func annotationModifyAction(){
-        homeView.memoAboutBaseView.modiFyLocationButton.addAction(UIAction(handler: { [weak self] _ in  print("여기인가????")
-            guard let self else { return }
-            print("여기인가????")
-            modifyCheckAction()
-        }), for: .touchUpInside)
+    private func makeLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [weak self] section, _  in
+            guard let self,
+                  let datas = reactor?.currentState.detailMemos
+            else { return nil }
+            
+            let hasImages = !(datas[section].imagePaths.isEmpty)
+            return CollectionViewLayouts.makeImageCarouselSection(
+                hasImages: hasImages,
+                showsSeparator: true
+            )
+        }
     }
     
-}
-
-extension AboutLocationViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.detailTableViewData.value?.count ?? 0
+    private func setDataSource() {
+        let cellRegister = setCollectionViewCellRegister()
+        
+        dataSource = DataSource(
+            collectionView: mainView.collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: cellRegister,
+                    for: indexPath,
+                    item: itemIdentifier
+                )
+            }
+        )
+        
+        let headerRegister = setCollectionViewHeaderRegister()
+        let footerRegister = setCollectionViewFooterRegister()
+        
+        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+            if kind == UICollectionView.elementKindSectionHeader {
+                return collectionView.dequeueConfiguredReusableSupplementary(
+                    using: headerRegister,
+                    for: indexPath
+                )
+            }
+            if kind == UICollectionView.elementKindSectionFooter {
+                return collectionView.dequeueConfiguredReusableSupplementary(
+                    using: footerRegister,
+                    for: indexPath
+                )
+            }
+            return nil
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DatailTableViewCell.reusebleIdentifier, for: indexPath) as? DatailTableViewCell else {
-            return UITableViewCell()
+    private func setCollectionViewCellRegister() -> CellRegister {
+        let cellRegister = CellRegister { [weak self] cell, _, item in
+            guard let self else { return }
+            cell.setImage(from: item, cache: self.imageCache)
         }
-        let detailData = viewModel.detailTableViewData.value?[indexPath.row]
-        cell.detailContents.text = detailData?.detailContents
-        cell.imageBool(!(detailData?.imagePaths.isEmpty ?? true))
-        cell.detailcollectionView.tag = indexPath.row
-        cell.regDateLabel.text = detailData?.regDate.localDate()
-        cell.detailcollectionView.dataSource = self
-        cell.detailcollectionView.delegate = self
-        cell.selectionStyle = .none
-        cell.menuDeleteAction = { [weak self] in
-            self?.deleteMemo(indexPath)
+        return cellRegister
+    }
+    
+    private func setCollectionViewHeaderRegister() -> HeaderRegister {
+        let headerRegister = HeaderRegister(
+            elementKind: UICollectionView.elementKindSectionHeader
+        ) { [weak self] supplementaryView, elementKind, indexPath in
+            
+            guard let section = self?.dataSource?.snapshot().sectionIdentifiers[indexPath.section] else {
+                return
+            }
+            
+            supplementaryView.setData(
+                data: DetailMemoHeaderView.SetData(
+                    detail: section.detailContents,
+                    regDate: section.regDate.localDate()
+                )
+            )
+            
+            supplementaryView.menuDeleteAction = {
+                self?.showDetailDeleteAlert(data: section, index: indexPath.section)
+            }
+            
+            supplementaryView.menuModifyAction = {
+                self?.reactor?.action.onNext(.modifyRequest(section))
+            }
         }
-        cell.menuModifyAction = { [weak self] in
-            self?.modeiFy(indexPath)
+        
+        return headerRegister
+    }
+    
+    private func setCollectionViewFooterRegister() -> FooterRegister {
+        return FooterRegister(
+            elementKind: UICollectionView.elementKindSectionFooter
+        ) { _, _, _ in }
+    }
+    
+    private func applySnapShot(data: [DetailMemoEntity]) {
+        var snapShot = SnapShot()
+        snapShot.appendSections(data)
+        data.forEach { detail in
+            snapShot.appendItems(detail.imagePaths, toSection: detail)
         }
-        cell.detailcollectionView.reloadData()
-        return cell
+        dataSource?.apply(snapShot, animatingDifferences: true)
     }
 }
 
 // MARK: Action
 extension AboutLocationViewController {
-    // 1. 수정시
-    func modeiFy(_ indexPath: IndexPath){
-        guard let data = viewModel.detailTableViewData.value else {
-            print("노 데이타 모디파이")
-            return
-        }
-        let detail = data[indexPath.row]
-        guard let location = viewModel.inputLocationMemo.value else { return }
-        
+    
+    private func modifyMoveMemoVC(memoID: String, detailID: String) {
         let vc = AboutMemoViewController(
             reactor: AboutMemoReactor(
-                memoID: location.id.stringValue,
-                detailMemoID: detail.id.stringValue
+                memoID: memoID,
+                detailMemoID: detailID
             )
         )
         
         vc.didSuccessMemo = { [weak self] in
-            self?.reloadDataLocation()
+            self?.reactor?.action.onNext(.reLoadData)
         }
         
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    // 메모삭제시
-    func deleteMemo(_ indexPath: IndexPath) {
-        guard viewModel.detailTableViewData.value != nil else {
-            print("노 데이타 딜리트")
-            return
+
+    
+    func showDetailDeleteAlert(data: DetailMemoEntity, index: Int){
+        let alert = UIAlertController(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: MapTextSection.delete.actionTitle, style: .destructive) { [weak self] _ in
+            guard let self else { return }
+            reactor?.action.onNext(.removeDetail(model: data, index: index))
         }
-        guard viewModel.inputLocationMemo.value != nil else { return }
-        showDetailDeleteAlert(indexPath)
+        
+        let cancel = UIAlertAction(title: MapTextSection.delete.cancelTitle, style: .default)
+        
+        alert.addAction(action)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true)
     }
     
-    func showDetailDeleteAlert(_ indexPath: IndexPath){
-        let alert = UIAlertController(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: MapTextSection.delete.actionTitle, style: .destructive) { [weak self] _ in
-            guard let self else { return }
-            viewModel.removeDetailMemo.value = indexPath
-        }
-        
-        let cancel = UIAlertAction(title: MapTextSection.delete.cancelTitle, style: .default)
-        
-        alert.addAction(action)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true)
-    }
     // 로케이션 기록 삭제시
-    func showLocationDeleteAlert() {
+    private func showLocationDeleteAlert() {
         let alert = UIAlertController(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: MapTextSection.delete.actionTitle, style: .destructive) { [weak self] _ in
+        let action = UIAlertAction(
+            title: MapTextSection.delete.actionTitle,
+            style: .destructive
+        ) { [weak self] _ in
             guard let self else { return }
-            viewModel.removeLocationMemo.value = ()
-            
+            reactor?.action.onNext(.removeRequest)
         }
-        let cancel = UIAlertAction(title: MapTextSection.delete.cancelTitle, style: .default)
+        let cancel = UIAlertAction(
+            title: MapTextSection.delete.cancelTitle,
+            style: .default
+        )
         
         alert.addAction(action)
         alert.addAction(cancel)
         present(alert, animated: true)
     }
+    
     // 지역 수정 액션
-    func modifyCheckAction(){
-        showAlertHandlerCancel(title: "수정", message: "장소를 수정 하러 가시겠습니까?", actionTitle: "이동하기") {[weak self] _ in
+    private func modifyCheckAction(){
+        showAlertHandlerCancel(title: "수정", message: "장소를 수정 하러 가시겠습니까?", actionTitle: "이동하기") { [weak self] _ in
             guard let self else { return }
-            guard let location = viewModel.inputLocationMemo.value else { return }
+            guard let location = reactor?.currentState.locationMemo else { return }
             locationDelegate?.getModifyInfo(with: location)
         }
     }
     
-    func newDetailMemoAction(){
-        guard let location = viewModel.inputLocationMemo.value else {
-            print("이때도 에러 처리해야해")
+    private func newDetailMemoAction(){
+        
+        guard let id = reactor?.currentState.memoID else {
             return
         }
+        
         let vc = AboutMemoViewController(
             reactor: AboutMemoReactor(
-                memoID: location.id.stringValue,
+                memoID: id,
                 detailMemoID: nil
             )
         )
         vc.didSuccessMemo = { [weak self] in
-            self?.reloadDataLocation()
+            self?.reactor?.action.onNext(.reLoadData)
         }
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
-    
-    
-    @objc
-    func reloadDataLocation(){
-        viewModel.inputLocationMemo.value = viewModel.inputLocationMemo.value
-    }
-    
-    func dismissAction(){
-        backdelegate?.backButtonClicked()
-    }
-}
 
-extension AboutLocationViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.detailTableViewData.value?[collectionView.tag].imagePaths.count ?? 0
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnlyImageCollectionViewCell.reusebleIdentifier, for: indexPath) as? OnlyImageCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.settingImageMode(.scaleAspectFill)
-        
-        let detail = viewModel.detailTableViewData.value?[collectionView.tag]
-        
-        let imageData = detail?.imagePaths[indexPath.item]
-       
-            if let imageData,
-               let detail{
-                let detailId = detail.id.stringValue
-                let iamgeid = imageData.id.stringValue
-                cell.loadImage(fromPath: iamgeid, detailId)
-        }
-        
-        return cell
-    }
-}
-
-
-extension AboutLocationViewController {
-    private func subscribe(){
-        viewModel.locationInfoOutPut
-            .guardBind(object: self) { owner, model in
-                guard let model else { return }
-                owner.homeView.memoAboutBaseView.memoAboutViewModel.infoInput.value = model
-        }
-        viewModel.emptyHiddenOutPut
-            .guardBind(object: self) { owner, bool in
-                guard let bool else { return }
-                owner.homeView.memoEmptyView.isHidden = bool
-                owner.homeView.detailAddButton.isHidden = !bool
-        }
-        viewModel.detailTableViewData
-            .guardBind(object: self) { owner, memos in
-                guard memos != nil else { return }
-                owner.homeView.detailTableView.reloadData()
-        }
-        viewModel.fileMangerErrorOutPut
-            .guardBind(object: self) { owner, error in
-                guard let error else { return }
-                
-                owner.disPatchQueItem?.cancel()
-                
-                owner.disPatchQueItem = DispatchWorkItem {
-                    owner.showAPIErrorAlert(file: error)
-                }
-                if let disPatchQueItem = owner.disPatchQueItem {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: disPatchQueItem)
-                }
-        }
-        
-        viewModel.repositoryErrorOutPut
-            .guardBind(object: self) { owner, error in
-                guard let error else { return }
-                DispatchQueue.main.async {
-                    owner.showAPIErrorAlert(repo: error)
-                }
-            }
-        viewModel.dismissAction
-            .guardBind(object: self) { owner, void in
-                guard void != nil else { return }
-                owner.dismissAction()
-                // FIXME: @@
-                
-//                SingleToneDataViewModel.shared.shardFolderOb.value =  SingleToneDataViewModel.shared.shardFolderOb.value
-            }
+    private func dismissAction(){
+        backDelegate?.backButtonClicked()
     }
 }

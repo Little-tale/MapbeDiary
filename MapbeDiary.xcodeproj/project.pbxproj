@@ -158,6 +158,13 @@
 		7BBB67E92F1BD25A0026EB7A /* DetailMemoRealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67E82F1BD25A0026EB7A /* DetailMemoRealmRepository.swift */; };
 		7BBB67EC2F1BF64F0026EB7A /* MDColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67EB2F1BF64F0026EB7A /* MDColors.swift */; };
 		7BBB67EE2F1BF6A90026EB7A /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67ED2F1BF6A90026EB7A /* Ext+UIColor.swift */; };
+		7BBB67F12F1CEADB0026EB7A /* AboutLocationVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F02F1CEADB0026EB7A /* AboutLocationVCView.swift */; };
+		7BBB67F32F1CEC3E0026EB7A /* MemoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F22F1CEC3E0026EB7A /* MemoDetailView.swift */; };
+		7BBB67F52F1CF48F0026EB7A /* AboutLocationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F42F1CF48F0026EB7A /* AboutLocationReactor.swift */; };
+		7BBB67F72F1CF9120026EB7A /* TextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F62F1CF9120026EB7A /* TextVC.swift */; };
+		7BBB67F92F1CFE230026EB7A /* DetailMemoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F82F1CFE230026EB7A /* DetailMemoHeaderView.swift */; };
+		7BBB67FB2F1CFE760026EB7A /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67FA2F1CFE760026EB7A /* BaseCollectionReusableView.swift */; };
+		7BBB67FD2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67FC2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -363,6 +370,13 @@
 		7BBB67E82F1BD25A0026EB7A /* DetailMemoRealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoRealmRepository.swift; sourceTree = "<group>"; };
 		7BBB67EB2F1BF64F0026EB7A /* MDColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDColors.swift; sourceTree = "<group>"; };
 		7BBB67ED2F1BF6A90026EB7A /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
+		7BBB67F02F1CEADB0026EB7A /* AboutLocationVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationVCView.swift; sourceTree = "<group>"; };
+		7BBB67F22F1CEC3E0026EB7A /* MemoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailView.swift; sourceTree = "<group>"; };
+		7BBB67F42F1CF48F0026EB7A /* AboutLocationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationReactor.swift; sourceTree = "<group>"; };
+		7BBB67F62F1CF9120026EB7A /* TextVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextVC.swift; sourceTree = "<group>"; };
+		7BBB67F82F1CFE230026EB7A /* DetailMemoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoHeaderView.swift; sourceTree = "<group>"; };
+		7BBB67FA2F1CFE760026EB7A /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseCollectionReusableView.swift; path = MapbeDiary/Features/AboutLocationFeature/BaseCollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
+		7BBB67FC2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoSeparatorFooterView.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -457,6 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */,
+				7BBB67F62F1CF9120026EB7A /* TextVC.swift */,
 			);
 			path = TestFeature;
 			sourceTree = "<group>";
@@ -875,6 +890,7 @@
 				7BBB67E42F1B7D7B0026EB7A /* BaseUITextView.swift */,
 				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
 				7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */,
+				7BBB67FA2F1CFE760026EB7A /* BaseCollectionReusableView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -901,6 +917,11 @@
 				7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */,
 				7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */,
 				7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */,
+				7BBB67F02F1CEADB0026EB7A /* AboutLocationVCView.swift */,
+				7BBB67F22F1CEC3E0026EB7A /* MemoDetailView.swift */,
+				7BBB67F42F1CF48F0026EB7A /* AboutLocationReactor.swift */,
+				7BBB67F82F1CFE230026EB7A /* DetailMemoHeaderView.swift */,
+				7BBB67FC2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift */,
 			);
 			path = AboutLocationFeature;
 			sourceTree = "<group>";
@@ -1192,15 +1213,18 @@
 				7BBB67CD2F1807690026EB7A /* SharedEventService.swift in Sources */,
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
+				7BBB67F32F1CEC3E0026EB7A /* MemoDetailView.swift in Sources */,
 				7BBB67D12F1913820026EB7A /* MapViewReactor.swift in Sources */,
 				7B11376F2B99AA2100D6BBD1 /* Extention.swift in Sources */,
 				7BBB67C82F17E9F30026EB7A /* FolderEntity.swift in Sources */,
 				7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */,
 				7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */,
 				7BA827382BB1951700227F63 /* ImageChach.swift in Sources */,
+				7BBB67F72F1CF9120026EB7A /* TextVC.swift in Sources */,
 				7BDE5FA22F13DC6700467F7F /* OnboardReactor.swift in Sources */,
 				7BBB67752F1500490026EB7A /* APITypeError.swift in Sources */,
 				7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */,
+				7BBB67F12F1CEADB0026EB7A /* AboutLocationVCView.swift in Sources */,
 				7B1137652B99A92A00D6BBD1 /* KakaoModel.swift in Sources */,
 				7BBB67D92F192D0A0026EB7A /* LocationManager+Rx.swift in Sources */,
 				7BBB67BA2F17CC270026EB7A /* AllLocationVCView.swift in Sources */,
@@ -1244,6 +1268,7 @@
 				7BBB67892F1530AC0026EB7A /* SettingViewReactor.swift in Sources */,
 				7BBB67B82F17CAA50026EB7A /* AddModelEntity.swift in Sources */,
 				7BBB65BB2F14DB670026EB7A /* KakaoLocalDTO.swift in Sources */,
+				7BBB67FB2F1CFE760026EB7A /* BaseCollectionReusableView.swift in Sources */,
 				7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */,
 				7BBB67AD2F16588F0026EB7A /* After.swift in Sources */,
 				7BBB67A02F1622E70026EB7A /* LoadingViewController.swift in Sources */,
@@ -1276,11 +1301,13 @@
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */,
 				7BBB67922F1559BC0026EB7A /* UserDefaultsManager.swift in Sources */,
+				7BBB67F52F1CF48F0026EB7A /* AboutLocationReactor.swift in Sources */,
 				7BBB67E22F1B7BFF0026EB7A /* AboutMemoTextView.swift in Sources */,
 				7B1C533D2B9C406000B712BC /* ErrorSection.swift in Sources */,
 				7BBB67E72F1BBC6C0026EB7A /* AboutMemoReactor.swift in Sources */,
 				7BDE5F9E2F13D9A500467F7F /* BaseUIProtocol.swift in Sources */,
 				7BBB67832F1510C70026EB7A /* CoordinateEntity.swift in Sources */,
+				7BBB67F92F1CFE230026EB7A /* DetailMemoHeaderView.swift in Sources */,
 				7BBB65BF2F14DCA90026EB7A /* SearchVCView.swift in Sources */,
 				7BBB67C22F17E4000026EB7A /* DetailMemoEntity.swift in Sources */,
 				7BBB67A22F162BB90026EB7A /* SettingWebReactor.swift in Sources */,
@@ -1289,6 +1316,7 @@
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
 				7BBB67C42F17E46B0026EB7A /* MemoMapper.swift in Sources */,
 				7BBB67A42F162E480026EB7A /* SettingWebVCView.swift in Sources */,
+				7BBB67FD2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift in Sources */,
 				7BDE5F662F13D95600467F7F /* VCBaseView.swift in Sources */,
 				7BA373352B9D86CC0016E851 /* SearchViewController.swift in Sources */,
 				7BBB67CA2F1807030026EB7A /* SharedEventProtocol.swift in Sources */,

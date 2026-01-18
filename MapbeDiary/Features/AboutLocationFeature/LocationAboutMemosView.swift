@@ -94,7 +94,7 @@ final class LocationAboutMemosView: BaseView {
     override func register() {
         tableViewDelegateDataSource()
         
-        detailTableView.register(DatailTableViewCell.self, forCellReuseIdentifier: DatailTableViewCell.reusebleIdentifier)
+//        detailTableView.register(DatailTableViewCell.self, forCellReuseIdentifier: DatailTableViewCell.reusebleIdentifier)
     }
     
     func tableViewDelegateDataSource(){

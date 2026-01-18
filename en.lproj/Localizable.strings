@@ -116,6 +116,8 @@
 
 "Alert_modify_title" = "Modify";
 
+"Modify_title" = "Modify";
+
 "Alert_success_title" = "Success";
 
 "Alert_fail_title" = "Failure";
