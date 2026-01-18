@@ -60,10 +60,8 @@
 		7B38745A2C059DBB00C24827 /* LocalLizeTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3874572C059BF200C24827 /* LocalLizeTexts.swift */; };
 		7B38745B2C059E0E00C24827 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B3874542C059B1D00C24827 /* Localizable.strings */; };
 		7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */; };
-		7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */; };
 		7B54A7D92BAB35C40039BC7F /* MapViewStackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */; };
 		7B54A7DD2BAB3EE20039BC7F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */; };
-		7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */; };
 		7B6331822BA5307900C1C1DE /* LocationMemosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */; };
 		7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6C201F2BA17A1C00EB7166 /* TextFieldEffects */; };
 		7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */; };
@@ -79,11 +77,9 @@
 		7BA373412B9DB20A0016E851 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */; };
 		7BA827362BB18E6E00227F63 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7BA827352BB18E6E00227F63 /* Kingfisher */; };
 		7BA827382BB1951700227F63 /* ImageChach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA827372BB1951700227F63 /* ImageChach.swift */; };
-		7BB250DC2BA1BDA900FDE898 /* MemoAboutBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */; };
 		7BB250DE2BA1C0D500FDE898 /* FontSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DD2BA1C0D500FDE898 /* FontSection.swift */; };
 		7BB250E02BA1C4D400FDE898 /* AboutLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */; };
 		7BB250E32BA1C63300FDE898 /* MemosEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */; };
-		7BB250E52BA1C74F00FDE898 /* LocationAboutMemosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */; };
 		7BB250E72BA1E18C00FDE898 /* TextFiledTesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */; };
 		7BB250F52BA2072100FDE898 /* AboutMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */; };
 		7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */; };
@@ -176,7 +172,6 @@
 		7BDE61462F13F3DF00467F7F /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE61452F13F3DF00467F7F /* Ext+UIViewController.swift */; };
 		7BDEA51C2B9B60F8008C6922 /* AddViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */; };
 		7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */; };
-		7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */; };
 		7BF0A7EC2BA5ABC100D40942 /* DatailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */; };
 		7BF0A7F02BA6B8A800D40942 /* CenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */; };
 		7BF1A44E2BA359460086D5D8 /* MapTextSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */; };
@@ -275,10 +270,8 @@
 		7B3874572C059BF200C24827 /* LocalLizeTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLizeTexts.swift; sourceTree = "<group>"; };
 		7B3874592C059C9500C24827 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationButton.swift; sourceTree = "<group>"; };
-		7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MordernCollectionViewLayout.swift; sourceTree = "<group>"; };
 		7B54A7D82BAB35C40039BC7F /* MapViewStackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewStackButtonView.swift; sourceTree = "<group>"; };
 		7B54A7DC2BAB3EE20039BC7F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationViewModel.swift; sourceTree = "<group>"; };
 		7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMemosViewModel.swift; sourceTree = "<group>"; };
 		7B6CE1372BAA785800322772 /* MapbeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MapbeDiary.entitlements; sourceTree = "<group>"; };
 		7B6EB8BB2CDC9D8600244AE6 /* UIAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAction.swift; sourceTree = "<group>"; };
@@ -293,11 +286,9 @@
 		7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BA827372BB1951700227F63 /* ImageChach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChach.swift; sourceTree = "<group>"; };
-		7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAboutBaseView.swift; sourceTree = "<group>"; };
 		7BB250DD2BA1C0D500FDE898 /* FontSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSection.swift; sourceTree = "<group>"; };
 		7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutLocationViewController.swift; sourceTree = "<group>"; };
 		7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemosEmptyView.swift; sourceTree = "<group>"; };
-		7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAboutMemosView.swift; sourceTree = "<group>"; };
 		7BB250E62BA1E18C00FDE898 /* TextFiledTesterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFiledTesterViewModel.swift; sourceTree = "<group>"; };
 		7BB250F42BA2072100FDE898 /* AboutMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMemoViewController.swift; sourceTree = "<group>"; };
 		7BB251022BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -385,7 +376,6 @@
 		7BDE61452F13F3DF00467F7F /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		7BDEA51B2B9B60F8008C6922 /* AddViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewSection.swift; sourceTree = "<group>"; };
 		7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
-		7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRouter.swift; sourceTree = "<group>"; };
 		7BF0A7EB2BA5ABC100D40942 /* DatailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailTableViewCell.swift; sourceTree = "<group>"; };
 		7BF0A7EF2BA6B8A800D40942 /* CenterFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterFlowLayout.swift; sourceTree = "<group>"; };
 		7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextSection.swift; sourceTree = "<group>"; };
@@ -886,6 +876,7 @@
 				7BBB67EF2F1C07D30026EB7A /* Protocol */,
 				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
 				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
+				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
 				7B11377A2B99AD5900D6BBD1 /* BaseHomeViewController.swift */,
 				7BBB67E42F1B7D7B0026EB7A /* BaseUITextView.swift */,
 				7B11377C2B99AD6E00D6BBD1 /* BaseView.swift */,
@@ -914,9 +905,7 @@
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
-				7B63317F2BA52EA600C1C1DE /* AboutLocationViewModel.swift */,
 				7BB250DF2BA1C4D400FDE898 /* AboutLocationViewController.swift */,
-				7BB250E42BA1C74F00FDE898 /* LocationAboutMemosView.swift */,
 				7BBB67F02F1CEADB0026EB7A /* AboutLocationVCView.swift */,
 				7BBB67F22F1CEC3E0026EB7A /* MemoDetailView.swift */,
 				7BBB67F42F1CF48F0026EB7A /* AboutLocationReactor.swift */,
@@ -960,15 +949,11 @@
 				7B1C53382B9C345F00B712BC /* CustomButton.swift */,
 				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
 				7B4EBF832BA747CE00388507 /* CustomLocationButton.swift */,
-				7B4F42872BB82AE90081369D /* MordernCollectionViewLayout.swift */,
 				7BA373322B9D45F70016E851 /* PlaceHolderTextView.swift */,
-				7BA373402B9DB20A0016E851 /* BaseCollectionViewCell.swift */,
-				7BB250DB2BA1BDA900FDE898 /* MemoAboutBaseView.swift */,
 				7BB250DD2BA1C0D500FDE898 /* FontSection.swift */,
 				7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */,
 				7BB8ECCB2B9F4E8700C88F17 /* SingleToneDataViewModel.swift */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
-				7BECDA2A2B9C980E00033B18 /* ActionRouter.swift */,
 			);
 			path = BaseFeature;
 			sourceTree = "<group>";
@@ -1282,12 +1267,10 @@
 				7BBB677B2F1501CB0026EB7A /* NetworkManagerError.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7BBB67782F1500BC0026EB7A /* NetworkManager.swift in Sources */,
-				7BB250DC2BA1BDA900FDE898 /* MemoAboutBaseView.swift in Sources */,
 				7BBB65C62F14E0880026EB7A /* SearchReactor.swift in Sources */,
 				7BBB676A2F14E8100026EB7A /* Ext+Observable.swift in Sources */,
 				7BBB67BC2F17DCCE0026EB7A /* AllLocationListViewReactor.swift in Sources */,
 				7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */,
-				7B4F42882BB82AE90081369D /* MordernCollectionViewLayout.swift in Sources */,
 				7BBB679E2F1622CB0026EB7A /* LoadingWindow.swift in Sources */,
 				7BBB67C62F17E5960026EB7A /* FolderMapper.swift in Sources */,
 				7BF2E7FE2BB807FF00E83EC1 /* CalendarMemoViewController.swift in Sources */,
@@ -1296,7 +1279,6 @@
 				7BBB679C2F161F6D0026EB7A /* LoadingView.swift in Sources */,
 				7B1137672B99A94800D6BBD1 /* KakaoAPIModel.swift in Sources */,
 				7BBB67942F155A420026EB7A /* CodableManager.swift in Sources */,
-				7BECDA2B2B9C980E00033B18 /* ActionRouter.swift in Sources */,
 				7BBB67C02F17E3980026EB7A /* LocationEntity.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,
 				7BBB65B62F13FD3A0026EB7A /* Ext+String.swift in Sources */,
@@ -1330,7 +1312,6 @@
 				7B6EB8BC2CDC9D8600244AE6 /* UIAction.swift in Sources */,
 				7BBB67D72F19289B0026EB7A /* LocationManager.swift in Sources */,
 				7BBB67962F1562320026EB7A /* Ext+UIView.swift in Sources */,
-				7B6331802BA52EA600C1C1DE /* AboutLocationViewModel.swift in Sources */,
 				7B1137532B99A83F00D6BBD1 /* URLSessionManager.swift in Sources */,
 				7BBB67EC2F1BF64F0026EB7A /* MDColors.swift in Sources */,
 				7BBB67B12F1666D50026EB7A /* Ext+UITextField.swift in Sources */,
@@ -1349,7 +1330,6 @@
 				7BBB67B32F1669920026EB7A /* MemoAddReactor.swift in Sources */,
 				7B4EBF842BA747CE00388507 /* CustomLocationButton.swift in Sources */,
 				7B1C53392B9C345F00B712BC /* CustomButton.swift in Sources */,
-				7BB250E52BA1C74F00FDE898 /* LocationAboutMemosView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
