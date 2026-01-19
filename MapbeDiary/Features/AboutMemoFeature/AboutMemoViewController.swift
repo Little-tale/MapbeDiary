@@ -213,6 +213,7 @@ extension AboutMemoViewController {
     private func showImageViewer(data: Data) {
         let vc = CustomImageViewer()
         vc.loadImage(data: data)
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 }

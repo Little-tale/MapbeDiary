@@ -3,9 +3,7 @@
 //  MapbeDiary
 //
 //  Created by Jae hyung Kim on 3/13/24.
-//
-// -> 레이아웃 -> 데이타 소스(타입정하기) 
-// -> 레지스트레이션(데이터 반영)(cellFor)  -> 데이타소스에 등록 -> 스냅샷
+
 import UIKit
 import RxSwift
 import RxCocoa
@@ -15,6 +13,8 @@ protocol AboutModifyLocationDelegate: AnyObject {
 }
 
 final class AboutLocationViewController: ReactorBaseViewController<AboutLocationReactor, AboutLocationVCView> {
+    
+    // MARK: typealias
     
     typealias DataSource = UICollectionViewDiffableDataSource<DetailMemoEntity, URL>
     
@@ -27,12 +27,12 @@ final class AboutLocationViewController: ReactorBaseViewController<AboutLocation
     typealias SnapShot = NSDiffableDataSourceSnapshot<DetailMemoEntity, URL>
     
     
-
+    // MARK: Property
+    
     private var dataSource: DataSource?
     private let imageCache = NSCache<NSString, UIImage>()
     weak var backDelegate: BackButtonDelegate?
     weak var locationDelegate: AboutModifyLocationDelegate?
-    
     
     
     override func viewDidLoad() {
@@ -131,25 +131,29 @@ final class AboutLocationViewController: ReactorBaseViewController<AboutLocation
             }
             .disposed(by: disposeBag)
         
+        mainView.collectionView.rx
+            .itemSelected
+            .compactMap { [weak self] indexPath in
+                self?.dataSource?.itemIdentifier(for: indexPath)
+            }
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .compactMap { url in
+                try? Data(contentsOf: url)
+            }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, data in
+                owner.showImageViewer(with: data)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func register() {
         mainView.collectionView.setCollectionViewLayout(makeLayout(), animated: true)
     }
-    
-    private func makeLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [weak self] section, _  in
-            guard let self,
-                  let datas = reactor?.currentState.detailMemos
-            else { return nil }
-            
-            let hasImages = !(datas[section].imagePaths.isEmpty)
-            return CollectionViewLayouts.makeImageCarouselSection(
-                hasImages: hasImages,
-                showsSeparator: true
-            )
-        }
-    }
+}
+
+// MARK: CollectionView
+extension AboutLocationViewController {
     
     private func setDataSource() {
         let cellRegister = setCollectionViewCellRegister()
@@ -235,6 +239,20 @@ final class AboutLocationViewController: ReactorBaseViewController<AboutLocation
         }
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
+    
+    private func makeLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [weak self] section, _  in
+            guard let self,
+                  let datas = reactor?.currentState.detailMemos
+            else { return nil }
+            
+            let hasImages = !(datas[section].imagePaths.isEmpty)
+            return CollectionViewLayouts.makeImageCarouselSection(
+                hasImages: hasImages,
+                showsSeparator: true
+            )
+        }
+    }
 }
 
 // MARK: Action
@@ -257,7 +275,7 @@ extension AboutLocationViewController {
     }
 
     
-    func showDetailDeleteAlert(data: DetailMemoEntity, index: Int){
+    private func showDetailDeleteAlert(data: DetailMemoEntity, index: Int){
         let alert = UIAlertController(title: MapTextSection.delete.alertTitle, message: MapTextSection.delete.alertMessage, preferredStyle: .alert)
         
         let action = UIAlertAction(title: MapTextSection.delete.actionTitle, style: .destructive) { [weak self] _ in
@@ -304,7 +322,6 @@ extension AboutLocationViewController {
     }
     
     private func newDetailMemoAction(){
-        
         guard let id = reactor?.currentState.memoID else {
             return
         }
@@ -315,13 +332,21 @@ extension AboutLocationViewController {
                 detailMemoID: nil
             )
         )
+        
         vc.didSuccessMemo = { [weak self] in
             self?.reactor?.action.onNext(.reLoadData)
         }
+        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-
+    
+    private func showImageViewer(with data: Data) {
+        let vc = CustomImageViewer()
+        vc.loadImage(data: data)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     private func dismissAction(){
         backDelegate?.backButtonClicked()

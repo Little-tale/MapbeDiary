@@ -161,6 +161,7 @@
 		7BBB67F92F1CFE230026EB7A /* DetailMemoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67F82F1CFE230026EB7A /* DetailMemoHeaderView.swift */; };
 		7BBB67FB2F1CFE760026EB7A /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67FA2F1CFE760026EB7A /* BaseCollectionReusableView.swift */; };
 		7BBB67FD2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67FC2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift */; };
+		7BBB68002F1E427E0026EB7A /* CustomImageVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB67FF2F1E427E0026EB7A /* CustomImageVCView.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -368,6 +369,7 @@
 		7BBB67F82F1CFE230026EB7A /* DetailMemoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoHeaderView.swift; sourceTree = "<group>"; };
 		7BBB67FA2F1CFE760026EB7A /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseCollectionReusableView.swift; path = MapbeDiary/Features/AboutLocationFeature/BaseCollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7BBB67FC2F1D34360026EB7A /* DetailMemoSeparatorFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoSeparatorFooterView.swift; sourceTree = "<group>"; };
+		7BBB67FF2F1E427E0026EB7A /* CustomImageVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageVCView.swift; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 		7BBB67E32F1B7D710026EB7A /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB67FE2F1E42650026EB7A /* CustomImageView */,
 				7BBB67EF2F1C07D30026EB7A /* Protocol */,
 				7BDE5F652F13D95600467F7F /* VCBaseView.swift */,
 				7BA3733C2B9D889E0016E851 /* BaseTableViewCell.swift */,
@@ -900,6 +903,15 @@
 				7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		7BBB67FE2F1E42650026EB7A /* CustomImageView */ = {
+			isa = PBXGroup;
+			children = (
+				7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */,
+				7BBB67FF2F1E427E0026EB7A /* CustomImageVCView.swift */,
+			);
+			path = CustomImageView;
 			sourceTree = "<group>";
 		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
@@ -944,7 +956,6 @@
 		AC9A7E61C166BA46023808AF /* BaseFeature */ = {
 			isa = PBXGroup;
 			children = (
-				7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */,
 				7B1137782B99AD4200D6BBD1 /* Observable.swift */,
 				7B1C53382B9C345F00B712BC /* CustomButton.swift */,
 				7B1C533C2B9C406000B712BC /* ErrorSection.swift */,
@@ -1295,6 +1306,7 @@
 				7BBB67A22F162BB90026EB7A /* SettingWebReactor.swift in Sources */,
 				7BBB678E2F1537FE0026EB7A /* RealmActor.swift in Sources */,
 				7BB251032BA350BD00FDE898 /* OnlyImageCollectionViewCell.swift in Sources */,
+				7BBB68002F1E427E0026EB7A /* CustomImageVCView.swift in Sources */,
 				7B1C53362B9BFBAF00B712BC /* FloatingLocationLayout.swift in Sources */,
 				7BBB67C42F17E46B0026EB7A /* MemoMapper.swift in Sources */,
 				7BBB67A42F162E480026EB7A /* SettingWebVCView.swift in Sources */,

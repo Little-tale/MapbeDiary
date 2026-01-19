@@ -18,6 +18,10 @@ class BaseHomeViewController<T:UIView>: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        register()
+    }
+    
+    func register() {
+        
     }
 }
