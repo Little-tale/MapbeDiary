@@ -39,7 +39,10 @@ struct PanelConfiguration {
     var folderID: String
 }
 
-// FIXME: 서치바 계속 나오는 문제
+enum MapViewControllerDelegate {
+    case moveToAnimationPresent(vc: UIViewController, target: UIView)
+}
+
 final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCView> {
     
     private var floatPanel: FloatingPanelController?
@@ -47,6 +50,8 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
     private var currentMemos: [LocationMemoEntity] = []
     private var lastLocation: CLLocationCoordinate2D?
     private let searchBarTapGesture = UITapGestureRecognizer()
+    
+    var delegateCloser: ((MapViewControllerDelegate) -> Void)?
     
 
     override func viewDidLoad() {
@@ -178,10 +183,10 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
                 let vc = SettingViewController(
                     reactor: SettingViewReactor()
                 )
-                
-                let nvc = UINavigationController(rootViewController: vc)
-                nvc.modalPresentationStyle = .fullScreen
-                owner.present(nvc, animated: true )
+                owner.delegateCloser?(.moveToAnimationPresent(
+                    vc: vc,
+                    target: owner.mainView.buttonStack.settingButton)
+                )
             }
             .disposed(by: disposeBag)
         
@@ -237,9 +242,10 @@ extension MapViewController {
             self?.finduserAnnotationOrNew(CL2D: location2D)
         }
         
-        let nvc = UINavigationController(rootViewController: vc)
-        nvc.modalPresentationStyle = .fullScreen
-        present(nvc, animated: true)
+        delegateCloser?(.moveToAnimationPresent(
+            vc: vc,
+            target: mainView.buttonStack.calendarButton)
+        )
     }
     
     private func settingPanel(view: UIViewController, layout: PanelLayoutType) -> FloatingPanelController{
@@ -359,9 +365,7 @@ extension MapViewController {
             addLongAnnotation(cl2: location)
         }
         
-        searchViewController.modalPresentationStyle = .fullScreen
-        
-        present(searchViewController, animated: false)
+        delegateCloser?(.moveToAnimationPresent(vc: searchViewController, target: mainView.searchBar.searchTextField))
     }
 }
 
@@ -426,10 +430,13 @@ extension MapViewController {
                 sharedService: sharedEvent
             )
         )
+        
         vc.delegate = self
         
-        vc.modalPresentationStyle = .popover
-        present(vc, animated: true)
+        delegateCloser?(.moveToAnimationPresent(
+            vc: vc,
+            target: mainView.buttonStack.locationMemosButton)
+        )
     }
 }
 
@@ -461,9 +468,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
     
     private func setupSearchBarTap() {
         mainView.searchBar.addGestureRecognizer(searchBarTapGesture)
-        if #available(iOS 13.0, *) {
-            mainView.searchBar.searchTextField.isUserInteractionEnabled = false
-        }
+        mainView.searchBar.searchTextField.isUserInteractionEnabled = false
     }
 
     private func updateFloatingPanel(
@@ -480,61 +485,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         with configuration: PanelConfiguration,
         configure: ((UIViewController) -> Void)?
     ) {
-        guard let currentFolderID = UserDefaultsManager.currentFolderID else { return }
-        
-        let viewController: UIViewController
-        
-        switch configuration.viewType {
-        case .addLocation:
-            guard let sharedEvent = reactor?.sharedEvent else { return }
-            let vc = AddLocationMemoViewController(
-                reactor: MemoAddReactor(sharedService: sharedEvent)
-            )
-            
-            if let coordinate = configuration.coordinate {
-                let coordinateStruct = AddModelEntity(
-                    lat: String(coordinate.latitude),
-                    lon: String(coordinate.longitude),
-                    folder: currentFolderID
-                )
-                vc.setAddModel(model: coordinateStruct)
-            }
-            vc.backDelegate = self
-            viewController = vc
-            
-        case let .about(memoID):
-            guard let sharedEvent = reactor?.sharedEvent else { return }
-            
-            let vc = AboutLocationViewController(
-                reactor: AboutLocationReactor(
-                    memoID: memoID,
-                    shared: sharedEvent
-                )
-            )
-            vc.backDelegate = self
-            vc.locationDelegate = self
-            viewController = vc
-            
-        case let .modify(memoID):
-            guard let sharedEvent = reactor?.sharedEvent else { return }
-            let vc = AddLocationMemoViewController(
-                reactor: MemoAddReactor(sharedService: sharedEvent)
-            )
-            
-            if let coordinate = configuration.coordinate {
-                let coordinateStruct = AddModelEntity(
-                    lat: String(coordinate.latitude),
-                    lon: String(coordinate.longitude),
-                    folder: currentFolderID
-                )
-                vc.setAddModel(model: coordinateStruct)
-            }
-            vc.backDelegate = self
-            vc.setModifier(memoID: memoID)
-            
-            viewController = vc
-        }
-        
+        guard let viewController = makePanelViewController(configuration: configuration) else { return }
         configure?(viewController)
         let newPanel = settingPanel(
             view: viewController,
@@ -579,6 +530,66 @@ extension MapViewController: FloatingPanelControllerDelegate {
         }
     }
     
+}
+
+private extension MapViewController {
+    func makePanelViewController(
+        configuration: PanelConfiguration
+    ) -> UIViewController? {
+        guard let sharedEvent = reactor?.sharedEvent else { return nil }
+        
+        switch configuration.viewType {
+        case .addLocation:
+            let vc = AddLocationMemoViewController(
+                reactor: MemoAddReactor(sharedService: sharedEvent)
+            )
+            applyCoordinate(
+                configuration.coordinate,
+                to: vc,
+                folderID: configuration.folderID
+            )
+            vc.backDelegate = self
+            return vc
+            
+        case let .about(memoID):
+            let vc = AboutLocationViewController(
+                reactor: AboutLocationReactor(
+                    memoID: memoID,
+                    shared: sharedEvent
+                )
+            )
+            vc.backDelegate = self
+            vc.locationDelegate = self
+            return vc
+            
+        case let .modify(memoID):
+            let vc = AddLocationMemoViewController(
+                reactor: MemoAddReactor(sharedService: sharedEvent)
+            )
+            applyCoordinate(
+                configuration.coordinate,
+                to: vc,
+                folderID: configuration.folderID
+            )
+            vc.backDelegate = self
+            vc.setModifier(memoID: memoID)
+            return vc
+        }
+    }
+    
+    func applyCoordinate(
+        _ coordinate: CLLocationCoordinate2D?,
+        to viewController: AddLocationMemoViewController,
+        folderID: String
+    ) {
+        guard let coordinate else { return }
+        let coordinateStruct = AddModelEntity(
+            lat: String(coordinate.latitude),
+            lon: String(coordinate.longitude),
+            folder: folderID
+        )
+        viewController.setAddModel(model: coordinateStruct)
+    }
 }
 
 // MARK: 뒤로가기 버튼 감지
@@ -691,7 +702,7 @@ extension MapViewController {
             }
     }
     
-    func makeCLLocationCoordinate2D(
+    private func makeCLLocationCoordinate2D(
         lon: String,
         lat: String
     ) -> CLLocationCoordinate2D? {

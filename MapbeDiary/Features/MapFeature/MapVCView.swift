@@ -64,7 +64,7 @@ extension MapVCView {
     private func settingSearchBar(){
         // Background
         searchBar.setTextFieldBackground(
-            color: .wheetSideBrown,
+            color: .white,
             transparentBackground: true
         )
         
@@ -73,7 +73,7 @@ extension MapVCView {
         // Shadow
         searchBar.layer.shadowColor = UIColor.black.cgColor
         searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
-        searchBar.layer.shadowRadius = 4.0
+        searchBar.layer.shadowRadius = 2.0
         searchBar.layer.shadowOpacity = 0.5
         searchBar.clipsToBounds = false
     }

@@ -92,7 +92,12 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
             }
             .disposed(by: disposeBag)
         
-        
+        mainView.backButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

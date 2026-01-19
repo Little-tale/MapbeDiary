@@ -15,6 +15,13 @@ final class AllLocationVCView: VCBaseView {
         case modify
     }
     
+    let backButton = UIButton().after {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName:"chevron.backward")
+        config.baseForegroundColor = .black
+        $0.configuration = config
+    }
+    
     let topTitleLabel = UILabel().after {
         $0.text = "모아보기"
         $0.font = .systemFont(ofSize: 20, weight: .bold)
@@ -36,6 +43,7 @@ final class AllLocationVCView: VCBaseView {
     var swipeAction: ((_ action: SwipeActionType, _ indexPath: IndexPath) -> Void)?
     
     override func setupHierarchy() {
+        addSubview(backButton)
         addSubview(topTitleLabel)
         addSubview(collectionView)
         addSubview(emptyImageView)
@@ -43,10 +51,18 @@ final class AllLocationVCView: VCBaseView {
     }
     
     override func setupConstraints() {
-        topTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(4)
-            make.horizontalEdges.equalToSuperview()
+        backButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(8)
+            make.centerY.equalTo(topTitleLabel)
+            make.size.equalTo(40)
         }
+        
+        topTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(45)
+        }
+        
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(topTitleLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(4)
@@ -63,6 +79,7 @@ final class AllLocationVCView: VCBaseView {
     }
     
     override func setupUI() {
+        self.backgroundColor = .white
         setCollectionView()
         setEmptyLabel()
         hiddenEmpty(hidden: true)

@@ -12,6 +12,8 @@ import RxCocoa
 
 final class OnboardViewController: ReactorBaseViewController<OnboardReactor,OnboardVCView> {
     
+    var onFinish: ((SharedEventService) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         startImageSet()
@@ -41,13 +43,7 @@ final class OnboardViewController: ReactorBaseViewController<OnboardReactor,Onbo
         reactor.state
             .compactMap{ $0.nextVC }
             .bind(with: self) { owner, service in
-                let vc = MapViewController(
-                    reactor: MapViewReactor(
-                        sharedEvent: service,
-                        locationManager: LocationManager()
-                    )
-                )
-                owner.changeRootView(vc)
+                owner.onFinish?(service)
             }
             .disposed(by: disposeBag)
     }

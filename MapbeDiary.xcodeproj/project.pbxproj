@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25F18DC146AD20FE711991D5 /* MainMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C06835283955A60F0D3556 /* MainMapCoordinator.swift */; };
 		7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */; };
 		7B11370F2B99A16F00D6BBD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */; };
 		7B1137112B99A16F00D6BBD1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */; };
@@ -167,6 +168,7 @@
 		7BBB68262F1E5D660026EB7A /* Ext+UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB68252F1E5D660026EB7A /* Ext+UIScreen.swift */; };
 		7BBB68292F1E5E670026EB7A /* AppLoadVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB68282F1E5E670026EB7A /* AppLoadVCView.swift */; };
 		7BBB682B2F1E5F280026EB7A /* AppLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB682A2F1E5F280026EB7A /* AppLoadViewController.swift */; };
+		7BBB682D2F1E64210026EB7A /* Ext+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB682C2F1E64210026EB7A /* Ext+Collection.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
@@ -183,6 +185,8 @@
 		7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF2E7FB2BB8070700E83EC1 /* FSCalendar */; };
 		7BF2E7FE2BB807FF00E83EC1 /* CalendarMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */; };
 		7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */; };
+		E0A93F612D33E4BE2F6C149B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6708A574D8E65EC2F88C4896 /* AppCoordinator.swift */; };
+		FB7A8B3FA576EDC952C19A84 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD6D682D54822D74520A91 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +228,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6708A574D8E65EC2F88C4896 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		7B0790922BA487E900AE9BF0 /* CustomImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageViewer.swift; sourceTree = "<group>"; };
 		7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapbeDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -379,6 +384,7 @@
 		7BBB68252F1E5D660026EB7A /* Ext+UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIScreen.swift"; sourceTree = "<group>"; };
 		7BBB68282F1E5E670026EB7A /* AppLoadVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppLoadVCView.swift; path = MapbeDiary/Core/Utils/Ext/AppLoadVCView.swift; sourceTree = SOURCE_ROOT; };
 		7BBB682A2F1E5F280026EB7A /* AppLoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppLoadViewController.swift; path = MapbeDiary/Core/Utils/Ext/AppLoadViewController.swift; sourceTree = SOURCE_ROOT; };
+		7BBB682C2F1E64210026EB7A /* Ext+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Collection.swift"; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
@@ -391,6 +397,8 @@
 		7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextSection.swift; sourceTree = "<group>"; };
 		7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoViewController.swift; sourceTree = "<group>"; };
 		7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		B4DD6D682D54822D74520A91 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		E9C06835283955A60F0D3556 /* MainMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,6 +452,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09B06CBC438DED36B957629C /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				6708A574D8E65EC2F88C4896 /* AppCoordinator.swift */,
+				B4DD6D682D54822D74520A91 /* Coordinator.swift */,
+				E9C06835283955A60F0D3556 /* MainMapCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		24FD8E6B1E49A23C18ED4E6E /* SettingFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +509,7 @@
 		484D8B771F18F48A10D2AD48 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				09B06CBC438DED36B957629C /* Coordinator */,
 				7B11370E2B99A16F00D6BBD1 /* AppDelegate.swift */,
 				7B1137102B99A16F00D6BBD1 /* SceneDelegate.swift */,
 				7B11371C2B99A17100D6BBD1 /* Info.plist */,
@@ -517,6 +536,7 @@
 				7BBB681F2F1E5CA20026EB7A /* Ext+UIAction.swift */,
 				7BBB68232F1E5D400026EB7A /* Ext+UiWindow.swift */,
 				7BBB68252F1E5D660026EB7A /* Ext+UIScreen.swift */,
+				7BBB682C2F1E64210026EB7A /* Ext+Collection.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -1275,6 +1295,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BBB67CD2F1807690026EB7A /* SharedEventService.swift in Sources */,
+				E0A93F612D33E4BE2F6C149B /* AppCoordinator.swift in Sources */,
+				FB7A8B3FA576EDC952C19A84 /* Coordinator.swift in Sources */,
+				25F18DC146AD20FE711991D5 /* MainMapCoordinator.swift in Sources */,
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7BBB68292F1E5E670026EB7A /* AppLoadVCView.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
@@ -1310,6 +1333,7 @@
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B6331822BA5307900C1C1DE /* LocationMemosViewModel.swift in Sources */,
 				7BBB676D2F14E9D70026EB7A /* PlaceDocumentEntity.swift in Sources */,
+				7BBB682D2F1E64210026EB7A /* Ext+Collection.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,
 				7BBB67B52F1697E50026EB7A /* MemoRealmRepository.swift in Sources */,
 				7BBB67DC2F1A47FF0026EB7A /* CalendarMemoVCView.swift in Sources */,

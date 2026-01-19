@@ -96,6 +96,13 @@ final class CalendarMemoViewController: ReactorBaseViewController<CalendarMemoVi
             .map { CalendarMemoViewReactor.Action.selectedIndex($0.item)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        mainView.backButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setDate(date: Date) {

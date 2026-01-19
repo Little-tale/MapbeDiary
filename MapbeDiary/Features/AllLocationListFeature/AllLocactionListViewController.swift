@@ -88,6 +88,12 @@ final class AllMemoLocationListViewController: ReactorBaseViewController<AllLoca
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        mainView.backButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         mainView.swipeAction = { [weak self] action, indexPath in
             self?.reactor?.action.onNext(.swipeAction(action: action, index: indexPath.item))
         }

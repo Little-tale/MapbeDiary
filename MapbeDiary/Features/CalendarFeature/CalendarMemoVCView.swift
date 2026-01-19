@@ -18,6 +18,19 @@ final class CalendarMemoVCView: VCBaseView {
     private var calendarHeightConstraint: Constraint?
     private var currentCalendarHeight: CGFloat = 400
     
+    let backButton = UIButton().after {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName:"chevron.backward")
+        config.baseForegroundColor = .black
+        $0.configuration = config
+    }
+    
+    let topTitleLabel = UILabel().after {
+        $0.text = "날짜로 찾아보기"
+        $0.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.textAlignment = .center
+    }
+    
     let calendarView = FSCalendar(frame: .zero)
     
     let collectionView = UICollectionView(
@@ -30,6 +43,8 @@ final class CalendarMemoVCView: VCBaseView {
     }
     
     override func setupHierarchy() {
+        addSubview(backButton)
+        addSubview(topTitleLabel)
         addSubview(calendarView)
         addSubview(collectionView)
         addSubview(emptyImageView)
@@ -37,11 +52,24 @@ final class CalendarMemoVCView: VCBaseView {
     
     override func setupConstraints() {
         
-        calendarView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(16)
+        backButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(8)
+            make.centerY.equalTo(topTitleLabel)
+            make.size.equalTo(40)
+        }
+        
+        topTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(45)
+        }
+        
+        calendarView.snp.makeConstraints { make in
+            make.top.equalTo(topTitleLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview().inset(16)
             calendarHeightConstraint = make.height.equalTo(maxCalendarHeight).constraint
         }
+        
         currentCalendarHeight = maxCalendarHeight
         
         collectionView.snp.makeConstraints { make in

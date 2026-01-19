@@ -106,7 +106,11 @@ final class SearchViewController: ReactorBaseViewController<SearchReactor, Searc
         
         mainView.backButton.rx.tap
             .bind(with: self) { owner, _ in
-                owner.dismiss(animated: false)
+                if #available(iOS 18, *) {
+                    owner.dismiss(animated: true)
+                } else {
+                    owner.dismiss(animated: false)
+                }
             }
             .disposed(by: disposeBag)
     }
