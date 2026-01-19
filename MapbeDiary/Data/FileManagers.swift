@@ -96,23 +96,22 @@ final class FileManagers {
         }
         
     }
-    // MARK: 원본 파이일이 있다면 덮어 씌웁니다.
+    // MARK: 원본 파일이 있다면 덮어 씌웁니다.
     func saveMarkerZipImageForMemo(memoId: String, imageData: Data?) -> Bool{
         guard let imageData,
               let image = UIImage(data: imageData) else {
             return false
         }
-        // TEST 영역 // 30 30 이였고 다른 메서드 였다. 
-        let resizing = image.resizeImageTo(CGSize(width: 40, height: 40))
-        let imageDa = resizing?.jpegData(compressionQuality: 1)
+         
+        let compressData = image.reSizeWithCompressImage(type: .jpeg, targetMB: 5)
         
-        guard let imageDa else { return false }
+        guard let compressData else { return false }
         
         let memoImagesDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imagePath = memoImagesDirectory.appendingPathComponent("\(memoId)-40.jpeg")
         
         do {
-            try imageDa.write(to: imagePath)
+            try compressData.write(to: imagePath)
             return true
         } catch {
             return false

@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: URLSessionManger SingleTone Patton
+@available(*, deprecated, renamed: "NetworkManager", message: "Use NetworkManager instead.")
 final class URLSessionManager {
     private init() {}
     static let shared = URLSessionManager()

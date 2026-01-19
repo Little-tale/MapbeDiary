@@ -154,12 +154,3 @@ extension AllMemoLocationListViewController {
         // applySnapshotUsingReloadData
     }
 }
-
-
-// FIXME: 해당 뷰모델 휴에 제거해야함.
-//        SingleToneDataViewModel.shared
-//            .allListFolderOut
-//            .guardBind(object: self) { owner, folder in
-//                guard let folder else { return }
-//                owner.homeView.allMemoViewModel.inputTrigger.value = folder
-//            }

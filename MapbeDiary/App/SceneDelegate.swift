@@ -34,7 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let _ = await FolderRealmRepository.shared.setUp()
         }
         
-        // FIXME: - 불러오는 동안의 뷰가 필요함.
+        window?.rootViewController = AppLoadViewController()
+        
         Task { @MainActor in
             do {
                 guard let _ = try await FolderRealmRepository.shared.fineAllFolder().first else {
@@ -54,9 +55,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 goOnboard()
             }
         }
+        
         if let url = connectionOptions.urlContexts.first?.url {
             handleDeepLink(url)
         }
+        
         window?.makeKeyAndVisible()
     }
     

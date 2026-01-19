@@ -54,7 +54,7 @@ extension KakaoApiRouter {
     }
     
     func errorCodeCase(stateCode: Int) -> ApiTypeError? {
-        let error = KaKaoErrors.allCases.filter {  errorCase in
+        let error = KaKaoErrors.allCases.filter { errorCase in
             errorCase.rawValue == stateCode
         }
         if error.isEmpty{

@@ -12,7 +12,7 @@ enum AddViewSection {
     case titleTextFieldText
     case simpleMemoTextFiled
     case phoneNumberTextLabel
-    case phoneNuberTextField
+    case phoneNumberTextField
     
     var placeHolder: String {
         switch self {
@@ -22,14 +22,12 @@ enum AddViewSection {
             "Add_simple_text_filed_text".localized
         case .phoneNumberTextLabel:
             "Add_phone_number_text_label".localized
-        case .phoneNuberTextField:
+        case .phoneNumberTextField:
             "If_phone_number".localized
-        default :
-            ""
         }
     }
     static var saveButtonText: String = "Add_save_button_text".localized
     static var defaultTitle: String = "Add_default_Text".localized
-    static let chagngeButtonTitle: String = "Image_change".localized
+    static let changeButtonTitle: String = "Image_change".localized
 }
 

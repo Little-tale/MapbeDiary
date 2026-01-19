@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+@available(*, deprecated, renamed: "CollectionViewLayouts", message: "Deprecated")
 final class CenterFlowLayout: UICollectionViewFlowLayout {
     // MARK: 스크롤 동작이 완료 될때 contentOffSet을 결정
     // proposedContentOffset -> 스크롤 동작이 끝날때 나온 값

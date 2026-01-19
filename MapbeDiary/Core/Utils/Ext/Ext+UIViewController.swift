@@ -145,3 +145,18 @@ extension UIViewController {
         }
     }
 }
+
+// MARK: Toast
+protocol ToastPro {}
+
+extension ToastPro where Self: UIViewController {
+    func showToastBody(title: String?, message: String?, completion: ((Bool) -> Void)? = nil ) {
+        self.view.makeToast(message,
+                            duration: 1.5,
+                            point: CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2),
+                            title: title,
+                            image: .cantAdd) { didTap in
+            completion?(didTap)
+        }
+    }
+}

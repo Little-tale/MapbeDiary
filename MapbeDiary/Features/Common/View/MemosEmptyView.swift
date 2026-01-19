@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MemosEmptyView: BaseView {
+final class MemosEmptyView: BaseView {
     let emptyLabel = UILabel()
     let emptyButton = UIButton()
     

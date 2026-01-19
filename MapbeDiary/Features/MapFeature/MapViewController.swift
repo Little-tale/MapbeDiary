@@ -9,7 +9,6 @@ import MapKit
 import CoreLocation
 import Toast
 import FloatingPanel
-
 import RxSwift
 import RxCocoa
 

@@ -14,7 +14,7 @@ final class AddImageWithButtonView: BaseView {
     
     let imageChangeButton = UIButton().after {
         var config = UIButton.Configuration.tinted()
-        config.title = AddViewSection.chagngeButtonTitle
+        config.title = AddViewSection.changeButtonTitle
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer{ atrubute in
             var before = atrubute
             before.font = JHFont.UIKit.bo10

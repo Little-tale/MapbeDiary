@@ -142,7 +142,6 @@ extension SettingViewController {
         button.rx.tap
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                //        SingleToneDataViewModel.shared.shardFolderOb.value = SingleToneDataViewModel.shared.shardFolderOb.value
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)

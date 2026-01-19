@@ -108,7 +108,7 @@ final class MemoAddVCView: VCBaseView {
         
         phoneTextField.addLeftPadding(width: 12)
         phoneTextField.borderStyle = .roundedRect
-        phoneTextField.placeholder = AddViewSection.phoneNuberTextField.placeHolder
+        phoneTextField.placeholder = AddViewSection.phoneNumberTextField.placeHolder
         phoneTextField.setPlaceholderColor(.black)
         phoneTextField.backgroundColor = .wheetSideBrown
         phoneTextField.textAlignment = .center

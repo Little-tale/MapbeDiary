@@ -34,7 +34,7 @@ class CustomLocationButton: UIButton {
     
     init(frame: CGRect, imageType: ImageType) {
         super.init(frame: frame)
-        configu(imageType: imageType)
+        config(imageType: imageType)
         addTarget(self, action: #selector(buttonActionControll), for: .touchUpInside)
     }
     
@@ -43,25 +43,25 @@ class CustomLocationButton: UIButton {
     }
     
     
-    private func configu(imageType: ImageType){
+    private func config(imageType: ImageType){
         
         switch imageType {
         case .location:
             settingHomeButton()
-            setImage(imageType.imageAsset.resizeImage(newWidth: 50), for: .normal)
+            setImage(imageType.imageAsset.resizeImage(maxDimension: 50), for: .normal)
         case .AllMemo:
             settingHomeButton()
-            setImage(imageType.imageAsset.resizeImage(newWidth: 36) , for: .normal)
+            setImage(imageType.imageAsset.resizeImage(maxDimension: 36), for: .normal)
         case .setting:
             settingHomeButton()
             setBackgroundImage(imageType.imageAsset, for: .normal)
             tintColor = .wheetBlack
         case .naviBackButton:
-            sttingSFImage( imageType.imageAsset,CGRect(x: 4, y: 0, width: 30, height: 30) ,.wheetBlack)
+            settingSFImage(imageType.imageAsset,CGRect(x: 4, y: 0, width: 30, height: 30) ,.wheetBlack)
             
         case .calendarButton:
             settingHomeButton()
-            sttingSFImage(
+            settingSFImage(
                 imageType.imageAsset,
                 CGRect(x: 2, y: 0, width: 47, height: 47),
                 .white,
@@ -77,7 +77,7 @@ class CustomLocationButton: UIButton {
         layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
-    private func sttingSFImage(_ image: UIImage,_ react: CGRect ,_ color: UIColor? = nil,_ mode: UIView.ContentMode? = .scaleAspectFit){
+    private func settingSFImage(_ image: UIImage,_ react: CGRect ,_ color: UIColor? = nil,_ mode: UIView.ContentMode? = .scaleAspectFit){
         let imageView = UIImageView(image: image)
         imageView.contentMode = mode ?? .scaleAspectFit
         imageView.frame = react

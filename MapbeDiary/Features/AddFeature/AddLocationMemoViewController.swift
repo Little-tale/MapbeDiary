@@ -11,11 +11,6 @@ import RxCocoa
 import Toast
 
 
-protocol BackButtonDelegate: AnyObject {
-    func backButtonClicked()
-}
-
-
 final class AddLocationMemoViewController: ReactorBaseViewController<MemoAddReactor,MemoAddVCView>{
     
     enum PhotoActionType {
