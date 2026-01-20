@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(*, deprecated)
 class CustomLocationButton: UIButton {
     
     enum ImageType {
@@ -23,11 +24,11 @@ class CustomLocationButton: UIButton {
             case .AllMemo:
                 return .memoAsset
             case .setting:
-                return UIImage(systemName: "gear.circle") ?? UIImage()
+                return .setting3D
             case .naviBackButton:
                 return UIImage(systemName: "arrow.uturn.backward.circle.fill") ?? UIImage()
             case .calendarButton:
-                return UIImage(systemName: "calendar.circle.fill") ?? .init()
+                return .calendar3D
             }
         }
     }
@@ -77,7 +78,12 @@ class CustomLocationButton: UIButton {
         layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
-    private func settingSFImage(_ image: UIImage,_ react: CGRect ,_ color: UIColor? = nil,_ mode: UIView.ContentMode? = .scaleAspectFit){
+    private func settingSFImage(
+        _ image: UIImage,
+        _ react: CGRect ,
+        _ color: UIColor? = nil,
+        _ mode: UIView.ContentMode? = .scaleAspectFit
+    ) {
         let imageView = UIImageView(image: image)
         imageView.contentMode = mode ?? .scaleAspectFit
         imageView.frame = react
