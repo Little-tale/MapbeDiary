@@ -26,7 +26,8 @@ final class AppCoordinator: Coordinator {
         Task { @MainActor in
             do {
                 guard let _ = try await FolderRealmRepository.shared.fineAllFolder().first else {
-                    throw NSError(domain: "NoFolder", code: 0)
+                    startOnboard()
+                    return
                 }
                 startMainMap()
             } catch {

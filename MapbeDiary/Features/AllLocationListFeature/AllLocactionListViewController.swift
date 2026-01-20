@@ -72,7 +72,7 @@ final class AllMemoLocationListViewController: ReactorBaseViewController<AllLoca
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, location in
                 owner.delegate?.modifyRequest(memoLocation: location)
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -90,7 +90,7 @@ final class AllMemoLocationListViewController: ReactorBaseViewController<AllLoca
         
         mainView.backButton.rx.tap
             .bind(with: self) { owner, _ in
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
         

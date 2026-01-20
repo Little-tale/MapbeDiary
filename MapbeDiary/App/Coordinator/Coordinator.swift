@@ -36,6 +36,23 @@ extension Coordinator {
         navigationController?.present(viewController, animated: animated, completion: completion)
     }
     
+    /// 확대, 축소 애니메이션 Present
+    func transitionPresent(
+        viewController: UIViewController,
+        target: UIView,
+        completion: (() -> Void)? = nil
+    ) {
+        if #available(iOS 18.0, *) {
+            viewController.preferredTransition = .zoom { [weak target] context in
+                return target
+            }
+            navigationController?.present(viewController, animated: true)
+            return
+        }
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController?.present(viewController, animated: false)
+    }
+    
     /// 현재 모달을 닫음
     func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController?.dismiss(animated: animated, completion: completion)

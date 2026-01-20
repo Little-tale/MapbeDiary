@@ -80,7 +80,7 @@ final class CalendarMemoViewController: ReactorBaseViewController<CalendarMemoVi
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, entity in
                 owner.selectedLocationMemo?(entity)
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -100,7 +100,7 @@ final class CalendarMemoViewController: ReactorBaseViewController<CalendarMemoVi
         mainView.backButton.rx
             .tap
             .bind(with: self) { owner, _ in
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -225,7 +225,7 @@ extension CalendarMemoViewController {
             systemItem: .close,
             primaryAction: .guardSelf(
                 self, handler: { owner, _ in
-                    owner.dismiss(animated: true)
+                    owner.coordinator?.dismiss()
                 }
             )
         )

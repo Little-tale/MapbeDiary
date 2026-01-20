@@ -17,14 +17,19 @@ class ReactorBaseViewController<R: Reactor, V: VCBaseView>: UIViewController, Re
     
     let mainView: V
     var disposeBag = DisposeBag()
+    weak var coordinator: Coordinator?
     
     
     // MARK: initial
     
-    init(reactor: R) {
+    init(
+        reactor: R,
+        coordinator: Coordinator? = nil
+    ) {
         self.mainView = V()
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
+        self.coordinator = coordinator
         setUI()
     }
     

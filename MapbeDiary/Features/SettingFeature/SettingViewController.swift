@@ -147,7 +147,7 @@ extension SettingViewController {
         button.rx.tap
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
         

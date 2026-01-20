@@ -39,9 +39,6 @@ struct PanelConfiguration {
     var folderID: String
 }
 
-enum MapViewControllerDelegate {
-    case moveToAnimationPresent(vc: UIViewController, target: UIView)
-}
 
 final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCView> {
     
@@ -50,9 +47,6 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
     private var currentMemos: [LocationMemoEntity] = []
     private var lastLocation: CLLocationCoordinate2D?
     private let searchBarTapGesture = UITapGestureRecognizer()
-    
-    var delegateCloser: ((MapViewControllerDelegate) -> Void)?
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,11 +175,12 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
             .tap
             .bind(with: self) { owner, _ in
                 let vc = SettingViewController(
-                    reactor: SettingViewReactor()
+                    reactor: SettingViewReactor(),
+                    coordinator: owner.coordinator
                 )
-                owner.delegateCloser?(.moveToAnimationPresent(
-                    vc: vc,
-                    target: owner.mainView.buttonStack.settingButton)
+                owner.coordinator?.transitionPresent(
+                    viewController: vc,
+                    target: owner.mainView.buttonStack.settingButton
                 )
             }
             .disposed(by: disposeBag)
@@ -232,7 +227,8 @@ extension MapViewController {
     private func moveToCalendarView(model: FolderEntity) {
         
         let vc = CalendarMemoViewController(
-            reactor: CalendarMemoViewReactor(folder: model)
+            reactor: CalendarMemoViewReactor(folder: model),
+            coordinator: coordinator
         )
         
         vc.selectedLocationMemo = { [weak self] memo in
@@ -242,9 +238,9 @@ extension MapViewController {
             self?.finduserAnnotationOrNew(CL2D: location2D)
         }
         
-        delegateCloser?(.moveToAnimationPresent(
-            vc: vc,
-            target: mainView.buttonStack.calendarButton)
+        coordinator?.transitionPresent(
+            viewController: vc,
+            target: mainView.buttonStack.calendarButton
         )
     }
     
@@ -336,9 +332,11 @@ extension MapViewController {
             latitude: location.latitude
         )
         
-        // 다음 뷰 컨트롤러로 이동하는 로직을 구현
         let searchViewController = SearchViewController(
-            reactor: SearchReactor(coordinate: coordinate)
+            reactor: SearchReactor(
+                coordinate: coordinate
+            ),
+            coordinator: self.coordinator
         )
         
         searchViewController.kakaoDataClosure = { [weak self] data in
@@ -365,7 +363,10 @@ extension MapViewController {
             addLongAnnotation(cl2: location)
         }
         
-        delegateCloser?(.moveToAnimationPresent(vc: searchViewController, target: mainView.searchBar.searchTextField))
+        coordinator?.transitionPresent(
+            viewController: searchViewController,
+            target: mainView.searchBar.searchTextField
+        )
     }
 }
 
@@ -428,14 +429,15 @@ extension MapViewController {
             reactor: AllLocationListViewReactor(
                 folderID: folderId,
                 sharedService: sharedEvent
-            )
+            ),
+            coordinator: coordinator
         )
         
         vc.delegate = self
         
-        delegateCloser?(.moveToAnimationPresent(
-            vc: vc,
-            target: mainView.buttonStack.locationMemosButton)
+        coordinator?.transitionPresent(
+            viewController: vc,
+            target: mainView.buttonStack.locationMemosButton
         )
     }
 }
