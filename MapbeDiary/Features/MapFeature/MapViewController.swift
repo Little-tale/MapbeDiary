@@ -264,11 +264,23 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if let annotation = annotation as? CustomAnnotation {
-            var view: ArtWorkMarkerView? = mapView.dequeueReusableAnnotationView(withIdentifier: ArtWorkMarkerView.reusableIdentifier, for: annotation) as? ArtWorkMarkerView
-    
-            view = ArtWorkMarkerView(annotation: annotation, reuseIdentifier: CustomAnnotation.reusableIdentifier)
-        
-            return view
+            let markerView: MKAnnotationView
+            if let memoId = annotation.locationId,
+               FileManagers.shard.loadImageMarkerImageUrl(memoId: memoId) != nil {
+                markerView = mapView.dequeueReusableAnnotationView(
+                    withIdentifier: ImageMarkerView.reusableIdentifier,
+                    for: annotation
+                )
+                markerView.annotation = annotation
+            } else {
+                markerView = mapView.dequeueReusableAnnotationView(
+                    withIdentifier: DefaultMarkerView.reusableIdentifier,
+                    for: annotation
+                )
+                markerView.annotation = annotation
+            }
+            
+            return markerView
         }
         
         print("asdsadsa")

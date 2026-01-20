@@ -170,6 +170,9 @@
 		7BBB682B2F1E5F280026EB7A /* AppLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB682A2F1E5F280026EB7A /* AppLoadViewController.swift */; };
 		7BBB682D2F1E64210026EB7A /* Ext+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB682C2F1E64210026EB7A /* Ext+Collection.swift */; };
 		7BCF4A8F2BCAD61C00BCE635 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A8E2BCAD61C00BCE635 /* README.md */; };
+		7BD1F85F2F1F8E9500FA2A97 /* ImageMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F85E2F1F8E9500FA2A97 /* ImageMarkerView.swift */; };
+		7BD1F8622F1F8F4100FA2A97 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 7BD1F8612F1F8F4100FA2A97 /* PinLayout */; };
+		7BD1F8642F1F963F00FA2A97 /* DefaultMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
 		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
@@ -386,6 +389,8 @@
 		7BBB682A2F1E5F280026EB7A /* AppLoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppLoadViewController.swift; path = MapbeDiary/Core/Utils/Ext/AppLoadViewController.swift; sourceTree = SOURCE_ROOT; };
 		7BBB682C2F1E64210026EB7A /* Ext+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Collection.swift"; sourceTree = "<group>"; };
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7BD1F85E2F1F8E9500FA2A97 /* ImageMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMarkerView.swift; sourceTree = "<group>"; };
+		7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMarkerView.swift; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
@@ -418,6 +423,7 @@
 				7B1137592B99A8A900D6BBD1 /* FloatingPanel in Frameworks */,
 				7BBB65C22F14DDA60026EB7A /* SwiftImageCompressor in Frameworks */,
 				7B6C20202BA17A1C00EB7166 /* TextFieldEffects in Frameworks */,
+				7BD1F8622F1F8F4100FA2A97 /* PinLayout in Frameworks */,
 				7B11375F2B99A8E200D6BBD1 /* DGCharts in Frameworks */,
 				7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */,
 				7B11378A2B99C2F100D6BBD1 /* Toast in Frameworks */,
@@ -1019,6 +1025,15 @@
 			path = AppLoadFeature;
 			sourceTree = "<group>";
 		};
+		7BD1F85D2F1F8E8800FA2A97 /* Marker */ = {
+			isa = PBXGroup;
+			children = (
+				7BD1F85E2F1F8E9500FA2A97 /* ImageMarkerView.swift */,
+				7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */,
+			);
+			path = Marker;
+			sourceTree = "<group>";
+		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1050,7 @@
 		88087A95B696C598319AACED /* MapFeature */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1F85D2F1F8E8800FA2A97 /* Marker */,
 				7B11377E2B99ADBF00D6BBD1 /* MapViewController.swift */,
 				7B1137912B99FF3E00D6BBD1 /* CustomAnnotation.swift */,
 				7B1C53352B9BFBAF00B712BC /* FloatingLocationLayout.swift */,
@@ -1104,6 +1120,7 @@
 				7BDE5F602F13D84300467F7F /* RxCocoa */,
 				7BDE5F622F13D84300467F7F /* RxRelay */,
 				7BBB65C12F14DDA60026EB7A /* SwiftImageCompressor */,
+				7BD1F8612F1F8F4100FA2A97 /* PinLayout */,
 			);
 			productName = MapbeDiary;
 			productReference = 7B11370B2B99A16F00D6BBD1 /* MapbeDiary.app */;
@@ -1212,6 +1229,7 @@
 				7BDE5F5C2F13D82E00467F7F /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				7BDE5F5F2F13D84300467F7F /* XCRemoteSwiftPackageReference "RxSwift" */,
 				7BBB65C02F14DDA60026EB7A /* XCRemoteSwiftPackageReference "SwiftImageCompressor" */,
+				7BD1F8602F1F8F4000FA2A97 /* XCRemoteSwiftPackageReference "PinLayout" */,
 			);
 			productRefGroup = 7B11370C2B99A16F00D6BBD1 /* Products */;
 			projectDirPath = "";
@@ -1306,6 +1324,7 @@
 				7BBB67C82F17E9F30026EB7A /* FolderEntity.swift in Sources */,
 				7B0790932BA487E900AE9BF0 /* CustomImageViewer.swift in Sources */,
 				7BB8ECC82B9F487900C88F17 /* AllLocactionListViewController.swift in Sources */,
+				7BD1F8642F1F963F00FA2A97 /* DefaultMarkerView.swift in Sources */,
 				7BA827382BB1951700227F63 /* ImageChach.swift in Sources */,
 				7BBB680E2F1E56330026EB7A /* BackButtonDelegate.swift in Sources */,
 				7BDE5FA22F13DC6700467F7F /* OnboardReactor.swift in Sources */,
@@ -1370,6 +1389,7 @@
 				7B11377B2B99AD5900D6BBD1 /* BaseHomeViewController.swift in Sources */,
 				7B1137712B99AB1400D6BBD1 /* RealmRepository.swift in Sources */,
 				7BBB67E92F1BD25A0026EB7A /* DetailMemoRealmRepository.swift in Sources */,
+				7BD1F85F2F1F8E9500FA2A97 /* ImageMarkerView.swift in Sources */,
 				7BBB677B2F1501CB0026EB7A /* NetworkManagerError.swift in Sources */,
 				7B1137792B99AD4200D6BBD1 /* Observable.swift in Sources */,
 				7BBB67782F1500BC0026EB7A /* NetworkManager.swift in Sources */,
@@ -1995,6 +2015,14 @@
 				minimumVersion = 0.0.4;
 			};
 		};
+		7BD1F8602F1F8F4000FA2A97 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.6;
+			};
+		};
 		7BDE5F5C2F13D82E00467F7F /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
@@ -2086,6 +2114,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BBB65C02F14DDA60026EB7A /* XCRemoteSwiftPackageReference "SwiftImageCompressor" */;
 			productName = SwiftImageCompressor;
+		};
+		7BD1F8612F1F8F4100FA2A97 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BD1F8602F1F8F4000FA2A97 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
 		};
 		7BDE5F5D2F13D82E00467F7F /* ReactorKit */ = {
 			isa = XCSwiftPackageProductDependency;

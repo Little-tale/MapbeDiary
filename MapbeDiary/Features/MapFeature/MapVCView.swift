@@ -42,8 +42,12 @@ final class MapVCView: VCBaseView {
     
     override func register() {
         mapView.register(
-            ArtWorkMarkerView.self,
-            forAnnotationViewWithReuseIdentifier: ArtWorkMarkerView.reusableIdentifier
+            ImageMarkerView.self,
+            forAnnotationViewWithReuseIdentifier: ImageMarkerView.reusableIdentifier
+        )
+        mapView.register(
+            DefaultMarkerView.self,
+            forAnnotationViewWithReuseIdentifier: DefaultMarkerView.reusableIdentifier
         )
     }
     
