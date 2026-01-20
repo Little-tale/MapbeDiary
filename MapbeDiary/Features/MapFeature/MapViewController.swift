@@ -232,8 +232,7 @@ extension MapViewController {
         )
         
         vc.selectedLocationMemo = { [weak self] memo in
-            guard let location = memo.location else { return }
-            guard let location2D = self?.makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat) else { return }
+            guard let location2D = self?.coordinate(from: memo) else { return }
             
             self?.finduserAnnotationOrNew(CL2D: location2D)
         }
@@ -395,9 +394,7 @@ extension MapViewController {
     
     // MARK: 메모를 통해 커스텀 어노테이션 설정
     func addCustomNoFocusForMemo(memo: LocationMemoEntity){
-        let location = memo.location
-        guard let location else { return }
-        let cl2 = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
+        let cl2 = coordinate(from: memo)
         print("????",memo.id)
         if let cl2 {
             let customLocation = CustomAnnotation(
@@ -520,13 +517,11 @@ extension MapViewController: FloatingPanelControllerDelegate {
         layout: PanelLayoutType,
         configure: ((UIViewController) -> Void)? = nil
     ) {
-        guard let folderID = UserDefaultsManager.currentFolderID else { return }
-        let config = PanelConfiguration(
+        guard let config = makePanelConfiguration(
             coordinate: coordinate,
             viewType: viewType,
-            layoutType: layout,
-            folderID: folderID,
-        )
+            layout: layout
+        ) else { return }
         updateFloatingPanel(with: config, configure: configure)
     }
     
@@ -554,16 +549,11 @@ private extension MapViewController {
         
         switch configuration.viewType {
         case .addLocation:
-            let vc = AddLocationMemoViewController(
-                reactor: MemoAddReactor(sharedService: sharedEvent)
+            return makeAddLocationMemoViewController(
+                sharedEvent: sharedEvent,
+                configuration: configuration,
+                memoIdForModify: nil
             )
-            applyCoordinate(
-                configuration.coordinate,
-                to: vc,
-                folderID: configuration.folderID
-            )
-            vc.backDelegate = self
-            return vc
             
         case let .about(memoID):
             let vc = AboutLocationViewController(
@@ -577,17 +567,11 @@ private extension MapViewController {
             return vc
             
         case let .modify(memoID):
-            let vc = AddLocationMemoViewController(
-                reactor: MemoAddReactor(sharedService: sharedEvent)
+            return makeAddLocationMemoViewController(
+                sharedEvent: sharedEvent,
+                configuration: configuration,
+                memoIdForModify: memoID
             )
-            applyCoordinate(
-                configuration.coordinate,
-                to: vc,
-                folderID: configuration.folderID
-            )
-            vc.backDelegate = self
-            vc.setModifier(memoID: memoID)
-            return vc
         }
     }
     
@@ -604,16 +588,33 @@ private extension MapViewController {
         )
         viewController.setAddModel(model: coordinateStruct)
     }
+    
+    func makeAddLocationMemoViewController(
+        sharedEvent: SharedEventProtocol,
+        configuration: PanelConfiguration,
+        memoIdForModify: String?
+    ) -> AddLocationMemoViewController {
+        let vc = AddLocationMemoViewController(
+            reactor: MemoAddReactor(sharedService: sharedEvent)
+        )
+        applyCoordinate(
+            configuration.coordinate,
+            to: vc,
+            folderID: configuration.folderID
+        )
+        vc.backDelegate = self
+        if let memoIdForModify {
+            vc.setModifier(memoID: memoIdForModify)
+        }
+        return vc
+    }
 }
 
 // MARK: 뒤로가기 버튼 감지
 extension MapViewController: BackButtonDelegate {
     func backButtonClicked() {
-        floatPanel?.removePanelFromParent(animated: true) { [weak self] in
-            guard let self else {return}
-            
-            floatPanel = nil
-            addTestAnnotations()
+        removeExistingPanelIfNeeded { [weak self] in
+            self?.addTestAnnotations()
         }
         removeAll()
     }
@@ -622,12 +623,7 @@ extension MapViewController: BackButtonDelegate {
 extension MapViewController: AboutModifyLocationDelegate {
     
     func getModifyInfo(with locationMemo: LocationMemoEntity) {
-        let coordinate: CLLocationCoordinate2D?
-        if let location = locationMemo.location {
-            coordinate = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
-        } else {
-            coordinate = nil
-        }
+        let coordinate = coordinate(from: locationMemo)
         requestModifyPanel(memoId: locationMemo.id, coordinate: coordinate)
     }
 }
@@ -636,13 +632,39 @@ extension MapViewController: AboutModifyLocationDelegate {
 extension MapViewController: AllMemoLocationListViewControllerDelegate {
     
     func modifyRequest(memoLocation: LocationMemoEntity) {
-        let coordinate: CLLocationCoordinate2D?
-        if let location = memoLocation.location {
-            coordinate = makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
-        } else {
-            coordinate = nil
-        }
+        let coordinate = coordinate(from: memoLocation)
         requestModifyPanel(memoId: memoLocation.id, coordinate: coordinate)
+    }
+    
+    func showMarker(memoLocation: LocationMemoEntity) {
+        let coordinate = coordinate(from: memoLocation)
+        
+        guard let coordinate else { return }
+        
+        coordinator?.dismiss()
+        setRegion(location: coordinate, latM: 300, longM: 300)
+        
+        if let existing = findAnnotation(memoId: memoLocation.id, coordinate: coordinate) {
+            if mainView.mapView.selectedAnnotations.contains(where: { $0 === existing }) {
+                showPanel(
+                    coordinate: nil,
+                    viewType: .about(memoId: memoLocation.id),
+                    layout: .detail
+                )
+            } else {
+                mainView.mapView.selectAnnotation(existing, animated: true)
+            }
+            return
+        }
+        
+        let customLocation = CustomAnnotation(
+            memoRegDate: memoLocation.regDate,
+            memoId: memoLocation.id,
+            title: memoLocation.title,
+            coordinate: coordinate
+        )
+        mainView.mapView.addAnnotation(customLocation)
+        mainView.mapView.selectAnnotation(customLocation, animated: true)
     }
 }
 
@@ -668,13 +690,12 @@ extension MapViewController {
         memoId: String,
         coordinate: CLLocationCoordinate2D?
     ) {
-        guard let folderID = UserDefaultsManager.currentFolderID else { return }
-        let config = PanelConfiguration(
+        let viewType = PanelViewControllerType.modify(memoId: memoId)
+        guard let config = makePanelConfiguration(
             coordinate: coordinate,
-            viewType: .modify(memoId: memoId),
-            layoutType: .custom,
-            folderID: folderID
-        )
+            viewType: viewType,
+            layout: .custom
+        ) else { return }
         pendingPanelConfiguration = config
         
         if let coordinate {
@@ -684,7 +705,7 @@ extension MapViewController {
                 if mainView.mapView.selectedAnnotations.contains(where: { $0 === existing }) {
                     showPanel(
                         coordinate: coordinate,
-                        viewType: .modify(memoId: memoId),
+                        viewType: viewType,
                         layout: .custom
                     )
                     pendingPanelConfiguration = nil
@@ -697,7 +718,7 @@ extension MapViewController {
         
         showPanel(
             coordinate: coordinate,
-            viewType: .modify(memoId: memoId),
+            viewType: viewType,
             layout: .custom
         )
         pendingPanelConfiguration = nil
@@ -730,6 +751,25 @@ extension MapViewController {
         } else {
             return nil
         }
+    }
+    
+    private func coordinate(from memo: LocationMemoEntity) -> CLLocationCoordinate2D? {
+        guard let location = memo.location else { return nil }
+        return makeCLLocationCoordinate2D(lon: location.lon, lat: location.lat)
+    }
+    
+    private func makePanelConfiguration(
+        coordinate: CLLocationCoordinate2D?,
+        viewType: PanelViewControllerType,
+        layout: PanelLayoutType
+    ) -> PanelConfiguration? {
+        guard let folderID = UserDefaultsManager.currentFolderID else { return nil }
+        return PanelConfiguration(
+            coordinate: coordinate,
+            viewType: viewType,
+            layoutType: layout,
+            folderID: folderID
+        )
     }
 }
 

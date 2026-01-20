@@ -12,6 +12,8 @@ import RxCocoa
 protocol AllMemoLocationListViewControllerDelegate: AnyObject {
 
     func modifyRequest(memoLocation: LocationMemoEntity)
+    
+    func showMarker(memoLocation: LocationMemoEntity)
 }
 
 final class AllMemoLocationListViewController: ReactorBaseViewController<AllLocationListViewReactor, AllLocationVCView> {
@@ -91,6 +93,17 @@ final class AllMemoLocationListViewController: ReactorBaseViewController<AllLoca
         mainView.backButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.coordinator?.dismiss()
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.collectionView.rx
+            .itemSelected
+            .withUnretained(self)
+            .compactMap { owner, indexPath in
+                owner.dataSource?.itemIdentifier(for: indexPath)
+            }
+            .bind(with: self) { owner, entity in
+                owner.delegate?.showMarker(memoLocation: entity)
             }
             .disposed(by: disposeBag)
         

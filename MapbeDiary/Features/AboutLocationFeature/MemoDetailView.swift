@@ -29,10 +29,11 @@ final class MemoDetailView: BaseView {
     }
     
     let modifyLocationButton = UIButton().after {
-        var config = UIButton.Configuration.plain()
+        var config = UIButton.Configuration.filled()
         config.title = "Modify_title".localized
-        config.baseForegroundColor = .blue
-        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+        config.baseForegroundColor = .black
+        config.baseBackgroundColor = .md(.tagGreen)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
         $0.configuration = config
     }
     

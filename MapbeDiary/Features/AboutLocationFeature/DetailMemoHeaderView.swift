@@ -15,7 +15,12 @@ final class DetailMemoHeaderView: BaseCollectionReusableView {
         let regDate: String
     }
     
-    private let detailContents = UILabel()
+    private let detailContents = PaddingLabel().after {
+        $0.insets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+        $0.backgroundColor = .md(.tagYellow)
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 8
+    }
     
     private let infoButton = UIButton(type: .system)
     
@@ -45,7 +50,8 @@ final class DetailMemoHeaderView: BaseCollectionReusableView {
         
         detailContents.snp.makeConstraints { make in
             make.top.equalTo(regDateLabel.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().inset(8)
+            make.trailing.lessThanOrEqualToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
         }
     }
@@ -56,7 +62,7 @@ final class DetailMemoHeaderView: BaseCollectionReusableView {
             for: .normal
         )
         infoButton.showsMenuAsPrimaryAction = true
-        infoButton.tintColor = .md(.tagBlue)
+        infoButton.tintColor = .gray
         
         infoButton.menu = UIMenu(children: [
             UIAction(
