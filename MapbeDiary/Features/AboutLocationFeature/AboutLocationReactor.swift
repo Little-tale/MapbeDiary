@@ -111,6 +111,9 @@ extension AboutLocationReactor {
             state.isEmptyDetails = trigger
             
         case let .setSuccessRemoveMemo(trigger):
+            if trigger {
+                sharedEvent.send(.needReloadMemos)
+            }
             state.successRemoveMemo = trigger
         }
         
