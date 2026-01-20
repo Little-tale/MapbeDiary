@@ -107,6 +107,7 @@ extension MemoDetailView {
     func setData(data: LocationMemoEntity) {
         self.locationTitleLabel.text = data.title
         self.locationMemoLabel.text = data.contents
+        self.locationMemoLabel.isHidden = (data.contents?.isEmpty ?? true)
         self.regDateLabel.text = DateFormatterManager.shared.localDate(
             data.regDate,
             style: .medium,
