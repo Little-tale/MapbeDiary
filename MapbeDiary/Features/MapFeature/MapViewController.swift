@@ -732,3 +732,13 @@ extension MapViewController {
         }
     }
 }
+
+#if DEBUG
+@available(iOS 17, *)
+#Preview {
+    MapViewController(reactor: MapViewReactor(
+        sharedEvent: SharedEventService(),
+        locationManager: LocationManager() )
+    )
+}
+#endif

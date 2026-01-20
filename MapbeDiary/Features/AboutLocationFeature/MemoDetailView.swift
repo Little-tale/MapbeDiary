@@ -15,9 +15,12 @@ final class MemoDetailView: BaseView {
         $0.numberOfLines = 2
     }
     
-    let locationMemoLabel = UILabel().after {
+    let locationMemoLabel = BubbleLabel().after {
         $0.font = JHFont.UIKit.re17
         $0.numberOfLines = 3
+        $0.insets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 4)
+        $0.backgroundColor = .md(.tagBlue)
+        $0.tailDirection = .topLeft
     }
     
     let regDateLabel = UILabel().after {
@@ -28,14 +31,14 @@ final class MemoDetailView: BaseView {
     let modifyLocationButton = UIButton().after {
         var config = UIButton.Configuration.plain()
         config.title = "Modify_title".localized
-        config.baseForegroundColor = .md(.textPrimary)
+        config.baseForegroundColor = .blue
         config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
         $0.configuration = config
     }
     
     private let phoneNumberImageView = UIImageView().after {
         $0.image = UIImage(systemName: "phone.fill")
-        $0.tintColor = .md(.tagBlue)
+        $0.tintColor = .green
     }
     
     let phoneNumberLabel = UILabel().after {
@@ -60,15 +63,15 @@ final class MemoDetailView: BaseView {
         }
         
         locationMemoLabel.snp.makeConstraints { make in
-            make.top.equalTo(locationTitleLabel.snp.bottom).offset(4)
-            make.leading.equalTo(locationMemoLabel)
+            make.top.equalTo(locationTitleLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().inset(8)
+            make.trailing.lessThanOrEqualToSuperview().inset(8)
         }
         
         phoneNumberImageView.snp.makeConstraints { make in
             make.top.equalTo(locationMemoLabel.snp.bottom).offset(8)
             make.leading.equalTo(locationMemoLabel)
             make.size.equalTo(20)
-            make.bottom.equalToSuperview().inset(8)
         }
         
         phoneNumberLabel.snp.makeConstraints { make in
@@ -76,14 +79,24 @@ final class MemoDetailView: BaseView {
             make.centerY.equalTo(phoneNumberImageView)
         }
         
+        modifyLocationButton.snp.makeConstraints { make in
+            make.top.equalTo(phoneNumberLabel)
+            make.trailing.equalToSuperview().inset(8)
+        }
+        
         regDateLabel.snp.makeConstraints { make in
+            make.top.equalTo(modifyLocationButton.snp.bottom).offset(4)
             make.trailing.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
         }
-        
-        modifyLocationButton.snp.makeConstraints { make in
-            make.bottom.equalTo(regDateLabel.snp.top)
-            make.trailing.equalToSuperview().inset(8)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let maxBubbleWidth = bounds.width - 16
+        let maxTextWidth = max(0, maxBubbleWidth - locationMemoLabel.insets.left - locationMemoLabel.insets.right)
+        if locationMemoLabel.preferredMaxLayoutWidth != maxTextWidth {
+            locationMemoLabel.preferredMaxLayoutWidth = maxTextWidth
         }
     }
 }

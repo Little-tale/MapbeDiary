@@ -352,3 +352,13 @@ extension AboutLocationViewController {
         backDelegate?.backButtonClicked()
     }
 }
+
+#if DEBUG
+@available(iOS 17, *)
+#Preview {
+    AboutLocationViewController(reactor: AboutLocationReactor(
+        memoID: "696cf7ecf15bdbae0c54b16c",
+        shared: SharedEventService())
+    )
+}
+#endif

@@ -173,6 +173,8 @@
 		7BD1F85F2F1F8E9500FA2A97 /* ImageMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F85E2F1F8E9500FA2A97 /* ImageMarkerView.swift */; };
 		7BD1F8622F1F8F4100FA2A97 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 7BD1F8612F1F8F4100FA2A97 /* PinLayout */; };
 		7BD1F8642F1F963F00FA2A97 /* DefaultMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */; };
+		7BD1F8672F1FA4E900FA2A97 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8662F1FA4E900FA2A97 /* PaddingLabel.swift */; };
+		7BD1F8692F1FA4E900FA2A98 /* BubbleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
 		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
@@ -391,6 +393,8 @@
 		7BCF4A8E2BCAD61C00BCE635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BD1F85E2F1F8E9500FA2A97 /* ImageMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMarkerView.swift; sourceTree = "<group>"; };
 		7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMarkerView.swift; sourceTree = "<group>"; };
+		7BD1F8662F1FA4E900FA2A97 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleLabel.swift; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
@@ -816,6 +820,7 @@
 		7BBB67842F15208D0026EB7A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1F8652F1FA4DD00FA2A97 /* Label */,
 				7BBB680C2F1E56220026EB7A /* Protocol */,
 				7BBB680B2F1E55740026EB7A /* View */,
 				7BBB680A2F1E553F0026EB7A /* Font */,
@@ -1032,6 +1037,15 @@
 				7BD1F8632F1F963F00FA2A97 /* DefaultMarkerView.swift */,
 			);
 			path = Marker;
+			sourceTree = "<group>";
+		};
+		7BD1F8652F1FA4DD00FA2A97 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */,
+				7BD1F8662F1FA4E900FA2A97 /* PaddingLabel.swift */,
+			);
+			path = Label;
 			sourceTree = "<group>";
 		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
@@ -1453,6 +1467,8 @@
 				7BBB65C42F14DF310026EB7A /* Ext+UISearchBar.swift in Sources */,
 				7BDEA51F2B9B63D6008C6922 /* CircleImage.swift in Sources */,
 				7BBB67812F1507970026EB7A /* KakaoMapper.swift in Sources */,
+				7BD1F8672F1FA4E900FA2A97 /* PaddingLabel.swift in Sources */,
+				7BD1F8692F1FA4E900FA2A98 /* BubbleLabel.swift in Sources */,
 				7BBB67DE2F1A60F90026EB7A /* CalendarMemoViewReactor.swift in Sources */,
 				7BA3733D2B9D889E0016E851 /* BaseTableViewCell.swift in Sources */,
 				7BBB67992F1574890026EB7A /* SettingSection.swift in Sources */,

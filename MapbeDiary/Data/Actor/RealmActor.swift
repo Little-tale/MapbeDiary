@@ -22,6 +22,9 @@ import RealmSwift
     private func setup() async {
         do {
             realm = try await Realm(actor: RealmActor.shared)
+            #if DEBUG
+            print(realm?.configuration.fileURL ?? "Can't get Realm fileURL")
+            #endif
         } catch {
             print("Realm 초기화 실패: \(error)")
             realm = nil

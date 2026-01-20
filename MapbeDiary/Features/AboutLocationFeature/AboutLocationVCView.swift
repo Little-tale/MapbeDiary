@@ -71,7 +71,7 @@ final class AboutLocationVCView: VCBaseView {
         memoDetailView.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(12)
-            make.height.equalTo(140)
+            make.height.greaterThanOrEqualTo(140)
         }
         
         bottomLine.snp.makeConstraints { make in
