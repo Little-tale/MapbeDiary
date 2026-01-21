@@ -74,6 +74,12 @@
 
 "Search_place" = "Search for a place!";
 
+"Search_place2" = "Search for a place";
+
+"Search_place3" = "Record good restaurants, cafes, etc\nSearch it!";
+
+"Search_tag_title" = "Recommended search terms";
+
 "Search_empty_text" = "Please enter a place to search!";
 
 "If_phone_number" = "Do you have a phone number?";

@@ -13,19 +13,22 @@ final class SearchVCView: VCBaseView {
     
     // MARK: Property
     let backButton = UIButton(frame: .zero)
+    
     let searchBar = UISearchBar()
+    
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CollectionViewLayouts.makeListLayout()
     )
-    let emptyImage = SearchEmptyView()
+    
+    let emptyView = SearchEmptyView()
     
     
     override func setupHierarchy() {
         addSubview(backButton)
         addSubview(searchBar)
         addSubview(collectionView)
-        addSubview(emptyImage)
+        addSubview(emptyView)
     }
     
     override func setupConstraints() {
@@ -47,10 +50,9 @@ final class SearchVCView: VCBaseView {
             make.top.equalTo(searchBar.snp.bottom).offset(4)
         }
         
-        emptyImage.snp.makeConstraints { make in
+        emptyView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(140)
         }
     }
     
@@ -77,13 +79,13 @@ extension SearchVCView {
     
     /// BackButton Setup UI
     private func setBackButton() {
-        let backImage = UIImage(systemName: "chevron.backward.circle.fill")
+        let backImage = UIImage(systemName: "chevron.left")
         
         guard var backImage else { return }
         
         backImage.withRenderingMode(.alwaysTemplate)
         
-        backImage = backImage.resizeImage(maxDimension: 24)
+        backImage = backImage.resizeImage(maxDimension: 16)
         
         backButton.setImage(backImage, for: .normal)
         backButton.clipsToBounds = true

@@ -176,6 +176,7 @@
 		7BD1F8692F1FA4E900FA2A98 /* BubbleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */; };
 		7BD1F86D2F21062600FA2A97 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 7BD1F86C2F21062600FA2A97 /* RxGesture */; };
 		7BD1F8702F21064B00FA2A97 /* ImageWithTextButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */; };
+		7BD1F8722F2128B200FA2A97 /* WrappedTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
 		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
@@ -397,6 +398,7 @@
 		7BD1F8662F1FA4E900FA2A97 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleLabel.swift; sourceTree = "<group>"; };
 		7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTextButtonView.swift; sourceTree = "<group>"; };
+		7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTagView.swift; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
@@ -989,6 +991,7 @@
 				7BD1F86E2F21063D00FA2A97 /* ButtonView */,
 				7BDEA51E2B9B63D6008C6922 /* CircleImage.swift */,
 				7BB250E22BA1C63300FDE898 /* MemosEmptyView.swift */,
+				7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1344,6 +1347,7 @@
 				7B11377F2B99ADBF00D6BBD1 /* MapViewController.swift in Sources */,
 				7BBB68292F1E5E670026EB7A /* AppLoadVCView.swift in Sources */,
 				7B7BE6532BAD9A830072F40F /* OnboardViewController.swift in Sources */,
+				7BD1F8722F2128B200FA2A97 /* WrappedTagView.swift in Sources */,
 				7BBB67F32F1CEC3E0026EB7A /* MemoDetailView.swift in Sources */,
 				7BBB67D12F1913820026EB7A /* MapViewReactor.swift in Sources */,
 				7BBB67C82F17E9F30026EB7A /* FolderEntity.swift in Sources */,

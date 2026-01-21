@@ -74,7 +74,13 @@
 
 "Search_place" = "장소를 검색해보세요!";
 
+"Search_place2" = "장소를 입력해주세요";
+
+"Search_place3" = "맛집, 카페, 명소 등 기록할 곳을\n검색해보세요!";
+
 "Search_empty_text" = "검색하실 장소를\n입력해주세요!";
+
+"Search_tag_title" = "추천 검색어";
 
 "If_phone_number" = "전화번호가 있나요?";
 

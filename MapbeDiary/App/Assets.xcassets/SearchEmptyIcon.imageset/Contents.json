@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "SearchEmptyIcon.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

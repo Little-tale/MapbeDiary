@@ -48,7 +48,7 @@ final class SearchViewController: ReactorBaseViewController<SearchReactor, Searc
             .map { $0.isEmpty }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, bool in
-                owner.mainView.emptyImage.isHidden = !bool
+                owner.mainView.emptyView.isHidden = !bool
             }
             .disposed(by: disposeBag)
     }
