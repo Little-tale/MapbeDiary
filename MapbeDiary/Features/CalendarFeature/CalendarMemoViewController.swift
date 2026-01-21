@@ -139,9 +139,10 @@ extension CalendarMemoViewController {
     
     private func setCollectionViewCellRegister() -> CellRegister {
         let cellRegister = CellRegister { cell, indexPath, item in
-            cell.backgroundColor = .wheetBior
             cell.layer.cornerRadius = 12
-            cell.clipsToBounds = true
+            cell.layer.masksToBounds = true
+            cell.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.4).cgColor
+            cell.layer.borderWidth = 0.4
             cell.setModel(location: item)
         }
         return cellRegister

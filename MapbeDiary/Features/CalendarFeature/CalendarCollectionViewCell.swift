@@ -13,18 +13,47 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
     
     private let imageView: UIImageView = UIImageView().after {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
     }
-    private let titleLabel = UILabel()
-    private let dateLabel = UILabel()
-    private var titleLeadingToImage: Constraint?
-    private var titleLeadingToContent: Constraint?
-    private var imageWidthToHeight: Constraint?
-    private var imageWidthZero: Constraint?
+    
+    private let emptyView = AllLocationCellEmptyView().after {
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
+    }
+    
+    private let stackView = UIStackView().after {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 8
+        $0.alignment = .leading
+    }
+    
+    private let titleLabel = UILabel().after {
+        $0.numberOfLines = 2
+        $0.textAlignment = .left
+        $0.font = .systemFont(ofSize: 18, weight: .bold)
+    }
+    
+    private let subtitleLabel: UILabel = UILabel().after {
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = .systemFont(ofSize: 14, weight: .regular)
+        $0.textColor = .lightGray
+    }
+    
+    private let dateLabel = UILabel().after {
+        $0.font = .systemFont(ofSize: 14, weight: .thin)
+        $0.textColor = .lightGray
+    }
     
     
     override func configureHierarchy() {
         contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(emptyView)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(subtitleLabel)
         contentView.addSubview(dateLabel)
     }
     
@@ -35,6 +64,34 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
         titleLabel.text = nil
         dateLabel.text = nil
     }
+    
+    override func configureLayout() {
+        imageView.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().inset(8)
+            make.width.equalTo(imageView.snp.height)
+        }
+
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(imageView)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(imageView).offset(4)
+            make.leading.equalTo(imageView.snp.trailing).offset(12)
+            make.trailing.equalToSuperview().inset(14)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(8)
+            make.trailing.equalToSuperview().inset(14)
+            make.leading.equalTo(stackView.snp.leading)
+        }
+    }
+    
+}
+
+extension CalendarCollectionViewCell {
     
     func setModel(location: LocationMemoEntity) {
         let title = location.title
@@ -48,16 +105,13 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
         let url = FileManagers.shard.loadImageOrignerMarker(location.id)
         
         titleLabel.text = title
+        subtitleLabel.text = location.contents ?? "Memo_empty".localized
+        if location.contents?.isEmpty == true { subtitleLabel.text = "Memo_empty".localized }
         dateLabel.text = dateString
         
         
         if let imageUrl = url {
-            imageView.isHidden = false
-            imageWidthZero?.deactivate()
-            imageWidthToHeight?.activate()
-            titleLeadingToContent?.deactivate()
-            titleLeadingToImage?.activate()
-            
+            emptyView.isHidden = true
             imageView.kf.indicatorType = .activity
             imageView.kf.setImage(
                 with: imageUrl,
@@ -66,51 +120,9 @@ class CalendarCollectionViewCell: BaseCollectionViewCell {
                 ))]
             )
         } else {
-            imageView.isHidden = true
-            imageWidthToHeight?.deactivate()
-            imageWidthZero?.activate()
-            titleLeadingToImage?.deactivate()
-            titleLeadingToContent?.activate()
+            emptyView.isHidden = false
         }
         
         setNeedsLayout()
     }
-    
-    
-    
-    override func configureLayout() {
-        imageView.snp.makeConstraints { make in
-            make.verticalEdges.leading.equalTo(contentView.safeAreaLayoutGuide)
-            imageWidthToHeight = make.width.equalTo(imageView.snp.height).constraint
-            imageWidthZero = make.width.equalTo(0).constraint
-        }
-        imageWidthZero?.deactivate()
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(8)
-            titleLeadingToImage = make.leading.equalTo(imageView.snp.trailing).offset(12).constraint
-            titleLeadingToContent = make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(12).constraint
-            make.bottom.lessThanOrEqualTo(dateLabel.snp.top).offset(-6)
-        }
-        titleLeadingToContent?.deactivate()
-        
-        dateLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(15)
-            make.leading.equalTo(titleLabel.snp.leading)
-            make.height.equalTo(14)
-        }
-    }
-
-    
-    override func designView() {
-        imageView.clipsToBounds = true
-        titleLabel.numberOfLines = 2
-        titleLabel.textAlignment = .left
-        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        dateLabel.font = .systemFont(ofSize: 14, weight: .thin)
-    }
-    
-    
 }

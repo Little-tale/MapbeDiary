@@ -13,7 +13,7 @@ import FSCalendar
 final class CalendarMemoVCView: VCBaseView {
     
     private var minCalendarHeight: CGFloat = 150
-    private var maxCalendarHeight: CGFloat = 410
+    private var maxCalendarHeight: CGFloat = 350
     private let snapThreshold: CGFloat = 30
     private var calendarHeightConstraint: Constraint?
     private var currentCalendarHeight: CGFloat = 400
