@@ -638,6 +638,7 @@
 		7B11370D2B99A16F00D6BBD1 /* MapbeDiary */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1F8762F2149DD00FA2A97 /* Doc */,
 				484D8B771F18F48A10D2AD48 /* App */,
 				7B2D775E2BF3797C00D6BBD1 /* Core */,
 				7B1137512B99A82F00D6BBD1 /* Data */,
@@ -1071,6 +1072,13 @@
 				7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		7BD1F8762F2149DD00FA2A97 /* Doc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Doc;
 			sourceTree = "<group>";
 		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
