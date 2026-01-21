@@ -177,6 +177,7 @@
 		7BD1F86D2F21062600FA2A97 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 7BD1F86C2F21062600FA2A97 /* RxGesture */; };
 		7BD1F8702F21064B00FA2A97 /* ImageWithTextButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */; };
 		7BD1F8722F2128B200FA2A97 /* WrappedTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */; };
+		7BD1F8752F213D2700FA2A97 /* AllLocationCellEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
 		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
@@ -399,6 +400,7 @@
 		7BD1F8682F1FA4E900FA2A98 /* BubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleLabel.swift; sourceTree = "<group>"; };
 		7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTextButtonView.swift; sourceTree = "<group>"; };
 		7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTagView.swift; sourceTree = "<group>"; };
+		7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationCellEmptyView.swift; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
@@ -583,8 +585,8 @@
 		667BC9CE7CCD39384DF6FDB2 /* AllLocationListFeature */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1F8732F213D0B00FA2A97 /* Cell */,
 				7B6331812BA5307900C1C1DE /* LocationMemosViewModel.swift */,
-				7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */,
 				7BB8ECC72B9F487900C88F17 /* AllLocactionListViewController.swift */,
 				7BBB67B92F17CC270026EB7A /* AllLocationVCView.swift */,
 				7BBB67BB2F17DCCE0026EB7A /* AllLocationListViewReactor.swift */,
@@ -1062,6 +1064,15 @@
 			path = ButtonView;
 			sourceTree = "<group>";
 		};
+		7BD1F8732F213D0B00FA2A97 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7BB8ECC52B9F43AD00C88F17 /* MemoSimpleCollectionViewCell.swift */,
+				7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		86BDCEB61BD305B13F4A9DA4 /* AboutLocationFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -1381,6 +1392,7 @@
 				7BBB67AF2F165E2E0026EB7A /* AddImageWithButtonView.swift in Sources */,
 				7B1137962B9B0AB800D6BBD1 /* FileManagers.swift in Sources */,
 				7B6331822BA5307900C1C1DE /* LocationMemosViewModel.swift in Sources */,
+				7BD1F8752F213D2700FA2A97 /* AllLocationCellEmptyView.swift in Sources */,
 				7BBB676D2F14E9D70026EB7A /* PlaceDocumentEntity.swift in Sources */,
 				7BBB682D2F1E64210026EB7A /* Ext+Collection.swift in Sources */,
 				7B1137922B99FF3E00D6BBD1 /* CustomAnnotation.swift in Sources */,

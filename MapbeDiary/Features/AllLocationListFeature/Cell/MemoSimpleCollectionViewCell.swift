@@ -9,13 +9,28 @@ import UIKit
 import SnapKit
 
 final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
-    let imageView = UIImageView()
-    let titleLabel = UILabel()
-    let subTitleLabel = UILabel()
-    let dateLabel = UILabel()
+    
+    struct Configuration {
+        let title: String
+        let subTitle: String?
+        let date: String?
+        let image: UIImage?
+    }
+    
+    private let imageView = UIImageView()
+    
+    private let emptyView = AllLocationCellEmptyView()
+    
+    private let titleLabel = UILabel()
+    
+    private let subTitleLabel = UILabel()
+    
+    private let dateLabel = UILabel()
+    
     
     override func configureHierarchy() {
         contentView.addSubview(imageView)
+        contentView.addSubview(emptyView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(subTitleLabel)
         contentView.addSubview(dateLabel)
@@ -26,6 +41,10 @@ final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(14)
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(14)
             //make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(14)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(imageView)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -55,6 +74,9 @@ final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         
+        emptyView.layer.cornerRadius = 12
+        emptyView.layer.masksToBounds = true
+        
         titleLabel.font = .systemFont(ofSize: 16,weight: .bold)
         
         subTitleLabel.font = .systemFont(ofSize: 12, weight: .light)
@@ -62,4 +84,23 @@ final class MemoSimpleCollectionViewCell: BaseCollectionViewCell {
         dateLabel.font = .systemFont(ofSize: 14, weight: .ultraLight)
     }
     
+}
+
+extension MemoSimpleCollectionViewCell {
+    
+    func setConfiguration(_ configuration: Configuration) {
+        titleLabel.text = configuration.title
+        
+        imageView.image = configuration.image
+        
+        emptyView.isHidden = configuration.image != nil
+        
+        if let subTitle = configuration.subTitle, !subTitle.isEmpty {
+            subTitleLabel.text = subTitle
+        } else {
+            subTitleLabel.text = "Memo_empty".localized
+        }
+        
+        dateLabel.text = configuration.date
+    }
 }

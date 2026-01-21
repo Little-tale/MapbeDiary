@@ -135,17 +135,22 @@ extension AllMemoLocationListViewController {
         let cellRegister = UICollectionView.CellRegistration<MemoSimpleCollectionViewCell,LocationMemoEntity>{
             [weak self] cell, indexPath, item in
             guard self != nil else { return }
-            cell.titleLabel.text = item.title
             
-            cell.dateLabel.text = DateFormatterManager.shared.localDate(item.regDate)
+            var image: UIImage? = nil
+            let imageUrl = FileManagers.shard.loadImageOrignerMarker(memoId: item.id)
             
-            cell.subTitleLabel.text = item.contents
-            let image = FileManagers.shard.loadImageOrignerMarker(memoId: item.id)
-            if let image {
-                cell.imageView.image = UIImage(contentsOfFile: image)
-            }else {
-                cell.imageView.image = .emptyAnnotation
+            if let imageUrl {
+                image = UIImage(contentsOfFile: imageUrl)
             }
+            
+            cell.setConfiguration(
+                MemoSimpleCollectionViewCell.Configuration(
+                    title: item.title,
+                    subTitle: item.contents,
+                    date: DateFormatterManager.shared.localDate(item.regDate),
+                    image: image
+                )
+            )
         }
         
         dataSource = UICollectionViewDiffableDataSource<FolderEntity,LocationMemoEntity>(

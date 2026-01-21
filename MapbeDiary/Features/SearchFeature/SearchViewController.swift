@@ -81,7 +81,7 @@ final class SearchViewController: ReactorBaseViewController<SearchReactor, Searc
             }
             .bind(with: self) { owner, model in
                 owner.kakaoDataClosure?(model)
-                owner.dismiss(animated: false)
+                owner.coordinator?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
         
