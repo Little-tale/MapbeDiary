@@ -9,44 +9,55 @@ import UIKit
 import SnapKit
 
 class SearchCollectionViewCell: BaseCollectionViewCell {
-    let placeNameLabel = UILabel(frame: .zero)
-    let roadNameLabel = UILabel(frame: .zero)
+    
+    private let stackView = UIStackView().after {
+        $0.axis = .vertical
+        $0.spacing = 8
+        $0.distribution = .equalSpacing
+        $0.alignment = .leading
+    }
+    
+    let placeNameLabel = UILabel(frame: .zero).after {
+        $0.font = JHFont.UIKit.bo17
+    }
+    
+    let roadNameLabel = UILabel(frame: .zero).after {
+        $0.font = JHFont.UIKit.re14
+    }
+    
+    private let trailingArrow = UIImageView().after {
+        $0.image = UIImage(systemName: "chevron.right")
+        $0.tintColor = .lightGray.withAlphaComponent(0.4)
+    }
     
     
     override func configureHierarchy() {
-        contentView.addSubview(placeNameLabel)
-        contentView.addSubview(roadNameLabel)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(placeNameLabel)
+        stackView.addArrangedSubview(roadNameLabel)
+        contentView.addSubview(trailingArrow)
     }
+    
     override func configureLayout() {
-        placeNameLabel.snp.makeConstraints{ make in
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.top.equalToSuperview().offset(10)
+        stackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(12)
+            make.leading.equalToSuperview().inset(8)
+            make.trailing.equalTo(trailingArrow.snp.leading)
+            make.bottom.equalToSuperview().inset(12)
         }
-        roadNameLabel.snp.makeConstraints{ make in
-            make.horizontalEdges.equalTo(placeNameLabel)
-            make.top.equalTo(placeNameLabel.snp.bottom).offset(10)
-            make.height.equalTo(placeNameLabel)
-            make.bottom.equalToSuperview()
-        }
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        roadNameLabel.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().inset(10)
+        trailingArrow.snp.makeConstraints { make in
+            make.top.equalTo(stackView)
+            make.trailing.equalToSuperview().inset(12)
         }
     }
-    override func designView() {
-        placeNameLabel.font = JHFont.UIKit.bo20
-        roadNameLabel.font = JHFont.UIKit.bo15
-        
-    }
+ 
     override func prepareForReuse() {
         super.prepareForReuse()
-        cleartext()
+        clearText()
         layoutIfNeeded()
     }
     
-    private func cleartext(){
+    private func clearText(){
         placeNameLabel.textColor = .black
         roadNameLabel.textColor = .black
     }
