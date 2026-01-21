@@ -28,17 +28,44 @@ final class MemoDetailView: BaseView {
         $0.font = JHFont.UIKit.re14
     }
     
-    let modifyLocationButton = UIButton().after {
-        var config = UIButton.Configuration.filled()
-        config.title = "Modify_title".localized
-        config.baseForegroundColor = .black
-        config.baseBackgroundColor = .md(.tagGreen)
-        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
-        $0.configuration = config
+    private let stackView = UIStackView().after {
+        $0.axis = .vertical
+        $0.alignment = .fill
+        $0.distribution = .fill
+        $0.spacing = 4
+    }
+
+    private let memoContainerView = UIView()
+
+    private let topRowStackView = UIStackView().after {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.spacing = 8
+    }
+
+    private let phoneRowStackView = UIStackView().after {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.spacing = 4
+    }
+
+    private let topRowSpacerView = UIView()
+    
+    let modifyLocationButton = ImageWithTextButtonView().after {
+        $0.textLabel.text = "Modify_title".localized
+        $0.textLabel.font = JHFont.UIKit.re17
+        $0.textLabel.textColor = .white
+        $0.imageView.image = UIImage(systemName: "pencil")
+        $0.imageView.tintColor = .white
+        $0.backgroundColor = .black
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 12
     }
     
     private let phoneNumberImageView = UIImageView().after {
-        $0.image = UIImage(systemName: "phone.fill")
+        $0.image = .phone
         $0.tintColor = .green
     }
     
@@ -49,11 +76,18 @@ final class MemoDetailView: BaseView {
     
     override func configureHierarchy() {
         addSubview(locationTitleLabel)
-        addSubview(locationMemoLabel)
-        addSubview(regDateLabel)
-        addSubview(modifyLocationButton)
-        addSubview(phoneNumberLabel)
-        addSubview(phoneNumberImageView)
+        addSubview(stackView)
+        
+        stackView.addArrangedSubview(memoContainerView)
+        stackView.addArrangedSubview(topRowStackView)
+        stackView.addArrangedSubview(regDateLabel)
+        
+        memoContainerView.addSubview(locationMemoLabel)
+        topRowStackView.addArrangedSubview(phoneRowStackView)
+        topRowStackView.addArrangedSubview(topRowSpacerView)
+        topRowStackView.addArrangedSubview(modifyLocationButton)
+        phoneRowStackView.addArrangedSubview(phoneNumberImageView)
+        phoneRowStackView.addArrangedSubview(phoneNumberLabel)
     }
     
     override func configureLayout() {
@@ -62,33 +96,21 @@ final class MemoDetailView: BaseView {
             make.leading.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.7)
         }
-        
-        locationMemoLabel.snp.makeConstraints { make in
+
+        stackView.snp.makeConstraints { make in
             make.top.equalTo(locationTitleLabel.snp.bottom).offset(8)
             make.leading.equalToSuperview().inset(8)
-            make.trailing.lessThanOrEqualToSuperview().inset(8)
-        }
-        
-        phoneNumberImageView.snp.makeConstraints { make in
-            make.top.equalTo(locationMemoLabel.snp.bottom).offset(8)
-            make.leading.equalTo(locationMemoLabel)
-            make.size.equalTo(20)
-        }
-        
-        phoneNumberLabel.snp.makeConstraints { make in
-            make.leading.equalTo(phoneNumberImageView.snp.trailing).offset(4)
-            make.centerY.equalTo(phoneNumberImageView)
-        }
-        
-        modifyLocationButton.snp.makeConstraints { make in
-            make.top.equalTo(phoneNumberLabel)
-            make.trailing.equalToSuperview().inset(8)
-        }
-        
-        regDateLabel.snp.makeConstraints { make in
-            make.top.equalTo(modifyLocationButton.snp.bottom).offset(4)
             make.trailing.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
+        }
+
+        locationMemoLabel.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+            make.trailing.lessThanOrEqualToSuperview()
+        }
+
+        phoneNumberImageView.snp.makeConstraints { make in
+            make.size.equalTo(20)
         }
     }
 
@@ -106,13 +128,59 @@ extension MemoDetailView {
     
     func setData(data: LocationMemoEntity) {
         self.locationTitleLabel.text = data.title
-        self.locationMemoLabel.text = data.contents
-        self.locationMemoLabel.isHidden = (data.contents?.isEmpty ?? true)
+        let memoContents = data.contents?.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.locationMemoLabel.text = memoContents
+        updateMemoRow(isHidden: memoContents?.isEmpty ?? true)
         self.regDateLabel.text = DateFormatterManager.shared.localDate(
             data.regDate,
             style: .medium,
             timeStyle: .short
         )
-        self.phoneNumberLabel.text = data.phoneNumber
+        let phoneNumber = data.phoneNumber?.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.phoneNumberLabel.text = phoneNumber
+        updatePhoneRow(isHidden: phoneNumber?.isEmpty ?? true)
     }
 }
+
+private extension MemoDetailView {
+    private func updateMemoRow(isHidden: Bool) {
+        let isArranged = stackView.arrangedSubviews.contains(memoContainerView)
+        if isHidden {
+            if isArranged {
+                stackView.removeArrangedSubview(memoContainerView)
+                memoContainerView.removeFromSuperview()
+            }
+        } else if !isArranged {
+            stackView.insertArrangedSubview(memoContainerView, at: 0)
+        }
+    }
+
+    private func updatePhoneRow(isHidden: Bool) {
+        let isArranged = topRowStackView.arrangedSubviews.contains(phoneRowStackView)
+        if isHidden {
+            if isArranged {
+                topRowStackView.removeArrangedSubview(phoneRowStackView)
+                phoneRowStackView.removeFromSuperview()
+            }
+        } else if !isArranged {
+            topRowStackView.insertArrangedSubview(phoneRowStackView, at: 0)
+        }
+    }
+}
+
+#if DEBUG
+@available(iOS 17.0, *)
+#Preview {
+    let view = MemoDetailView()
+    view.setData(data: LocationMemoEntity(
+        id: "1",
+        title: "서울 중구 을지로 1가의 맛집",
+        location: nil,
+        contents: nil, // "미슐랭 2스타 맛집임",
+        phoneNumber: "010-0000-0001",
+        regDate: Date(),
+        detailMemos: [])
+    )
+    return view
+}
+#endif

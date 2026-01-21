@@ -7,6 +7,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 protocol AboutModifyLocationDelegate: AnyObject {
     func getModifyInfo(with locationMemo: LocationMemoEntity)
@@ -124,7 +125,8 @@ final class AboutLocationViewController: ReactorBaseViewController<AboutLocation
             .disposed(by: disposeBag)
         
         mainView.memoDetailView.modifyLocationButton.rx
-            .tap
+            .tapGesture()
+            .when(.recognized)
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.modifyCheckAction()
