@@ -560,7 +560,8 @@ private extension MapViewController {
                 reactor: AboutLocationReactor(
                     memoID: memoID,
                     shared: sharedEvent
-                )
+                ),
+                coordinator: coordinator
             )
             vc.backDelegate = self
             vc.locationDelegate = self
@@ -595,7 +596,8 @@ private extension MapViewController {
         memoIdForModify: String?
     ) -> AddLocationMemoViewController {
         let vc = AddLocationMemoViewController(
-            reactor: MemoAddReactor(sharedService: sharedEvent)
+            reactor: MemoAddReactor(sharedService: sharedEvent),
+            coordinator: coordinator
         )
         applyCoordinate(
             configuration.coordinate,

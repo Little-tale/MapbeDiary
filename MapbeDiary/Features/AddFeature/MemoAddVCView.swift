@@ -10,7 +10,7 @@ import SnapKit
 
 final class MemoAddVCView: VCBaseView {
     
-    private let backView = UIView()
+    private let backView = UIView().after { $0.isUserInteractionEnabled = true }
     
     let AddTitleDateView = AddTitleDateImageView()
     
@@ -43,6 +43,7 @@ final class MemoAddVCView: VCBaseView {
         $0.text = AddViewSection.phoneNumberTextLabel.placeHolder
         $0.textColor = .black
         $0.font = JHFont.UIKit.bo12
+        $0.isUserInteractionEnabled = true
     }
     
     let phoneTextField = UITextField(frame: .zero)

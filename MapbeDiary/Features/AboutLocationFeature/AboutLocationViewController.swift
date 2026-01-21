@@ -147,6 +147,20 @@ final class AboutLocationViewController: ReactorBaseViewController<AboutLocation
                 owner.showImageViewer(with: data)
             }
             .disposed(by: disposeBag)
+        
+        mainView.memoDetailView.phoneNumberLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .compactMap { owner, _ in
+                return owner.mainView.memoDetailView.phoneNumberLabel.text
+            }
+            .filter { $0.isEmpty == false }
+            .bind(with: self) { owner, tel in
+                owner.coordinator?.moveToTel(phoneNumber: tel)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func register() {

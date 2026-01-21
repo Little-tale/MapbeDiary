@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 extension Reactive where Base: UIViewController {
     
@@ -42,3 +43,12 @@ extension Reactive where Base: UIViewController {
     }
 }
 
+
+extension Reactive where Base: RxGestureView {
+    
+    public func tapGestureOnTop() -> TapControlEvent {
+        return self.tapGesture { gesture, delegate in
+            delegate.simultaneousRecognitionPolicy = .never
+        }
+    }
+}

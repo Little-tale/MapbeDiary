@@ -58,3 +58,20 @@ extension Coordinator {
         navigationController?.dismiss(animated: animated, completion: completion)
     }
 }
+
+// MARK: Tel
+extension Coordinator {
+    func moveToTel(phoneNumber: String) {
+        let phoneNumber = phoneNumber.compactMap { c in
+            if c.isNumber {
+                return String(c)
+            }
+            return nil
+        }.joined(separator: "")
+        
+        if let url = URL(string: "tel://\(phoneNumber)"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+}
