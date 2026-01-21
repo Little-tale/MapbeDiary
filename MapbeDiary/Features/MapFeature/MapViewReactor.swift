@@ -35,6 +35,7 @@ final class MapViewReactor: Reactor {
         case changeFolder(folderID: String)
         case setDeepLink(String?)
         case calendarButtonTapped
+        case getCurrentLocation
     }
     
     enum Mutation {
@@ -82,6 +83,7 @@ extension MapViewReactor {
                 return .merge([
                     .just(.loadFolder),
                     .just(.checkLocationWhenInUseAuthorization),
+                    .just(.getCurrentLocation)
                 ])
             }
         
@@ -145,7 +147,7 @@ extension MapViewReactor {
             return .empty()
             
         case .viewDidLoad:
-            return .just(.setDefaultLocation)
+            return .empty()
             
         case .calendarButtonTapped:
             guard let id = UserDefaultsManager.currentFolderID else {
@@ -161,6 +163,14 @@ extension MapViewReactor {
                     return .just(.setRealmError(.cantFindFolder))
                 }
                 return .just(.setRealmError(error))
+            }
+            
+        case .getCurrentLocation:
+            if locationManager.isAuthorized() {
+                let current = locationManager.getCurrentLocation()
+                return .just(.setLocation(current))
+            } else {
+                return .just(.setDefaultLocation)
             }
         }
         

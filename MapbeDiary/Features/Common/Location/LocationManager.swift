@@ -20,6 +20,8 @@ protocol LocationManagerDelegate: AnyObject {
 final class LocationManager: NSObject {
     
     private let locationManager = CLLocationManager()
+    private let minimumUpdateDistance: CLLocationDistance
+    private var lastReportedLocation: CLLocation?
     
     weak var delegate: LocationManagerDelegate?
     
@@ -28,10 +30,14 @@ final class LocationManager: NSObject {
         longitude: 126.9778222
     )
     
-    override init() {
+    init(
+        minimumUpdateDistance: CLLocationDistance = 100
+    ) {
+        self.minimumUpdateDistance = minimumUpdateDistance
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = minimumUpdateDistance
         
         if isAuthorized() {
             locationManager.startUpdatingLocation()
@@ -57,6 +63,13 @@ extension LocationManager {
         delegate?.currentAuthState(
             state: locationManager.authorizationStatus
         )
+    }
+    
+    func getCurrentLocation() -> CLLocationCoordinate2D {
+        guard let location = locationManager.location else {
+            return Self.defaultLocation
+        }
+        return CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
 }
 
@@ -85,10 +98,19 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        guard let location = locations.last?.coordinate else {
+        guard let location = locations.last else {
             return
         }
         
-        delegate?.didUpdateLocation(location)
+        if let lastLocation = lastReportedLocation {
+            let distance = location.distance(from: lastLocation)
+            if distance < minimumUpdateDistance {
+                return
+            }
+        }
+        
+        lastReportedLocation = location
+        
+        delegate?.didUpdateLocation(location.coordinate)
     }
 }
