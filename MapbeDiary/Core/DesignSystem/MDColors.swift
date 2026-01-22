@@ -11,6 +11,9 @@ enum MDColors {
     
     // MARK: - Base
     case background
+    case skinBackground
+    case whiteLightBackground
+    case peach
     case surface
     case divider
     case shadow
@@ -23,6 +26,8 @@ enum MDColors {
     // MARK: - Brand / Action
     case primary
     case onPrimary
+    case greenPrimary
+    case pinkPrimary
     
     // MARK: - Accent
     case accent
@@ -50,41 +55,46 @@ enum MDColors {
         switch self {
             
             // Base
-        case .background:        return "#F9FAFB"
-        case .surface:           return "#FFFFFF"
-        case .divider:           return "#E5E7EB"
-        case .shadow:            return "#0000001A"
+        case .background:               return "#F9FAFB"
+        case .skinBackground:           return "#F2EED8"
+        case .whiteLightBackground:      return "#F0F1F2"
+        case .peach:                    return "#F29863"
+        case .surface:                  return "#FFFFFF"
+        case .divider:                  return "#E5E7EB"
+        case .shadow:                   return "#0000001A"
             
             // Text
-        case .textPrimary:       return "#111827"
-        case .textSecondary:     return "#6B7280"
-        case .textHint:          return "#9CA3AF"
+        case .textPrimary:              return "#111827"
+        case .textSecondary:            return "#6B7280"
+        case .textHint:                 return "#9CA3AF"
             
             // Brand / Action
-        case .primary:           return "#0A84FF"
-        case .onPrimary:         return "#FFFFFF"
+        case .primary:                  return "#0A84FF"
+        case .onPrimary:                return "#FFFFFF"
+        case .greenPrimary:             return "#17BFA0"
+        case .pinkPrimary:              return "#F24976"
             
             // Accent (iOS-like Green)
-        case .accent:            return "#34C759"
-        case .onAccent:          return "#FFFFFF"
+        case .accent:                   return "#34C759"
+        case .onAccent:                 return "#FFFFFF"
             
             // Memo Tags
-        case .tagYellow:         return "#FFF3B0"
-        case .tagPink:           return "#FFD6E7"
-        case .tagBlue:           return "#D6E8FF"
-        case .tagGreen:          return "#D7FBE3"
-        case .tagPurple:         return "#E9DDFF"
+        case .tagYellow:                return "#FFF3B0"
+        case .tagPink:                  return "#FFD6E7"
+        case .tagBlue:                  return "#D6E8FF"
+        case .tagGreen:                 return "#D7FBE3"
+        case .tagPurple:                return "#E9DDFF"
             
             // Dark Mode
-        case .backgroundDark:    return "#0B0F17"
-        case .surfaceDark:       return "#111827"
-        case .textPrimaryDark:   return "#F9FAFB"
-        case .textSecondaryDark: return "#CBD5E1"
-        case .primaryDark:       return "#0A84FF"
+        case .backgroundDark:           return "#0B0F17"
+        case .surfaceDark:              return "#111827"
+        case .textPrimaryDark:          return "#F9FAFB"
+        case .textSecondaryDark:        return "#CBD5E1"
+        case .primaryDark:              return "#0A84FF"
             
             // Destructive (iOS-like Red)
-        case .destructive:       return "#FF3B30"   // iOS systemRed 느낌
-        case .onDestructive:     return "#FFFFFF"
+        case .destructive:              return "#FF3B30"   // iOS systemRed 느낌
+        case .onDestructive:            return "#FFFFFF"
         }
     }
 }

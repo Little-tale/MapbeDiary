@@ -13,7 +13,7 @@ final class SettingVCView: VCBaseView {
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CollectionViewLayouts.makeListLayout(
-            backgroundColor: .wheetLightBrown,
+            backgroundColor: .md(.whiteLightBackground),
             layout: .insetGrouped
         )
     )
@@ -58,7 +58,7 @@ final class SettingVCView: VCBaseView {
     }
     
     override func setupUI() {
-        
+        self.backgroundColor = .white
         collectionView.layer.cornerRadius = 20
         collectionView.clipsToBounds = true
     }

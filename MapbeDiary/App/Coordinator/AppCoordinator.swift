@@ -3,7 +3,7 @@ import IQKeyboardManagerSwift
 
 @MainActor
 final class AppCoordinator: Coordinator {
-    
+    var parentCoordinator: Coordinator? = nil
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController?
     

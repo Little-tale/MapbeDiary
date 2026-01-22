@@ -2,6 +2,7 @@ import UIKit
 
 @MainActor
 protocol Coordinator: AnyObject {
+    var parentCoordinator: Coordinator? { get set }
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController? { get }
     func start()
@@ -56,6 +57,20 @@ extension Coordinator {
     /// 현재 모달을 닫음
     func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController?.dismiss(animated: animated, completion: completion)
+    }
+    
+    func backToParent(animated: Bool = true) {
+        parentCoordinator?.removeChild(self)
+        back(animated: animated)
+    }
+    
+    func dismissSelf(animated: Bool = true, completion: (() -> Void)? = nil) {
+        parentCoordinator?.removeChild(self)
+        dismiss(animated: animated)
+    }
+
+    func removeChild(_ coordinator: Coordinator) {
+        childCoordinators.removeAll { $0 === coordinator }
     }
 }
 

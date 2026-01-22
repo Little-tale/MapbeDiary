@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import RxSwift
 import RxCocoa
 import Toast
@@ -14,21 +15,12 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
     
     // MARK: property
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection,SettingModel>
+    private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingModel>
     
-    private typealias CellRegistry = UICollectionView.CellRegistration<UICollectionViewCell,SettingModel>
+    private typealias CellRegistry = UICollectionView.CellRegistration<UICollectionViewCell, SettingModel>
     
     private var dataSource: DataSource?
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mainView.backgroundColor = .wheetSideBrown
-        navigationLeftButtonSetting() // 네비게이션 좌측 버튼세팅
-        settingMainNaviTitleView() // 네비게이션 중앙 설정
-        settingDataSource() // 컴포지셔널 데이터 소스 세팅
-        settingSnapShot() // 스냅샷 세팅
-    }
     
     override func bind(reactor: SettingViewReactor) {
         super.bind(reactor: reactor)
@@ -95,9 +87,14 @@ final class SettingViewController: ReactorBaseViewController<SettingViewReactor,
         mainView.backButton.rx
             .tap
             .bind(with: self) { owner, _ in
-                owner.dismiss(animated: true)
+                owner.coordinator?.dismissSelf()
             }
             .disposed(by: disposeBag)
+    }
+    
+    override func register() {
+        settingDataSource() // 컴포지셔널 데이터 소스 세팅
+        settingSnapShot() // 스냅샷 세팅
     }
 }
 
@@ -129,43 +126,9 @@ extension SettingViewController {
         
         vc.sendAction(type: type)
         
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.next(viewController: vc)
     }
 }
-
-// MARK: 네비게이션 LeftBarButtonSetting
-extension SettingViewController {
-    /// 좌측 버튼 설정
-    private func navigationLeftButtonSetting(){
-        
-        let button = CustomLocationButton(frame: .zero, imageType: .naviBackButton)
-        
-        let leftUIBarButton = UIBarButtonItem(customView: button)
-        
-        navigationItem.leftBarButtonItem = leftUIBarButton
-        
-        button.rx.tap
-            .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                owner.coordinator?.dismiss()
-            }
-            .disposed(by: disposeBag)
-        
-    }
-
-    /// 네비게이션 타이틀 세팅
-    private func settingMainNaviTitleView(){
-        navigationItem.title = "Setting_title".localized
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font : UIFont.systemFont(
-                ofSize: 20, weight: .bold
-            ),
-            NSAttributedString.Key.foregroundColor : UIColor.wheetBlack
-        ]
-    }
-    
-}
-
 
 // MARK: CollectionView Settings
 extension SettingViewController {
@@ -177,7 +140,6 @@ extension SettingViewController {
         
             let cell = collectionView.dequeueConfiguredReusableCell(using: reg, for: indexPath, item: itemIdentifier)
             
-            cell.backgroundColor = .wheetPink
             
             return cell
         })
@@ -185,20 +147,15 @@ extension SettingViewController {
     
     private func settingCellRegister() -> CellRegistry {
         let cellRegister: CellRegistry = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
-            var config = UIListContentConfiguration.valueCell()
             
-            config.text = itemIdentifier.title
-            config.secondaryText = itemIdentifier.detail
-            
-            cell.contentConfiguration = config
-            cell.backgroundColor  = .blue
+            cell.contentConfiguration = UIHostingConfiguration {
+                SettingCellView(model: itemIdentifier)
+            }
+            cell.backgroundColor = .white
         }
         return cellRegister
     }
-}
-
-// MARK: 컴포지션 스냅샷 세팅
-extension SettingViewController {
+    
     private func settingSnapShot(){
         
         var snapShot = NSDiffableDataSourceSnapshot<SettingSection,SettingModel> ()

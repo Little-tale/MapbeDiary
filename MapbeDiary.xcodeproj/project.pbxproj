@@ -178,6 +178,8 @@
 		7BD1F8702F21064B00FA2A97 /* ImageWithTextButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */; };
 		7BD1F8722F2128B200FA2A97 /* WrappedTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */; };
 		7BD1F8752F213D2700FA2A97 /* AllLocationCellEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */; };
+		7BD1F8782F2293FC00FA2A97 /* SettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8772F2293FC00FA2A97 /* SettingCellView.swift */; };
+		7BD1F87A2F229FB900FA2A97 /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1F8792F229FB900FA2A97 /* SettingCoordinator.swift */; };
 		7BDE5F5E2F13D82E00467F7F /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F5D2F13D82E00467F7F /* ReactorKit */; };
 		7BDE5F612F13D84300467F7F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F602F13D84300467F7F /* RxCocoa */; };
 		7BDE5F632F13D84300467F7F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE5F622F13D84300467F7F /* RxRelay */; };
@@ -401,6 +403,8 @@
 		7BD1F86F2F21064B00FA2A97 /* ImageWithTextButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTextButtonView.swift; sourceTree = "<group>"; };
 		7BD1F8712F2128B200FA2A97 /* WrappedTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTagView.swift; sourceTree = "<group>"; };
 		7BD1F8742F213D2700FA2A97 /* AllLocationCellEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationCellEmptyView.swift; sourceTree = "<group>"; };
+		7BD1F8772F2293FC00FA2A97 /* SettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellView.swift; sourceTree = "<group>"; };
+		7BD1F8792F229FB900FA2A97 /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		7BDE5F652F13D95600467F7F /* VCBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBaseView.swift; sourceTree = "<group>"; };
 		7BDE5F9D2F13D9A500467F7F /* BaseUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIProtocol.swift; sourceTree = "<group>"; };
 		7BDE5F9F2F13DA3200467F7F /* ReactorBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactorBaseViewController.swift; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 				6708A574D8E65EC2F88C4896 /* AppCoordinator.swift */,
 				B4DD6D682D54822D74520A91 /* Coordinator.swift */,
 				E9C06835283955A60F0D3556 /* MainMapCoordinator.swift */,
+				7BD1F8792F229FB900FA2A97 /* SettingCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -485,6 +490,7 @@
 				7BBB67882F1530AC0026EB7A /* SettingViewReactor.swift */,
 				7BBB678A2F1531C30026EB7A /* SettingVCView.swift */,
 				7BBB67982F1574890026EB7A /* SettingSection.swift */,
+				7BD1F8772F2293FC00FA2A97 /* SettingCellView.swift */,
 			);
 			path = SettingFeature;
 			sourceTree = "<group>";
@@ -1384,6 +1390,7 @@
 				7BBB67BA2F17CC270026EB7A /* AllLocationVCView.swift in Sources */,
 				7B7BE64F2BAD96870072F40F /* ScrollImageView.swift in Sources */,
 				7BBB67AB2F1657750026EB7A /* MemoAddVCView.swift in Sources */,
+				7BD1F87A2F229FB900FA2A97 /* SettingCoordinator.swift in Sources */,
 				7BD1F8702F21064B00FA2A97 /* ImageWithTextButtonView.swift in Sources */,
 				7BBB68152F1E581B0026EB7A /* KakaoAddressDTO.swift in Sources */,
 				7BBB65BD2F14DBF80026EB7A /* PlaceDocumentDTO.swift in Sources */,
@@ -1454,6 +1461,7 @@
 				7B11379A2B9B3CB700D6BBD1 /* AddTitleDateImageView.swift in Sources */,
 				7BBB679C2F161F6D0026EB7A /* LoadingView.swift in Sources */,
 				7BBB67942F155A420026EB7A /* CodableManager.swift in Sources */,
+				7BD1F8782F2293FC00FA2A97 /* SettingCellView.swift in Sources */,
 				7BBB67C02F17E3980026EB7A /* LocationEntity.swift in Sources */,
 				7BBB681B2F1E59C10026EB7A /* KakaoApiErrors.swift in Sources */,
 				7BA373332B9D45F70016E851 /* PlaceHolderTextView.swift in Sources */,

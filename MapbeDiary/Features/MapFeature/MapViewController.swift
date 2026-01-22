@@ -174,12 +174,14 @@ final class MapViewController: ReactorBaseViewController<MapViewReactor, MapVCVi
         mainView.buttonStack.settingButton.rx
             .tap
             .bind(with: self) { owner, _ in
-                let vc = SettingViewController(
-                    reactor: SettingViewReactor(),
-                    coordinator: owner.coordinator
-                )
+                let coordinator = SettingCoordinator(parentCoordinator: owner.coordinator)
+                coordinator.start()
+                owner.coordinator?.childCoordinators.append(coordinator)
+                
+                guard let nav = coordinator.navigationController else { return }
+                
                 owner.coordinator?.transitionPresent(
-                    viewController: vc,
+                    viewController: nav,
                     target: owner.mainView.buttonStack.settingButton
                 )
             }

@@ -3,6 +3,7 @@ import UIKit
 @MainActor
 final class MainMapCoordinator: Coordinator {
     
+    var parentCoordinator: Coordinator? = nil
     var childCoordinators: [Coordinator] = []
     private(set) var navigationController: UINavigationController?
     

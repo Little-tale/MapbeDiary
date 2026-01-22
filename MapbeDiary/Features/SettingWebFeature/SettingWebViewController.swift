@@ -45,6 +45,20 @@ class SettingWebViewController: ReactorBaseViewController<SettingWebReactor, Set
             .map { _ in SettingWebReactor.Action.viewDidLoad }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rx.viewWillAppear
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.setNavigationBarHidden(false, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        rx.viewWillDisappear
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.setNavigationBarHidden(true, animated: false)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
