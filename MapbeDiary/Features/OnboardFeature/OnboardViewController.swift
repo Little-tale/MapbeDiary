@@ -74,9 +74,9 @@ extension OnboardViewController {
     
     private func startImageSet(){
         let images: [UIImage] = [
-            UIImage.on1,
-            UIImage.on2,
-            UIImage.on3
+            UIImage.mb3,
+            UIImage.mb4,
+            UIImage.mb5
         ]
         
         let imageViews = images.map { image in

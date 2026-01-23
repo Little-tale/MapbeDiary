@@ -11,7 +11,7 @@ import SnapKit
 final class AppLoadVCView: VCBaseView {
     
     private let imageView = UIImageView().after {
-        $0.image = UIImage(resource: .on1)
+        $0.image = UIImage(resource: .mb3)
         $0.contentMode = .scaleAspectFill
     }
     

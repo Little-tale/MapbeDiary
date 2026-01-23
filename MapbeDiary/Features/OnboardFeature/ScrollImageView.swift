@@ -24,7 +24,9 @@ final class ScrollImageView: BaseView {
         return scrollView
     }()
 
-    let pageController = UIPageControl()
+    let pageController = UIPageControl().after {
+        $0.backgroundStyle = .prominent
+    }
     
     var currentPageListener: ((Int) -> Void)?
     
