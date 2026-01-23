@@ -14,14 +14,6 @@
 		7B1137182B99A17100D6BBD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1137172B99A17100D6BBD1 /* Assets.xcassets */; };
 		7B11371B2B99A17100D6BBD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B1137192B99A17100D6BBD1 /* LaunchScreen.storyboard */; };
 		7B1137262B99A17100D6BBD1 /* MapbeDiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137252B99A17100D6BBD1 /* MapbeDiaryTests.swift */; };
-		9A8C0E7B2F20000100AAB001 /* KakaoMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA001 /* KakaoMapperTests.swift */; };
-		9A8C0E7B2F20000100AAB002 /* KakaoApiRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA002 /* KakaoApiRouterTests.swift */; };
-		9A8C0E7B2F20000100AAB003 /* DateFormatterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA003 /* DateFormatterManagerTests.swift */; };
-		9A8C0E7B2F20000100AAB004 /* URLsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA004 /* URLsTests.swift */; };
-		9A8C0E7B2F20000200AAB005 /* SearchReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA005 /* SearchReactorTests.swift */; };
-		9A8C0E7B2F20000200AAB006 /* MemoAddReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA006 /* MemoAddReactorTests.swift */; };
-		9A8C0E7B2F20000200AAB007 /* OnboardReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA007 /* OnboardReactorTests.swift */; };
-		9A8C0E7B2F20000200AAB008 /* AllLocationListViewReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA008 /* AllLocationListViewReactorTests.swift */; };
 		7B1137302B99A17100D6BBD1 /* MapbeDiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11372F2B99A17100D6BBD1 /* MapbeDiaryUITests.swift */; };
 		7B1137322B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1137312B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift */; };
 		7B11373F2B99A21200D6BBD1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B11373E2B99A21200D6BBD1 /* GoogleService-Info.plist */; };
@@ -203,6 +195,14 @@
 		7BF2E7FC2BB8070700E83EC1 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF2E7FB2BB8070700E83EC1 /* FSCalendar */; };
 		7BF2E7FE2BB807FF00E83EC1 /* CalendarMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */; };
 		7BF2E8002BB81D0200E83EC1 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */; };
+		9A8C0E7B2F20000100AAB001 /* KakaoMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA001 /* KakaoMapperTests.swift */; };
+		9A8C0E7B2F20000100AAB002 /* KakaoApiRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA002 /* KakaoApiRouterTests.swift */; };
+		9A8C0E7B2F20000100AAB003 /* DateFormatterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA003 /* DateFormatterManagerTests.swift */; };
+		9A8C0E7B2F20000100AAB004 /* URLsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000100AAA004 /* URLsTests.swift */; };
+		9A8C0E7B2F20000200AAB005 /* SearchReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA005 /* SearchReactorTests.swift */; };
+		9A8C0E7B2F20000200AAB006 /* MemoAddReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA006 /* MemoAddReactorTests.swift */; };
+		9A8C0E7B2F20000200AAB007 /* OnboardReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA007 /* OnboardReactorTests.swift */; };
+		9A8C0E7B2F20000200AAB008 /* AllLocationListViewReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8C0E7B2F20000200AAA008 /* AllLocationListViewReactorTests.swift */; };
 		E0A93F612D33E4BE2F6C149B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6708A574D8E65EC2F88C4896 /* AppCoordinator.swift */; };
 		FB7A8B3FA576EDC952C19A84 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD6D682D54822D74520A91 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
@@ -256,14 +256,6 @@
 		7B11371C2B99A17100D6BBD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B1137212B99A17100D6BBD1 /* MapbeDiaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapbeDiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1137252B99A17100D6BBD1 /* MapbeDiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapbeDiaryTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000100AAA001 /* KakaoMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapperTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000100AAA002 /* KakaoApiRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiRouterTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000100AAA003 /* DateFormatterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManagerTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000100AAA004 /* URLsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLsTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000200AAA005 /* SearchReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReactorTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000200AAA006 /* MemoAddReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAddReactorTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000200AAA007 /* OnboardReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardReactorTests.swift; sourceTree = "<group>"; };
-		9A8C0E7B2F20000200AAA008 /* AllLocationListViewReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationListViewReactorTests.swift; sourceTree = "<group>"; };
 		7B11372B2B99A17100D6BBD1 /* MapbeDiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapbeDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B11372F2B99A17100D6BBD1 /* MapbeDiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapbeDiaryUITests.swift; sourceTree = "<group>"; };
 		7B1137312B99A17100D6BBD1 /* MapbeDiaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapbeDiaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -432,6 +424,14 @@
 		7BF1A44D2BA359460086D5D8 /* MapTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextSection.swift; sourceTree = "<group>"; };
 		7BF2E7FD2BB807FF00E83EC1 /* CalendarMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMemoViewController.swift; sourceTree = "<group>"; };
 		7BF2E7FF2BB81D0200E83EC1 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000100AAA001 /* KakaoMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapperTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000100AAA002 /* KakaoApiRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiRouterTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000100AAA003 /* DateFormatterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManagerTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000100AAA004 /* URLsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLsTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000200AAA005 /* SearchReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReactorTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000200AAA006 /* MemoAddReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAddReactorTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000200AAA007 /* OnboardReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardReactorTests.swift; sourceTree = "<group>"; };
+		9A8C0E7B2F20000200AAA008 /* AllLocationListViewReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationListViewReactorTests.swift; sourceTree = "<group>"; };
 		B4DD6D682D54822D74520A91 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E9C06835283955A60F0D3556 /* MainMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1761,7 +1761,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/App/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.6;
+				CURRENT_PROJECT_VERSION = 1.1.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1780,7 +1780,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.7;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1802,7 +1802,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MapbeDiary/App/MapbeDiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.6;
+				CURRENT_PROJECT_VERSION = 1.1.7;
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MapbeDiary/App/Info.plist;
@@ -1820,7 +1820,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.7;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SilverGun.MapbeDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
